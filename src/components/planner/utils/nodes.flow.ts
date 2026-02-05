@@ -36,8 +36,9 @@ export const buildSupplyNodes = (
 }
 
 /**
- * FABRICA DE NODOS DE PRODUCCIÓN (MÁQUINAS)
- * Gestiona la lógica de "sustitución": si el suministro cubre la demanda, la máquina no se renderiza.
+ * GENERACION DE NODOS DE PRODUCCION
+ * * Crea entidades visuales solo para elementos con carga de fabricacion positiva.
+ * Integra metadatos de carga de edificio y conteo de unidades fisicas.
  */
 export const buildProductionNodes = (
   targetId: string,
@@ -50,46 +51,39 @@ export const buildProductionNodes = (
 ): Node[] => {
   const nodes: Node[] = []
 
-  totals.forEach((qty, id) => {
-    const supplyAmount = supplies[id] || 0
-    // netQty: Diferencia entre lo necesario y lo que ya tenemos (demanda insatisfecha)
-    const netQty = Math.max(0, qty - supplyAmount)
+  totals.forEach((productionQty, id) => {
+    if (productionQty <= 0) return
 
-    // Solo creamos el nodo si hay algo que fabricar localmente
-    if (netQty > 0) {
-      // Buscamos el edificio que tiene la receta para este producto de salida
-      const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === id))
-      const r = b?.recipes?.find((r) => r.output.id === id)
+    const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === id))
+    const r = b?.recipes?.find((r) => r.output.id === id)
 
-      if (b && r) {
-        const baseIpm = r.output.amount_per_minute
-        // buildingLoad: Ratio de trabajo (ej: 2.5 significa 2 máquinas al 100% y una al 50%)
-        const buildingLoad = netQty / baseIpm
+    if (b && r) {
+      const baseIpm = r.output.amount_per_minute
+      const buildingLoad = productionQty / baseIpm
 
-        dagreGraph.setNode(id, { width: 240, height: 335 })
+      dagreGraph.setNode(id, { width: 240, height: 335 })
 
-        nodes.push({
-          id,
-          type: 'productionNode',
-          draggable: true,
-          data: {
-            itemId: id,
-            itemName: items.find((i) => i.id === id)?.name || id,
-            buildingId: b.id,
-            buildingName: b.name,
-            buildingLoad,
-            buildingCount: Math.ceil(buildingLoad), // Número entero de edificios necesarios
-            baseIpm,
-            targetIpm: qty,
-            supply: supplyAmount,
-            onSupplyChange,
-            buildingPower: b.power || 0,
-            buildingHeat: b.heat || 0,
-            isTarget: id === targetId, // Estilo especial si es el producto final
-          },
-          position: { x: 0, y: 0 },
-        })
-      }
+      nodes.push({
+        id,
+        type: 'productionNode',
+        draggable: true,
+        data: {
+          itemId: id,
+          itemName: items.find((i) => i.id === id)?.name || id,
+          buildingId: b.id,
+          buildingName: b.name,
+          buildingLoad,
+          buildingCount: Math.ceil(buildingLoad),
+          baseIpm,
+          targetIpm: productionQty,
+          supply: supplies[id] || 0,
+          onSupplyChange,
+          buildingPower: b.power || 0,
+          buildingHeat: b.heat || 0,
+          isTarget: id === targetId,
+        },
+        position: { x: 0, y: 0 },
+      })
     }
   })
   return nodes

@@ -3,82 +3,85 @@ import BUILDINGS_DATA from '@/data/buildings_and_recipes.json'
 
 const buildings = BUILDINGS_DATA as Building[]
 
+/**
+ * MOTOR DE CALCULO DE DEMANDA NETA
+ * * Este modulo gestiona la recursion de la cadena de suministro.
+ * Prioriza el uso de inventario existente (supplies) antes de asignar carga a maquinas.
+ */
 export const calculateProductionTotals = (
   targetId: string,
   targetIpm: number,
   supplies: Record<string, number>,
   addOrgitalExportSystem: boolean,
 ) => {
-  const totals = new Map<string, number>()
+  // Almacena la produccion que las fabricas deben asumir obligatoriamente
+  const productionTotals = new Map<string, number>()
+
+  // Clon de inventario para gestion de consumo secuencial
+  // Se garantiza un minimo de 1 unidad para cualquier supply activo
+  const runningInventory: Record<string, number> = {}
+  Object.keys(supplies).forEach((id) => {
+    runningInventory[id] = Math.max(1, supplies[id])
+  })
 
   /**
-   * LA LISTA DE LA COMPRA (Recursiva):
-   * Mira qué necesitas, y luego mira qué ingredientes necesitan esos ingredientes.
+   * RESOLUCION DE DEMANDA POR ITEM
+   * 1. Determina disponibilidad en inventario.
+   * 2. Calcula excedente no cubierto (deuda).
+   * 3. Si existe deuda, escala la produccion y solicita ingredientes de forma recursiva.
    */
-  const calculateNetAmounts = (id: string, amount: number) => {
-    // 1. Apuntamos en la lista: "Necesito esta cantidad total de este ítem"
-    const prev = totals.get(id) || 0
-    totals.set(id, prev + amount)
+  const requestItems = (id: string, amountNeeded: number) => {
+    const available = runningInventory[id] || 0
+    const takenFromSupply = Math.min(amountNeeded, available)
 
-    // 2. CÁLCULO DE DEMANDA NETA:
-    // Restamos lo que viene de fuera.
-    const supplyAmount = supplies[id] || 0
-    const netNeededForIngredients = Math.max(0, amount - supplyAmount)
+    if (runningInventory[id] !== undefined) {
+      runningInventory[id] -= takenFromSupply
+    }
 
-    // Si ya no me falta nada por fabricar de esto, dejo de mirar sus ingredientes.
-    // ¡Aquí es donde se cortan las ramas del árbol!
-    if (netNeededForIngredients <= 0) return
+    const debt = amountNeeded - takenFromSupply
 
-    const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === id))
-    const r = b?.recipes?.find((r) => r.output.id === id)
+    if (debt > 0) {
+      const prevProd = productionTotals.get(id) || 0
+      productionTotals.set(id, prevProd + debt)
 
-    if (r) {
-      r.inputs.forEach((input) => {
-        // Pedimos a los "hijos" solo lo que nos falta por cubrir
-        const inputQty = (input.amount_per_minute / r.output.amount_per_minute) * netNeededForIngredients
-        calculateNetAmounts(input.id, inputQty)
-      })
+      const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === id))
+      const r = b?.recipes?.find((r) => r.output.id === id)
+
+      if (r) {
+        r.inputs.forEach((input) => {
+          // El calculo de ingredientes se basa exclusivamente en la produccion neta
+          const inputQty = (input.amount_per_minute / r.output.amount_per_minute) * debt
+          requestItems(input.id, inputQty)
+        })
+      }
     }
   }
 
-  // Empezamos a calcular desde el producto final que elegiste
-  calculateNetAmounts(targetId, targetIpm)
+  requestItems(targetId, targetIpm)
 
-  // PASO 2: CONTAR LAS FACTURAS (Luz y Calor)
-  let power = 0
-  let heat = 0
-  let totalBuildings = 0
+  // CALCULO DE METRICAS OPERATIVAS (ENERGIA, CALOR Y UNIDADES)
+  let power = 0,
+    heat = 0,
+    totalBuildings = 0
 
-  totals.forEach((qty, id) => {
-    // Para pagar la luz, solo contamos las máquinas que REALMENTE vamos a construir
-    const netQtyForStats = Math.max(0, qty - (supplies[id] || 0))
-
-    // Si lo traes todo de fuera, no gastas luz aquí
-    if (netQtyForStats <= 0) return
-
+  productionTotals.forEach((qty, id) => {
     const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === id))
     const r = b?.recipes?.find((r) => r.output.id === id)
-
     if (b && r) {
-      // Redondeamos hacia arriba (no puedes construir media máquina)
-      const count = Math.ceil(netQtyForStats / r.output.amount_per_minute)
-
+      const count = Math.ceil(qty / r.output.amount_per_minute)
       power += count * (b.power || 0)
       heat += count * (b.heat || 0)
       totalBuildings += count
     }
   })
 
-  // PASO 3: EL COHETE (Si está activado)
-  const launcher = buildings.find((b) => b.id === 'orbital_cargo_launcher')
-  if (launcher && addOrgitalExportSystem) {
-    const LAUNCHER_CAPACITY = 10
-    const launcherCount = Math.ceil(targetIpm / LAUNCHER_CAPACITY)
-
-    power += launcherCount * (launcher.power || 0)
-    heat += launcherCount * (launcher.heat || 0)
-    totalBuildings += launcherCount
+  if (addOrgitalExportSystem) {
+    const launcher = buildings.find((b) => b.id === 'orbital_cargo_launcher')
+    const count = Math.ceil(targetIpm / 10)
+    power += count * (launcher?.power || 0)
+    heat += count * (launcher?.heat || 0)
+    totalBuildings += count
   }
 
-  return { totals, power, heat, buildings: totalBuildings }
+  return { totals: productionTotals, power, heat, buildings: totalBuildings }
 }

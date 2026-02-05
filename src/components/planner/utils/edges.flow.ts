@@ -3,8 +3,11 @@ import { type Edge } from '@xyflow/react'
 import dagre from 'dagre'
 
 /**
- * CONSTRUCTOR DE CONEXIONES (LOGÍSTICA)
- * Analiza las recetas de entrada y decide de dónde viene cada material necesario.
+ * DEFINICION DE CONEXIONES LOGISTICAS
+ * * Mapea el flujo de materiales discriminando origen por color y estilo:
+ * - Verde/Punteado: Flujo desde inventario externo.
+ * - Color Solido: Flujo generado por produccion local.
+ * - Naranja: Flujo hacia sistema de exportacion final.
  */
 export const buildEdges = (
   targetId: string,
@@ -19,83 +22,72 @@ export const buildEdges = (
 ): Edge[] => {
   const edges: Edge[] = []
 
-  totals.forEach((qty, id) => {
-    const supplyAmount = supplies[id] || 0
-    const netQty = Math.max(0, qty - supplyAmount)
+  const currentSupplyInventory: Record<string, number> = {}
+  Object.keys(supplies).forEach((id) => {
+    currentSupplyInventory[id] = Math.max(1, supplies[id])
+  })
 
-    // Condición de parada: No tiramos cables si el nodo no existe (salvo el target final)
-    if (netQty <= 0 && id !== targetId) return
+  const commonLabelStyle = { fill: '#fff', fontSize: 16, fontWeight: 700 }
 
-    const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === id))
-    const r = b?.recipes?.find((r) => r.output.id === id)
-    if (!r) return
+  const connectToSources = (consumerId: string, itemId: string, totalNeeded: number, isFinalLauncher = false) => {
+    if (totalNeeded <= 0) return
+    const itemInfo = items.find((i) => i.id === itemId)
+    let remaining = totalNeeded
 
-    r.inputs?.forEach((input) => {
-      // Necesidad proporcional: (Cantidad_Receta / Salida_Receta) * Demanda_Neta_Actual
-      const inputTotalNeeded = (input.amount_per_minute / r.output.amount_per_minute) * netQty
-      if (inputTotalNeeded <= 0) return
+    // SEGMENTO DE SUMINISTRO (SUPPLY)
+    const available = currentSupplyInventory[itemId] || 0
+    if (available > 0) {
+      const taken = Math.min(available, remaining)
+      currentSupplyInventory[itemId] -= taken
+      remaining -= taken
 
-      /**
-       * FLUJO DE SUMINISTRO EXTERNO (Input -> Máquina)
-       * Color: Verde esmeralda (#22c55e)
-       * Estilo: Punteado animado (indica material que no se produce in-situ)
-       */
-      if (supplies[input.id] !== undefined) {
-        const amountFromSupply = Math.min(supplies[input.id], inputTotalNeeded)
+      edges.push({
+        id: `e-supply-${itemId}-${consumerId}`,
+        source: `supply-${itemId}`,
+        target: consumerId,
+        label: `${itemInfo?.name} x${taken.toFixed(1)}/m`,
+        animated: true,
+        style: {
+          stroke: isFinalLauncher ? '#f97316' : '#22c55e',
+          strokeWidth: isFinalLauncher ? 4 : 3,
+          strokeDasharray: isFinalLauncher ? '' : '5, 5',
+        },
+        labelStyle: commonLabelStyle,
+      })
+      dagreGraph.setEdge(`supply-${itemId}`, consumerId)
+    }
 
-        edges.push({
-          id: `e-supply-${input.id}-${id}`,
-          source: `supply-${input.id}`,
-          target: id,
-          label: `${amountFromSupply.toFixed(1)}/m`,
-          animated: true,
-          style: { stroke: '#22c55e', strokeWidth: 3, strokeDasharray: '5, 5' },
-          labelStyle: { fill: '#fff', fontSize: 16, fontWeight: 700 },
-        })
-        dagreGraph.setEdge(`supply-${input.id}`, id)
-      }
+    // SEGMENTO DE PRODUCCION INTERNA
+    if (remaining > 0) {
+      edges.push({
+        id: `e-${itemId}-${consumerId}`,
+        source: itemId,
+        target: consumerId,
+        label: `${itemInfo?.name} x${remaining.toFixed(1)}/m`,
+        style: {
+          stroke: isFinalLauncher ? '#f97316' : getItemColor(itemId),
+          strokeWidth: isFinalLauncher ? 4 : 3,
+          opacity: 0.8,
+        },
+        labelStyle: commonLabelStyle,
+      })
+      dagreGraph.setEdge(itemId, consumerId)
+    }
+  }
 
-      /**
-       * FLUJO DE PRODUCCIÓN LOCAL (Máquina -> Máquina)
-       * Color: Dinámico según ITEM_COLORS (basado en el tipo de ítem)
-       * Estilo: Línea sólida
-       */
-      const inputProducedNet = Math.max(0, (totals.get(input.id) || 0) - (supplies[input.id] || 0))
-      if (inputProducedNet > 0) {
-        const amountFromProd = Math.min(inputProducedNet, inputTotalNeeded)
-        edges.push({
-          id: `e-${input.id}-${id}`,
-          source: input.id,
-          target: id,
-          label: `${items.find((i) => i.id === input.id)?.name} x${amountFromProd.toFixed(1)}/m`,
-          style: {
-            stroke: getItemColor(input.id),
-            strokeWidth: 3,
-            opacity: 0.8,
-          },
-          labelStyle: { fill: '#fff', fontSize: 16, fontWeight: 700 },
-        })
-        // Registramos la relación en Dagre para jerarquizar los niveles (Ranks)
-        dagreGraph.setEdge(input.id, id)
-      }
+  // Iteracion sobre el mapa de totales para conectar insumos de fabricacion
+  totals.forEach((prodQty, nodeId) => {
+    const b = buildings.find((b) => b.recipes?.some((r) => r.output.id === nodeId))
+    const r = b?.recipes?.find((r) => r.output.id === nodeId)
+    r?.inputs?.forEach((input) => {
+      const inputNeeded = (input.amount_per_minute / r.output.amount_per_minute) * prodQty
+      connectToSources(nodeId, input.id, inputNeeded)
     })
   })
 
-  // CONEXIÓN FINAL: Del último proceso productivo al sistema de salida
+  // Conexion de salida hacia el Launcher Orbital
   if (addOrgitalExportSystem) {
-    // Si el objetivo final se cubre solo con supply, el cable sale del supply
-    const finalSource = supplies[targetId] >= targetIpm ? `supply-${targetId}` : targetId
-    const targetItemInfo = items.find((i) => i.id === targetId)
-
-    edges.push({
-      id: `e-final-launcher`,
-      source: finalSource,
-      target: 'terminal-launcher',
-      label: `${targetItemInfo?.name} (${targetIpm.toFixed(1)}/min)`,
-      style: { stroke: '#f97316', strokeWidth: 4 }, // Naranja vibrante para el output final
-      labelStyle: { fill: '#fff', fontSize: 16, fontWeight: 700 },
-    })
-    dagreGraph.setEdge(finalSource, 'terminal-launcher')
+    connectToSources('terminal-launcher', targetId, targetIpm, true)
   }
 
   return edges
