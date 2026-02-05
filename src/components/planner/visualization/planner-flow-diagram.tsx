@@ -1,9 +1,8 @@
 import { usePlannerStore } from '@/store/planner.store'
-import { Background, BackgroundVariant, Controls, ReactFlow, useReactFlow } from '@xyflow/react'
+import { Background, BackgroundVariant, Controls, ReactFlow, ReactFlowProvider, useReactFlow } from '@xyflow/react'
 import { useMemo, useRef } from 'react'
 import { calculateProductionTotals } from '../core/calculateProductionTotals'
 import { useProduction } from '../hooks/useProduction'
-import { PlannerSidebar } from '../ui'
 import { getLayoutedFlow } from '../utils'
 import { OrbitalExportSystemNode, ProductionNode } from './reactflow-nodes'
 import { SupplyNode } from './reactflow-nodes/SupplyNode'
@@ -14,7 +13,7 @@ export interface PlannerFlowDiagramProps {
   addOrbitalExportSystem: boolean // agrega el edifio "Orbital Export System" al diagrama
 }
 
-export function PlannerFlowDiagram({ addOrbitalExportSystem }: PlannerFlowDiagramProps) {
+function PlannerFlowDiagramInner({ addOrbitalExportSystem }: PlannerFlowDiagramProps) {
   const targetId = usePlannerStore((state) => state.targetId)
   const targetIpm = usePlannerStore((state) => state.targetIpm)
   const setPlannerStats = usePlannerStore((state) => state.setPlannerStats)
@@ -60,15 +59,17 @@ export function PlannerFlowDiagram({ addOrbitalExportSystem }: PlannerFlowDiagra
   }, [targetId, targetIpm, supplies, updateSupply, setNodes, setEdges, fitView, addOrbitalExportSystem])
 
   return (
-    <div className="flex flex-1 w-full overflow-hidden">
-      <PlannerSidebar />
+    <ReactFlow minZoom={0.1} nodes={nodes} edges={edges} onNodesChange={onNodesChange} nodeTypes={nodeTypes} colorMode="dark" fitView>
+      <Background color="white" variant={BackgroundVariant.Dots} gap={30} />
+      <Controls position="bottom-right" />
+    </ReactFlow>
+  )
+}
 
-      <div className="flex-1 relative overflow-hidden">
-        <ReactFlow minZoom={0.1} nodes={nodes} edges={edges} onNodesChange={onNodesChange} nodeTypes={nodeTypes} colorMode="dark" fitView>
-          <Background color="white" variant={BackgroundVariant.Dots} gap={30} />
-          <Controls position="bottom-right" />
-        </ReactFlow>
-      </div>
-    </div>
+export function PlannerFlowDiagram(props: PlannerFlowDiagramProps) {
+  return (
+    <ReactFlowProvider>
+      <PlannerFlowDiagramInner {...props} />
+    </ReactFlowProvider>
   )
 }

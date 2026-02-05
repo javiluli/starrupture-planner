@@ -1,65 +1,51 @@
-import { PlannerStatsDisplay } from '@/components/planner/stats/planner-stats-display'
-import { PlannerItemSelector, PlannerMarquee, PlannerTargetIpm } from '@/components/planner/ui'
-import { PlannerFlowDiagram } from '@/components/planner/visualization/planner-flow-diagram'
-import { ItemImage } from '@/components/ui/asset-image'
+import {
+  PlannerFlowDiagram,
+  PlannerItemSelector,
+  PlannerMarquee,
+  PlannerSidebar,
+  PlannerStatsDisplay,
+  PlannerTargetIpm,
+} from '@/components/planner'
 import { usePlannerStore } from '@/store/planner.store'
-import { Divider, Link, Switch } from '@heroui/react'
-import { ReactFlowProvider } from '@xyflow/react'
-import { useMemo, useState } from 'react'
-
-function getRandomItems(array: string[], count = 16) {
-  const shuffled = [...array].sort(() => Math.random() - 0.5)
-  return shuffled.slice(0, count)
-}
+import { Divider, Switch } from '@heroui/react'
+import { useState } from 'react'
 
 const PagePlanner = () => {
-  const items = usePlannerStore((state) => state.items)
   const targetId = usePlannerStore((state) => state.targetId)
-  const setTargetId = usePlannerStore((state) => state.setTargetId)
-
   const [isSelected, setIsSelected] = useState(true)
-
-  //  Generamos la lista aleatoria de IDs de forma segura
-  const itemList = useMemo(() => {
-    const ids = items.map((i) => i.id)
-    return getRandomItems(ids)
-  }, [items])
 
   return (
     <div className="h-full flex flex-col">
-      <div className="px-6 py-2 space-y-2">
-        <div className="flex items-center space-x-4">
-          <PlannerItemSelector />
-          <PlannerTargetIpm />
-          <PlannerStatsDisplay />
-          <Switch size="sm" isDisabled={!targetId} isSelected={isSelected} onValueChange={setIsSelected} defaultSelected>
-            Diagram with Orbital Export System
-          </Switch>
-        </div>
+      {/* Submenu superior */}
+      <div className="flex items-center px-6 py-2 space-x-2">
+        {/* Selector de item */}
+        <PlannerItemSelector />
+        {/* Cantidad de items/min a generar */}
+        <PlannerTargetIpm />
+        {/* Stats power/heat del "Core Base" */}
+        <PlannerStatsDisplay />
+        {/* Agrega el "Orbital Export System" al diagrama como final */}
+        <Switch size="sm" isDisabled={!targetId} isSelected={isSelected} onValueChange={setIsSelected} defaultSelected>
+          Diagram with Orbital Export System
+        </Switch>
       </div>
 
       <Divider />
 
-      {/* Flow items */}
+      {/* Se muetsra el Flow si hay un items seleccionado */}
       {targetId ? (
-        <ReactFlowProvider>
-          <PlannerFlowDiagram addOrbitalExportSystem={isSelected} />
-        </ReactFlowProvider>
+        <div className="flex flex-1 w-full overflow-hidden">
+          {/* Menus/Sidebar para seleccionar items externos que se suman a la produccion (supply) */}
+          <PlannerSidebar />
+          <div className="flex-1 relative overflow-hidden">
+            {/* Diagrama principal React Flow */}
+            <PlannerFlowDiagram addOrbitalExportSystem={isSelected} />
+          </div>
+        </div>
       ) : (
+        // Si no hay un item seleccioando
         <div className="h-full flex flex-col items-center justify-center space-y-2 text-center">
-          <PlannerMarquee animationDuration={90}>
-            {itemList.map((id, idx) => (
-              <div key={`$${id}-${idx}`} className="flex w-28 shrink-0 items-center justify-center hover:cursor-pointer">
-                <Link
-                  onPress={() => {
-                    setTargetId(id)
-                  }}
-                >
-                  <ItemImage id={id} className="w-full h-24" />
-                </Link>
-              </div>
-            ))}
-          </PlannerMarquee>
+          <PlannerMarquee />
           <h2>Selecciona un objeto para empezar la producción</h2>
           <p>Elije cualquier elemento, componente o munición procesados para ver los edificios necesarios y el flujo de recursos.</p>
         </div>

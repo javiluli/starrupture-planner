@@ -1,4 +1,4 @@
-export * from './planner-item-selector'
-export * from './planner-marquee'
-export * from './planner-sidebar'
-export * from './planner-target-ipm'
+export { PlannerItemSelector } from './planner-item-selector'
+export { PlannerMarquee } from './planner-marquee'
+export { PlannerSidebar } from './planner-sidebar'
+export { PlannerTargetIpm } from './planner-target-ipm'

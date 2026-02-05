@@ -7,7 +7,7 @@ export interface MarqueeProps {
   reverse?: boolean
 }
 
-export function PlannerMarquee({ children, animationDuration = 200, reverse = false }: MarqueeProps) {
+export function Marquee({ children, animationDuration = 200, reverse = false }: MarqueeProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [repetitions, setRepetitions] = useState(2)
