@@ -1,0 +1,64 @@
+@import 'tailwindcss';
+@plugin './hero.ts';
+/* Note: You may need to change the path to fit your project structure */
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-item-raw: #3b82f6;
+  --color-item-processed: #8b5cf6;
+  --color-item-component: #06d6a0;
+  --color-item-material: #6b7280;
+  --color-item-ammo: #f59e0b;
+  --color-item-default: #94a3b8;
+}
+
+@layer base {
+  h1 {
+    @apply text-3xl font-semibold tracking-tight text-zinc-100;
+  }
+
+  h2 {
+    @apply text-2xl font-semibold tracking-tight text-zinc-100;
+  }
+
+  h3 {
+    @apply text-xl font-medium text-zinc-200;
+  }
+
+  p {
+    @apply text-base leading-relaxed text-zinc-400;
+  }
+
+  a {
+    @apply text-blue-400 hover:text-blue-300 underline;
+  }
+
+  ul {
+    @apply list-disc list-inside text-zinc-400;
+  }
+
+  li {
+    @apply leading-relaxed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply text-zinc-900 dark:text-zinc-100;
+  }
+
+  p {
+    @apply text-zinc-600 dark:text-zinc-400;
+  }
+}
+
+.field-grid {
+  /* Asegúrate de que el fondo sea relativo al borde */
+  background-image:
+    linear-gradient(to right, hsla(0, 0%, 100%, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, hsla(0, 0%, 100%, 0.035) 1px, transparent 1px);
+  background-size: 10px 10px;
+  background-position: -1px -1px; /* Compensa el borde de 1px del nodo */
+  box-sizing: border-box;
+}

@@ -1,0 +1,302 @@
+[
+  {
+    "id": "ore_titanium",
+    "name": "Mineral de Titanio",
+    "type": "raw"
+  },
+  {
+    "id": "ore_wolfram",
+    "name": "Mineral de Wolframio",
+    "type": "raw"
+  },
+  {
+    "id": "ore_calcium",
+    "name": "Mineral de Calcio",
+    "type": "raw"
+  },
+  {
+    "id": "ore_sulphur",
+    "name": "Mineral de Azufre",
+    "type": "raw"
+  },
+  {
+    "id": "helium",
+    "name": "Helio",
+    "type": "raw"
+  },
+  {
+    "id": "bar_titanium",
+    "name": "Lingote de Titanio",
+    "type": "processed"
+  },
+  {
+    "id": "bar_wolfram",
+    "name": "Lingote de Wolframio",
+    "type": "processed"
+  },
+  {
+    "id": "block_calcium",
+    "name": "Bloque de Calcio",
+    "type": "processed"
+  },
+  {
+    "id": "powder_calcium",
+    "name": "Polvo de Calcio",
+    "type": "component"
+  },
+  {
+    "id": "powder_wolfram",
+    "name": "Polvo de Wolframio",
+    "type": "component"
+  },
+  {
+    "id": "ceramics",
+    "name": "Cerámica",
+    "type": "component"
+  },
+  {
+    "id": "glass",
+    "name": "Cristal",
+    "type": "component"
+  },
+  {
+    "id": "titanium_housing",
+    "name": "Carcasa de Titanio",
+    "type": "component"
+  },
+  {
+    "id": "heat_sheet",
+    "name": "Lámina Termorresistente",
+    "type": "component"
+  },
+  {
+    "id": "synthetic_silicon",
+    "name": "Silicio Sintético",
+    "type": "component"
+  },
+  {
+    "id": "supermagnet",
+    "name": "Superimán",
+    "type": "component"
+  },
+  {
+    "id": "sulphuric_acid",
+    "name": "Ácido Sulfúrico",
+    "type": "component"
+  },
+  {
+    "id": "basic_building",
+    "name": "Material de Construcción Básico",
+    "type": "material"
+  },
+  {
+    "id": "calcite_sheets",
+    "name": "Láminas de Calcita",
+    "type": "component"
+  },
+  {
+    "id": "titanium_beam",
+    "name": "Viga de Titanio",
+    "type": "component"
+  },
+  {
+    "id": "titanium_rod",
+    "name": "Varilla de Titanio",
+    "type": "component"
+  },
+  {
+    "id": "titanium_sheet",
+    "name": "Lámina de Titanio",
+    "type": "component"
+  },
+  {
+    "id": "wolfram_plate",
+    "name": "Placa de Wolframio",
+    "type": "component"
+  },
+  {
+    "id": "wolfram_wire",
+    "name": "Cable de Wolframio",
+    "type": "component"
+  },
+  {
+    "id": "rotor",
+    "name": "Rotor",
+    "type": "component"
+  },
+  {
+    "id": "tube",
+    "name": "Tubo",
+    "type": "component"
+  },
+  {
+    "id": "stabilizer",
+    "name": "Estabilizador",
+    "type": "component"
+  },
+  {
+    "id": "stator",
+    "name": "Estátor",
+    "type": "component"
+  },
+  {
+    "id": "electronics",
+    "name": "Electrónica",
+    "type": "component"
+  },
+  {
+    "id": "inductor",
+    "name": "Inductor",
+    "type": "component"
+  },
+  {
+    "id": "valve",
+    "name": "Válvula",
+    "type": "component"
+  },
+  {
+    "id": "turbine",
+    "name": "Turbina",
+    "type": "component"
+  },
+  {
+    "id": "nozzle",
+    "name": "Boquilla",
+    "type": "component"
+  },
+  {
+    "id": "pressure_tank",
+    "name": "Tanque de Presión",
+    "type": "component"
+  },
+  {
+    "id": "pistol_ammo",
+    "name": "Munición de Pistola",
+    "type": "ammo"
+  },
+  {
+    "id": "standard_ammo",
+    "name": "Munición Estándar",
+    "type": "ammo"
+  },
+  {
+    "id": "accumulator",
+    "name": "Acumulador",
+    "type": "component"
+  },
+  {
+    "id": "applicator",
+    "name": "Aplicador",
+    "type": "component"
+  },
+  {
+    "id": "battery",
+    "name": "Batería",
+    "type": "component"
+  },
+  {
+    "id": "chemicals",
+    "name": "Productos Químicos",
+    "type": "component"
+  },
+  {
+    "id": "condenser",
+    "name": "Condensador",
+    "type": "component"
+  },
+  {
+    "id": "electromagnetic_coil",
+    "name": "Bobina Electromagnética",
+    "type": "component"
+  },
+  {
+    "id": "electromagnet",
+    "name": "Electroimán",
+    "type": "component"
+  },
+  {
+    "id": "generator",
+    "name": "Generador",
+    "type": "component"
+  },
+  {
+    "id": "hardening_agent",
+    "name": "Agente Endurecedor",
+    "type": "component"
+  },
+  {
+    "id": "heavy_ammo",
+    "name": "Munición Pesada",
+    "type": "ammo"
+  },
+  {
+    "id": "impeller",
+    "name": "Impulsor",
+    "type": "component"
+  },
+  {
+    "id": "intermediate_building",
+    "name": "Material de Construcción Intermedio",
+    "type": "material"
+  },
+  {
+    "id": "ion_injector",
+    "name": "Inyector de Iones",
+    "type": "component"
+  },
+  {
+    "id": "laser_emitter",
+    "name": "Emisor Láser",
+    "type": "component"
+  },
+  {
+    "id": "lens",
+    "name": "Lente",
+    "type": "component"
+  },
+  {
+    "id": "liquid_helium",
+    "name": "Helio Líquido",
+    "type": "component"
+  },
+  {
+    "id": "nanofiber",
+    "name": "Nanofibra",
+    "type": "component"
+  },
+  {
+    "id": "pressurized_helium",
+    "name": "Helio Presurizado",
+    "type": "component"
+  },
+  {
+    "id": "pump",
+    "name": "Bomba",
+    "type": "component"
+  },
+  {
+    "id": "resonator",
+    "name": "Resonador",
+    "type": "component"
+  },
+  {
+    "id": "scanner",
+    "name": "Escáner",
+    "type": "component"
+  },
+  {
+    "id": "shotgun_ammo",
+    "name": "Munición de Escopeta",
+    "type": "ammo"
+  },
+  {
+    "id": "superconductor",
+    "name": "Superconductor",
+    "type": "component"
+  },
+  {
+    "id": "synthetic_resin",
+    "name": "Resina Sintética",
+    "type": "component"
+  }
+]
