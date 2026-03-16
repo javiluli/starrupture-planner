@@ -1,0 +1,455 @@
+{
+  "Future Health Solutions": {
+    "id": "future_health_solutions",
+    "description": "Sistemas de salud, alimentación y soporte vital",
+    "levels": [
+      {
+        "level": 1,
+        "xp": 0,
+        "components": [],
+        "rewards": [{ "name": "Hábitat" }, { "name": "Módulos de Hábitat Básicos" }, { "name": "Módulos de Hábitat Avanzados" }]
+      },
+      {
+        "level": 2,
+        "xp": 200,
+        "components": [{ "id": "bar_wolfram", "points": 1 }],
+        "rewards": [{ "name": "Cámara de Regeneración" }]
+      },
+      {
+        "level": 3,
+        "xp": 1500,
+        "components": [
+          { "id": "bar_wolfram", "points": 1 },
+          { "id": "wolfram_wire", "points": 5 }
+        ],
+        "rewards": [{ "name": "Herramienta Médica (Medtool)" }]
+      },
+      {
+        "level": 4,
+        "xp": 6400,
+        "components": [
+          { "id": "titanium_rod", "points": 4 },
+          { "id": "titanium_sheet", "points": 15 }
+        ],
+        "rewards": [{ "name": "Estación LEM" }]
+      },
+      {
+        "level": 5,
+        "xp": 17600,
+        "components": [
+          { "id": "powder_calcium", "points": 12 },
+          { "id": "powder_wolfram", "points": 18 }
+        ],
+        "rewards": [{ "name": "LEM de Dietista Menor" }, { "name": "LEM de Irrigador Menor" }]
+      },
+      {
+        "level": 6,
+        "xp": 37800,
+        "components": [{ "id": "ceramics", "points": 25 }],
+        "rewards": [{ "name": "Estación de Comida" }]
+      },
+      {
+        "level": 7,
+        "xp": 69700,
+        "components": [{ "id": "glass", "points": 46 }],
+        "rewards": [{ "name": "Mejora de Inventario (+8)" }]
+      },
+      {
+        "level": 8,
+        "xp": 116000,
+        "components": [{ "id": "chemicals", "points": 46 }],
+        "rewards": [{ "name": "LEM de Dietista" }, { "name": "LEM de Irrigador" }]
+      },
+      {
+        "level": 9,
+        "xp": 179400,
+        "components": [
+          { "id": "hardening_agent", "points": 60 },
+          { "id": "pressurized_helium", "points": 20 }
+        ],
+        "rewards": [{ "name": "Mezclador" }]
+      },
+      {
+        "level": 10,
+        "xp": 262600,
+        "components": [{ "id": "liquid_helium", "points": 120 }],
+        "rewards": [{ "name": "LEM de Resistencia" }]
+      },
+      {
+        "level": 11,
+        "xp": 368300,
+        "components": [{ "id": "ion_injector", "points": 246 }],
+        "rewards": [{ "name": "LEM de Irrigador Mayor" }, { "name": "LEM de Dietista Mayor" }]
+      }
+    ]
+  },
+  "Selenian Corporation": {
+    "id": "selenian_corporation",
+    "description": "Fábricas e instalaciones de producción",
+    "levels": [
+      {
+        "level": 1,
+        "xp": 0,
+        "components": [],
+        "rewards": [
+          { "name": "Núcleo de Base" },
+          { "name": "Impresora de Objetos Básica" },
+          { "name": "Excavadora de Mena" },
+          { "name": "Fundición" },
+          { "name": "Hábitat" }
+        ]
+      },
+      {
+        "level": 2,
+        "xp": 200,
+        "components": [{ "id": "bar_titanium", "points": 1 }],
+        "rewards": [{ "name": "Fabricador" }]
+      },
+      {
+        "level": 3,
+        "xp": 1500,
+        "components": [
+          { "id": "bar_titanium", "points": 1 },
+          { "id": "titanium_rod", "points": 5 }
+        ],
+        "rewards": [{ "name": "Mejora de Inventario (+8)" }]
+      },
+      {
+        "level": 4,
+        "xp": 6400,
+        "components": [
+          { "id": "titanium_rod", "points": 4 },
+          { "id": "titanium_sheet", "points": 16 }
+        ],
+        "rewards": [{ "name": "Horno" }]
+      },
+      {
+        "level": 5,
+        "xp": 17600,
+        "components": [
+          { "id": "titanium_beam", "points": 35 },
+          { "id": "titanium_sheet", "points": 12 }
+        ],
+        "rewards": [{ "name": "LEM Minero Mayor" }]
+      },
+      {
+        "level": 6,
+        "xp": 37800,
+        "components": [{ "id": "tube", "points": 25 }],
+        "rewards": [{ "name": "Extractor de Helio-3" }]
+      },
+      {
+        "level": 7,
+        "xp": 69700,
+        "components": [
+          { "id": "glass", "points": 70 },
+          { "id": "synthetic_silicon", "points": 46 }
+        ],
+        "rewards": [{ "name": "Hábitat Grande" }]
+      },
+      {
+        "level": 8,
+        "xp": 116000,
+        "components": [
+          { "id": "electronics", "points": 116 },
+          { "id": "synthetic_silicon", "points": 46 }
+        ],
+        "rewards": [{ "name": "Mega Prensa" }]
+      },
+      {
+        "level": 9,
+        "xp": 179400,
+        "components": [{ "id": "impeller", "points": 120 }],
+        "rewards": [{ "name": "Refinería" }, { "name": "Extractor de Azufre" }]
+      },
+      {
+        "level": 10,
+        "xp": 262600,
+        "components": [{ "id": "turbine", "points": 175 }],
+        "rewards": [{ "name": "Ensamblador" }]
+      },
+      {
+        "level": 11,
+        "xp": 368300,
+        "components": [{ "id": "scanner", "points": 246 }],
+        "rewards": [{ "name": "LEM de Vigor Mayor" }, { "name": "LEM de Vida Mayor" }]
+      }
+    ]
+  },
+  "Griffith Blue Corporation": {
+    "id": "griffith_blue_corporation",
+    "description": "Defensa militar y armamento",
+    "levels": [
+      {
+        "level": 1,
+        "xp": 0,
+        "components": [],
+        "rewards": [{ "name": "Plataformas Básicas" }, { "name": "Plataformas Avanzadas" }, { "name": "Módulos de Plataforma" }]
+      },
+      {
+        "level": 2,
+        "xp": 200,
+        "components": [{ "id": "bar_titanium", "points": 1 }],
+        "rewards": [{ "name": "Pistola UPP-7" }]
+      },
+      {
+        "level": 3,
+        "xp": 1500,
+        "components": [
+          { "id": "titanium_rod", "points": 5 },
+          { "id": "wolfram_wire", "points": 5 }
+        ],
+        "rewards": [{ "name": "Granada" }]
+      },
+      {
+        "level": 4,
+        "xp": 6400,
+        "components": [
+          { "id": "titanium_sheet", "points": 15 },
+          { "id": "wolfram_plate", "points": 15 }
+        ],
+        "rewards": [{ "name": "Estación de Mejora de Equipo" }]
+      },
+      {
+        "level": 5,
+        "xp": 17600,
+        "components": [
+          { "id": "titanium_housing", "points": 35 },
+          { "id": "titanium_sheet", "points": 12 }
+        ],
+        "rewards": [{ "name": "Bonos de Guerra (60)" }]
+      },
+      {
+        "level": 6,
+        "xp": 37800,
+        "components": [{ "id": "stabilizer", "points": 35 }],
+        "rewards": [{ "name": "Torreta de Defensa" }]
+      },
+      {
+        "level": 7,
+        "xp": 69700,
+        "components": [
+          { "id": "inductor", "points": 70 },
+          { "id": "stabilizer", "points": 35 }
+        ],
+        "rewards": [{ "name": "Bonos de Guerra (80)" }]
+      },
+      {
+        "level": 8,
+        "xp": 116000,
+        "components": [{ "id": "applicator", "points": 46 }],
+        "rewards": [{ "name": "Mejora de Inventario (+8)" }]
+      },
+      {
+        "level": 9,
+        "xp": 179400,
+        "components": [
+          { "id": "battery", "points": 120 },
+          { "id": "nozzle", "points": 45 }
+        ],
+        "rewards": [{ "name": "Torre de Defensa" }]
+      },
+      {
+        "level": 10,
+        "xp": 262600,
+        "components": [{ "id": "lens", "points": 175 }],
+        "rewards": [{ "name": "Bonos de Guerra (100)" }]
+      },
+      {
+        "level": 11,
+        "xp": 368299,
+        "components": [{ "id": "condenser", "points": 246 }],
+        "rewards": [{ "name": "LEM de Escudo Mayor" }, { "name": "LEM de Vida Mayor" }]
+      }
+    ]
+  },
+  "Moon Energy Corporation": {
+    "id": "moon_energy_corporation",
+    "description": "Generación de energía e investigación",
+    "levels": [
+      {
+        "level": 1,
+        "xp": 0,
+        "components": [],
+        "rewards": [{ "name": "Generador Solar v.1" }, { "name": "Estación de Análisis" }]
+      },
+      {
+        "level": 2,
+        "xp": 200,
+        "components": [{ "id": "bar_wolfram", "points": 1 }],
+        "rewards": [{ "name": "Estación de Recetas" }]
+      },
+      {
+        "level": 3,
+        "xp": 1500,
+        "components": [{ "id": "ore_calcium", "points": 5 }],
+        "rewards": [{ "name": "Mapa" }]
+      },
+      {
+        "level": 4,
+        "xp": 6400,
+        "components": [
+          { "id": "calcite_sheets", "points": 15 },
+          { "id": "block_calcium", "points": 4 }
+        ],
+        "rewards": [{ "name": "LEM de Infiltrado Menor" }]
+      },
+      {
+        "level": 5,
+        "xp": 17600,
+        "components": [{ "id": "rotor", "points": 45 }],
+        "rewards": [{ "name": "Turbina de Viento v.1" }]
+      },
+      {
+        "level": 6,
+        "xp": 37800,
+        "components": [{ "id": "heat_sheet", "points": 25 }],
+        "rewards": [{ "name": "Amplificador de Núcleo v.2" }]
+      },
+      {
+        "level": 7,
+        "xp": 69700,
+        "components": [
+          { "id": "chemicals", "points": 70 },
+          { "id": "helium", "points": 5 }
+        ],
+        "rewards": [{ "name": "LEM de Infiltrado Mayor" }]
+      },
+      {
+        "level": 8,
+        "xp": 116000,
+        "components": [{ "id": "valve", "points": 100 }],
+        "rewards": [{ "name": "Generador Solar v.2" }]
+      },
+      {
+        "level": 9,
+        "xp": 179400,
+        "components": [{ "id": "electromagnetic_coil", "points": 120 }],
+        "rewards": [{ "name": "Amplificador de Núcleo v.2" }]
+      },
+      {
+        "level": 10,
+        "xp": 262600,
+        "components": [{ "id": "generator", "points": 175 }],
+        "rewards": [{ "name": "Turbina de Viento v.2" }]
+      },
+      {
+        "level": 11,
+        "xp": 368300,
+        "components": [{ "id": "laser_emitter", "points": 246 }],
+        "rewards": [{ "name": "Mejora de Inventario (+8)" }]
+      }
+    ]
+  },
+  "Clever Robotics": {
+    "id": "clever_robotics",
+    "description": "Logística, transporte y automatización",
+    "levels": [
+      {
+        "level": 1,
+        "xp": 0,
+        "components": [],
+        "rewards": [
+          { "name": "Terminal Corporativa" },
+          { "name": "Lanzador de Carga Orbital" },
+          { "name": "Raíl v.1" },
+          { "name": "Soporte de Raíl" },
+          { "name": "Conector de Raíl" }
+        ]
+      },
+      {
+        "level": 2,
+        "xp": 200,
+        "components": [{ "id": "bar_wolfram", "points": 1 }],
+        "rewards": [{ "name": "Almacén Personal" }]
+      },
+      {
+        "level": 3,
+        "xp": 1500,
+        "components": [
+          { "id": "bar_wolfram", "points": 1 },
+          { "id": "wolfram_wire", "points": 5 }
+        ],
+        "rewards": [{ "name": "Depósito de Almacenamiento v.1" }]
+      },
+      {
+        "level": 4,
+        "xp": 6400,
+        "components": [
+          { "id": "wolfram_plate", "points": 15 },
+          { "id": "wolfram_wire", "points": 4 }
+        ],
+        "rewards": [{ "name": "Dron de Construcción" }]
+      },
+      {
+        "level": 5,
+        "xp": 17600,
+        "components": [
+          { "id": "titanium_housing", "points": 35 },
+          { "id": "wolfram_plate", "points": 12 }
+        ],
+        "rewards": [{ "name": "Multiraíl 3" }, { "name": "Modulador de Raíl 3" }]
+      },
+      {
+        "level": 6,
+        "xp": 37800,
+        "components": [
+          { "id": "heat_sheet", "points": 25 },
+          { "id": "titanium_housing", "points": 25 }
+        ],
+        "rewards": [{ "name": "Raíl v.2" }]
+      },
+      {
+        "level": 7,
+        "xp": 69700,
+        "components": [{ "id": "stator", "points": 46 }],
+        "rewards": [{ "name": "Despachador de Carga" }, { "name": "Receptor de Carga" }]
+      },
+      {
+        "level": 8,
+        "xp": 116000,
+        "components": [
+          { "id": "nozzle", "points": 46 },
+          { "id": "supermagnet", "points": 116 }
+        ],
+        "rewards": [{ "name": "Depósito de Almacenamiento v.2" }]
+      },
+      {
+        "level": 9,
+        "xp": 179400,
+        "components": [
+          { "id": "electronics", "points": 46 },
+          { "id": "hardening_agent", "points": 70 }
+        ],
+        "rewards": [{ "name": "Almacén Personal Grande" }]
+      },
+      {
+        "level": 10,
+        "xp": 262600,
+        "components": [
+          { "id": "pressurized_helium", "points": 10 },
+          { "id": "pump", "points": 175 }
+        ],
+        "rewards": [{ "name": "Multiraíl 5" }, { "name": "Modulador de Raíl 5" }]
+      },
+      {
+        "level": 11,
+        "xp": 368300,
+        "components": [{ "id": "electromagnet", "points": 246 }],
+        "rewards": [{ "name": "Raíl v.3" }]
+      },
+      {
+        "level": 12,
+        "xp": 499200,
+        "components": [{ "id": "pressure_tank", "points": 210 }],
+        "rewards": [{ "name": "Multialmacén" }]
+      },
+      {
+        "level": 13,
+        "xp": 658000,
+        "components": [{ "id": "superconductor", "points": 400 }],
+        "rewards": [{ "name": "Almacenamiento Expandible" }]
+      }
+    ]
+  }
+}

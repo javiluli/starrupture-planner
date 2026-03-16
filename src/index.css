@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+@plugin './hero.ts';
+/* Note: You may need to change the path to fit your project structure */
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: 'Geist Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/geist/Geist-Variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/geist/GeistMono-Variable.woff2') format('woff2');
+}
+
+@theme {
+  /* Slate / Steel Gray */
+  --color-item-raw: #64748b;
+  /* Electric Cyan */
+  --color-item-processed: #a855f7;
+  /* Neon Purple */
+  --color-item-component: #6366f1;
+  /* Indigo */
+  --color-item-material: #22d3ee;
+  /*  Danger Red */
+  --color-item-ammo: #ef4444;
+  --color-orbital_cargo_launcher: #00ff9f;
+}
+
+@layer base {
+  body,
+  #root,
+  main {
+    font-family:
+      'Geist Sans',
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      'Segoe UI',
+      sans-serif;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  }
+}
+
+@layer utilities {
+  .panel {
+    @apply rounded-2xl border border-divider/60 bg-content1/30;
+  }
+
+  .panel-muted {
+    @apply rounded-2xl border border-divider/60 bg-content1/20;
+  }
+}
+
+.field-grid {
+  background-image:
+    linear-gradient(to right, hsla(0, 0%, 100%, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, hsla(0, 0%, 100%, 0.035) 1px, transparent 1px);
+  background-size: 10px 10px;
+  background-position: -1px -1px; /* Compensa el borde de 1px del nodo */
+  box-sizing: border-box;
+}
+
+.react-flow__edge-raw .react-flow__edge-path {
+  stroke: var(--color-item-raw);
+  filter: drop-shadow(0 0 2px var(--color-item-raw)) drop-shadow(0 0 6px var(--color-item-raw));
+}
+.react-flow__edge-processed .react-flow__edge-path {
+  stroke: var(--color-item-processed);
+  filter: drop-shadow(0 0 2px var(--color-item-processed)) drop-shadow(0 0 6px var(--color-item-processed));
+}
+.react-flow__edge-component .react-flow__edge-path {
+  stroke: var(--color-item-component);
+  filter: drop-shadow(0 0 2px var(--color-item-component)) drop-shadow(0 0 6px var(--color-item-component));
+}
+.react-flow__edge-material .react-flow__edge-path {
+  stroke: var(--color-item-material);
+  filter: drop-shadow(0 0 2px var(--color-item-material)) drop-shadow(0 0 6px var(--color-item-material));
+}
+.react-flow__edge-ammo .react-flow__edge-path {
+  stroke: var(--color-item-ammo);
+  filter: drop-shadow(0 0 2px var(--color-item-ammo)) drop-shadow(0 0 6px var(--color-item-ammo));
+}
+
+.react-flow__edge-orbital_cargo_launcher .react-flow__edge-path {
+  stroke: var(--color-orbital_cargo_launcher);
+  filter: drop-shadow(0 0 2px var(--color-orbital_cargo_launcher)) drop-shadow(0 0 6px var(--color-orbital_cargo_launcher));
+}

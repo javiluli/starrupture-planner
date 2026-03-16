@@ -1,0 +1,14 @@
+{
+  "item-counter": "Total Items",
+
+  "category-filter-label": "Category by filter",
+  "building-filter-label": "Building by filter",
+  "search-bar-label": "Search items",
+  "table": {
+    "item": "Item",
+    "category": "Category",
+    "production": "Production",
+    "actions": "Actions",
+    "corporations": "Corporations"
+  }
+}
