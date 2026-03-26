@@ -1,9 +1,11 @@
 import RootLayout from '@/layouts/root-layout'
-import { ROUTE } from '@/router/routes'
 import NotFound from '@/pages/not-found'
+import PageCorporations from '@/pages/page-corporations'
 import PageItems from '@/pages/page-items'
 import PagePlanner from '@/pages/page-planner'
+import PageRecipes from '@/pages/page-recipes'
 import PageDevUI from '@/pages/pagedevui/page-dev-ui'
+import { ROUTE } from '@/router/routes'
 import { createBrowserRouter } from 'react-router-dom'
 
 const devRoutes = import.meta.env.DEV
@@ -27,6 +29,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTE.ITEMS,
         element: <PageItems />,
+      },
+      {
+        path: ROUTE.RECIPES,
+        element: <PageRecipes />,
+      },
+      {
+        path: ROUTE.CORPORATIONS,
+        element: <PageCorporations />,
       },
       ...devRoutes,
     ],
