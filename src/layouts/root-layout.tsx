@@ -33,6 +33,7 @@ const RootLayout = () => {
           <NavItem to={ROUTE.HOME} label="📐 Planner" />
           <NavItem to={ROUTE.ITEMS} label="📦 Items" />
           <NavItem to={ROUTE.RECIPES} label="🏭 Buildings" />
+          <NavItem to={ROUTE.CORPORATIONS} label="🏢 Corporations" />
         </NavbarContent>
 
         <NavbarContent justify="end">
