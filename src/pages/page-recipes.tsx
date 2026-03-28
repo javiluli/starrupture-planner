@@ -1,9 +1,8 @@
-import { AccordionBuildingsWithRecipes } from '@/features/recipes'
-import { useRecipesStats } from '@/features/recipes/hooks'
+import { RecipesAccordion, useRecipesSummary } from '@/features/recipes'
 import { Flex, PageContainer, Panel, StatLabel, Typography } from '@/shared/ui'
 
 const PageRecipes = () => {
-  const stats = useRecipesStats()
+  const stats = useRecipesSummary()
 
   return (
     <PageContainer>
@@ -20,7 +19,7 @@ const PageRecipes = () => {
       </Panel>
 
       <div className="flex-1 overflow-y-auto">
-        <AccordionBuildingsWithRecipes />
+        <RecipesAccordion />
       </div>
     </PageContainer>
   )

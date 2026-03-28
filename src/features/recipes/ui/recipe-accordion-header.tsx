@@ -1,7 +1,7 @@
 import type { BuildingUnlockInfo } from '@/features/recipes/types'
 import type { Building } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { RecipeHeaderMeta } from './recipe-accordion-header-meta'
+import { RecipeAccordionMeta } from './recipe-accordion-meta'
 
 export const RecipeAccordionHeader = ({ building, unlockInfo }: { building: Building; unlockInfo: BuildingUnlockInfo | null }) => (
   <Flex align="center" gap="lg">
@@ -10,7 +10,7 @@ export const RecipeAccordionHeader = ({ building, unlockInfo }: { building: Buil
       <Typography as="h3" variant="h3">
         {building.name}
       </Typography>
-      <RecipeHeaderMeta building={building} unlockInfo={unlockInfo} />
+      <RecipeAccordionMeta building={building} unlockInfo={unlockInfo} />
     </div>
   </Flex>
 )

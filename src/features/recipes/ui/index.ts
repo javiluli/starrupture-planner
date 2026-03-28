@@ -1,1 +1,1 @@
-export { AccordionBuildingsWithRecipes } from './accordion-buildings-with-recipes'
+export { RecipesAccordion } from './recipes-accordion'

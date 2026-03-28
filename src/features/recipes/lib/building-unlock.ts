@@ -1,24 +1,18 @@
 import type { CorporationsById } from '@/shared/@types/corporations.type'
 import type { BuildingUnlockInfo } from '@/features/recipes/types'
 
-export const buildBuildingUnlockMap = (corporations: CorporationsById) => {
-  const map = new Map<string, BuildingUnlockInfo>()
-
-  Object.entries(corporations).forEach(([corporationName, corporation]) => {
-    corporation.levels.forEach((level) => {
-      level.components.forEach((component) => {
-        if (!map.has(component.id)) {
-          map.set(component.id, {
-            corporationId: corporation.id,
-            corporationLevel: level.level,
-            corporationName,
-          })
+export const getBuildingUnlockInfo = (corporations: CorporationsById, buildingName: string): BuildingUnlockInfo | null => {
+  for (const [corporationName, corporation] of Object.entries(corporations)) {
+    for (const level of corporation.levels) {
+      if (level.rewards.some((reward) => reward.name === buildingName)) {
+        return {
+          corporationId: corporation.id,
+          corporationLevel: level.level,
+          corporationName,
         }
-      })
-    })
-  })
+      }
+    }
+  }
 
-  return map
+  return null
 }
-
-export const getBuildingUnlockInfo = (unlockMap: Map<string, BuildingUnlockInfo>, buildingName: string) => unlockMap.get(buildingName) ?? null
