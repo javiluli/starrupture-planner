@@ -1,6 +1,6 @@
 import { cn } from '@heroui/react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import './marquee.css'
+import './styles.css'
 
 export interface MarqueeProps {
   children: ReactNode
