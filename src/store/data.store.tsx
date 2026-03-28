@@ -1,15 +1,12 @@
-import { translations } from '@/shared/i18n/game-data'
-import type { Language } from '@/shared/@types/i18n'
 import type { Building, CorporationLevelMatch, CorporationsData, Item } from '@/shared/@types/production'
+import { buildings, corporations, items } from '@/shared/data'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 export interface DataStoreState {
-  language: Language
   items: Item[]
   buildings: Building[]
   corporations: CorporationsData
-  setLanguage: (lang: Language) => void
 }
 
 export type ItemTableRow = Item & {
@@ -18,8 +15,7 @@ export type ItemTableRow = Item & {
   corporations: CorporationLevelMatch[] | undefined
 }
 
-const getBuildingForItem = (buildings: Building[], itemId: string) =>
-  buildings.find((b) => b.recipes?.some((r) => r.output.id === itemId))
+const getBuildingForItem = (buildings: Building[], itemId: string) => buildings.find((b) => b.recipes?.some((r) => r.output.id === itemId))
 
 const getCorporationsForItem = (corporations: CorporationsData, itemId: string) =>
   Object.values(corporations).flatMap((corp) =>
@@ -31,11 +27,7 @@ const getCorporationsForItem = (corporations: CorporationsData, itemId: string) 
       })),
   )
 
-export const buildItemsTableData = (
-  items: Item[],
-  buildings: Building[],
-  corporations: CorporationsData,
-): ItemTableRow[] =>
+export const buildItemsTableData = (items: Item[], buildings: Building[], corporations: CorporationsData): ItemTableRow[] =>
   items.map((item) => {
     const building = getBuildingForItem(buildings, item.id)
     const itemCorporations = getCorporationsForItem(corporations, item.id)
@@ -49,11 +41,9 @@ export const buildItemsTableData = (
   })
 
 export const dataSelectors = {
-  language: (state: DataStoreState) => state.language,
   items: (state: DataStoreState) => state.items,
   buildings: (state: DataStoreState) => state.buildings,
   corporations: (state: DataStoreState) => state.corporations,
-  setLanguage: (state: DataStoreState) => state.setLanguage,
 }
 
 /**
@@ -62,14 +52,11 @@ export const dataSelectors = {
  */
 export const useDataStore = create<DataStoreState>()(
   persist(
-    (set) => ({
-      // Valores iniciales (por defecto ingles)
-      language: 'en',
-      ...translations.en,
-
-      setLanguage: (lang: Language) => {
-        set({ language: lang, ...translations[lang] })
-      },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    (_set) => ({
+      items: items as Item[],
+      buildings: buildings as Building[],
+      corporations,
     }),
     {
       name: 'zstore.data',
