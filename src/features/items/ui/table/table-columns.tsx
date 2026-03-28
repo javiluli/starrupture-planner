@@ -5,10 +5,10 @@ interface TableColumn {
   name: string
 }
 
-export const getColumns = (t: (key: string) => string): TableColumn[] => [
-  { key: 'item', name: t('table.item') },
-  { key: 'category', name: t('table.category') },
-  { key: 'production', name: t('table.production') },
-  { key: 'actions', name: t('table.actions') },
-  { key: 'corporations', name: t('table.corporations') },
+export const getColumns = (): TableColumn[] => [
+  { key: 'item', name: 'Item' },
+  { key: 'category', name: 'Category' },
+  { key: 'production', name: 'Production' },
+  { key: 'actions', name: 'Actions' },
+  { key: 'corporations', name: 'Corporations' },
 ]

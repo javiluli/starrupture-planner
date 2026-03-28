@@ -1,8 +1,14 @@
-export { filterItems } from './filter-items'
+/**
+ * Types
+ */
 export type { ItemFilterInput } from './filter-items'
+/**
+ * Components
+ */
+export { filterItems } from './filter-items'
 export { useItemsTableData } from './hooks/use-items-table-data'
 export { BuildingSelect } from './ui/filters/building-select'
 export { CategorySelect } from './ui/filters/category-select'
+export { CorporationSelect } from './ui/filters/corporation-select'
 export { SearchInput } from './ui/filters/search-input'
-export { ItemCount } from './ui/item-count'
 export { TableOfItems } from './ui/table/table'

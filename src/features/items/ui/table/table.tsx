@@ -3,7 +3,6 @@ import { Typography } from '@/shared/ui'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { ActionsCell, CategoryCell, CorporationsCell, ItemCell, ProductionCell } from './table-cells'
 import { getColumns, type ColumnKey } from './table-columns'
-import { useTranslation } from 'react-i18next'
 
 interface Props {
   dataFiltered: (Item & {
@@ -14,8 +13,7 @@ interface Props {
 }
 
 export const TableOfItems = ({ dataFiltered }: Props) => {
-  const { t } = useTranslation('items')
-  const columns = getColumns(t as unknown as (key: string) => string)
+  const columns = getColumns()
   const renderCell = (item: (typeof dataFiltered)[number], columnKey: React.Key) => {
     const key = columnKey as ColumnKey
 
