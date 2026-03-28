@@ -1,4 +1,4 @@
-import type { Item } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
 
 /**
  * Busca un item por id en el catalogo.

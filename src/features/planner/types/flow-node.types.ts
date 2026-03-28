@@ -1,33 +1,3 @@
-export interface RecipeInput {
-  id: string
-  amount_per_minute: number
-}
-
-export interface Recipe {
-  output: {
-    id: string
-    amount_per_minute: number
-  }
-  inputs: RecipeInput[]
-}
-
-export interface Building {
-  id: string
-  name: string
-  power: number
-  heat: number
-  type: string
-  recipes: Recipe[]
-}
-
-export type ItemType = 'raw' | 'processed' | 'component' | 'material' | 'ammo'
-
-export interface Item {
-  id: string
-  name: string
-  type: ItemType
-}
-
 export interface ProductionNodeData {
   buildingId: string // ID de la maquina actual donde se va a fabricar
   buildingName: string // Nombre de la maquina
@@ -59,43 +29,14 @@ export interface OrbitalExportSystemNodeData {
   [key: string]: unknown
 }
 
-export interface Stats {
-  buildings: number
-  power: number
-  heat: number
-}
-
-/**
- * Corporations
- */
-export interface Reward {
-  name: string
-}
-
-export interface Component {
-  id: string
-  points: number
-}
-
-export interface Level {
-  level: number
-  xp: number
-  components: Component[]
-  rewards: Reward[]
-}
-
-export interface Corporation {
-  id: string
-  description: string
-  levels: Level[]
-}
-
-// El tipo global para JSON
-export interface CorporationsData {
-  [corporationName: string]: Corporation
-}
-
-export interface CorporationLevelMatch {
-  corporationId: string
-  level: number
+export interface SupplyNodeData {
+  buildingId: string // ID de la maquina actual donde se va a fabricar
+  buildingName: string // Nombre de la maquina
+  buildingPower: number // En termino del juego "Energia que condume la maquina"
+  buildingHeat: number // En termino del juego "Refrigeracion que consume la maquina del CORE BASE"
+  itemId: string // ID del item/objeto "supply"
+  itemName: string // Nombre del item/objeto "supply"
+  supplyCount: number // Cantidad de items ya fabricados externamente, se restan del total requerido
+  onSupplyCountChange: (itemId: string, amount: number) => void // Funcion que actualiza esa cantidad externa de items
+  [key: string]: unknown
 }

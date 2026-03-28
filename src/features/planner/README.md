@@ -15,16 +15,20 @@ src/features/planner
 +- index.ts         # Exports publicos
 ```
 
-## Notas
+## Principios
 
-- UI debe enfocarse en render.
-- La logica reusable vive en `lib/`.
-- Lo especifico del flow vive en `flow/`.
-- El store de planner vive en `state/`.
+- UI solo renderiza y despacha acciones.
+- La logica del plan vive en `lib/production-plan/`.
+- El flow solo convierte un plan a nodos/edges.
+- El store mantiene estado y no calcula el plan.
 
-## Esquemas de flujo
+## Flujo principal (resumen)
 
-### 1) Flujo vertical (top-down)
+```
+UI -> hook -> buildProductionFlow -> buildProductionPlan -> planToFlow -> React Flow
+```
+
+## Flujo detallado (top-down)
 
 ```mermaid
 flowchart TD
@@ -48,20 +52,21 @@ flowchart TD
 
   %% ===== Lib =====
   subgraph Lib["lib/ (helpers)"]
-    Logic["planner-logic"]
+    Plan["production-plan/"]
     Recipes["recipes"]
     Corps["corporations"]
     SupplyLib["supply-count + supply-count-items"]
     Random["random-items"]
+    Logic["planner-logic (clamp)"]
   end
 
   %% ===== Flow =====
   subgraph Flow["flow/"]
     Builder["builder/build-production-flow"]
+    PlanToFlow["plan-to-flow"]
     CoreEdges["core/flow-edges"]
     CoreNodes["core/flow-nodes"]
     CoreLookup["core/lookup"]
-    CoreSupply["core/supply-count-inventory"]
     Layout["layout/flow-fit"]
     Diagram["diagram/production-flow-diagram"]
     Config["config/*"]
@@ -76,52 +81,25 @@ flowchart TD
   UseFlow --> Builder
   UseFlow --> Layout
 
-  PlannerStore --> Logic
+  PlannerStore --> Plan
   PlannerStore --> Recipes
   PlannerStore --> Corps
 
-  Builder --> Logic
+  Builder --> Plan
+  Builder --> PlanToFlow
   Builder --> CoreEdges
   Builder --> CoreNodes
   Builder --> Config
 
-  CoreEdges --> CoreSupply
   CoreEdges --> CoreLookup
-  CoreEdges --> Recipes
-
   CoreNodes --> CoreLookup
-  CoreNodes --> Recipes
 
   UIControls --> SupplyLib
   UISidebar --> SupplyLib
   UIControls --> Random
 ```
 
-### 2) Flujo intermedio (flowchart con llamadas)
-
-```mermaid
-flowchart LR
-  UI["UI (controls/sidebar)"] --> Hook["use-flow-diagram"]
-  Hook --> Store["planner.store"]
-  Hook --> Builder["buildProductionFlow"]
-  Hook --> Layout["flow-fit"]
-
-  Store --> LibCorps["corporations"]
-  Store --> LibRecipes["recipes"]
-  Store --> LibLogic["planner-logic"]
-
-  Builder --> LibLogic
-  Builder --> FlowNodes["flow-nodes"]
-  Builder --> FlowEdges["flow-edges"]
-  Builder --> FlowConfig["flow/config"]
-
-  FlowEdges --> LibRecipes
-  FlowEdges --> FlowLookup["flow/lookup"]
-  FlowNodes --> LibRecipes
-  FlowNodes --> FlowLookup
-```
-
-### 3) Flujo intermedio (sequenceDiagram)
+## Secuencia (alto nivel)
 
 ```mermaid
 sequenceDiagram
@@ -130,62 +108,48 @@ sequenceDiagram
   participant Hook as use-flow-diagram
   participant Store as planner.store
   participant Builder as buildProductionFlow
+  participant Plan as production-plan
+  participant PlanToFlow as plan-to-flow
   participant CoreNodes as flow-nodes
   participant CoreEdges as flow-edges
-  participant Logic as planner-logic
-  participant Lib as lib helpers
 
   UI->>Hook: render + inputs
   Hook->>Store: read targetId/targetIpm/supplyCountByItem
-  Hook->>Lib: isItemExportableToCorporation
   Hook->>Builder: buildProductionFlow(params)
-  Builder->>Logic: calculateProductionTotals
-  Builder->>CoreNodes: buildSupplyNodes/buildProductionNodes
-  Builder->>CoreEdges: buildEdges
-  CoreEdges->>Lib: findRecipeForItem
-  CoreNodes->>Lib: findRecipeForItem
+  Builder->>Plan: buildProductionPlan
+  Builder->>PlanToFlow: planToFlow
+  PlanToFlow->>CoreNodes: buildSupplyNodes/buildProductionNodes
+  PlanToFlow->>CoreEdges: buildEdges
   Hook-->>UI: setNodes/setEdges/setStats
 ```
 
-### 5) Flujo con colores por capa
+## Mapa de responsabilidad (store vs lib vs flow)
 
-```mermaid
-flowchart LR
-  classDef ui fill:#1f2937,stroke:#93c5fd,color:#e5e7eb
-  classDef hooks fill:#0f172a,stroke:#38bdf8,color:#e5e7eb
-  classDef state fill:#111827,stroke:#f59e0b,color:#fef3c7
-  classDef lib fill:#0b1220,stroke:#34d399,color:#d1fae5
-  classDef flow fill:#0b1220,stroke:#a78bfa,color:#ede9fe
-
-  UI["ui/"]:::ui --> Hooks["hooks/"]:::hooks
-  Hooks --> State["state/"]:::state
-  Hooks --> Flow["flow/builder"]:::flow
-  State --> Lib["lib/"]:::lib
-  Flow --> FlowCore["flow/core"]:::flow
-  FlowCore --> Config["flow/config"]:::flow
-```
-
-## Mapa de responsabilidad (store vs lib)
-
-**Store (estado y reglas de negocio)**
+**Store (estado y acciones)**
 
 - `setTargetId`, `setTargetIpm`, `setPlannerStats`
 - `setSupplyCount`, `incrementSupplyCount`, `addSupplyItem`, `removeSupplyItem`
 
 **Lib (funciones puras / helpers)**
 
-- `calculateProductionTotals`, `clampTargetIpm`, `toFlowStats`
+- `buildProductionPlan`, `clampTargetIpm`
 - `findRecipeForItem`
 - `isItemExportableToCorporation`
-- `filterItemsByQuery`, `groupItemsByType`, `getSupplyCountItemIds`
+- `getSupplyCountItemIds`, `filterItemsByQuery`, `groupItemsByType`
 - `sortRequirementsByTime`, `pickRequirementByIndex`
 - `getRandomItemIds`
 
 **Flow (grafo y layout)**
 
-- `buildProductionFlow` (builder principal)
+- `buildProductionFlow` (wrapper plan -> flow)
+- `planToFlow`
 - `buildEdges`, `connectSupplyAndProduction`
 - `buildSupplyNodes`, `buildProductionNodes`, `buildLauncherNode`
-- `buildSupplyCountInventory`
 - `findItemById`, `getItemName`, `getItemType`, `getBuildingStats`
 - `scheduleFlowFitView`, `shouldFitFlowView`
+
+## Notas para devs
+
+- Si necesitas cambiar reglas de calculo, edita `lib/production-plan/`.
+- Si el layout se ve raro, revisa `flow/config/dagre-config.ts`.
+- Si cambias el nombre de un tipo o campo, ajusta `ProductionStep` y `planToFlow`.

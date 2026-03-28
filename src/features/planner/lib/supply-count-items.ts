@@ -1,4 +1,4 @@
-import type { Item } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
 
 export const SUPPLY_ITEM_TYPE_ORDER: Item['type'][] = ['raw', 'processed', 'material', 'component', 'ammo']
 

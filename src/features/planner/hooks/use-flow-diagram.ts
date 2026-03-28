@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react'
-import { useReactFlow } from '@xyflow/react'
-import { useProduction } from '@/features/planner/hooks/use-production'
-import { shouldFitFlowView, scheduleFlowFitView } from '@/features/planner/flow/layout/flow-fit'
-import type { Building, Item } from '@/shared/@types/production'
 import { buildProductionFlow } from '@/features/planner/flow'
+import { scheduleFlowFitView, shouldFitFlowView } from '@/features/planner/flow/layout/flow-fit'
+import { useProduction } from '@/features/planner/hooks/use-production'
 import { isItemExportableToCorporation } from '@/features/planner/lib/corporations'
+import type { Building } from '@/shared/@types/building.type'
+import type { Item } from '@/shared/@types/item.type'
 import { useDataStore } from '@/store/data.store'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
+import { useReactFlow } from '@xyflow/react'
+import { useEffect, useRef } from 'react'
 
 interface UseFlowDiagramParams {
   items: Item[]

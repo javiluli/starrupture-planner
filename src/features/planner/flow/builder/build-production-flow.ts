@@ -1,11 +1,8 @@
 import type { Node, Edge } from '@xyflow/react'
-import { Position } from '@xyflow/react'
-import dagre from 'dagre'
-import type { Building, Item } from '@/shared/@types/production'
-import { DAGRE_GRAPH_CONFIG } from '@/features/planner/flow/config/dagre-config'
-import { buildLauncherNode, buildProductionNodes, buildSupplyNodes } from '@/features/planner/flow/core/flow-nodes'
-import { buildEdges } from '@/features/planner/flow/core/flow-edges'
-import { calculateProductionTotals, toFlowStats } from '@/features/planner/lib/planner-logic'
+import type { Building } from '@/shared/@types/building.type'
+import type { Item } from '@/shared/@types/item.type'
+import { buildProductionPlan } from '@/features/planner/lib/production-plan'
+import { planToFlow } from '@/features/planner/flow/plan-to-flow'
 
 export interface FlowBuildParams {
   /** Lista de items del juego (nombre ya traducido). */
@@ -27,7 +24,7 @@ export interface FlowBuildParams {
 export interface FlowBuildResult {
   nodes: Node[]
   edges: Edge[]
-  stats: ReturnType<typeof toFlowStats>
+  stats: ReturnType<typeof buildProductionPlan>['stats']
 }
 
 /**
@@ -53,67 +50,24 @@ export const buildProductionFlow = ({
   isExportable,
   setSupplyCount,
 }: FlowBuildParams): FlowBuildResult => {
-  // 1) Calculamos la demanda neta y stats basicas.
-  const totalsResult = calculateProductionTotals(buildings, targetId, targetIpm, supplyCountByItem, isExportable)
-
-  // 2) Inicializamos el grafo de Dagre con la config base.
-  const dagreGraph = new dagre.graphlib.Graph()
-  dagreGraph.setDefaultEdgeLabel(() => ({}))
-  dagreGraph.setGraph(DAGRE_GRAPH_CONFIG)
-
-  // 3) Construimos nodos de supply (inputs externos).
-  const supplyNodes = buildSupplyNodes(supplyCountByItem, buildings, items, setSupplyCount, dagreGraph)
-
-  // 4) Construimos nodos de produccion (fabricacion interna).
-  const productionNodes = buildProductionNodes(
-    targetId,
-    totalsResult.totals,
-    supplyCountByItem,
+  const plan = buildProductionPlan({
     buildings,
-    items,
-    setSupplyCount,
-    dagreGraph,
-  )
-
-  // 5) Construimos nodo final de exportacion si aplica.
-  const launcherNodes = isExportable ? buildLauncherNode(targetId, targetIpm, items, buildings, dagreGraph) : []
-
-  // 6) Unimos nodos en el orden esperado por el layout.
-  const nodes = [...supplyNodes, ...productionNodes, ...launcherNodes]
-
-  // 7) Construimos edges con estilos y consumo de supply.
-  const edges = buildEdges(
     targetId,
     targetIpm,
-    totalsResult.totals,
     supplyCountByItem,
-    buildings,
-    items,
     isExportable,
-    dagreGraph,
-  )
-
-  // 8) Ejecutamos el layout de Dagre.
-  dagre.layout(dagreGraph)
-
-  // 9) Ajustamos posiciones para React Flow (Dagre centra, React Flow usa esquina).
-  const layoutedNodes = nodes.map((n) => {
-    const pos = dagreGraph.node(n.id)
-    return {
-      ...n,
-      position: {
-        x: pos.x - (n.width || 260) / 2,
-        y: pos.y - (n.height || 390) / 2,
-      },
-      sourcePosition: Position.Right,
-      targetPosition: Position.Left,
-    }
   })
 
-  // 10) Devolvemos nodos, edges y stats finales.
+  const { nodes, edges } = planToFlow({
+    plan,
+    items,
+    buildings,
+    setSupplyCount,
+  })
+
   return {
-    nodes: layoutedNodes,
+    nodes,
     edges,
-    stats: toFlowStats(totalsResult),
+    stats: plan.stats,
   }
 }

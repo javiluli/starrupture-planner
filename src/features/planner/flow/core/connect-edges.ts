@@ -1,6 +1,6 @@
 import type { Edge } from '@xyflow/react'
 import dagre from 'dagre'
-import type { ItemType } from '@/shared/@types/production'
+import type { ItemType } from '@/shared/@types/item.type'
 
 const EDGE_LABEL_STYLES = {
   labelBgBorderRadius: 10,

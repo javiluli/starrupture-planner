@@ -1,4 +1,4 @@
-import type { Stats } from '@/shared/@types/production'
+import type { Stats } from '@/features/planner/types'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { findRecipeForItem } from '@/features/planner/lib/recipes'

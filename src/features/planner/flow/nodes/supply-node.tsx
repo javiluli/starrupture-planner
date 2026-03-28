@@ -1,4 +1,4 @@
-import type { SupplyNodeData } from '@/shared/@types/supply-node.type'
+import type { SupplyNodeData } from '@/features/planner/types'
 import { AssetImage, Flex } from '@/shared/ui'
 import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'

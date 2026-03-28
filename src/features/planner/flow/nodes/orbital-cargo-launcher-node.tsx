@@ -1,5 +1,5 @@
 import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, ORBITAL_CARGO_LAUNCHER_NAME } from '@/features/planner/constants'
-import { type OrbitalExportSystemNodeData } from '@/shared/@types/production'
+import { type OrbitalExportSystemNodeData } from '@/features/planner/types'
 import { AssetImage, Flex } from '@/shared/ui'
 import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'

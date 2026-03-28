@@ -1,4 +1,4 @@
-import { type ProductionNodeData } from '@/shared/@types/production'
+import { type ProductionNodeData } from '@/features/planner/types'
 import { AssetImage, Flex } from '@/shared/ui'
 import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
