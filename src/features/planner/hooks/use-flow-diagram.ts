@@ -16,9 +16,9 @@ interface UseFlowDiagramParams {
 export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
   const targetId = usePlannerStore(plannerSelectors.targetId)
   const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
-  const supplies = usePlannerStore(plannerSelectors.supplies)
+  const supplyCountByItem = usePlannerStore(plannerSelectors.supplyCountByItem)
   const setPlannerStats = usePlannerStore(plannerSelectors.setPlannerStats)
-  const setSupplyAmount = usePlannerStore(plannerSelectors.setSupplyAmount)
+  const setSupplyCount = usePlannerStore(plannerSelectors.setSupplyCount)
 
   const corporations = useDataStore((state) => state.corporations)
 
@@ -38,9 +38,9 @@ export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
       buildings,
       targetId,
       targetIpm,
-      supplies,
+      supplyCountByItem,
       isExportable,
-      updateSupply: setSupplyAmount,
+      setSupplyCount,
     })
 
     setNodes(newNodes)
@@ -53,7 +53,7 @@ export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, buildings, targetId, targetIpm, supplies, fitView, corporations, setSupplyAmount])
+  }, [items, buildings, targetId, targetIpm, supplyCountByItem, fitView, corporations, setSupplyCount])
 
   return { nodes, edges, onNodesChange }
 }

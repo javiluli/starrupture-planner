@@ -1,5 +1,5 @@
 import { Flex } from '@/shared/ui'
-import { getSupplyItemIds } from '@/features/planner/lib/supply'
+import { getSupplyCountItemIds } from '@/features/planner/lib/supply-count'
 import { memo } from 'react'
 import { SupplyCard } from './supply-card'
 import { SupplyModal } from './supply-modal'
@@ -12,7 +12,7 @@ import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
  *
  * 2. Estabilidad de la UI: Al ser un panel con multiples sub-componentes
  * (cards, imagenes, inputs), el memo garantiza que React solo procese
- * los cambios si los datos de suministros (supplies) han variado realmente.
+ * los cambios si los datos de suministros (supplyCountByItem) han variado realmente.
  *
  * 3. Fluidez del Diagrama: Mantiene el hilo principal libre de carga visual
  * pesada mientras el motor de React Flow realiza calculos de posicionamiento.
@@ -24,14 +24,14 @@ import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
  */
 export const SupplySidebar = memo(() => {
   // Filtramos solo nodos de produccion, es decir, que produzcan algo
-  const supplies = usePlannerStore(plannerSelectors.supplies)
+  const supplyCountByItem = usePlannerStore(plannerSelectors.supplyCountByItem)
 
   return (
     <Flex direction="col" align="stretch" className="p-4 panel overflow-hidden">
       <SupplyModal />
       <Flex direction="col" gap="md" className="flex-1 pr-3 overflow-y-auto">
-        {getSupplyItemIds(supplies).map((id) => (
-          <SupplyCard key={id} itemId={id} value={supplies[id]} />
+        {getSupplyCountItemIds(supplyCountByItem).map((id) => (
+          <SupplyCard key={id} itemId={id} value={supplyCountByItem[id]} />
         ))}
       </Flex>
     </Flex>

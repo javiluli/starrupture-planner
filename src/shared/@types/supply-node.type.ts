@@ -5,7 +5,7 @@ export interface SupplyNodeData {
   buildingHeat: number // En termino del juego "Refrigeracion que consume la maquina del CORE BASE"
   itemId: string // ID del item/objeto "supply"
   itemName: string // Nombre del item/objeto "supply"
-  supply: number // Cantidad de items que ya se fabrican desde otro lado, estos se restan del total requerido para ese item
-  onSupplyChange: (itemId: string, amount: number) => void // Funcion que actualiza esa cantidad externa de items fabricados (supply)
+  supplyCount: number // Cantidad de items ya fabricados externamente, se restan del total requerido
+  onSupplyCountChange: (itemId: string, amount: number) => void // Funcion que actualiza esa cantidad externa de items
   [key: string]: unknown
 }

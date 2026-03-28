@@ -1,21 +1,19 @@
-# Planner Lib
+# Lib (Planner)
 
-Helpers puros de dominio para la feature de planner.
-Aqui no hay UI, solo calculos, filtros y utilidades.
+Helpers puros que no dependen de React.
 
-## Indice de archivos
+## Archivos
 
-- `planner-logic.ts`: calculo de demanda neta, stats y clamp de ipm.
-- `recipes.ts`: resolver edificio y receta para un item.
-- `corporations.ts`: comprobar si un item es exportable por corporacion.
-- `corporation-requirements.ts`: ordenar y seleccionar requisitos.
-- `random-items.ts`: ids aleatorios estables para el marquee.
-- `supply-items.ts`: filtros y agrupacion de items del supply.
-- `supply.ts`: helpers simples de ids para supply.
-- `index.ts`: barrel con exports publicos.
+- `planner-logic.ts`: calculos de produccion y stats globales.
+- `recipes.ts`: helpers de recetas.
+- `corporations.ts`: helpers de corporaciones.
+- `requirements.ts`: ordenamiento y picks de requirements.
+- `random-items.ts`: ids aleatorios para el marquee.
+- `supply-count-items.ts`: filtros y agrupacion de items del supply.
+- `supply-count.ts`: helpers simples de ids para supply.
 
-## Recorrido rapido
+## Flujo
 
-1. `planner-logic.ts` es el nucleo de calculo.
-2. `recipes.ts` y `corporations.ts` dan lookups puntuales.
-3. `supply-items.ts` y `random-items.ts` alimentan UI de sidebar y marquee.
+1. `planner-logic.ts` calcula el total requerido por item.
+2. `requirements.ts` ordena y calcula tiempos.
+3. `supply-count-items.ts` y `random-items.ts` alimentan UI de sidebar y marquee.

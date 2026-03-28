@@ -8,24 +8,24 @@ import { findRecipeForItem } from '@/features/planner/lib/recipes'
 /**
  * Fabrica de nodos de suministro (inputs).
  *
- * @param supplies Diccionario de supply (itemId -> cantidad).
+ * @param supplyCountByItem Diccionario de supply (itemId -> cantidad).
  * @param buildings Catalogo de edificios.
  * @param items Catalogo de items.
- * @param onSupplyChange Callback para actualizar el supply.
+ * @param onSupplyCountChange Callback para actualizar el supply.
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
  * @returns Lista de nodos de supply.
  */
 export const buildSupplyNodes = (
-  supplies: Record<string, number>,
+  supplyCountByItem: Record<string, number>,
   buildings: Building[],
   items: Item[],
-  onSupplyChange: (id: string, val: number) => void,
+  onSupplyCountChange: (id: string, val: number) => void,
   dagreGraph: dagre.graphlib.Graph,
 ): Node[] => {
   const buildingData = buildings.find((b) => b.id === PACKAGE_RECEIVER_ID)
   const { power, heat } = getBuildingStats(buildingData)
 
-  return Object.keys(supplies).map((id) => {
+  return Object.keys(supplyCountByItem).map((id) => {
     // Reservamos un poco mas de alto para evitar solapes con produccion.
     dagreGraph.setNode(`supply-${id}`, { width: 200, height: 390 })
 
@@ -40,8 +40,8 @@ export const buildSupplyNodes = (
         buildingHeat: heat,
         itemId: id,
         itemName: getItemName(items, id),
-        supply: supplies[id],
-        onSupplyChange,
+        supplyCount: supplyCountByItem[id],
+        onSupplyCountChange,
       },
       position: { x: 0, y: 0 },
     }
@@ -53,20 +53,20 @@ export const buildSupplyNodes = (
  *
  * @param targetId Id del item objetivo.
  * @param totals Totales de produccion por item.
- * @param supplies Supply externo por item.
+ * @param supplyCountByItem Supply externo por item.
  * @param buildings Catalogo de edificios.
  * @param items Catalogo de items.
- * @param onSupplyChange Callback para actualizar el supply.
+ * @param onSupplyCountChange Callback para actualizar el supply.
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
  * @returns Lista de nodos de produccion.
  */
 export const buildProductionNodes = (
   targetId: string,
   totals: Map<string, number>,
-  supplies: Record<string, number>,
+  supplyCountByItem: Record<string, number>,
   buildings: Building[],
   items: Item[],
-  onSupplyChange: (id: string, val: number) => void,
+  onSupplyCountChange: (id: string, val: number) => void,
   dagreGraph: dagre.graphlib.Graph,
 ): Node[] => {
   const nodes: Node[] = []
@@ -97,8 +97,8 @@ export const buildProductionNodes = (
           buildingCount: Math.ceil(buildingLoad),
           baseIpm,
           targetIpm: productionQty,
-          supply: supplies[id] || 0,
-          onSupplyChange,
+          supplyCount: supplyCountByItem[id] || 0,
+          onSupplyCountChange,
           buildingPower: power,
           buildingHeat: heat,
           isTarget: id === targetId,

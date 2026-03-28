@@ -13,33 +13,31 @@ export interface PlannerStoreState {
   /**
    * ID del item - Cantidad "Supply"
    */
-  supplies: Record<string, number>
+  supplyCountByItem: Record<string, number>
   // Acciones
   setTargetId: (id: string) => void
   setTargetIpm: (value: number) => void
   setPlannerStats: (data: Stats) => void
 
   // Acciones para Suministros
-  updateSupply: (itemId: string, amount: number) => void
-  setSupplyAmount: (itemId: string, amount: number) => void
-  incrementSupply: (itemId: string, delta: number) => void
-  addSupplyNode: (itemId: string) => void
-  removeSupply: (itemId: string) => void
+  setSupplyCount: (itemId: string, amount: number) => void
+  incrementSupplyCount: (itemId: string, delta: number) => void
+  addSupplyItem: (itemId: string) => void
+  removeSupplyItem: (itemId: string) => void
 }
 
 export const plannerSelectors = {
   targetId: (state: PlannerStoreState) => state.targetId,
   targetIpm: (state: PlannerStoreState) => state.targetIpm,
   plannerStats: (state: PlannerStoreState) => state.plannerStats,
-  supplies: (state: PlannerStoreState) => state.supplies,
+  supplyCountByItem: (state: PlannerStoreState) => state.supplyCountByItem,
   setTargetId: (state: PlannerStoreState) => state.setTargetId,
   setTargetIpm: (state: PlannerStoreState) => state.setTargetIpm,
   setPlannerStats: (state: PlannerStoreState) => state.setPlannerStats,
-  updateSupply: (state: PlannerStoreState) => state.updateSupply,
-  setSupplyAmount: (state: PlannerStoreState) => state.setSupplyAmount,
-  incrementSupply: (state: PlannerStoreState) => state.incrementSupply,
-  addSupplyNode: (state: PlannerStoreState) => state.addSupplyNode,
-  removeSupply: (state: PlannerStoreState) => state.removeSupply,
+  setSupplyCount: (state: PlannerStoreState) => state.setSupplyCount,
+  incrementSupplyCount: (state: PlannerStoreState) => state.incrementSupplyCount,
+  addSupplyItem: (state: PlannerStoreState) => state.addSupplyItem,
+  removeSupplyItem: (state: PlannerStoreState) => state.removeSupplyItem,
 }
 
 /**
@@ -50,12 +48,12 @@ export const plannerSelectors = {
  */
 export const usePlannerStore = create<PlannerStoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // DATOS INICIALES
       targetId: '',
       targetIpm: 1,
       plannerStats: { buildings: 0, power: 0, heat: 0 },
-      supplies: {},
+      supplyCountByItem: {},
 
       /**
        * Establece el item objetivo.
@@ -112,16 +110,16 @@ export const usePlannerStore = create<PlannerStoreState>()(
        * @param id Item supply
        * @param amount Cantidad
        */
-      setSupplyAmount: (id, amount) =>
+      setSupplyCount: (id, amount) =>
         set((state) => {
           if (Number.isNaN(amount) || amount <= 0) {
-            const next = { ...state.supplies }
+            const next = { ...state.supplyCountByItem }
             delete next[id]
-            return { supplies: next }
+            return { supplyCountByItem: next }
           }
 
           return {
-            supplies: { ...state.supplies, [id]: amount },
+            supplyCountByItem: { ...state.supplyCountByItem, [id]: amount },
           }
         }),
 
@@ -131,36 +129,28 @@ export const usePlannerStore = create<PlannerStoreState>()(
        * @param id Item supply
        * @param delta Variacion
        */
-      incrementSupply: (id, delta) =>
+      incrementSupplyCount: (id, delta) =>
         set((state) => {
-          const current = state.supplies[id] ?? 0
+          const current = state.supplyCountByItem[id] ?? 0
           const next = current + delta
 
           if (next <= 0) {
-            const updated = { ...state.supplies }
+            const updated = { ...state.supplyCountByItem }
             delete updated[id]
-            return { supplies: updated }
+            return { supplyCountByItem: updated }
           }
 
-          return { supplies: { ...state.supplies, [id]: next } }
+          return { supplyCountByItem: { ...state.supplyCountByItem, [id]: next } }
         }),
-
-      /**
-       * Alias legacy usado por nodos del flow.
-       *
-       * @param id Item supply
-       * @param amount Cantidad
-       */
-      updateSupply: (id, amount) => get().setSupplyAmount(id, amount),
 
       /**
        * Agrega un supply si no existe.
        *
        * @param id Item supply
        */
-      addSupplyNode: (id) =>
+      addSupplyItem: (id) =>
         set((state) => ({
-          supplies: { ...state.supplies, [id]: state.supplies[id] || 0 },
+          supplyCountByItem: { ...state.supplyCountByItem, [id]: state.supplyCountByItem[id] || 0 },
         })),
 
       /**
@@ -168,11 +158,11 @@ export const usePlannerStore = create<PlannerStoreState>()(
        *
        * @param id Item supply
        */
-      removeSupply: (id) =>
+      removeSupplyItem: (id) =>
         set((state) => {
-          const newSupplies = { ...state.supplies }
-          delete newSupplies[id]
-          return { supplies: newSupplies }
+          const next = { ...state.supplyCountByItem }
+          delete next[id]
+          return { supplyCountByItem: next }
         }),
     }),
     {
@@ -181,4 +171,3 @@ export const usePlannerStore = create<PlannerStoreState>()(
     },
   ),
 )
-

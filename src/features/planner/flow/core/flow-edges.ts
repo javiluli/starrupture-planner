@@ -2,7 +2,7 @@ import { ORBITAL_CARGO_LAUNCHER_ID } from '@/features/planner/constants'
 import type { Building, Item } from '@/shared/@types/production'
 import { type Edge } from '@xyflow/react'
 import dagre from 'dagre'
-import { buildSupplyInventory } from './supply-inventory'
+import { buildSupplyCountInventory } from './supply-count-inventory'
 import { getItemName, getItemType } from './lookup'
 import { connectSupplyAndProduction } from './connect-edges'
 import { findRecipeForItem } from '@/features/planner/lib/recipes'
@@ -13,7 +13,7 @@ import { findRecipeForItem } from '@/features/planner/lib/recipes'
  * @param targetId Item objetivo.
  * @param targetIpm Produccion objetivo por minuto.
  * @param totals Totales de produccion por item.
- * @param supplies Supply externo por item.
+ * @param supplyCountByItem Supply externo por item.
  * @param buildings Catalogo de edificios.
  * @param items Catalogo de items.
  * @param addOrgitalExportSystem Si se agrega el launcher orbital.
@@ -24,14 +24,14 @@ export const buildEdges = (
   targetId: string,
   targetIpm: number,
   totals: Map<string, number>,
-  supplies: Record<string, number>,
+  supplyCountByItem: Record<string, number>,
   buildings: Building[],
   items: Item[],
   addOrgitalExportSystem: boolean,
   dagreGraph: dagre.graphlib.Graph,
 ): Edge[] => {
   const edges: Edge[] = []
-  const supplyInventory = buildSupplyInventory(supplies)
+  const supplyCountInventory = buildSupplyCountInventory(supplyCountByItem)
 
   totals.forEach((prodQty, nodeId) => {
     const { recipe } = findRecipeForItem(buildings, nodeId)
@@ -45,7 +45,7 @@ export const buildEdges = (
         itemType: getItemType(items, input.id),
         consumerId: nodeId,
         totalNeeded: inputNeeded,
-        supplyInventory,
+        supplyCountInventory,
       })
     })
   })
@@ -59,7 +59,7 @@ export const buildEdges = (
       itemType: getItemType(items, targetId),
       consumerId: ORBITAL_CARGO_LAUNCHER_ID,
       totalNeeded: targetIpm,
-      supplyInventory,
+      supplyCountInventory,
       isFinalLauncher: true,
     })
   }

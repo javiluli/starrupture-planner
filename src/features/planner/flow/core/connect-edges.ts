@@ -17,7 +17,7 @@ interface ConnectParams {
   itemType: ItemType
   consumerId: string
   totalNeeded: number
-  supplyInventory: Record<string, number>
+  supplyCountInventory: Record<string, number>
   isFinalLauncher?: boolean
 }
 
@@ -36,17 +36,17 @@ export const connectSupplyAndProduction = ({
   itemType,
   consumerId,
   totalNeeded,
-  supplyInventory,
+  supplyCountInventory,
   isFinalLauncher = false,
 }: ConnectParams) => {
   if (totalNeeded <= 0) return
 
   let remaining = totalNeeded
 
-  const available = supplyInventory[itemId] || 0
+  const available = supplyCountInventory[itemId] || 0
   if (available > 0) {
     const taken = Math.min(available, remaining)
-    supplyInventory[itemId] -= taken
+    supplyCountInventory[itemId] -= taken
     remaining -= taken
 
     edges.push({

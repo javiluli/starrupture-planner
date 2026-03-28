@@ -17,11 +17,11 @@ export interface FlowBuildParams {
   /** Tasa objetivo en items por minuto. */
   targetIpm: number
   /** Inventario de suministros externos. */
-  supplies: Record<string, number>
+  supplyCountByItem: Record<string, number>
   /** Indica si hay exportacion orbital. */
   isExportable: boolean
   /** Callback para actualizar supply desde nodos. */
-  updateSupply: (id: string, val: number) => void
+  setSupplyCount: (id: string, val: number) => void
 }
 
 export interface FlowBuildResult {
@@ -39,9 +39,9 @@ export interface FlowBuildResult {
  * @param params.buildings Lista de edificios con recetas.
  * @param params.targetId Id del item objetivo.
  * @param params.targetIpm Produccion objetivo por minuto.
- * @param params.supplies Suministros externos por item.
+ * @param params.supplyCountByItem Suministros externos por item.
  * @param params.isExportable Si se agrega exportacion orbital.
- * @param params.updateSupply Callback para actualizar supply desde nodos.
+ * @param params.setSupplyCount Callback para actualizar supply desde nodos.
  * @returns Nodos, edges y stats calculadas.
  */
 export const buildProductionFlow = ({
@@ -49,12 +49,12 @@ export const buildProductionFlow = ({
   buildings,
   targetId,
   targetIpm,
-  supplies,
+  supplyCountByItem,
   isExportable,
-  updateSupply,
+  setSupplyCount,
 }: FlowBuildParams): FlowBuildResult => {
   // 1) Calculamos la demanda neta y stats basicas.
-  const totalsResult = calculateProductionTotals(buildings, targetId, targetIpm, supplies, isExportable)
+  const totalsResult = calculateProductionTotals(buildings, targetId, targetIpm, supplyCountByItem, isExportable)
 
   // 2) Inicializamos el grafo de Dagre con la config base.
   const dagreGraph = new dagre.graphlib.Graph()
@@ -62,10 +62,18 @@ export const buildProductionFlow = ({
   dagreGraph.setGraph(DAGRE_GRAPH_CONFIG)
 
   // 3) Construimos nodos de supply (inputs externos).
-  const supplyNodes = buildSupplyNodes(supplies, buildings, items, updateSupply, dagreGraph)
+  const supplyNodes = buildSupplyNodes(supplyCountByItem, buildings, items, setSupplyCount, dagreGraph)
 
   // 4) Construimos nodos de produccion (fabricacion interna).
-  const productionNodes = buildProductionNodes(targetId, totalsResult.totals, supplies, buildings, items, updateSupply, dagreGraph)
+  const productionNodes = buildProductionNodes(
+    targetId,
+    totalsResult.totals,
+    supplyCountByItem,
+    buildings,
+    items,
+    setSupplyCount,
+    dagreGraph,
+  )
 
   // 5) Construimos nodo final de exportacion si aplica.
   const launcherNodes = isExportable ? buildLauncherNode(targetId, targetIpm, items, buildings, dagreGraph) : []
@@ -74,7 +82,16 @@ export const buildProductionFlow = ({
   const nodes = [...supplyNodes, ...productionNodes, ...launcherNodes]
 
   // 7) Construimos edges con estilos y consumo de supply.
-  const edges = buildEdges(targetId, targetIpm, totalsResult.totals, supplies, buildings, items, isExportable, dagreGraph)
+  const edges = buildEdges(
+    targetId,
+    targetIpm,
+    totalsResult.totals,
+    supplyCountByItem,
+    buildings,
+    items,
+    isExportable,
+    dagreGraph,
+  )
 
   // 8) Ejecutamos el layout de Dagre.
   dagre.layout(dagreGraph)

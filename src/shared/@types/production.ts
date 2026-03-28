@@ -39,11 +39,11 @@ export interface ProductionNodeData {
   itemId: string // ID del item/objeto que va a fabricar la maquina
   itemName: string // Nombre del item/objeto
 
-  baseIpm: number // Fijo: Lo que produce 1 sola máquina (ej: 60)
+  baseIpm: number // Fijo: Lo que produce 1 sola maquina (ej: 60)
   targetIpm: number // Variable: Lo que el sistema REQUIERE (ej: 75)
 
-  supply: number // Cantidad de items que ya se fabrican desde otro lado, estos se restan del total requerido para ese item
-  onSupplyChange: (itemId: string, amount: number) => void // Funcion que actualiza esa cantidad externa de items fabricados (supply)
+  supplyCount: number // Cantidad de items ya fabricados externamente, se restan del total requerido
+  onSupplyCountChange: (itemId: string, amount: number) => void // Funcion que actualiza esa cantidad externa de items
 
   [key: string]: unknown
 }

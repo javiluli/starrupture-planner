@@ -51,7 +51,7 @@ flowchart TD
     Logic["planner-logic"]
     Recipes["recipes"]
     Corps["corporations"]
-    SupplyLib["supply + supply-items"]
+    SupplyLib["supply-count + supply-count-items"]
     Random["random-items"]
   end
 
@@ -61,7 +61,7 @@ flowchart TD
     CoreEdges["core/flow-edges"]
     CoreNodes["core/flow-nodes"]
     CoreLookup["core/lookup"]
-    CoreSupply["core/supply-inventory"]
+    CoreSupply["core/supply-count-inventory"]
     Layout["layout/flow-fit"]
     Diagram["diagram/production-flow-diagram"]
     Config["config/*"]
@@ -136,7 +136,7 @@ sequenceDiagram
   participant Lib as lib helpers
 
   UI->>Hook: render + inputs
-  Hook->>Store: read targetId/targetIpm/supplies
+  Hook->>Store: read targetId/targetIpm/supplyCountByItem
   Hook->>Lib: isItemExportableToCorporation
   Hook->>Builder: buildProductionFlow(params)
   Builder->>Logic: calculateProductionTotals
@@ -170,14 +170,14 @@ flowchart LR
 **Store (estado y reglas de negocio)**
 
 - `setTargetId`, `setTargetIpm`, `setPlannerStats`
-- `setSupplyAmount`, `incrementSupply`, `addSupplyNode`, `removeSupply`, `updateSupply`
+- `setSupplyCount`, `incrementSupplyCount`, `addSupplyItem`, `removeSupplyItem`
 
 **Lib (funciones puras / helpers)**
 
 - `calculateProductionTotals`, `clampTargetIpm`, `toFlowStats`
 - `findRecipeForItem`
 - `isItemExportableToCorporation`
-- `filterItemsByQuery`, `groupItemsByType`, `getSupplyItemIds`
+- `filterItemsByQuery`, `groupItemsByType`, `getSupplyCountItemIds`
 - `sortRequirementsByTime`, `pickRequirementByIndex`
 - `getRandomItemIds`
 
@@ -186,6 +186,6 @@ flowchart LR
 - `buildProductionFlow` (builder principal)
 - `buildEdges`, `connectSupplyAndProduction`
 - `buildSupplyNodes`, `buildProductionNodes`, `buildLauncherNode`
-- `buildSupplyInventory`
+- `buildSupplyCountInventory`
 - `findItemById`, `getItemName`, `getItemType`, `getBuildingStats`
 - `scheduleFlowFitView`, `shouldFitFlowView`
