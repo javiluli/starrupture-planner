@@ -1,1 +1,1 @@
-export { CorporationsList, StatPreview } from './ui'
+export { AccordionCorporationsWithRewards } from './ui'

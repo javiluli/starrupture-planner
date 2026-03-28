@@ -1,2 +1,1 @@
-export { CorporationsList } from './corporations-list'
-export { StatPreview } from './stat-preview'
+export { AccordionCorporationsWithRewards } from './accordion-corporations-with-rewards'
