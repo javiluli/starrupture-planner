@@ -1,1 +1,1 @@
-export { AccordionCorporationsWithRewards } from './accordion-corporations-with-rewards'
+export { CorporationsAccordion } from './corporations-accordion'

@@ -1,2 +1,2 @@
-export { useCorporationsStats } from './use-corporations-stats'
-export { useCorporationsList } from './use-corporations-list'
+export { useCorporationsSummary } from './use-corporations-summary'
+export { useCorporationsAccordionData } from './use-corporations-accordion-data'

@@ -1,6 +1,6 @@
 import type { Corporation } from '@/shared/@types/corporations.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { CorporationHeaderMeta } from './corporation-accordion-header-meta'
+import { CorporationAccordionMeta } from './corporation-accordion-meta'
 
 interface Props {
   corporation: Corporation
@@ -16,7 +16,7 @@ export const CorporationAccordionHeader = ({ corporation }: Props) => (
       <Typography as="h3" variant="h4" tone="soft" className="capitalize">
         {corporation.description}
       </Typography>
-      <CorporationHeaderMeta corporation={corporation} />
+      <CorporationAccordionMeta corporation={corporation} />
     </div>
   </Flex>
 )

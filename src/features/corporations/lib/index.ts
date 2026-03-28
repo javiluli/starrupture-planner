@@ -1,1 +1,1 @@
-export { corporationStats } from './corporation-stats'
+export { getCorporationsSummary } from './corporation-summary'

@@ -5,14 +5,14 @@ import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { Button, Chip } from '@heroui/react'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LevelAndXPRequired } from './level-and-XP-required'
+import { LevelRequirements } from './level-requirements'
 
 interface Props {
   level: Level
   itemMap: Map<string, Item>
 }
 
-const RecipeRowComponent = ({ level, itemMap }: Props) => {
+const CorporationLevelRowComponent = ({ level, itemMap }: Props) => {
   const navigate = useNavigate()
   const setTargetId = usePlannerStore(plannerSelectors.setTargetId)
 
@@ -27,7 +27,7 @@ const RecipeRowComponent = ({ level, itemMap }: Props) => {
   return (
     <div className="rounded-lg border border-divider">
       <Flex direction="col" align="start" gap="xl" wrap="wrap" className="px-10 py-6">
-        <LevelAndXPRequired level={level.level} xp={level.xp} />
+        <LevelRequirements level={level.level} xp={level.xp} />
 
         <Flex gap="lg">
           {level.components.map((c, index) => {
@@ -83,4 +83,4 @@ const RecipeRowComponent = ({ level, itemMap }: Props) => {
   )
 }
 
-export const RecipeRow = memo(RecipeRowComponent)
+export const CorporationLevelRow = memo(CorporationLevelRowComponent)

@@ -8,7 +8,7 @@ interface Props {
   xp: number
 }
 
-export const LevelAndXPRequired = ({ level, xp }: Props) => (
+export const LevelRequirements = ({ level, xp }: Props) => (
   <Flex gap="md">
     <Typography variant="h4">Level {level} </Typography>
     <Chip variant="bordered" color="primary">

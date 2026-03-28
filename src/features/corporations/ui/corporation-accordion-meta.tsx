@@ -3,7 +3,7 @@ import { Flex } from '@/shared/ui'
 import { formatNumber } from '@/shared/utils'
 import { Chip } from '@heroui/react'
 
-export const CorporationHeaderMeta = ({ corporation }: { corporation: Corporation }) => {
+export const CorporationAccordionMeta = ({ corporation }: { corporation: Corporation }) => {
   const componentsCount = corporation.levels.reduce((acc, c) => acc + (c.components?.length ?? 0), 0)
   const rewardsCount = corporation.levels.reduce((acc, c) => acc + (c.rewards?.length ?? 0), 0)
   const xpCount = corporation.levels.reduce((total, c) => total + c.xp, 0)
@@ -17,6 +17,3 @@ export const CorporationHeaderMeta = ({ corporation }: { corporation: Corporatio
     </Flex>
   )
 }
-
-// Alias legacy para imports antiguos
-export const CorporationAccordionHeaderMeta = CorporationHeaderMeta

@@ -1,10 +1,9 @@
-import { useCorporationsStats } from '@/features/corporations/hooks'
-import { AccordionCorporationsWithRewards } from '@/features/corporations/ui'
+import { CorporationsAccordion, useCorporationsSummary } from '@/features/corporations'
 import { Flex, PageContainer, Panel, StatLabel, Typography } from '@/shared/ui'
 import { formatNumber } from '@/shared/utils'
 
 const PageCorporations = () => {
-  const stats = useCorporationsStats()
+  const stats = useCorporationsSummary()
 
   return (
     <PageContainer>
@@ -22,7 +21,7 @@ const PageCorporations = () => {
       </Panel>
 
       <div className="flex-1 overflow-y-auto">
-        <AccordionCorporationsWithRewards />
+        <CorporationsAccordion />
       </div>
     </PageContainer>
   )
