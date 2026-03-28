@@ -1,1 +1,1 @@
-export { RecipesList, RecipesHeader } from './ui'
+export { AccordionBuildingsWithRecipes } from './ui'

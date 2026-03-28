@@ -1,2 +1,1 @@
-export { RecipesHeader } from './sections/recipes-header'
-export { RecipesList } from './sections/recipes-list'
+export { AccordionBuildingsWithRecipes } from './accordion-buildings-with-recipes'
