@@ -66,5 +66,3 @@ export const buildEdges = (
 
   return edges
 }
-
-

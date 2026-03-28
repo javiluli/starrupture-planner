@@ -1,7 +1,7 @@
 import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, ORBITAL_CARGO_LAUNCHER_NAME } from '@/features/planner/constants'
 import { type OrbitalExportSystemNodeData } from '@/shared/@types/production'
 import { AssetImage, Flex } from '@/shared/ui'
-import { Divider } from '@heroui/react'
+import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
@@ -11,10 +11,11 @@ export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps) => {
   return (
     <Flex
       direction="col"
-      className="relative w-72 space-y-3 bg-content1 text-foreground px-6 py-4 rounded-2xl shadow-md"
-      style={{
-        border: `2px solid ${selected ? '#fff' : '#373a40'}`,
-      }}
+      className={cn(
+        'relative w-64 space-y-3 bg-content1/90 text-foreground px-6 py-4 shadow-xl rounded-3xl border-4 transition-all',
+        selected ? 'border-content4' : 'border-content2',
+        selected ? 'shadow-background/40' : 'shadow-none',
+      )}
     >
       <Handle type="target" position={Position.Left} style={{ background: '#ffffff' }} />
       <Handle type="source" position={Position.Right} className="opacity-0" />
@@ -31,7 +32,7 @@ export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps) => {
         </Flex>
       </Flex>
 
-      <Divider className="bg-divider/60" />
+      <Divider />
 
       <Flex gap="md">
         <div className="flex bg-content2 rounded-2xl">

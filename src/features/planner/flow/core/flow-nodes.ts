@@ -1,4 +1,4 @@
-import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID } from '@/features/planner/constants'
+import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, PACKAGE_RECEIVER_ID } from '@/features/planner/constants'
 import type { Building, Item } from '@/shared/@types/production'
 import { type Node } from '@xyflow/react'
 import dagre from 'dagre'
@@ -9,6 +9,7 @@ import { findRecipeForItem } from '@/features/planner/lib/recipes'
  * Fabrica de nodos de suministro (inputs).
  *
  * @param supplies Diccionario de supply (itemId -> cantidad).
+ * @param buildings Catalogo de edificios.
  * @param items Catalogo de items.
  * @param onSupplyChange Callback para actualizar el supply.
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
@@ -16,10 +17,14 @@ import { findRecipeForItem } from '@/features/planner/lib/recipes'
  */
 export const buildSupplyNodes = (
   supplies: Record<string, number>,
+  buildings: Building[],
   items: Item[],
   onSupplyChange: (id: string, val: number) => void,
   dagreGraph: dagre.graphlib.Graph,
 ): Node[] => {
+  const buildingData = buildings.find((b) => b.id === PACKAGE_RECEIVER_ID)
+  const { power, heat } = getBuildingStats(buildingData)
+
   return Object.keys(supplies).map((id) => {
     // Reservamos un poco mas de alto para evitar solapes con produccion.
     dagreGraph.setNode(`supply-${id}`, { width: 200, height: 390 })
@@ -29,6 +34,10 @@ export const buildSupplyNodes = (
       type: 'supplyNode',
       draggable: true,
       data: {
+        buildingId: buildingData?.id,
+        buildingName: buildingData?.name,
+        buildingPower: power,
+        buildingHeat: heat,
         itemId: id,
         itemName: getItemName(items, id),
         supply: supplies[id],
@@ -118,9 +127,9 @@ export const buildLauncherNode = (
   buildings: Building[],
   dagreGraph: dagre.graphlib.Graph,
 ): Node[] => {
-  const launcherData = buildings.find((b) => b.id === ORBITAL_CARGO_LAUNCHER_ID)
+  const buildingData = buildings.find((b) => b.id === ORBITAL_CARGO_LAUNCHER_ID)
   const targetItemName = getItemName(items, targetId)
-  const { power, heat } = getBuildingStats(launcherData)
+  const { power, heat } = getBuildingStats(buildingData)
 
   // Ajuste de altura para compactar en vertical.
   dagreGraph.setNode(ORBITAL_CARGO_LAUNCHER_ID, { width: 225, height: 390 })
@@ -141,5 +150,3 @@ export const buildLauncherNode = (
     },
   ]
 }
-
-

@@ -1,28 +1,45 @@
-import { Flex, AssetImage, Typography } from '@/shared/ui'
-import { Handle, Position } from '@xyflow/react'
+import type { SupplyNodeData } from '@/shared/@types/supply-node.type'
+import { AssetImage, Flex } from '@/shared/ui'
+import { cn, Divider } from '@heroui/react'
+import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
-export function SupplyNode({ data }: { data: any }) {
+export function SupplyNode({ data, selected }: NodeProps) {
+  const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supply } = data as SupplyNodeData
+
   return (
-    <div className="bg-zinc-900 border-2 border-success p-3 rounded-xl shadow-lg w-40">
-      {/* Anadimos 'nodrag' a la clase para que al escribir no se mueva el nodo */}
-      <Flex direction="col" align="center" gap="sm">
-        <Typography as="span" variant="micro" tone="normal" className="text-success uppercase tracking-tighter italic">
-          External Supply
-        </Typography>
+    <Flex
+      direction="col"
+      className={cn(
+        'relative w-64 space-y-3 bg-content1/90 text-foreground px-6 py-4 shadow-xl rounded-3xl border-4 transition-all',
+        selected ? 'border-content4' : 'border-content2',
+        selected ? 'shadow-background/40' : 'shadow-none',
+      )}
+    >
+      <Handle type="target" position={Position.Left} className="opacity-0" style={{ background: '#ffffff' }} />
+      <Handle type="source" position={Position.Right} style={{ background: '#ffffff' }} />
 
-        <div className="bg-content2 rounded-2xl">
-          <AssetImage kind="items" id={data.itemId} className="w-full h-26" />
-        </div>
+      <Flex direction="col">
+        <FlowNodeHeader title={buildingName} className="italic" />
 
-        <div className="text-center w-full">
-          <Typography as="span" variant="micro" tone="normal" className="font-bold truncate">
-            {data.itemName}
-          </Typography>
-        </div>
+        <Flex>
+          <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />
+
+          <div className="relative">
+            <AssetImage kind="buildings" id={buildingId} className="h-40" />
+            <div className="absolute left-1/2 bottom-0 bg-content1 ring-2 ring-foreground rounded-2xl z-10">
+              <AssetImage kind="items" id={itemId} className="h-16" />
+            </div>
+          </div>
+        </Flex>
       </Flex>
 
-      <Handle type="source" position={Position.Right} className="w-2 h-2 bg-green-500" />
-    </div>
+      <Divider />
+      <FlowNodeOutputRate itemName={itemName} baseIpm={supply} />
+
+      <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+        <FlowNodeCountBadge buildingLoad={1} buildingCount={1} />
+      </div>
+    </Flex>
   )
 }
-

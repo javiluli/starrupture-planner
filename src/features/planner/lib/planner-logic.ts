@@ -25,7 +25,7 @@ export const clampTargetIpm = (value: number) => {
  * @param buildings Lista de edificios disponibles
  * @param targetId Item objetivo
  * @param targetIpm Produccion objetivo por minuto
- * @param supplies Suministros externos que reducen demanda
+ * @param supplyCount Suministros externos que reducen demanda
  * @param addOrgitalExportSystem Si se agrega exportacion orbital
  * @returns Totales por item y stats globales
  */
@@ -33,7 +33,7 @@ export const calculateProductionTotals = (
   buildings: Building[],
   targetId: string,
   targetIpm: number,
-  supplies: Record<string, number>,
+  supplyCount: Record<string, number>,
   addOrgitalExportSystem: boolean,
 ): ProductionTotalsResult => {
   /**
@@ -47,8 +47,8 @@ export const calculateProductionTotals = (
    * Regla: minimo 1 unidad para cualquier supply activo.
    */
   const runningInventory: Record<string, number> = {}
-  Object.keys(supplies).forEach((id) => {
-    runningInventory[id] = Math.max(1, supplies[id])
+  Object.keys(supplyCount).forEach((id) => {
+    runningInventory[id] = Math.max(1, supplyCount[id])
   })
 
   /**

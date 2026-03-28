@@ -57,4 +57,3 @@ export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
 
   return { nodes, edges, onNodesChange }
 }
-

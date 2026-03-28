@@ -62,7 +62,7 @@ export const buildProductionFlow = ({
   dagreGraph.setGraph(DAGRE_GRAPH_CONFIG)
 
   // 3) Construimos nodos de supply (inputs externos).
-  const supplyNodes = buildSupplyNodes(supplies, items, updateSupply, dagreGraph)
+  const supplyNodes = buildSupplyNodes(supplies, buildings, items, updateSupply, dagreGraph)
 
   // 4) Construimos nodos de produccion (fabricacion interna).
   const productionNodes = buildProductionNodes(targetId, totalsResult.totals, supplies, buildings, items, updateSupply, dagreGraph)
@@ -100,4 +100,3 @@ export const buildProductionFlow = ({
     stats: toFlowStats(totalsResult),
   }
 }
-
