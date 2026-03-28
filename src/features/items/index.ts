@@ -1,7 +1,4 @@
-/**
- * Types
- */
-export type { ItemFilterInput } from './filter-items'
+export type { ItemFilterInput, ItemTableRow } from './types'
 /**
  * Components
  */

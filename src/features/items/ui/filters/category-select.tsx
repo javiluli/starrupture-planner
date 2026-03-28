@@ -1,4 +1,4 @@
-import type { ItemType } from '@/shared/@types/production'
+import type { ItemType } from '@/shared/@types/item.type'
 import { itemsSelectors, useItemsStore } from '@/store/items.store'
 import { Select, SelectItem } from '@heroui/react'
 

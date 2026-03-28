@@ -1,5 +1,5 @@
 import { filterItems, type ItemFilterInput } from '@/features/items'
-import type { ItemTableRow } from '@/store/data.store'
+import type { ItemTableRow } from '@/features/items/types'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 

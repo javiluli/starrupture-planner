@@ -1,4 +1,4 @@
-import type { Corporation } from '@/shared/@types/production'
+import type { Corporation } from '@/shared/@types/corporations.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { itemsSelectors, useItemsStore } from '@/store/items.store'

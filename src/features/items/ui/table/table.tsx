@@ -1,4 +1,5 @@
-import type { CorporationLevelMatch, Item } from '@/shared/@types/production'
+import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
+import type { Item } from '@/shared/@types/item.type'
 import { Typography } from '@/shared/ui'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { ActionsCell, CategoryCell, CorporationsCell, ItemCell, ProductionCell } from './table-cells'
@@ -8,7 +9,7 @@ interface Props {
   dataFiltered: (Item & {
     buildingId: string | null
     production: string | undefined
-    corporations: CorporationLevelMatch[] | undefined
+    corporations: CorporationLevelRef[] | undefined
   })[]
 }
 

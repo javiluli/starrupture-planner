@@ -1,17 +1,11 @@
-import type { CorporationLevelMatch } from '@/shared/@types/production'
-
-export type ItemFilterInput = {
-  selectedCategory: string
-  selectedBuildingId: string
-  selectedCorporationId: string
-  searchQuery: string
-}
+import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
+import type { ItemFilterInput } from '@/features/items/types'
 
 type ItemFilterTarget = {
   name: string
   type: string
   buildingId: string | null
-  corporations: CorporationLevelMatch[] | undefined
+  corporations: CorporationLevelRef[] | undefined
 }
 
 export const filterItems = <T extends ItemFilterTarget>(items: T[], filters: ItemFilterInput): T[] => {

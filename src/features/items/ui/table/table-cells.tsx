@@ -1,4 +1,5 @@
-import type { CorporationLevelMatch, Item } from '@/shared/@types/production'
+import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
+import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { Button, Chip, Tooltip } from '@heroui/react'
@@ -60,7 +61,7 @@ export const ActionsCell = ({ item }: { item: Item }) => {
   )
 }
 
-export const CorporationsCell = ({ corporations }: { corporations: CorporationLevelMatch[] | undefined }) => {
+export const CorporationsCell = ({ corporations }: { corporations: CorporationLevelRef[] | undefined }) => {
   return (
     <Flex gap="lg">
       {corporations?.map((c) => (

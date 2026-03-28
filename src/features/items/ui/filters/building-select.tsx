@@ -1,4 +1,4 @@
-import type { Building } from '@/shared/@types/production'
+import type { Building } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { itemsSelectors, useItemsStore } from '@/store/items.store'
