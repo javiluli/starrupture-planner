@@ -1,4 +1,5 @@
-import type { Item, Recipe } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
+import type { Recipe } from '@/shared/@types/building.type'
 import { AssetImage, Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { Button } from '@heroui/react'

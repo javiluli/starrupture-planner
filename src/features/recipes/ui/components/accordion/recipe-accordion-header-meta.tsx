@@ -1,9 +1,9 @@
-import type { ReactNode } from 'react'
+import type { BuildingUnlockInfo } from '@/features/recipes/types'
+import type { Building } from '@/shared/@types/building.type'
+import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { Chip, Divider } from '@heroui/react'
 import { Flame, Zap } from 'lucide-react'
-import { AssetImage, Flex, Typography } from '@/shared/ui'
-import type { Building } from '@/shared/@types/production'
-import type { BuildingUnlockInfo } from '../../../lib'
+import type { ReactNode } from 'react'
 
 const RecipesChip = ({ count }: { count: number }) => <Chip variant="solid">{count} recipes</Chip>
 
@@ -22,7 +22,7 @@ const UnlockBadge = ({ unlockInfo }: { unlockInfo: BuildingUnlockInfo | null }) 
       <>
         <AssetImage kind="corporations" id={unlockInfo.corporationId} className="h-5" />
         <Typography as="span" variant="small" tone="soft">
-          {unlockInfo.corporationName} L.{unlockInfo.level}
+          {unlockInfo.corporationName} L.{unlockInfo.corporationLevel}
         </Typography>
       </>
     ) : (
@@ -45,3 +45,6 @@ export const RecipeHeaderMeta = ({ building, unlockInfo }: { building: Building;
     </Flex>
   </Flex>
 )
+
+// Alias legacy para imports antiguos
+export const RecipeAccordionHeaderMeta = RecipeHeaderMeta

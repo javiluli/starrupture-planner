@@ -1,4 +1,4 @@
-import type { Corporation } from '@/shared/@types/production'
+import type { Corporation } from '@/shared/@types/corporations.type'
 import { Flex } from '@/shared/ui'
 import { formatNumber } from '@/shared/utils'
 import { Chip } from '@heroui/react'
@@ -17,3 +17,6 @@ export const CorporationHeaderMeta = ({ corporation }: { corporation: Corporatio
     </Flex>
   )
 }
+
+// Alias legacy para imports antiguos
+export const CorporationAccordionHeaderMeta = CorporationHeaderMeta

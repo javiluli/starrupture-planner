@@ -1,6 +1,6 @@
+import type { BuildingUnlockInfo } from '@/features/recipes/types'
+import type { Building } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import type { Building } from '@/shared/@types/production'
-import type { BuildingUnlockInfo } from '../../../lib'
 import { RecipeHeaderMeta } from './recipe-accordion-header-meta'
 
 export const RecipeAccordionHeader = ({ building, unlockInfo }: { building: Building; unlockInfo: BuildingUnlockInfo | null }) => (

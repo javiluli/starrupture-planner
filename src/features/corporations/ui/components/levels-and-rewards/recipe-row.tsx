@@ -1,4 +1,5 @@
-import type { Item, Level } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
+import type { Level } from '@/shared/@types/corporations.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { Button, Chip } from '@heroui/react'

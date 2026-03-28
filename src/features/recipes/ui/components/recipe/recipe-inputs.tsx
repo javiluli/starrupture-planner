@@ -1,4 +1,5 @@
-import type { Item, RecipeInput } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
+import type { RecipeInput } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 
 export const RecipeInputs = ({ inputs, itemMap }: { inputs: RecipeInput[]; itemMap: Map<string, Item> }) => (

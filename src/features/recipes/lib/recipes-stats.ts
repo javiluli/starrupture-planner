@@ -1,4 +1,4 @@
-import type { Building } from '@/shared/@types/production'
+import type { Building } from '@/shared/@types/building.type'
 
 export const buildRecipesStats = (buildings: Building[]) => {
   const buildingsWithRecipes = buildings.filter((building) => (building.recipes?.length ?? 0) > 0)

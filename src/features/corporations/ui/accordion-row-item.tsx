@@ -1,13 +1,10 @@
-import type { Corporation } from '@/shared/@types/production'
-import { buildItemMap } from '@/shared/lib'
+import type { Corporation } from '@/shared/@types/corporations.type'
 import { AccordionItemContent } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
-import { useMemo } from 'react'
+import { useItemMap } from '@/shared/hooks'
 import { RecipeRow } from './components'
 
 export const AccordionRowItem = ({ corporation }: { corporation: Corporation }) => {
-  const items = useDataStore(dataSelectors.items)
-  const itemMap = useMemo(() => buildItemMap(items), [items])
+  const itemMap = useItemMap()
 
   return (
     <AccordionItemContent>

@@ -1,16 +1,16 @@
 import { Accordion } from '@/shared/ui'
 import { accordionItemStyles } from '@/shared/ui/accordion/accordionItem.styles'
-import { dataSelectors, useDataStore } from '@/store/data.store'
 import { AccordionItem } from '@heroui/react'
 import { AccordionRowItem } from './accordion-row-item'
 import { CorporationAccordionHeader } from './components/accordion'
+import { useCorporationsList } from '../hooks'
 
 export const AccordionCorporationsWithRewards = () => {
-  const corporations = useDataStore(dataSelectors.corporations)
+  const corporations = useCorporationsList()
 
   return (
     <Accordion>
-      {Object.values(corporations).map((corporation) => (
+      {corporations.map((corporation) => (
         <AccordionItem
           key={corporation.id}
           aria-label={corporation.id.split('_')[0]}

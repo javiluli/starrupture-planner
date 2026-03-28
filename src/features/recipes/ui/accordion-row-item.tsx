@@ -1,13 +1,10 @@
-import type { Building } from '@/shared/@types/production'
-import { buildItemMap } from '@/shared/lib'
+import type { Building } from '@/shared/@types/building.type'
 import { AccordionItemContent } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
-import { useMemo } from 'react'
+import { useItemMap } from '@/shared/hooks'
 import { RecipeRow } from './components/recipe'
 
 export const AccordionRowItem = ({ building }: { building: Building }) => {
-  const items = useDataStore(dataSelectors.items)
-  const itemMap = useMemo(() => buildItemMap(items), [items])
+  const itemMap = useItemMap()
 
   return (
     <AccordionItemContent>

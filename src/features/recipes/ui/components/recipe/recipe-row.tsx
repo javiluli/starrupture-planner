@@ -1,7 +1,8 @@
 import { ChevronLeft } from 'lucide-react'
 import { memo } from 'react'
 import { Flex } from '@/shared/ui'
-import type { Item, Recipe } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
+import type { Recipe } from '@/shared/@types/building.type'
 import { RecipeOutput } from './recipe-output'
 import { RecipeInputs } from './recipe-inputs'
 
