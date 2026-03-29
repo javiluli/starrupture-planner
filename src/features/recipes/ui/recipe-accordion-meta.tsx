@@ -20,7 +20,7 @@ const UnlockBadge = ({ unlockInfo }: { unlockInfo: BuildingUnlockInfo | null }) 
   <Flex align="center" gap="xs">
     {unlockInfo ? (
       <>
-        <AssetImage kind="corporations" id={unlockInfo.corporationId} className="h-5" />
+        <AssetImage kind="corporations" id={unlockInfo.corporationId} width={20} />
         <Typography as="span" variant="small" tone="soft">
           {unlockInfo.corporationName} L.{unlockInfo.corporationLevel}
         </Typography>
