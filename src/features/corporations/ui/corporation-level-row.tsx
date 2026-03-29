@@ -46,7 +46,7 @@ const CorporationLevelRowComponent = ({ level, itemMap }: Props) => {
                       </Typography>
                     </Flex>
 
-                    <AssetImage kind="items" id={c.id} className="h-12" />
+                    <AssetImage kind="items" id={c.id} width={48} />
                     <Typography as="span" variant="micro" tone="normal" className="text-center">
                       {inputItem?.name ?? c.id}
                     </Typography>

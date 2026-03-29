@@ -8,7 +8,7 @@ interface Props {
 
 export const CorporationAccordionHeader = ({ corporation }: Props) => (
   <Flex align="center" gap="lg">
-    <AssetImage kind="corporations" id={corporation.id} className="h-32" />
+    <AssetImage kind="corporations" id={corporation.id} width={128} />
     <div className="flex-1 space-y-2">
       <Typography as="h3" variant="h3" className="capitalize">
         {corporation.id.split('_').join(' ')}
