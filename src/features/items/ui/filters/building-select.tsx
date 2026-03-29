@@ -30,7 +30,7 @@ export const BuildingSelect = () => {
           const b = item.data as Building
           return (
             <Flex>
-              <AssetImage kind="buildings" id={b.id} className="w-6 shrink-0" />
+              <AssetImage kind="buildings" id={b.id} width={24} className="shrink-0" />
               <Typography as="span" variant="small" tone="muted">
                 {b.name}
               </Typography>
@@ -42,7 +42,7 @@ export const BuildingSelect = () => {
       {(b) => (
         <SelectItem key={b.id} textValue={b.name}>
           <Flex>
-            <AssetImage kind="buildings" id={b.id} className="w-8 shrink-0" />
+            <AssetImage kind="buildings" id={b.id} width={32} className="shrink-0" />
             <Typography as="span" variant="small" tone="muted">
               {b.name}
             </Typography>

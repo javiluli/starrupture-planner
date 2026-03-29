@@ -23,7 +23,7 @@ export const CorporationSelect = () => {
           const c = item.data as Corporation
           return (
             <Flex key={c.id} align="center" gap="sm">
-              <AssetImage kind="corporations" id={c.id} className="w-4 rounded-none" />
+              <AssetImage kind="corporations" id={c.id} width={16} className="rounded-none" />
               <Typography as="span" variant="small" tone="muted" className="capitalize">
                 {c.id.replaceAll('_', ' ')}
               </Typography>
@@ -35,7 +35,7 @@ export const CorporationSelect = () => {
       {(c) => (
         <SelectItem key={c.id}>
           <Flex>
-            <AssetImage kind="corporations" id={c.id} className="w-6 rounded-none" />
+            <AssetImage kind="corporations" id={c.id} width={24} className="rounded-none" />
             <Typography as="span" variant="small" tone="muted" className="capitalize">
               {c.id.split('_').join(' ')}
             </Typography>

@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 export const ItemCell = ({ item }: { item: Item }) => {
   return (
     <Flex gap="sm">
-      <AssetImage kind="items" id={item.id} className="h-14" />
+      <AssetImage kind="items" id={item.id} width={56} />
       <Typography as="span" variant="body" tone="muted">
         {item.name}
       </Typography>
@@ -66,7 +66,7 @@ export const CorporationsCell = ({ corporations }: { corporations: CorporationLe
     <Flex gap="lg">
       {corporations?.map((c) => (
         <Flex key={`${c.corporationId}-${c.level}`} gap="sm">
-          <AssetImage kind="corporations" id={c.corporationId} className="h-6" />
+          <AssetImage kind="corporations" id={c.corporationId} width={24} />
           <Typography as="span" variant="small" tone="soft" className="capitalize">
             {c.corporationId.split('_')[0]} <span>L.{c.level}</span>
           </Typography>
