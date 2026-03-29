@@ -24,7 +24,7 @@ export function RandomItemMarquee() {
               setTargetId(id)
             }}
           >
-            <AssetImage id={id} kind="items" className="h-24" />
+            <AssetImage id={id} kind="items" width={96} />
           </Link>
         </Flex>
       ))}

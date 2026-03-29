@@ -27,7 +27,7 @@ export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps) => {
           <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />
 
           <div className="relative">
-            <AssetImage kind="buildings" id={ORBITAL_CARGO_LAUNCHER_ID} className="h-40" />
+            <AssetImage kind="buildings" id={ORBITAL_CARGO_LAUNCHER_ID} width={160} />
           </div>
         </Flex>
       </Flex>
@@ -36,7 +36,7 @@ export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps) => {
 
       <Flex gap="md">
         <div className="flex bg-content2 rounded-2xl">
-          <AssetImage kind="items" id={exportItemId} className="h-10" />
+          <AssetImage kind="items" id={exportItemId} width={40} />
         </div>
         <FlowNodeOutputRate itemName={exportItemName} baseIpm={ORBITAL_CARGO_LAUNCHER_EXPORT_IPM} />
       </Flex>

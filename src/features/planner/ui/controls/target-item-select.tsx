@@ -19,7 +19,7 @@ export function TargetItemSelect() {
       onSelectionChange={(id) => setTargetId(id as string)}
     >
       {items.map((i) => (
-        <AutocompleteItem key={i.id} textValue={i.name} startContent={<AssetImage kind="items" id={i.id} className="w-full h-8" />}>
+        <AutocompleteItem key={i.id} textValue={i.name} startContent={<AssetImage kind="items" id={i.id} width={32} />}>
           {i.name}
         </AutocompleteItem>
       ))}

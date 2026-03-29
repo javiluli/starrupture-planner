@@ -74,7 +74,7 @@ export function SupplyModal() {
                             className="group panel-muted p-3 cursor-pointer transition-colors hover:bg-content3/60"
                             onClick={() => handleSupply(i.id)}
                           >
-                            <AssetImage kind="items" id={i.id} className="w-24 h-24" />
+                            <AssetImage kind="items" id={i.id} width={96} />
                             <Typography
                               as="span"
                               variant="micro"

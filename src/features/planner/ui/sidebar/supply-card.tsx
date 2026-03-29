@@ -59,7 +59,7 @@ export const SupplyCard = memo(({ itemId, value }: SupplyCardProps) => {
       <CardBody className="py-2">
         <Flex gap="md">
           {/* Imagen del item */}
-          <AssetImage kind="items" id={itemId} className="w-18" />
+          <AssetImage kind="items" id={itemId} width={72} />
 
           {/* Input supply, con botones para sumar o restar de 10 */}
           <Flex className="bg-content2/60 rounded-lg border border-divider/60">

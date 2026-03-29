@@ -27,9 +27,9 @@ export function SupplyNode({ data, selected }: NodeProps) {
           <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />
 
           <div className="relative">
-            <AssetImage kind="buildings" id={buildingId} className="h-40" />
+            <AssetImage kind="buildings" id={buildingId} width={160} />
             <div className="absolute left-1/2 bottom-0 bg-content1 ring-2 ring-foreground rounded-2xl z-10">
-              <AssetImage kind="items" id={itemId} className="h-16" />
+              <AssetImage kind="items" id={itemId} width={64} />
             </div>
           </div>
         </Flex>
