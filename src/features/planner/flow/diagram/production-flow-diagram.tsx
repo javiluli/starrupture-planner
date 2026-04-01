@@ -3,12 +3,18 @@ import { dataSelectors, useDataStore } from '@/store/data.store'
 import { FLOW_BACKGROUND } from '@/features/planner/flow/config/flow-theme'
 import { FLOW_NODE_TYPES } from '@/features/planner/flow/config/node-types'
 import { useFlowDiagram } from '@/features/planner/hooks/use-flow-diagram'
+import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
 
 function ProductionFlowDiagramInner() {
   const itemsStore = useDataStore(dataSelectors.items)
   const buildingsStore = useDataStore(dataSelectors.buildings)
+  const plan = useProductionPlan()
 
-  const { nodes, edges, onNodesChange } = useFlowDiagram({ items: itemsStore, buildings: buildingsStore })
+  const { nodes, edges, onNodesChange } = useFlowDiagram({
+    items: itemsStore,
+    buildings: buildingsStore,
+    plan,
+  })
 
   return (
     <ReactFlow

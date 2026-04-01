@@ -1,27 +1,22 @@
-import { buildProductionFlow } from '@/features/planner/flow'
+import { buildProductionFlowFromPlan } from '@/features/planner/flow/builder/build-production-flow'
 import { scheduleFlowFitView, shouldFitFlowView } from '@/features/planner/flow/layout/flow-fit'
 import { useProduction } from '@/features/planner/hooks/use-production'
-import { isItemExportableToCorporation } from '@/features/planner/lib/corporations'
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
-import { useDataStore } from '@/store/data.store'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { useReactFlow } from '@xyflow/react'
 import { useEffect, useRef } from 'react'
+import type { ProductionPlan } from '@/features/planner/lib/production-plan/types'
 
 interface UseFlowDiagramParams {
   items: Item[]
   buildings: Building[]
+  plan: ProductionPlan | null
 }
 
-export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
+export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams) => {
   const targetId = usePlannerStore(plannerSelectors.targetId)
-  const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
-  const supplyCountByItem = usePlannerStore(plannerSelectors.supplyCountByItem)
-  const setPlannerStats = usePlannerStore(plannerSelectors.setPlannerStats)
   const setSupplyCount = usePlannerStore(plannerSelectors.setSupplyCount)
-
-  const corporations = useDataStore((state) => state.corporations)
 
   const { nodes, setNodes, edges, setEdges, onNodesChange } = useProduction()
   const { fitView } = useReactFlow()
@@ -29,24 +24,17 @@ export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
   const lastTargetIdRef = useRef(targetId)
 
   useEffect(() => {
-    const isExportable = isItemExportableToCorporation(corporations, targetId)
-    const {
-      nodes: newNodes,
-      edges: newEdges,
-      stats,
-    } = buildProductionFlow({
+    if (!plan) return
+
+    const { nodes: newNodes, edges: newEdges } = buildProductionFlowFromPlan({
+      plan,
       items,
       buildings,
-      targetId,
-      targetIpm,
-      supplyCountByItem,
-      isExportable,
       setSupplyCount,
     })
 
     setNodes(newNodes)
     setEdges(newEdges)
-    setPlannerStats(stats)
 
     if (shouldFitFlowView(lastTargetIdRef.current, targetId)) {
       lastTargetIdRef.current = targetId
@@ -54,7 +42,7 @@ export const useFlowDiagram = ({ items, buildings }: UseFlowDiagramParams) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, buildings, targetId, targetIpm, supplyCountByItem, fitView, corporations, setSupplyCount])
+  }, [plan, items, buildings, targetId, fitView, setSupplyCount])
 
   return { nodes, edges, onNodesChange }
 }

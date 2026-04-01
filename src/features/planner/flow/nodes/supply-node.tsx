@@ -5,8 +5,7 @@ import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
 export function SupplyNode({ data, selected }: NodeProps) {
-  const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supplyCount } =
-    data as SupplyNodeData
+  const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supplyCount } = data as SupplyNodeData
 
   return (
     <Flex
@@ -21,7 +20,8 @@ export function SupplyNode({ data, selected }: NodeProps) {
       <Handle type="source" position={Position.Right} style={{ background: '#ffffff' }} />
 
       <Flex direction="col">
-        <FlowNodeHeader title={buildingName} className="italic" />
+        <FlowNodeHeader title={buildingName} />
+        <FlowNodeHeader title="External supply" className="text-medium text-foreground/60 italic" />
 
         <Flex>
           <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />

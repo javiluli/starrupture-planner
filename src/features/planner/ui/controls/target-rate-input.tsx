@@ -1,10 +1,11 @@
+import { usePlannerTarget } from '@/features/planner'
 import { Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { NumberInput } from '@heroui/react'
 
-export function TargetRateInput() {
+export const TargetRateInput = () => {
   const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
-  const setTargetIpm = usePlannerStore(plannerSelectors.setTargetIpm)
+  const { setTargetRate } = usePlannerTarget()
 
   return (
     <NumberInput
@@ -13,7 +14,7 @@ export function TargetRateInput() {
       className="max-w-32"
       minValue={0}
       value={targetIpm}
-      onValueChange={setTargetIpm}
+      onValueChange={setTargetRate}
       endContent={
         <div className="pointer-events-none flex items-center">
           <Typography as="span" variant="micro" tone="soft">

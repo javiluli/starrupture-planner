@@ -1,6 +1,11 @@
-# Flow (Planner)
+﻿# Flow (Planner)
 
 React Flow + helpers de layout y construccion de nodos/edges.
+
+## Enlaces rapidos
+
+- [Planner (overview)](../README.md)
+- [Hooks](../hooks/README.md)
 
 ## Estructura
 
@@ -21,12 +26,14 @@ flow/
 
 ## Rol en el sistema
 
-- `buildProductionFlow` solo orquesta (plan -> flow).
+- `buildProductionFlowFromPlan` orquesta (plan -> flow).
 - `planToFlow` transforma el plan en nodos y edges.
-- `core/*` genera nodos y edges con layout estable.
+- `core/*` crea nodos/edges a partir del plan.
+- El `plan` viene de `useProductionPlan`.
 
 ## Donde tocar segun necesidad
 
 - Cambios de layout: `config/dagre-config.ts`.
 - Cambios de nodos: `core/flow-nodes.ts`.
 - Cambios de edges: `core/flow-edges.ts`.
+- Ajustes de nombres/labels: `core/lookup.ts`.

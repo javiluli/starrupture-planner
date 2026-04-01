@@ -1,6 +1,6 @@
 import { cn, Image } from '@heroui/react'
 
-type IconKind = 'items' | 'buildings' | 'corporations'
+export type IconKind = 'items' | 'buildings' | 'corporations'
 
 type AssetImageProps = {
   id: string

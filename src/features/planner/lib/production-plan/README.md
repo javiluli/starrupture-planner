@@ -1,6 +1,12 @@
-# Production Plan (Planner)
+﻿# Production Plan (Planner)
 
 Esta carpeta concentra toda la logica de calculo del plan.
+
+## Enlaces rapidos
+
+- [Planner (overview)](../../README.md)
+- [Lib](../README.md)
+- [Flow](../../flow/README.md)
 
 ## Archivos
 
@@ -14,4 +20,3 @@ Esta carpeta concentra toda la logica de calculo del plan.
 1. `calculate-totals` genera demanda neta.
 2. `build-steps` genera steps con recetas.
 3. `build-production-plan` calcula stats y ensambla el plan.
-

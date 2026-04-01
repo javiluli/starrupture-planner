@@ -1,8 +1,8 @@
-import type { Building } from '@/shared/@types/building.type'
 import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID } from '@/features/planner/constants'
-import type { BuildProductionPlanParams, ProductionPlan, ProductionStep } from './types'
+import type { Building } from '@/shared/@types/building.type'
 import { buildSteps } from './build-steps'
 import { buildSupplyCountInventory, calculateTotals } from './calculate-totals'
+import type { BuildProductionPlanParams, ProductionPlan, ProductionStep } from './types'
 
 /**
  * Calcula stats globales a partir de los pasos.
@@ -14,12 +14,7 @@ import { buildSupplyCountInventory, calculateTotals } from './calculate-totals'
  * @param isExportable Indica si se agrega el launcher orbital.
  * @returns Totales de edificios, energia y heat.
  */
-const computeStats = (
-  buildings: Building[],
-  steps: ProductionStep[],
-  targetIpm: number,
-  isExportable: boolean,
-) => {
+const computeStats = (buildings: Building[], steps: ProductionStep[], targetIpm: number, isExportable: boolean) => {
   let power = 0
   let heat = 0
   let totalBuildings = 0
