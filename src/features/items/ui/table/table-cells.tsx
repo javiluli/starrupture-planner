@@ -1,9 +1,8 @@
+import { usePlannerTarget } from '@/features/planner'
 import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
-import { Button, Chip, Tooltip } from '@heroui/react'
-import { Ruler } from 'lucide-react'
+import { Button, Chip } from '@heroui/react'
 import { useNavigate } from 'react-router-dom'
 
 export const ItemCell = ({ item }: { item: Item }) => {
@@ -38,10 +37,10 @@ export const ProductionCell = ({ itemProduction }: { itemProduction: string | un
 
 export const ActionsCell = ({ item }: { item: Item }) => {
   const navigate = useNavigate()
-  const setTargetId = usePlannerStore(plannerSelectors.setTargetId)
+  const { selectTargetItem } = usePlannerTarget()
 
   const handlerRedirect = (id: string) => {
-    setTargetId(id)
+    selectTargetItem(id)
     // Un ligero delay, opcional permite que el estado se sincronice antes del cambio de vista
     setTimeout(() => {
       navigate('/')
@@ -51,11 +50,9 @@ export const ActionsCell = ({ item }: { item: Item }) => {
   return (
     <Flex>
       {item.type !== 'raw' && (
-        <Tooltip content="Open on planner">
-          <Button isIconOnly variant="light" onPress={() => handlerRedirect(item.id)}>
-            <Ruler />
-          </Button>
-        </Tooltip>
+        <Button size="sm" onPress={() => handlerRedirect(item.id)}>
+          Planner
+        </Button>
       )}
     </Flex>
   )

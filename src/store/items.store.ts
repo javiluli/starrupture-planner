@@ -1,5 +1,4 @@
-import { filterItems, type ItemFilterInput } from '@/features/items'
-import type { ItemTableRow } from '@/features/items/types'
+import type { ItemFilterInput } from '@/features/items'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
@@ -9,7 +8,6 @@ interface ItemsStoreState {
   setSelectedBuildingId: (value: string) => void
   setSelectedCorporationId: (value: string) => void
   setSearchQuery: (value: string) => void
-  getFilteredItems: (items: ItemTableRow[]) => ItemTableRow[]
   resetFilter: () => void
 }
 
@@ -19,7 +17,6 @@ export const itemsSelectors = {
   setSelectedBuildingId: (state: ItemsStoreState) => state.setSelectedBuildingId,
   setSelectedCorporationId: (state: ItemsStoreState) => state.setSelectedCorporationId,
   setSearchQuery: (state: ItemsStoreState) => state.setSearchQuery,
-  getFilteredItems: (state: ItemsStoreState) => state.getFilteredItems,
   resetFilter: (state: ItemsStoreState) => state.resetFilter,
 }
 
@@ -36,7 +33,6 @@ export const useItemsStore = create<ItemsStoreState>()(
       setSelectedBuildingId: (value) => set({ filters: { ...get().filters, selectedBuildingId: value } }),
       setSelectedCorporationId: (value) => set({ filters: { ...get().filters, selectedCorporationId: value } }),
       setSearchQuery: (value) => set({ filters: { ...get().filters, searchQuery: value } }),
-      getFilteredItems: (items) => filterItems(items, get().filters),
       resetFilter: () => {
         set({
           filters: { selectedCategory: '', selectedBuildingId: '', selectedCorporationId: '', searchQuery: '' },

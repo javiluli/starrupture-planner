@@ -1,6 +1,6 @@
 import type { ItemType } from '@/shared/@types/item.type'
-import { itemsSelectors, useItemsStore } from '@/store/items.store'
 import { Select, SelectItem } from '@heroui/react'
+import { useItemsFilters } from '@/features/items/hooks/use-items-filters'
 
 const CATEGORY_OPTIONS: {
   key: ItemType
@@ -14,16 +14,18 @@ const CATEGORY_OPTIONS: {
 ]
 
 export const CategorySelect = () => {
-  const setSelectedCategory = useItemsStore(itemsSelectors.setSelectedCategory)
+  const { filters, setSelectedCategory } = useItemsFilters()
+  const selectedKeys = filters.selectedCategory ? [filters.selectedCategory] : []
 
   return (
     <Select
-      size="sm"
-      variant="bordered"
-      className="w-48"
+      size='sm'
+      variant='bordered'
+      className='w-48'
       items={CATEGORY_OPTIONS}
       isClearable={true}
-      placeholder="Category by filter"
+      placeholder='Category by filter'
+      selectedKeys={selectedKeys}
       onChange={(e) => setSelectedCategory(e.target.value)}
     >
       {(i) => (
