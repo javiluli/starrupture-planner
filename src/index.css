@@ -57,11 +57,11 @@
 
 @layer utilities {
   .panel {
-    @apply rounded-2xl border border-divider/60 bg-content1/30;
+    @apply rounded-2xl bg-content1/30;
   }
 
   .panel-muted {
-    @apply rounded-2xl border border-divider/60 bg-content1/20;
+    @apply rounded-2xl bg-content1/20;
   }
 }
 
