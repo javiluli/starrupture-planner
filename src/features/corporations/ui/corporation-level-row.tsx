@@ -1,7 +1,7 @@
 import type { Item } from '@/shared/@types/item.type'
 import type { Level } from '@/shared/@types/corporations.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
+import { usePlannerTarget } from '@/features/planner'
 import { Button, Chip } from '@heroui/react'
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -14,10 +14,10 @@ interface Props {
 
 const CorporationLevelRowComponent = ({ level, itemMap }: Props) => {
   const navigate = useNavigate()
-  const setTargetId = usePlannerStore(plannerSelectors.setTargetId)
+  const { selectTargetItem } = usePlannerTarget()
 
   const handlerRedirect = (id: string) => {
-    setTargetId(id)
+    selectTargetItem(id)
     // Un ligero delay, opcional permite que el estado se sincronice antes del cambio de vista
     setTimeout(() => {
       navigate('/')
@@ -25,41 +25,41 @@ const CorporationLevelRowComponent = ({ level, itemMap }: Props) => {
   }
 
   return (
-    <div className="rounded-lg border border-divider">
-      <Flex direction="col" align="start" gap="xl" wrap="wrap" className="px-10 py-6">
+    <div className='rounded-lg border border-divider'>
+      <Flex direction='col' align='start' gap='xl' wrap='wrap' className='px-10 py-6'>
         <LevelRequirements level={level.level} xp={level.xp} />
 
-        <Flex gap="lg">
+        <Flex gap='lg'>
           {level.components.map((c, index) => {
             const inputItem = itemMap.get(c.id)
 
             return (
-              <Flex key={c.id} gap="lg">
-                <Flex direction="col" gap="md">
-                  <div className="flex flex-col items-center gap-2 p-2 rounded-md bg-content1 min-w-30">
-                    <Flex gap="md">
-                      <Chip size="sm" variant="bordered" color="primary">
+              <Flex key={c.id} gap='lg'>
+                <Flex direction='col' gap='md'>
+                  <div className='flex flex-col items-center gap-2 p-2 rounded-md bg-content1 min-w-30'>
+                    <Flex gap='md'>
+                      <Chip size='sm' variant='bordered' color='primary'>
                         {c.points} G
                       </Chip>
-                      <Typography as="span" variant="micro" tone="muted" className="text-center">
+                      <Typography as='span' variant='micro' tone='muted' className='text-center'>
                         x{(level.xp / c.points).toFixed(0)}
                       </Typography>
                     </Flex>
 
-                    <AssetImage kind="items" id={c.id} width={48} />
-                    <Typography as="span" variant="micro" tone="normal" className="text-center">
+                    <AssetImage kind='items' id={c.id} width={48} />
+                    <Typography as='span' variant='micro' tone='normal' className='text-center'>
                       {inputItem?.name ?? c.id}
                     </Typography>
                   </div>
 
-                  <Button variant="solid" size="sm" onPress={() => handlerRedirect(c.id)}>
+                  <Button variant='solid' size='sm' onPress={() => handlerRedirect(c.id)}>
                     Open on planner
                   </Button>
                 </Flex>
 
                 {/* Separador solo si NO es el ultimo */}
                 {index < level.components.length - 1 && (
-                  <Typography as="span" variant="h3" tone="soft" className="font-light">
+                  <Typography as='span' variant='h3' tone='soft' className='font-light'>
                     OR
                   </Typography>
                 )}
@@ -69,11 +69,11 @@ const CorporationLevelRowComponent = ({ level, itemMap }: Props) => {
         </Flex>
 
         <Flex>
-          <Typography variant="small" tone="muted">
+          <Typography variant='small' tone='muted'>
             Rewards:
           </Typography>
           {level.rewards.map((r) => (
-            <Chip variant="bordered" size="sm">
+            <Chip variant='bordered' size='sm'>
               {r.name}
             </Chip>
           ))}
