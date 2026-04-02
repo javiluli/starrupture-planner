@@ -1,6 +1,13 @@
 import type { Edge } from '@xyflow/react'
 import dagre from 'dagre'
-import type { ItemType } from '@/shared/@types/production'
+import type { ItemType } from '@/shared/@types/item.type'
+
+const EDGE_LABEL_STYLES = {
+  labelBgBorderRadius: 10,
+  labelBgPadding: [10, 6] as [number, number],
+  labelBgStyle: { fill: '#0A101B', stroke: '#E6EDF3', strokeWidth: 1 },
+  labelStyle: { fill: '#E6EDF3', fontSize: 16, fontWeight: 600 },
+}
 
 interface ConnectParams {
   edges: Edge[]
@@ -10,7 +17,7 @@ interface ConnectParams {
   itemType: ItemType
   consumerId: string
   totalNeeded: number
-  supplyInventory: Record<string, number>
+  supplyCountInventory: Record<string, number>
   isFinalLauncher?: boolean
 }
 
@@ -29,17 +36,17 @@ export const connectSupplyAndProduction = ({
   itemType,
   consumerId,
   totalNeeded,
-  supplyInventory,
+  supplyCountInventory,
   isFinalLauncher = false,
 }: ConnectParams) => {
   if (totalNeeded <= 0) return
 
   let remaining = totalNeeded
 
-  const available = supplyInventory[itemId] || 0
+  const available = supplyCountInventory[itemId] || 0
   if (available > 0) {
     const taken = Math.min(available, remaining)
-    supplyInventory[itemId] -= taken
+    supplyCountInventory[itemId] -= taken
     remaining -= taken
 
     edges.push({
@@ -49,11 +56,11 @@ export const connectSupplyAndProduction = ({
       label: `${itemName} x${taken.toFixed(1)}/m`,
       animated: true,
       style: {
-        stroke: isFinalLauncher ? '#00ff9f' : '#3b82f6',
-        strokeWidth: 4,
-        strokeDasharray: isFinalLauncher ? '' : '5, 5',
+        stroke: '#6366f1',
+        strokeWidth: 6,
+        strokeDasharray: '5 5',
       },
-      labelStyle: { fill: '#fff', fontSize: 18, fontWeight: 700 },
+      ...EDGE_LABEL_STYLES,
       className: `e-supply-${itemType}`,
     })
     dagreGraph.setEdge(`supply-${itemId}`, consumerId)
@@ -69,7 +76,7 @@ export const connectSupplyAndProduction = ({
         strokeWidth: 4,
         opacity: 0.8,
       },
-      labelStyle: { fill: '#fff', fontSize: 18, fontWeight: 700 },
+      ...EDGE_LABEL_STYLES,
       className: isFinalLauncher ? 'react-flow__edge-orbital_cargo_launcher' : `react-flow__edge-${itemType}`,
     })
     dagreGraph.setEdge(itemId, consumerId)

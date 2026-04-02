@@ -1,25 +1,24 @@
 import { Flex, PageContainer, Panel, Typography } from '@/shared/ui'
 import { Sidebar } from './components'
 import {
-  AutocompleteSection,
-  ButtonsSection,
-  CardsSection,
-  ChipsSection,
-  DropdownSection,
-  InputsSection,
-  MediaSection,
-  NumberInputSection,
-  OverlaysSection,
-  ProgressSection,
-  RadiosSection,
-  SelectsSection,
-  TableSection,
-  TabsSection,
-  ThemeSection,
-  TogglesSection,
-  TooltipsSection,
-  TypographySection,
-} from './sections'
+  AccordionPlayground,
+  AutocompletePlayground,
+  ButtonPlayground,
+  CardsPlayground,
+  CheckboxPlayground,
+  ChipPlayground,
+  DropdownPlayground,
+  InputPlayground,
+  LinkPlayground,
+  ModalPlayground,
+  NumberinputPlayground,
+  SelectsPlayground,
+  TablePlayground,
+  TabsPlayground,
+  TooltipPlayground,
+  TypographyPlayground,
+} from './playground'
+import { Theme } from './playground/custom/theme'
 
 const PageDevUI = () => {
   return (
@@ -34,26 +33,24 @@ const PageDevUI = () => {
 
         <div className="grid grid-cols-[14rem_minmax(0,1fr)] gap-10 items-start py-4 pb-12">
           <Sidebar />
-
           <div className="space-y-10">
-            <TypographySection />
-            <ThemeSection />
-            <ButtonsSection />
-            <InputsSection />
-            <NumberInputSection />
-            <SelectsSection />
-            <AutocompleteSection />
-            <TogglesSection />
-            <RadiosSection />
-            <ChipsSection />
-            <TabsSection />
-            <TableSection />
-            <CardsSection />
-            <ProgressSection />
-            <OverlaysSection />
-            <TooltipsSection />
-            <DropdownSection />
-            <MediaSection />
+            <Theme />
+            <TypographyPlayground />
+            <AccordionPlayground />
+            <AutocompletePlayground />
+            <ButtonPlayground />
+            <CardsPlayground />
+            <CheckboxPlayground />
+            <ChipPlayground />
+            <DropdownPlayground />
+            <InputPlayground />
+            <LinkPlayground />
+            <ModalPlayground />
+            <NumberinputPlayground />
+            <SelectsPlayground />
+            <TablePlayground />
+            <TabsPlayground />
+            <TooltipPlayground />
           </div>
         </div>
       </div>

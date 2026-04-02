@@ -1,6 +1,5 @@
+export type { CorporationLevelRequirement } from './corporation-level-requirements'
 export { pickRandomItems } from './array'
-export { colorWithOpacity } from './color'
 export { formatTime } from './time'
 export { calculateCorporationLevelRequirements } from './corporation-level-requirements'
-export type { CorporationLevelRequirement } from './corporation-level-requirements'
 export { formatNumber } from './format'

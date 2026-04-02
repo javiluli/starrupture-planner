@@ -1,45 +1,44 @@
-import { BuildingSelect, CategorySelect, ItemCount, SearchInput, TableOfItems, useItemsTableData } from '@/features/items'
-import { Flex, PageContainer, Panel } from '@/shared/ui'
-import { itemsSelectors, useItemsStore } from '@/store/items.store'
-import { useMemo } from 'react'
+import { BuildingSelect, CategorySelect, ClearFiltersButton, CorporationSelect, SearchInput, TableOfItems, useFilteredItems, useItemsTableData, useItemsFilters } from '@/features/items'
+import { Flex, PageContainer, Panel, StatLabel } from '@/shared/ui'
+import { useEffect } from 'react'
 
 const PageItems = () => {
   /**
-   * Zustand store
+   * Hooks
    */
   const itemsWithProduction = useItemsTableData()
+  const { resetFilter } = useItemsFilters()
+  const filteredItems = useFilteredItems(itemsWithProduction)
 
   /**
-   * Filters
+   * Start with clean/empty filters
    */
-  const filters = useItemsStore(itemsSelectors.filters)
-  const setSelectedCategory = useItemsStore(itemsSelectors.setSelectedCategory)
-  const setSelectedBuildingId = useItemsStore(itemsSelectors.setSelectedBuildingId)
-  const setSearchQuery = useItemsStore(itemsSelectors.setSearchQuery)
-  const getFilteredItems = useItemsStore(itemsSelectors.getFilteredItems)
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const filteredItems = useMemo(() => getFilteredItems(itemsWithProduction), [getFilteredItems, itemsWithProduction, filters])
+  useEffect(() => {
+    resetFilter()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <PageContainer>
       {/* Header and filters */}
-      <Panel padding="sm">
-        <Flex wrap="wrap" justify="between" align="end" gap="lg">
-          {/* Filters */}
-          <Flex>
-            <CategorySelect onChange={setSelectedCategory} />
-            <BuildingSelect onChange={setSelectedBuildingId} />
-            <SearchInput onSearch={setSearchQuery} />
+      <Panel padding='sm'>
+        <Flex wrap='wrap' justify='between' align='end' gap='lg'>
+          {/* Filters menu */}
+          <Flex wrap='wrap'>
+            <CategorySelect />
+            <BuildingSelect />
+            <CorporationSelect />
+            <SearchInput />
+            <ClearFiltersButton />
           </Flex>
 
-          {/* Contador de items */}
-          <ItemCount totalItems={filteredItems.length} />
+          {/* Items count */}
+          <StatLabel value={filteredItems.length} label='Item' />
         </Flex>
       </Panel>
 
-      {/* Table container */}
-      <div className="flex-1 overflow-y-scroll panel-muted">
+      {/* Main table */}
+      <div className='flex-1 overflow-y-scroll panel-muted'>
         <TableOfItems dataFiltered={filteredItems} />
       </div>
     </PageContainer>

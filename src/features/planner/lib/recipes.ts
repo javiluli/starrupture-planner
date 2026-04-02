@@ -1,4 +1,4 @@
-import type { Building } from '@/shared/@types/production'
+import type { Building } from '@/shared/@types/building.type'
 
 /**
  * Busca en el catalogo que edificio y que receta corresponden a un item especifico.

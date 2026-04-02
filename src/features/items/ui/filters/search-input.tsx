@@ -1,19 +1,20 @@
 import { Input } from '@heroui/react'
 import { SearchIcon } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
+import { useItemsFilters } from '@/features/items/hooks/use-items-filters'
 
-export const SearchInput = ({ onSearch }: { onSearch: (value: string) => void }) => {
-  const { t } = useTranslation('items')
+export const SearchInput = () => {
+  const { filters, setSearchQuery } = useItemsFilters()
 
   return (
     <Input
-      type="search"
-      size="sm"
-      variant="bordered"
-      className="w-3xs"
-      placeholder={t('search-bar-label')}
+      type='search'
+      size='sm'
+      variant='bordered'
+      className='w-50'
+      placeholder='Search items'
       startContent={<SearchIcon size={18} />}
-      onChange={(e) => onSearch(e.target.value)}
+      value={filters.searchQuery}
+      onChange={(e) => setSearchQuery(e.target.value)}
     />
   )
 }

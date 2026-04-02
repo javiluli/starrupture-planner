@@ -1,21 +1,20 @@
-import type { CorporationLevelMatch, Item } from '@/shared/@types/production'
+import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
+import type { Item } from '@/shared/@types/item.type'
 import { Typography } from '@/shared/ui'
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
 import { ActionsCell, CategoryCell, CorporationsCell, ItemCell, ProductionCell } from './table-cells'
 import { getColumns, type ColumnKey } from './table-columns'
-import { useTranslation } from 'react-i18next'
 
 interface Props {
   dataFiltered: (Item & {
     buildingId: string | null
     production: string | undefined
-    corporations: CorporationLevelMatch[] | undefined
+    corporations: CorporationLevelRef[] | undefined
   })[]
 }
 
 export const TableOfItems = ({ dataFiltered }: Props) => {
-  const { t } = useTranslation('items')
-  const columns = getColumns(t as unknown as (key: string) => string)
+  const columns = getColumns()
   const renderCell = (item: (typeof dataFiltered)[number], columnKey: React.Key) => {
     const key = columnKey as ColumnKey
 

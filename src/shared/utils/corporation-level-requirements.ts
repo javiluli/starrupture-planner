@@ -1,4 +1,4 @@
-import type { CorporationsData } from '@/shared/@types/production'
+import type { CorporationsById } from '@/shared/@types/corporations.type'
 
 export interface CorporationLevelRequirement {
   corporationId: string
@@ -20,7 +20,7 @@ export interface CorporationLevelRequirement {
 export const calculateCorporationLevelRequirements = (
   itemId: string,
   targetIpm: number,
-  corporations: CorporationsData,
+  corporations: CorporationsById,
 ): CorporationLevelRequirement[] => {
   const results: CorporationLevelRequirement[] = []
 

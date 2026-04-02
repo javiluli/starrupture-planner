@@ -1,5 +1,5 @@
 import { Flex, AssetImage, Typography } from '@/shared/ui'
-import { filterItemsByQuery, groupItemsByType, SUPPLY_ITEM_TYPE_ORDER } from '@/features/planner/lib/supply-items'
+import { filterItemsByQuery, groupItemsByType, SUPPLY_ITEM_TYPE_ORDER } from '@/features/planner/lib/supply-count-items'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { Button, Chip, Input, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/react'
 import { SearchIcon } from 'lucide-react'
@@ -8,7 +8,7 @@ import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 
 export function SupplyModal() {
   const items = useDataStore(dataSelectors.items)
-  const addSupplyNode = usePlannerStore(plannerSelectors.addSupplyNode)
+  const addSupplyItem = usePlannerStore(plannerSelectors.addSupplyItem)
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [search, setSearch] = useState('')
@@ -17,7 +17,7 @@ export function SupplyModal() {
   const itemsByType = useMemo(() => groupItemsByType(filteredItems), [filteredItems])
 
   const handleSupply = (itemId: string) => {
-    addSupplyNode(itemId)
+    addSupplyItem(itemId)
     setSearch('')
     onClose()
   }
@@ -74,7 +74,7 @@ export function SupplyModal() {
                             className="group panel-muted p-3 cursor-pointer transition-colors hover:bg-content3/60"
                             onClick={() => handleSupply(i.id)}
                           >
-                            <AssetImage kind="items" id={i.id} className="w-24 h-24" />
+                            <AssetImage kind="items" id={i.id} width={96} />
                             <Typography
                               as="span"
                               variant="micro"

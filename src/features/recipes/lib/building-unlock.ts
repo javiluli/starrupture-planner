@@ -1,33 +1,18 @@
-import type { CorporationsData } from '@/shared/@types/production'
+import type { CorporationsById } from '@/shared/@types/corporations.type'
+import type { BuildingUnlockInfo } from '@/features/recipes/types'
 
-export interface BuildingUnlockInfo {
-  corporationId: string
-  corporationName: string
-  level: number
-}
-
-const normalize = (value: string) => value.trim().toLowerCase()
-
-export const buildBuildingUnlockMap = (corporations: CorporationsData) => {
-  const map = new Map<string, BuildingUnlockInfo>()
-
-  Object.entries(corporations).forEach(([corporationName, corporation]) => {
-    corporation.levels.forEach((level) => {
-      level.rewards?.forEach((reward) => {
-        const key = normalize(reward.name)
-        if (!key || map.has(key)) return
-
-        map.set(key, {
+export const getBuildingUnlockInfo = (corporations: CorporationsById, buildingName: string): BuildingUnlockInfo | null => {
+  for (const [corporationName, corporation] of Object.entries(corporations)) {
+    for (const level of corporation.levels) {
+      if (level.rewards.some((reward) => reward.name === buildingName)) {
+        return {
           corporationId: corporation.id,
+          corporationLevel: level.level,
           corporationName,
-          level: level.level,
-        })
-      })
-    })
-  })
+        }
+      }
+    }
+  }
 
-  return map
+  return null
 }
-
-export const getBuildingUnlockInfo = (unlockMap: Map<string, BuildingUnlockInfo>, buildingName: string) =>
-  unlockMap.get(normalize(buildingName)) ?? null

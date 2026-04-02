@@ -1,6 +1,6 @@
-import {
+﻿import {
   CorporationLevelRequirements,
-  ProductionFlowDiagram,
+  ProductionDiagramTabs,
   RandomItemMarquee,
   StatsBar,
   SupplySidebar,
@@ -9,10 +9,8 @@ import {
 } from '@/features/planner'
 import { Flex, Grid, PageContainer, Panel, Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
-import { useTranslation } from 'react-i18next'
 
 const PagePlanner = () => {
-  const { t } = useTranslation('planner')
   const targetId = usePlannerStore(plannerSelectors.targetId)
 
   return (
@@ -37,8 +35,10 @@ const PagePlanner = () => {
       {targetId ? (
         <Grid className="flex-1 grid-cols-[minmax(0,1fr)_20rem] gap-4 items-stretch">
           {/* Diagrama principal React Flow */}
-          <div className="panel-muted overflow-hidden">
-            <ProductionFlowDiagram />
+          <div className="panel-muted h-full overflow-hidden">
+            <div className="flex w-full h-full flex-col">
+              <ProductionDiagramTabs />
+            </div>
           </div>
           {/* Menus/Sidebar para seleccionar items externos que se suman a la produccion (supply) */}
           <SupplySidebar />
@@ -47,8 +47,10 @@ const PagePlanner = () => {
         // Si no hay un item seleccioando
         <Flex direction="col" align="center" justify="center" className="h-full text-center">
           <RandomItemMarquee />
-          <Typography variant="h2">{t('title')}</Typography>
-          <Typography tone="soft">{t('subtitle')}</Typography>
+          <Typography variant="h2">Select an object to begin production</Typography>
+          <Typography tone="soft">
+            Choose any processed item, component, or ammunition to see the necessary buildings and resource flow.
+          </Typography>
         </Flex>
       )}
     </PageContainer>

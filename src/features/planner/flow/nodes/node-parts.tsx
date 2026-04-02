@@ -1,10 +1,10 @@
 import { Flex, Typography } from '@/shared/ui'
-import { Divider } from '@heroui/react'
+import { cn, Divider } from '@heroui/react'
 import { FlameIcon, ZapIcon } from 'lucide-react'
 
-export function FlowNodeHeader({ title }: { title: string }) {
+export function FlowNodeHeader({ title, className }: { title: string; className?: string }) {
   return (
-    <Typography as="h3" variant="h3" className="font-bold">
+    <Typography as="h3" variant="h3" className={cn(className, 'font-bold')}>
       {title}
     </Typography>
   )
@@ -20,7 +20,7 @@ function NodeStatBadge({ icon: Icon, value, color }: NodeStatBadgeProps) {
   return (
     <Flex gap="xs">
       <Icon size={20} className={color} />
-      <Typography as="span" variant="small" className={`font-mono font-bold ${color}`}>
+      <Typography as="span" variant="small" className={`font-mono font-bold`}>
         {value}
       </Typography>
     </Flex>
@@ -36,7 +36,7 @@ export function FlowNodeStats({ buildingPower, buildingHeat }: FlowNodeStatsProp
   return (
     <Flex direction="col" gap="sm">
       <NodeStatBadge icon={ZapIcon} value={buildingPower} color="text-warning" />
-      <Divider className="bg-divider/60" />
+      <Divider />
       <NodeStatBadge icon={FlameIcon} value={buildingHeat} color="text-danger" />
     </Flex>
   )

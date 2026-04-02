@@ -1,20 +1,18 @@
 import { ORBITAL_CARGO_LAUNCHER_ID } from '@/features/planner/constants'
-import type { Building, Item } from '@/shared/@types/production'
+import type { Item } from '@/shared/@types/item.type'
 import { type Edge } from '@xyflow/react'
 import dagre from 'dagre'
-import { buildSupplyInventory } from './supply-inventory'
 import { getItemName, getItemType } from './lookup'
 import { connectSupplyAndProduction } from './connect-edges'
-import { findRecipeForItem } from '@/features/planner/lib/recipes'
+import type { ProductionStep } from '@/features/planner/lib/production-plan'
 
 /**
  * Genera edges para el flujo completo.
  *
  * @param targetId Item objetivo.
  * @param targetIpm Produccion objetivo por minuto.
- * @param totals Totales de produccion por item.
- * @param supplies Supply externo por item.
- * @param buildings Catalogo de edificios.
+ * @param steps Pasos calculados de produccion.
+ * @param supplyCountInventory Inventario temporal del supply.
  * @param items Catalogo de items.
  * @param addOrgitalExportSystem Si se agrega el launcher orbital.
  * @param dagreGraph Instancia de Dagre para registrar edges.
@@ -23,29 +21,26 @@ import { findRecipeForItem } from '@/features/planner/lib/recipes'
 export const buildEdges = (
   targetId: string,
   targetIpm: number,
-  totals: Map<string, number>,
-  supplies: Record<string, number>,
-  buildings: Building[],
+  steps: ProductionStep[],
+  supplyCountInventory: Record<string, number>,
   items: Item[],
   addOrgitalExportSystem: boolean,
   dagreGraph: dagre.graphlib.Graph,
 ): Edge[] => {
   const edges: Edge[] = []
-  const supplyInventory = buildSupplyInventory(supplies)
 
-  totals.forEach((prodQty, nodeId) => {
-    const { recipe } = findRecipeForItem(buildings, nodeId)
-    recipe?.inputs?.forEach((input) => {
-      const inputNeeded = (input.amount_per_minute / recipe.output.amount_per_minute) * prodQty
+  steps.forEach((step) => {
+    step.inputs?.forEach((input) => {
+      const inputNeeded = (input.amount_per_minute / step.recipeOutputIpm) * step.targetIpm
       connectSupplyAndProduction({
         edges,
         dagreGraph,
         itemName: getItemName(items, input.id),
         itemId: input.id,
         itemType: getItemType(items, input.id),
-        consumerId: nodeId,
+        consumerId: step.itemId,
         totalNeeded: inputNeeded,
-        supplyInventory,
+        supplyCountInventory,
       })
     })
   })
@@ -59,12 +54,10 @@ export const buildEdges = (
       itemType: getItemType(items, targetId),
       consumerId: ORBITAL_CARGO_LAUNCHER_ID,
       totalNeeded: targetIpm,
-      supplyInventory,
+      supplyCountInventory,
       isFinalLauncher: true,
     })
   }
 
   return edges
 }
-
-

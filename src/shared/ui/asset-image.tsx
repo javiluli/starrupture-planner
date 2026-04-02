@@ -1,33 +1,50 @@
-import { Image } from '@heroui/react'
+import { cn, Image } from '@heroui/react'
 
-type IconKind = 'items' | 'buildings' | 'corporations'
+export type IconKind = 'items' | 'buildings' | 'corporations'
 
 type AssetImageProps = {
   id: string
   kind: IconKind
+  width?: number
   className?: string
 }
 
-const iconMaps: Record<IconKind, Record<string, string>> = {
-  items: import.meta.glob('../../assets/icons/items/*.png', {
-    eager: true,
-    import: 'default',
-  }) as Record<string, string>,
-  buildings: import.meta.glob('../../assets/icons/buildings/*.png', {
-    eager: true,
-    import: 'default',
-  }) as Record<string, string>,
-  corporations: import.meta.glob('../../assets/icons/corporations/*.png', {
-    eager: true,
-    import: 'default',
-  }) as Record<string, string>,
+type IconMap = Record<string, string>
+
+const buildIconMap = (modules: Record<string, string>) => {
+  const map: IconMap = {}
+  Object.entries(modules).forEach(([path, src]) => {
+    const fileName = path.split('/').pop() ?? ''
+    const id = fileName.replace(/\.webp$/i, '')
+    if (!id) return
+    map[id] = src
+  })
+  return map
 }
 
-const resolveIcon = (kind: IconKind, id: string) => {
-  const path = `../../assets/icons/${kind}/${id}.png`
-  return iconMaps[kind][path] ?? ''
+const iconMaps: Record<IconKind, IconMap> = {
+  items: buildIconMap(
+    import.meta.glob('../../assets/icons/items/*.webp', {
+      eager: true,
+      import: 'default',
+    }) as Record<string, string>,
+  ),
+  buildings: buildIconMap(
+    import.meta.glob('../../assets/icons/buildings/*.webp', {
+      eager: true,
+      import: 'default',
+    }) as Record<string, string>,
+  ),
+  corporations: buildIconMap(
+    import.meta.glob('../../assets/icons/corporations/*.webp', {
+      eager: true,
+      import: 'default',
+    }) as Record<string, string>,
+  ),
 }
 
-export const AssetImage = ({ id, kind, className }: AssetImageProps) => (
-  <Image alt={`${kind}__${id}`} src={resolveIcon(kind, id)} className={className} />
+const resolveIcon = (kind: IconKind, id: string) => iconMaps[kind][id] ?? ''
+
+export const AssetImage = ({ id, kind, width, className }: AssetImageProps) => (
+  <Image alt={`${kind}__${id}`} src={resolveIcon(kind, id)} width={width} className={cn('rounded-none', className)} />
 )

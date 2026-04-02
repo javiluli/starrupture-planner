@@ -1,6 +1,6 @@
-import { type ProductionNodeData } from '@/shared/@types/production'
+import { type ProductionNodeData } from '@/features/planner/types'
 import { AssetImage, Flex } from '@/shared/ui'
-import { Divider } from '@heroui/react'
+import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeProductionRate, FlowNodeStats } from './node-parts'
 
@@ -11,10 +11,11 @@ export const ProductionNode = ({ data, selected }: NodeProps) => {
   return (
     <Flex
       direction="col"
-      className="relative w-64 space-y-3 bg-content1/90 text-foreground px-6 py-4 rounded-2xl transition-all"
-      style={{
-        border: `2px solid ${selected ? '#fff' : '#373a40'}`,
-      }}
+      className={cn(
+        'relative w-64 space-y-3 bg-content1/90 text-foreground px-6 py-4 shadow-xl rounded-3xl border-4 transition-all',
+        selected ? 'border-content4' : 'border-content2',
+        selected ? 'shadow-background/40' : 'shadow-none',
+      )}
     >
       <Handle type="target" position={Position.Left} style={{ background: '#ffffff' }} />
       <Handle type="source" position={Position.Right} className="opacity-0" />
@@ -26,17 +27,17 @@ export const ProductionNode = ({ data, selected }: NodeProps) => {
           <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />
 
           <div className="relative">
-            <AssetImage kind="buildings" id={buildingId} className="h-40" />
+            <AssetImage kind="buildings" id={buildingId} width={160} />
             <div className="absolute left-1/2 bottom-0 bg-content1 ring-2 ring-foreground rounded-2xl z-10">
-              <AssetImage kind="items" id={itemId} className="h-16" />
+              <AssetImage kind="items" id={itemId} width={64} />
             </div>
           </div>
         </Flex>
       </Flex>
 
-      <Divider className="bg-divider/60" />
+      <Divider />
       <FlowNodeOutputRate itemName={itemName} baseIpm={baseIpm} />
-      <Divider className="bg-divider/60" />
+      <Divider />
       <FlowNodeProductionRate buildingLoad={buildingLoad} targetIpm={targetIpm} />
 
       <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">

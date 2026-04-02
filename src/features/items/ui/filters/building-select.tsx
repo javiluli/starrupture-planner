@@ -1,39 +1,51 @@
+import type { Building } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { Select, SelectItem } from '@heroui/react'
-import { useMemo, type ChangeEvent } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
+import { useItemsFilters } from '@/features/items/hooks/use-items-filters'
 
-const NON_PRODUCING_TYPES = new Set(['generator', 'transport', 'temperature', 'habitat', 'defense'])
+const NON_PRODUCING_TYPES = new Set(['generator', 'transport', 'temperature', 'habitat', 'defense', 'storage', 'core'])
 
-export const BuildingSelect = ({ onChange }: { onChange: (value: string) => void }) => {
-  const { t } = useTranslation('items')
+export const BuildingSelect = () => {
   const buildings = useDataStore(dataSelectors.buildings)
+  const { filters, setSelectedBuildingId } = useItemsFilters()
+  const selectedKeys = filters.selectedBuildingId ? [filters.selectedBuildingId] : []
 
   const productionBuildings = useMemo(() => {
     return buildings.filter((b) => !NON_PRODUCING_TYPES.has(b.type))
   }, [buildings])
 
-  const handleSelectionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    onChange(e.target.value)
-  }
-
   return (
     <Select
-      size="sm"
-      variant="bordered"
-      className="w-3xs"
+      size='sm'
+      variant='bordered'
+      className='w-57.5'
       items={productionBuildings}
       isClearable={true}
-      placeholder={t('building-filter-label')}
+      placeholder='Building by filter'
       maxListboxHeight={500}
-      onChange={handleSelectionChange}
+      selectedKeys={selectedKeys}
+      onChange={(e) => setSelectedBuildingId(e.target.value)}
+      renderValue={(items) => {
+        return items.map((item) => {
+          const b = item.data as Building
+          return (
+            <Flex>
+              <AssetImage kind='buildings' id={b.id} width={24} className='shrink-0' />
+              <Typography as='span' variant='small' tone='muted'>
+                {b.name}
+              </Typography>
+            </Flex>
+          )
+        })
+      }}
     >
       {(b) => (
         <SelectItem key={b.id} textValue={b.name}>
           <Flex>
-            <AssetImage kind="buildings" id={b.id} className="h-8 shrink-0" />
-            <Typography as="span" variant="small" tone="muted">
+            <AssetImage kind='buildings' id={b.id} width={32} className='shrink-0' />
+            <Typography as='span' variant='small' tone='muted'>
               {b.name}
             </Typography>
           </Flex>

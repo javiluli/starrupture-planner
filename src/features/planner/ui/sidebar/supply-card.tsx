@@ -11,7 +11,7 @@ import { memo } from 'react'
  * podria disparar re-renders innecesarios en el Sidebar.
  * * 2. Estabilidad de la UI: Al ser un panel con multiples sub-componentes
  * (cards, imagenes, inputs), el memo garantiza que React solo procese
- * los cambios si los datos de suministros (supplies) han variado realmente.
+ * los cambios si los datos de suministros (supplyCountByItem) han variado realmente.
  * * 3. Fluidez del Diagrama: Mantiene el hilo principal libre de carga visual
  * pesada mientras el motor de React Flow realiza calculos de posicionamiento.
  */
@@ -31,35 +31,35 @@ interface SupplyCardProps {
  * @param value Cantidad de la suma "supply"
  */
 export const SupplyCard = memo(({ itemId, value }: SupplyCardProps) => {
-  const removeSupply = usePlannerStore(plannerSelectors.removeSupply)
-  const incrementSupply = usePlannerStore(plannerSelectors.incrementSupply)
-  const setSupplyAmount = usePlannerStore(plannerSelectors.setSupplyAmount)
+  const removeSupplyItem = usePlannerStore(plannerSelectors.removeSupplyItem)
+  const incrementSupplyCount = usePlannerStore(plannerSelectors.incrementSupplyCount)
+  const setSupplyCount = usePlannerStore(plannerSelectors.setSupplyCount)
 
   // Aplica la cantidad de input a la cantidad de items supply
   const handleUpdateSupply = (val: number) => {
     if (isNaN(val)) return
     // Si el valor llega a 0 o menos, eliminamos el item
     if (val <= 0) {
-      removeSupply(itemId)
+      removeSupplyItem(itemId)
     } else {
-      setSupplyAmount(itemId, val)
+      setSupplyCount(itemId, val)
     }
   }
   // Suma 1 item supply
-  const addx1ItemsSupply = () => incrementSupply(itemId, 1)
+  const addx1ItemsSupply = () => incrementSupplyCount(itemId, 1)
   // Resta 1 item supply
-  const removex1ItemsSupply = () => incrementSupply(itemId, -1)
+  const removex1ItemsSupply = () => incrementSupplyCount(itemId, -1)
   // Suma 10 items supply de golpe
-  const addx10ItemsSupply = () => incrementSupply(itemId, 10)
+  const addx10ItemsSupply = () => incrementSupplyCount(itemId, 10)
   // Resta 10 items supply de golpe
-  const removex10ItemsSupply = () => incrementSupply(itemId, -10)
+  const removex10ItemsSupply = () => incrementSupplyCount(itemId, -10)
 
   return (
     <Card className="panel-muted">
       <CardBody className="py-2">
         <Flex gap="md">
           {/* Imagen del item */}
-          <AssetImage kind="items" id={itemId} className="w-18" />
+          <AssetImage kind="items" id={itemId} width={72} />
 
           {/* Input supply, con botones para sumar o restar de 10 */}
           <Flex className="bg-content2/60 rounded-lg border border-divider/60">

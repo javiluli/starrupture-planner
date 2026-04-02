@@ -4,8 +4,8 @@ import { sections } from '../constant'
 
 export const Sidebar = () => (
   <aside className="sticky top-24 h-fit w-56 space-y-3">
-    <Typography variant="h3" className="uppercase tracking-wide font-bold">
-      Sections
+    <Typography variant="h4" className="uppercase tracking-wide font-bold">
+      Components
     </Typography>
     <Flex direction="col" align="start" gap="xs">
       {sections.map((section) => (

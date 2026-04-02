@@ -57,7 +57,7 @@ export const CorporationLevelRequirements: React.FC = () => {
                 <Flex justify="between" className="mb-3">
                   <Flex gap="sm">
                     <div className="p-1.5 bg-content2 rounded-lg border border-divider/60">
-                      <AssetImage kind="corporations" id={stat.corporationId} className="w-5 h-5" />
+                      <AssetImage kind="corporations" id={stat.corporationId} width={20} />
                     </div>
                     <Flex direction="col" gap="none">
                       <Typography as="span" variant="small" tone="muted" className="font-semibold">
@@ -99,7 +99,7 @@ export const CorporationLevelRequirements: React.FC = () => {
       <PopoverTrigger>
         <Button variant="light" className="px-4 panel">
           <Flex gap="md">
-            <AssetImage kind="corporations" id={selectedStat.corporationId} className="w-6 h-6" />
+            <AssetImage kind="corporations" id={selectedStat.corporationId} width={24} />
             <div className="px-2 py-1 bg-content1 rounded-lg font-mono space-x-2 w-fit">
               <Typography as="span" variant="small" tone="normal" className="font-semibold">
                 {formatTime(selectedStat.timeMinutes)}
@@ -129,5 +129,3 @@ const StatBox = ({ label, value }: { label: string; value: string }) => (
     </Typography>
   </Flex>
 )
-
-

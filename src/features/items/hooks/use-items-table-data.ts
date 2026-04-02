@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
-import { buildItemsTableData, dataSelectors, useDataStore } from '@/store/data.store'
+import { buildItemsTableData } from '@/features/items/lib/build-items-table-data'
+import { dataSelectors, useDataStore } from '@/store/data.store'
 
 export const useItemsTableData = () => {
   const items = useDataStore(dataSelectors.items)

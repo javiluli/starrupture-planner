@@ -1,9 +1,8 @@
-import type { Stats } from '@/shared/@types/production'
+import type { Stats } from '@/features/planner/types'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
-import { findRecipeForItem } from '@/features/planner/lib/recipes'
-import { clampTargetIpm } from '@/features/planner/lib'
-import { useDataStore } from '@/store/data.store'
+
+const EMPTY_STATS: Stats = { buildings: 0, power: 0, heat: 0 }
 
 export interface PlannerStoreState {
   // Estado
@@ -13,33 +12,33 @@ export interface PlannerStoreState {
   /**
    * ID del item - Cantidad "Supply"
    */
-  supplies: Record<string, number>
+  supplyCountByItem: Record<string, number>
   // Acciones
   setTargetId: (id: string) => void
   setTargetIpm: (value: number) => void
   setPlannerStats: (data: Stats) => void
-
   // Acciones para Suministros
-  updateSupply: (itemId: string, amount: number) => void
-  setSupplyAmount: (itemId: string, amount: number) => void
-  incrementSupply: (itemId: string, delta: number) => void
-  addSupplyNode: (itemId: string) => void
-  removeSupply: (itemId: string) => void
+  setSupplyCount: (itemId: string, amount: number) => void
+  incrementSupplyCount: (itemId: string, delta: number) => void
+  addSupplyItem: (itemId: string) => void
+  removeSupplyItem: (itemId: string) => void
 }
 
 export const plannerSelectors = {
+  // Estado
   targetId: (state: PlannerStoreState) => state.targetId,
   targetIpm: (state: PlannerStoreState) => state.targetIpm,
   plannerStats: (state: PlannerStoreState) => state.plannerStats,
-  supplies: (state: PlannerStoreState) => state.supplies,
+  supplyCountByItem: (state: PlannerStoreState) => state.supplyCountByItem,
+  // Acciones
   setTargetId: (state: PlannerStoreState) => state.setTargetId,
   setTargetIpm: (state: PlannerStoreState) => state.setTargetIpm,
   setPlannerStats: (state: PlannerStoreState) => state.setPlannerStats,
-  updateSupply: (state: PlannerStoreState) => state.updateSupply,
-  setSupplyAmount: (state: PlannerStoreState) => state.setSupplyAmount,
-  incrementSupply: (state: PlannerStoreState) => state.incrementSupply,
-  addSupplyNode: (state: PlannerStoreState) => state.addSupplyNode,
-  removeSupply: (state: PlannerStoreState) => state.removeSupply,
+  // Acciones para Suministros
+  setSupplyCount: (state: PlannerStoreState) => state.setSupplyCount,
+  incrementSupplyCount: (state: PlannerStoreState) => state.incrementSupplyCount,
+  addSupplyItem: (state: PlannerStoreState) => state.addSupplyItem,
+  removeSupplyItem: (state: PlannerStoreState) => state.removeSupplyItem,
 }
 
 /**
@@ -48,50 +47,36 @@ export const plannerSelectors = {
  *
  * Regla: la UI solo llama acciones o lee selectors. No se permite logica de negocio en componentes.
  */
+const removeSupply = (state: PlannerStoreState, id: string) => {
+  const next = { ...state.supplyCountByItem }
+  delete next[id]
+  return next
+}
+
 export const usePlannerStore = create<PlannerStoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       // DATOS INICIALES
       targetId: '',
       targetIpm: 1,
-      plannerStats: { buildings: 0, power: 0, heat: 0 },
-      supplies: {},
-
+      plannerStats: EMPTY_STATS,
+      supplyCountByItem: {},
       /**
        * Establece el item objetivo.
-       * Si no hay id, resetea stats e ipm.
-       * Si hay id, inicializa ipm al ratio base de la receta.
        *
        * @param id Id del item objetivo
        */
       setTargetId: (id: string) => {
-        if (!id) {
-          set({
-            targetId: '',
-            targetIpm: 0,
-            plannerStats: { buildings: 0, power: 0, heat: 0 },
-          })
-          return
-        }
-
-        const buildings = useDataStore.getState().buildings
-        const { recipe } = findRecipeForItem(buildings, id)
-
-        set({
-          targetId: id,
-          targetIpm: recipe ? recipe.output.amount_per_minute : 1,
-        })
+        set({ targetId: id })
       },
-
       /**
-       * Actualiza la tasa objetivo. Se clamp a 0 o mas.
+       * Actualiza la tasa objetivo.
        *
        * @param value Nuevo ipm
        */
       setTargetIpm: (value: number) => {
-        set({ targetIpm: clampTargetIpm(value) })
+        set({ targetIpm: value })
       },
-
       /**
        * Mezcla stats calculados en el estado actual.
        *
@@ -105,74 +90,53 @@ export const usePlannerStore = create<PlannerStoreState>()(
           },
         }))
       },
-
       /**
        * Establece el supply exacto. Si amount <= 0, elimina el supply.
        *
        * @param id Item supply
        * @param amount Cantidad
        */
-      setSupplyAmount: (id, amount) =>
+      setSupplyCount: (id, amount) =>
         set((state) => {
           if (Number.isNaN(amount) || amount <= 0) {
-            const next = { ...state.supplies }
-            delete next[id]
-            return { supplies: next }
+            return { supplyCountByItem: removeSupply(state, id) }
           }
-
           return {
-            supplies: { ...state.supplies, [id]: amount },
+            supplyCountByItem: { ...state.supplyCountByItem, [id]: amount },
           }
         }),
-
       /**
        * Incrementa o decrementa el supply. Si llega a 0, elimina el supply.
        *
        * @param id Item supply
        * @param delta Variacion
        */
-      incrementSupply: (id, delta) =>
+      incrementSupplyCount: (id, delta) =>
         set((state) => {
-          const current = state.supplies[id] ?? 0
+          const current = state.supplyCountByItem[id] ?? 0
           const next = current + delta
-
           if (next <= 0) {
-            const updated = { ...state.supplies }
-            delete updated[id]
-            return { supplies: updated }
+            return { supplyCountByItem: removeSupply(state, id) }
           }
-
-          return { supplies: { ...state.supplies, [id]: next } }
+          return { supplyCountByItem: { ...state.supplyCountByItem, [id]: next } }
         }),
-
-      /**
-       * Alias legacy usado por nodos del flow.
-       *
-       * @param id Item supply
-       * @param amount Cantidad
-       */
-      updateSupply: (id, amount) => get().setSupplyAmount(id, amount),
-
       /**
        * Agrega un supply si no existe.
        *
        * @param id Item supply
        */
-      addSupplyNode: (id) =>
+      addSupplyItem: (id) =>
         set((state) => ({
-          supplies: { ...state.supplies, [id]: state.supplies[id] || 0 },
+          supplyCountByItem: { ...state.supplyCountByItem, [id]: state.supplyCountByItem[id] || 0 },
         })),
-
       /**
        * Elimina completamente un supply.
        *
        * @param id Item supply
        */
-      removeSupply: (id) =>
+      removeSupplyItem: (id) =>
         set((state) => {
-          const newSupplies = { ...state.supplies }
-          delete newSupplies[id]
-          return { supplies: newSupplies }
+          return { supplyCountByItem: removeSupply(state, id) }
         }),
     }),
     {
@@ -181,4 +145,3 @@ export const usePlannerStore = create<PlannerStoreState>()(
     },
   ),
 )
-
