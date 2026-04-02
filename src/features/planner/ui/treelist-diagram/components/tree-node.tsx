@@ -26,7 +26,7 @@ interface TreeNodeProps {
 }
 
 const ROW_BUTTON_BASE = 'flex items-center gap-3 flex-1 text-left rounded-lg pl-0 pr-2 py-2 transition-colors'
-const ROW_BUTTON_INTERACTIVE = 'cursor-pointer hover:bg-content2/60'
+const ROW_BUTTON_INTERACTIVE = 'cursor-pointer hover:bg-content1/30'
 
 const ICON_BASE = 'relative shrink-0 rounded-xl border-2 p-1 bg-content1 transition-transform duration-200'
 const ICON_FINAL = 'border-primary'

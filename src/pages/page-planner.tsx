@@ -1,8 +1,6 @@
 ﻿import {
   CorporationLevelRequirements,
-  ProductionFlowDiagram,
-  ProductionItemsDiagram,
-  ProductionTreelistDiagram,
+  ProductionDiagramTabs,
   RandomItemMarquee,
   StatsBar,
   SupplySidebar,
@@ -11,8 +9,6 @@
 } from '@/features/planner'
 import { Flex, Grid, PageContainer, Panel, Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
-import { Tab, Tabs } from '@heroui/react'
-import { ListTree, Network, Package, Rows } from 'lucide-react'
 
 const PagePlanner = () => {
   const targetId = usePlannerStore(plannerSelectors.targetId)
@@ -41,44 +37,7 @@ const PagePlanner = () => {
           {/* Diagrama principal React Flow */}
           <div className="panel-muted h-full overflow-hidden">
             <div className="flex w-full h-full flex-col">
-              <Tabs aria-label="Options" variant="bordered" size="lg" fullWidth>
-                <Tab
-                  key="network-graph"
-                  className="h-full"
-                  title={
-                    <div className="flex items-center space-x-2">
-                      <Network />
-                      <span>Network grap</span>
-                    </div>
-                  }
-                >
-                  <ProductionFlowDiagram />
-                </Tab>
-                <Tab
-                  key="tree-list"
-                  className="h-full"
-                  title={
-                    <div className="flex items-center space-x-2">
-                      <ListTree />
-                      <span>Tree list</span>
-                    </div>
-                  }
-                >
-                  <ProductionTreelistDiagram />
-                </Tab>
-                <Tab
-                  key="items"
-                  className="h-full"
-                  title={
-                    <div className="flex items-center space-x-2">
-                      <Package />
-                      <span>Items</span>
-                    </div>
-                  }
-                >
-                  <ProductionItemsDiagram />
-                </Tab>
-              </Tabs>
+              <ProductionDiagramTabs />
             </div>
           </div>
           {/* Menus/Sidebar para seleccionar items externos que se suman a la produccion (supply) */}
@@ -99,4 +58,3 @@ const PagePlanner = () => {
 }
 
 export default PagePlanner
-

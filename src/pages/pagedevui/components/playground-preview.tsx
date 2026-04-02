@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const PlaygroundPreview = ({ children, ...props }: Props) => (
-  <Flex wrap="wrap" gap="md" {...props}>
+  <Flex wrap="wrap" gap="xl" {...props}>
     {children}
   </Flex>
 )

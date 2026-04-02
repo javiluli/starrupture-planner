@@ -122,7 +122,7 @@ export default heroui({
           foreground: '#fff',
         },
         focus: '#2563EB',
-        overlay: '#e6edf3',
+        overlay: '#03050A',
         divider: '#121B30',
       },
     },
