@@ -1,0 +1,46 @@
+import type { SupplyNodeData } from '@/features/planner/types'
+import { AssetImage, Flex } from '@/shared/ui'
+import { cn, Divider } from '@heroui/react'
+import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
+
+export function SupplyNode({ data, selected }: NodeProps) {
+  const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supplyCount } = data as SupplyNodeData
+
+  return (
+    <Flex
+      direction="col"
+      className={cn(
+        'relative w-64 space-y-1 bg-content1/90 text-foreground px-4 py-3 shadow-xl rounded-2xl border-4 transition-all',
+        selected ? 'border-content4' : 'border-content2',
+        selected ? 'shadow-background/40' : 'shadow-none',
+      )}
+    >
+      <Handle type="target" position={Position.Left} className="opacity-0" style={{ background: '#ffffff' }} />
+      <Handle type="source" position={Position.Right} style={{ background: '#ffffff' }} />
+
+      <Flex direction="col">
+        <FlowNodeHeader title={buildingName} />
+        <FlowNodeHeader title="External supply" className="text-medium text-foreground/60 italic" />
+
+        <Flex>
+          <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />
+
+          <div className="relative">
+            <AssetImage kind="buildings" id={buildingId} width={160} />
+            <div className="absolute left-1/2 bottom-0 bg-content1 ring-2 ring-foreground rounded-2xl z-10">
+              <AssetImage kind="items" id={itemId} width={64} />
+            </div>
+          </div>
+        </Flex>
+      </Flex>
+
+      <Divider />
+      <FlowNodeOutputRate itemName={itemName} baseIpm={supplyCount} />
+
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2">
+        <FlowNodeCountBadge buildingCount={1} />
+      </div>
+    </Flex>
+  )
+}

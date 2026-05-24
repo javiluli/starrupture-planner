@@ -1,0 +1,22 @@
+[
+  {
+    "id": "base_core",
+    "power": 0,
+    "heat": 0,
+    "area_ocupada": [4, 4],
+    "radio_area_construccion": 49,
+    "diametro_area_construccion": 102
+  },
+  {
+    "id": "ore_excavator",
+    "area_ocupada": [4, 4]
+  },
+  {
+    "id": "smelter",
+    "area_ocupada": [4, 4]
+  },
+  {
+    "id": "solar_generator_v1",
+    "area_ocupada": [4, 4]
+  }
+]

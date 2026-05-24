@@ -1,0 +1,60 @@
+{
+  "name": "starrupture-planner",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "A website that allows you to create a detailed production workflow for the video game StarRupture.",
+  "homepage": "https://sr-planner.vercel.app/",
+  "author": "javiluli",
+  "license": "MIT",
+  "keywords": [
+    "star-rupture",
+    "production-planner",
+    "gaming-tool",
+    "react",
+    "typescript",
+    "game-assistant",
+    "react-flow",
+    "supply-chain-calculator",
+    "automation-tool"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "copy:fonts": "node scripts/copy-geist-fonts.cjs"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@heroui/react": "^2.8.10",
+    "@types/dagre": "^0.7.54",
+    "@xyflow/react": "^12.10.2",
+    "dagre": "^0.8.5",
+    "framer-motion": "^12.40.0",
+    "geist": "^1.7.1",
+    "lucide": "^0.577.0",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.1",
+    "zustand": "^5.0.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^24.12.4",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.4.26",
+    "globals": "^16.5.0",
+    "tailwindcss": "^4.3.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.59.4",
+    "vite": "^7.3.3",
+    "vite-tsconfig-paths": "^6.1.1"
+  }
+}

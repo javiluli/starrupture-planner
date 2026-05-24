@@ -1,0 +1,48 @@
+import { type ProductionNodeData } from '@/features/planner/types'
+import { AssetImage, Flex } from '@/shared/ui'
+import { cn, Divider } from '@heroui/react'
+import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeProductionRate, FlowNodeStats } from './node-parts'
+
+export const ProductionNode = ({ data, selected }: NodeProps) => {
+  const { buildingId, buildingName, buildingPower, buildingHeat, buildingLoad, buildingCount, itemId, itemName, baseIpm, targetIpm } =
+    data as ProductionNodeData
+
+  return (
+    <Flex
+      direction="col"
+      className={cn(
+        'relative w-64 space-y-1 bg-content1/90 text-foreground px-4 py-3 shadow-xl rounded-2xl border-4 transition-all',
+        selected ? 'border-content4' : 'border-content2',
+        selected ? 'shadow-background/60' : 'shadow-none',
+      )}
+    >
+      <Handle type="target" position={Position.Left} />
+      <Handle type="source" position={Position.Right} />
+
+      <Flex direction="col">
+        <FlowNodeHeader title={buildingName} />
+
+        <Flex>
+          <FlowNodeStats buildingPower={buildingPower} buildingHeat={buildingHeat} />
+
+          <div className="relative">
+            <AssetImage kind="buildings" id={buildingId} width={160} />
+            <div className="absolute left-1/2 bottom-0 bg-content1 ring-2 ring-foreground rounded-2xl z-10">
+              <AssetImage kind="items" id={itemId} width={64} />
+            </div>
+          </div>
+        </Flex>
+      </Flex>
+
+      <Divider />
+      <FlowNodeOutputRate itemName={itemName} baseIpm={baseIpm} />
+      <Divider />
+      <FlowNodeProductionRate buildingLoad={buildingLoad} targetIpm={targetIpm} />
+
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2">
+        <FlowNodeCountBadge buildingCount={buildingCount} />
+      </div>
+    </Flex>
+  )
+}
