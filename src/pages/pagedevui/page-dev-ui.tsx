@@ -18,7 +18,7 @@ import {
   TooltipPlayground,
   TypographyPlayground,
 } from './playground'
-import { Theme } from './playground/custom/theme'
+import { Theme, TreeListPlayground } from './playground/custom'
 
 const PageDevUI = () => {
   return (
@@ -36,6 +36,7 @@ const PageDevUI = () => {
           <div className="space-y-10">
             <Theme />
             <TypographyPlayground />
+            <TreeListPlayground />
             <AccordionPlayground />
             <AutocompletePlayground />
             <ButtonPlayground />
@@ -59,3 +60,4 @@ const PageDevUI = () => {
 }
 
 export default PageDevUI
+

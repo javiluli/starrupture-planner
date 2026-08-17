@@ -1,5 +1,5 @@
 import type { IconKind } from '@/shared/ui/asset-image'
-import type { TreeNodeData } from '../components/tree-node'
+import type { TreeNodeData } from '../types'
 
 const getItemName = (itemMap: Map<string, string>, itemId: string) => itemMap.get(itemId) ?? itemId
 
@@ -21,3 +21,4 @@ export const getTreeNodeInfo = (node: TreeNodeData, itemNameMap: Map<string, str
     supplyCount: node.supplyCount ?? 0,
   }
 }
+

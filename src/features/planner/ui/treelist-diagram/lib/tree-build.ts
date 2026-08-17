@@ -1,5 +1,5 @@
 import type { ProductionStep } from '../../../lib'
-import type { TreeNodeData } from '../components/tree-node'
+import type { TreeNodeData } from '../types'
 
 type SupplyMap = Map<string, number>
 
@@ -120,3 +120,4 @@ export const buildTree = (
     children: buildChildren(step, effectiveTarget, stepsByItem, supplyMap),
   }
 }
+

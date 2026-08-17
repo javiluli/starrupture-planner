@@ -6,4 +6,6 @@ export { PageContainer } from './layout/page-container'
 export { Panel } from './layout/panel'
 export { Marquee } from './marquee'
 export { StatLabel } from './stat-label'
+export { TreeList, TreeListNode } from './treelist'
 export { Typography } from './typography'
+

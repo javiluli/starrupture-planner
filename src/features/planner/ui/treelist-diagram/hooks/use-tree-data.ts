@@ -1,7 +1,7 @@
-﻿import { useMemo } from 'react'
+import { useMemo } from 'react'
 import type { ProductionStep } from '../../../lib'
 import { buildTree } from '../lib/tree-build'
-import type { TreeNodeData } from '../components/tree-node'
+import type { TreeNodeData } from '../types'
 
 export const useTreeData = (steps: ProductionStep[] | undefined, supplyCountByItem?: Record<string, number>) => {
   return useMemo<TreeNodeData | null>(() => {
@@ -21,3 +21,4 @@ export const useTreeData = (steps: ProductionStep[] | undefined, supplyCountByIt
     return buildTree(stepMap, rootNode.itemId, true, rootNode.targetIpm, supplyRemaining)
   }, [steps, supplyCountByItem])
 }
+

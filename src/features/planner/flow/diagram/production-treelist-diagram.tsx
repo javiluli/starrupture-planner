@@ -1,21 +1,17 @@
-﻿import { Flex, Typography } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
-import { useMemo } from 'react'
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
-import { TreeNode, useTreeData, useTreeExpansion } from '@/features/planner/ui/treelist-diagram'
-import { Button } from '@heroui/react'
+import { PlannerTreeRow, getTreeNodeKey, type TreeNodeData, useTreeData } from '@/features/planner/ui/treelist-diagram'
+import { Flex, TreeList, Typography } from '@/shared/ui'
+import { dataSelectors, useDataStore } from '@/store/data.store'
+import { useCallback, useMemo } from 'react'
 
 export function ProductionTreelistDiagram() {
   const items = useDataStore(dataSelectors.items)
   const plan = useProductionPlan()
 
-  const itemNameMap = useMemo(() => {
-    return new Map(items.map((item) => [item.id, item.name]))
-  }, [items])
-
+  const itemNameMap = useMemo(() => new Map(items.map((item) => [item.id, item.name])), [items])
   const treeData = useTreeData(plan?.steps, plan?.supplyCountByItem)
-  const rootPath = treeData ? treeData.itemId : 'root'
-  const { expandedMap, toggle, expandAll, collapseAll } = useTreeExpansion(treeData, rootPath)
+  const getChildren = useCallback((node: TreeNodeData) => node.children ?? [], [])
+  const getNodeId = useCallback((node: TreeNodeData, path: string) => getTreeNodeKey(path, node), [])
 
   if (!treeData) {
     return (
@@ -27,24 +23,9 @@ export function ProductionTreelistDiagram() {
 
   return (
     <div className="py-6">
-      <Flex align="center" justify="end" gap="sm" className="pb-4">
-        <Button variant="bordered" size="sm" onPress={expandAll}>
-          Expand all
-        </Button>
-        <Button variant="bordered" size="sm" onPress={collapseAll}>
-          Collapse all
-        </Button>
-      </Flex>
-      <TreeNode
-        node={treeData}
-        nodePath={rootPath}
-        itemNameMap={itemNameMap}
-        depth={0}
-        isLast={true}
-        ancestorLineFlags={[]}
-        isExpandedById={expandedMap}
-        onToggle={toggle}
-      />
+      <TreeList data={[treeData]} getChildren={getChildren} getNodeId={getNodeId} defaultExpanded={true} className="py-2">
+        {(nodeProps) => <PlannerTreeRow {...nodeProps} itemNameMap={itemNameMap} />}
+      </TreeList>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 export const customization = [
   { id: 'theme', label: 'Theme tokens' },
   { id: 'typography', label: 'Typography' },
+  { id: 'treelist', label: 'TreeList' },
 ]
 
 export const sections = [
@@ -71,3 +72,4 @@ export const animals = [
   { label: 'Otter', key: 'otter', description: 'A carnivorous mammal in the subfamily Lutrinae' },
   { label: 'Crocodile', key: 'crocodile', description: 'A large semiaquatic reptile' },
 ]
+
