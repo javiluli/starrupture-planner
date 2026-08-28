@@ -16,7 +16,7 @@ export const PagePlanner = () => {
   return (
     <PageContainer>
       {/* Submenu superior */}
-      <Panel className="px-2 py-1">
+      <Panel className="shrink-0 px-2 py-1" padding="sm">
         <Flex wrap="wrap" gap="md">
           <Flex>
             {/* Selector de item */}
@@ -33,19 +33,19 @@ export const PagePlanner = () => {
 
       {/* Se muetsra el Flow si hay un items seleccionado */}
       {targetId ? (
-        <Grid className="flex-1 grid-cols-[minmax(0,1fr)_24rem] gap-2 items-stretch">
+        <Grid gap="lg" className="min-h-0 min-w-0 flex-1 grid-cols-[minmax(0,1fr)_24rem] items-stretch overflow-hidden">
           {/* Diagrama principal React Flow */}
-          <div className="h-full overflow-hidden">
-            <div className="panel-muted border border-divider flex w-full h-full flex-col">
-              <ProductionDiagramTabs />
-            </div>
-          </div>
+          <Panel padding="none" variant="muted" className="min-h-0 min-w-0 overflow-hidden border border-divider">
+            <ProductionDiagramTabs />
+          </Panel>
           {/* Menus/Sidebar para seleccionar items externos que se suman a la produccion (supply) */}
-          <SidebarPanel />
+          <Panel padding="none" variant="muted" className="min-h-0 min-w-0 overflow-hidden border border-divider">
+            <SidebarPanel />
+          </Panel>
         </Grid>
       ) : (
         // Si no hay un item seleccioando
-        <Flex direction="col" align="center" justify="center" className="h-full text-center">
+        <Flex direction="col" align="center" justify="center" className="min-h-0 flex-1 overflow-hidden text-center">
           <RandomItemMarquee />
           <Typography variant="h2">Select an object to begin production</Typography>
           <Typography tone="soft">

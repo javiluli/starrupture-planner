@@ -1,4 +1,3 @@
-import { Flex } from '@/shared/ui'
 import { Tab, Tabs } from '@heroui/react'
 import { memo } from 'react'
 import { BuildingVariantsPanel } from './building-variants-panel'
@@ -23,15 +22,25 @@ import { SupplyPanel } from './supply-panel'
  */
 export const SidebarPanel = memo(() => {
   return (
-    <Flex direction="col" align="stretch" className="border border-divider overflow-hidden">
-      <Tabs variant="underlined" aria-label="Supply sidebar" fullWidth>
-        <Tab key="supply" title="Supply">
-          <SupplyPanel />
-        </Tab>
-        <Tab key="variants" title="Variants">
-          <BuildingVariantsPanel />
-        </Tab>
-      </Tabs>
-    </Flex>
+    <Tabs
+      placement="top"
+      variant="underlined"
+      aria-label="Supply sidebar"
+      fullWidth
+      classNames={{
+        tabWrapper: 'flex h-full min-h-0 w-full flex-col overflow-hidden',
+        base: 'w-full shrink-0',
+        tabList: 'w-full',
+        panel: 'min-h-0 flex-1 overflow-hidden p-0',
+      }}
+    >
+      <Tab key="supply" title="Supply">
+        <SupplyPanel />
+      </Tab>
+
+      <Tab key="variants" title="Variants">
+        <BuildingVariantsPanel />
+      </Tab>
+    </Tabs>
   )
 })

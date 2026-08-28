@@ -55,7 +55,7 @@ export const SupplyCard = memo(({ itemId, value }: SupplyCardProps) => {
   const removex10ItemsSupply = () => incrementSupplyCount(itemId, -10)
 
   return (
-    <Card className="panel-muted border border-divider">
+    <Card className="">
       <CardBody className="py-2">
         <Flex gap="md">
           {/* Imagen del item */}

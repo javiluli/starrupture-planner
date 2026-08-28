@@ -5,8 +5,12 @@ export const ClearFiltersButton = () => {
   const { resetFilter, hasActiveFilters } = useItemsFilters()
 
   return (
-    <Button size='sm' variant='bordered' onPress={resetFilter} isDisabled={!hasActiveFilters}>
-      Clear filters
-    </Button>
+    <>
+      {hasActiveFilters && (
+        <Button size="sm" variant="solid" onPress={resetFilter} isDisabled={!hasActiveFilters}>
+          Clear filters
+        </Button>
+      )}
+    </>
   )
 }

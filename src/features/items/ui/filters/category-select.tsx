@@ -19,12 +19,12 @@ export const CategorySelect = () => {
 
   return (
     <Select
-      size='sm'
-      variant='bordered'
-      className='w-48'
+      size="sm"
+      variant="bordered"
+      className="w-48"
       items={CATEGORY_OPTIONS}
       isClearable={true}
-      placeholder='Category by filter'
+      placeholder="Filter by category"
       selectedKeys={selectedKeys}
       onChange={(e) => setSelectedCategory(e.target.value)}
     >

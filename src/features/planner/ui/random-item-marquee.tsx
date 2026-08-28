@@ -18,13 +18,13 @@ export function RandomItemMarquee() {
   return (
     <Marquee animationDuration={90}>
       {itemList.map((id, idx) => (
-        <Flex key={`$${id}-${idx}`} justify='center' className='w-28 shrink-0 hover:cursor-pointer'>
+        <Flex key={`$${id}-${idx}`} justify="center" className="w-28 shrink-0 hover:cursor-pointer">
           <Link
             onPress={() => {
               selectTargetItem(id)
             }}
           >
-            <AssetImage id={id} kind='items' width={96} />
+            <AssetImage id={id} kind="items" width={96} />
           </Link>
         </Flex>
       ))}

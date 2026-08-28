@@ -4,15 +4,20 @@ import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Tab, Tabs } from '@hero
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { GithubButton } from './components/github-button'
 
+/**
+ * Componente principal que contiene el menu pincipal de la web y el <Outlet/> con el contenido/body
+ */
 const RootLayout = () => {
   const location = useLocation()
   const navigate = useNavigate()
 
   return (
-    <Flex id="__NEXT" direction="col" align="stretch" className="h-screen">
+    <Flex id="__NEXT" direction="col" align="stretch" className="h-dvh min-h-0 gap-0 overflow-hidden">
       <Navbar className="shrink-0 border-b border-divider/60 bg-background/80 backdrop-blur" maxWidth="full">
         <NavbarBrand className="space-x-2">
-          <Typography className="text-xl leading-[calc(2.5/2.25)] font-semibold tracking-tight">SR Planner</Typography>
+          <Typography variant="h2" as="h1">
+            SR Planner
+          </Typography>
         </NavbarBrand>
 
         <NavbarContent justify="center">
@@ -37,7 +42,7 @@ const RootLayout = () => {
         </NavbarContent>
       </Navbar>
 
-      <main className="flex-1 min-h-0">
+      <main className="min-h-0 flex-1 overflow-hidden">
         <Outlet />
       </main>
     </Flex>

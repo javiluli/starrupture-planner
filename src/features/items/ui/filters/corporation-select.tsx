@@ -11,12 +11,12 @@ export const CorporationSelect = () => {
 
   return (
     <Select
-      size='sm'
-      variant='bordered'
-      className='w-67.5'
+      size="sm"
+      variant="bordered"
+      className="w-67.5"
       items={Object.values(corporations)}
       isClearable={true}
-      placeholder='Corporation by filter'
+      placeholder="Filter by Corporation"
       maxListboxHeight={500}
       selectedKeys={selectedKeys}
       onChange={(e) => setSelectedCorporationId(e.target.value)}
@@ -24,9 +24,9 @@ export const CorporationSelect = () => {
         return items.map((item) => {
           const c = item.data as Corporation
           return (
-            <Flex key={c.id} align='center' gap='sm'>
-              <AssetImage kind='corporations' id={c.id} width={16} className='rounded-none' />
-              <Typography as='span' variant='small' tone='muted' className='capitalize'>
+            <Flex key={c.id} align="center" gap="sm">
+              <AssetImage kind="corporations" id={c.id} width={16} className="rounded-none" />
+              <Typography as="span" variant="small" tone="muted" className="capitalize">
                 {c.id.replaceAll('_', ' ')}
               </Typography>
             </Flex>
@@ -35,10 +35,10 @@ export const CorporationSelect = () => {
       }}
     >
       {(c) => (
-        <SelectItem key={c.id} className='py-3'>
+        <SelectItem key={c.id} className="py-3">
           <Flex>
-            <AssetImage kind='corporations' id={c.id} width={18} className='rounded-none' />
-            <Typography as='span' variant='small' tone='muted' className='capitalize'>
+            <AssetImage kind="corporations" id={c.id} width={18} className="rounded-none" />
+            <Typography as="span" variant="small" tone="muted" className="capitalize">
               {c.id.split('_').join(' ')}
             </Typography>
           </Flex>

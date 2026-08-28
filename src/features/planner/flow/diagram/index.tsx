@@ -6,23 +6,34 @@ import { ProductionItemsDiagram } from './production-items-diagram'
 
 export const ProductionDiagramTabs = () => {
   return (
-    <Tabs variant="underlined" aria-label="Options" fullWidth>
+    <Tabs
+      placement="top"
+      variant="underlined"
+      aria-label="Options"
+      fullWidth
+      classNames={{
+        tabWrapper: 'flex h-full min-h-0 w-full flex-col overflow-hidden',
+        base: 'w-full shrink-0',
+        tabList: 'w-full',
+        panel: 'min-h-0 flex-1 overflow-hidden p-0',
+      }}
+    >
       <Tab
         key="network-graph"
-        className="h-full"
         title={
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <Network size={22} />
-            <span>Network grap</span>
+            <span>Network graph</span>
           </div>
         }
       >
         <ProductionFlowDiagram />
       </Tab>
+
       <Tab
         key="tree-list"
         title={
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <ListTree size={22} />
             <span>Tree list</span>
           </div>
@@ -30,10 +41,11 @@ export const ProductionDiagramTabs = () => {
       >
         <ProductionTreelistDiagram />
       </Tab>
+
       <Tab
         key="items"
         title={
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <Package size={22} />
             <span>Items</span>
           </div>

@@ -2,7 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '@heroui/react'
 
-type PanelVariant = 'default' | 'muted'
+// type PanelVariant = 'default' | 'muted'
 
 type PanelPadding = 'none' | 'sm' | 'md' | 'lg'
 
@@ -19,8 +19,15 @@ const paddingClasses: Record<PanelPadding, string> = {
   lg: 'p-6',
 }
 
+const panelVariant = {
+  default: 'rounded-2xl bg-content1',
+  muted: 'rounded-2xl bg-content1/20',
+} as const
+
+type PanelVariant = keyof typeof panelVariant
+
 export const Panel = ({ children, className, variant = 'default', padding = 'md', ...props }: PanelProps) => (
-  <div className={cn(variant === 'muted' ? 'panel-muted' : 'panel', paddingClasses[padding], className)} {...props}>
+  <div className={cn(panelVariant[variant], paddingClasses[padding], className)} {...props}>
     {children}
   </div>
 )

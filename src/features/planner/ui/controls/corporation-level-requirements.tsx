@@ -2,7 +2,7 @@ import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { calculateCorporationLevelRequirements, formatTime, formatNumber } from '@/shared/utils'
 import { sortRequirementsByTime, pickRequirementByIndex } from '@/features/planner/lib/corporation-requirements'
 import { dataSelectors, useDataStore } from '@/store/data.store'
-import { Button, Card, Chip, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
+import { Button, Card, Chip, Divider, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
 import React, { useMemo, useState } from 'react'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 
@@ -12,7 +12,7 @@ export const CorporationLevelRequirements: React.FC = () => {
   const corporations = useDataStore(dataSelectors.corporations)
 
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
 
   const exportStats = useMemo(() => {
     if (!targetId || targetIpm <= 0) return []
@@ -51,7 +51,7 @@ export const CorporationLevelRequirements: React.FC = () => {
                 isPressable
                 onPress={() => handleSelect(index)}
                 className={`w-full p-3 transition-all duration-200 group border border-divider/60 shadow-none
-                  ${isSelected ? 'bg-content1/40 ring-2 ring-primary/30' : 'bg-transparent hover:bg-content1/30'}
+                  ${isSelected ? 'bg-content1/40 ring-2 ring-primary/30' : 'bg-transparent hover:bg-content1'}
                 `}
               >
                 <Flex justify="between" className="mb-3">
@@ -83,7 +83,7 @@ export const CorporationLevelRequirements: React.FC = () => {
 
                 <div className="grid grid-cols-3 gap-1 bg-content1/60 rounded-lg p-1.5">
                   <StatBox label="Time" value={formatTime(stat.timeMinutes)} />
-                  <StatBox label="Units" value={formatNumber(stat.totalItemsNeeded)} />
+                  <StatBox label="Items" value={formatNumber(stat.totalItemsNeeded)} />
                   <StatBox label="XP/u" value={`${stat.pointsPerItem}`} />
                 </div>
               </Card>
@@ -100,17 +100,15 @@ export const CorporationLevelRequirements: React.FC = () => {
         <Button variant="light" className="px-4 panel">
           <Flex gap="md">
             <AssetImage kind="corporations" id={selectedStat.corporationId} width={24} />
-            <div className="px-2 py-1 bg-content1 rounded-lg font-mono space-x-2 w-fit">
-              <Typography as="span" variant="small" tone="normal" className="font-semibold">
+            <Flex className="h-5 px-3" gap="md">
+              <Typography as="span" variant="small">
+                {formatNumber(selectedStat.totalItemsNeeded)} Items
+              </Typography>
+              <Divider orientation="vertical" className="bg-foreground/60" />
+              <Typography as="span" variant="small">
                 {formatTime(selectedStat.timeMinutes)}
               </Typography>
-              <Typography as="span" variant="micro" tone="soft">
-                |
-              </Typography>
-              <Typography as="span" variant="small" tone="muted">
-                {formatNumber(selectedStat.totalItemsNeeded)} units
-              </Typography>
-            </div>
+            </Flex>
           </Flex>
         </Button>
       </PopoverTrigger>
@@ -120,7 +118,7 @@ export const CorporationLevelRequirements: React.FC = () => {
 }
 
 const StatBox = ({ label, value }: { label: string; value: string }) => (
-  <Flex direction="col" align="center" justify="center" className="py-1">
+  <Flex align="center" justify="center" className="py-1">
     <Typography as="span" variant="micro" tone="soft" className="tracking-tight mb-0.5">
       {label}
     </Typography>

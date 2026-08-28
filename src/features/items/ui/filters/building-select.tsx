@@ -18,12 +18,12 @@ export const BuildingSelect = () => {
 
   return (
     <Select
-      size='sm'
-      variant='bordered'
-      className='w-57.5'
+      size="sm"
+      variant="bordered"
+      className="w-57.5"
       items={productionBuildings}
       isClearable={true}
-      placeholder='Building by filter'
+      placeholder="Filter by building"
       maxListboxHeight={500}
       selectedKeys={selectedKeys}
       onChange={(e) => setSelectedBuildingId(e.target.value)}
@@ -32,8 +32,8 @@ export const BuildingSelect = () => {
           const b = item.data as Building
           return (
             <Flex>
-              <AssetImage kind='buildings' id={b.id} width={24} className='shrink-0' />
-              <Typography as='span' variant='small' tone='muted'>
+              <AssetImage kind="buildings" id={b.id} width={24} className="shrink-0" />
+              <Typography as="span" variant="small" tone="muted">
                 {b.name}
               </Typography>
             </Flex>
@@ -44,8 +44,8 @@ export const BuildingSelect = () => {
       {(b) => (
         <SelectItem key={b.id} textValue={b.name}>
           <Flex>
-            <AssetImage kind='buildings' id={b.id} width={32} className='shrink-0' />
-            <Typography as='span' variant='small' tone='muted'>
+            <AssetImage kind="buildings" id={b.id} width={32} className="shrink-0" />
+            <Typography as="span" variant="small" tone="muted">
               {b.name}
             </Typography>
           </Flex>
