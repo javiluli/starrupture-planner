@@ -44,12 +44,11 @@ Reusable code that is not tied to a specific feature lives in `shared/`.
 
 ```
 src/shared/
-  i18n/            # UI translations and game data translations
-    ui/            # UI copy translations (en/es)
-    game-data/     # Game data translations (en/es)
-  ui/              # Reusable UI building blocks
-  utils/           # Cross-feature helpers
-  types/           # Shared TypeScript types
+  @types/          # Shared TypeScript types and data contracts
+  data/            # Static game datasets (buildings, recipes, corporations)
+  hooks/           # Cross-feature custom hooks
+  ui/              # Reusable UI building blocks (TreeList, Marquee, Layout)
+  utils/           # Cross-feature mathematical and format helpers
 ```
 
 ## Pages and Layouts

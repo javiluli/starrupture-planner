@@ -1,6 +1,6 @@
 import { Flex, Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
-import { Divider } from '@heroui/react'
+import { Divider, Tooltip } from '@heroui/react'
 import { Factory, Flame, Zap } from 'lucide-react'
 
 export const StatsBar: React.FC = () => {
@@ -9,24 +9,29 @@ export const StatsBar: React.FC = () => {
 
   return (
     <Flex className="h-5 px-3" gap="md">
-      <Flex>
-        <Factory size={20} />
-        <Typography as="span">{buildings}</Typography>
-      </Flex>
+      <Tooltip content={`${buildings} Buildings`}>
+        <Flex>
+          <Factory size={20} />
+          <Typography as="span">{buildings}</Typography>
+        </Flex>
+      </Tooltip>
 
       <Divider orientation="vertical" className="bg-foreground/60" />
 
-      <Flex>
-        <Zap size={20} />
-        <Typography as="span">{power}</Typography>
-      </Flex>
-
+      <Tooltip content={`${power} power use`}>
+        <Flex>
+          <Zap size={20} />
+          <Typography as="span">{power}</Typography>
+        </Flex>
+      </Tooltip>
       <Divider orientation="vertical" className="bg-foreground/60" />
 
-      <Flex>
-        <Flame size={20} />
-        <Typography as="span">{heat}</Typography>
-      </Flex>
+      <Tooltip content={`${heat} heat of Core base`}>
+        <Flex>
+          <Flame size={20} />
+          <Typography as="span">{heat}</Typography>
+        </Flex>
+      </Tooltip>
     </Flex>
   )
 }

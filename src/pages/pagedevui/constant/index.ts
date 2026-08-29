@@ -1,6 +1,7 @@
 export const customization = [
   { id: 'theme', label: 'Theme tokens' },
   { id: 'typography', label: 'Typography' },
+  { id: 'layout', label: 'Layout' },
   { id: 'treelist', label: 'TreeList' },
 ]
 

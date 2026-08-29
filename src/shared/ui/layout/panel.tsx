@@ -1,16 +1,16 @@
-import type { HTMLAttributes, ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
 
 import { cn } from '@heroui/react'
 
-// type PanelVariant = 'default' | 'muted'
+export type PanelPadding = 'none' | 'sm' | 'md' | 'lg'
 
-type PanelPadding = 'none' | 'sm' | 'md' | 'lg'
-
-type PanelProps = HTMLAttributes<HTMLDivElement> & {
+export type PanelProps<T extends ElementType = 'div'> = {
+  as?: T
   children?: ReactNode
   variant?: PanelVariant
   padding?: PanelPadding
-}
+  className?: string
+} & Omit<ComponentPropsWithoutRef<T>, 'as' | 'children' | 'className'>
 
 const paddingClasses: Record<PanelPadding, string> = {
   none: '',
@@ -20,14 +20,25 @@ const paddingClasses: Record<PanelPadding, string> = {
 }
 
 const panelVariant = {
-  default: 'rounded-2xl bg-content1',
-  muted: 'rounded-2xl bg-content1/20',
+  default: 'rounded-2xl border border-divider/70 bg-content1',
+  muted: 'rounded-2xl border border-divider/70 bg-content1/20',
 } as const
 
-type PanelVariant = keyof typeof panelVariant
+export type PanelVariant = keyof typeof panelVariant
 
-export const Panel = ({ children, className, variant = 'default', padding = 'md', ...props }: PanelProps) => (
-  <div className={cn(panelVariant[variant], paddingClasses[padding], className)} {...props}>
-    {children}
-  </div>
-)
+export const Panel = <T extends ElementType = 'div'>({
+  as,
+  children,
+  className,
+  variant = 'default',
+  padding = 'md',
+  ...props
+}: PanelProps<T>) => {
+  const Component = as ?? 'div'
+
+  return (
+    <Component className={cn(panelVariant[variant], paddingClasses[padding], className)} {...props}>
+      {children}
+    </Component>
+  )
+}

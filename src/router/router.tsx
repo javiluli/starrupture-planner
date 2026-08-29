@@ -1,15 +1,26 @@
 import RootLayout from '@/layouts/root-layout'
-import { PageCorporations, PageItems, PagePlanner, PageRecipes } from '@/pages'
 import { NotFound } from '@/pages/not-found'
-import PageDevUI from '@/pages/pagedevui/page-dev-ui'
 import { ROUTE } from '@/router/routes'
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
+
+const PagePlanner = lazy(() => import('@/pages/page-planner').then((m) => ({ default: m.PagePlanner })))
+const PageItems = lazy(() => import('@/pages/page-items').then((m) => ({ default: m.PageItems })))
+const PageRecipes = lazy(() => import('@/pages/page-recipes').then((m) => ({ default: m.PageRecipes })))
+const PageCorporations = lazy(() => import('@/pages/page-corporations').then((m) => ({ default: m.PageCorporations })))
+const PageDevUI = lazy(() => import('@/pages/pagedevui/page-dev-ui'))
+
+const withSuspense = (Component: React.ComponentType) => (
+  <Suspense fallback={<div className="flex h-full w-full items-center justify-center min-h-0 flex-1" />}>
+    <Component />
+  </Suspense>
+)
 
 const devRoutes = import.meta.env.DEV
   ? [
       {
         path: '/dev/ui',
-        element: <PageDevUI />,
+        element: withSuspense(PageDevUI),
       },
     ]
   : []
@@ -17,22 +28,22 @@ const devRoutes = import.meta.env.DEV
 export const productionRoutes = [
   {
     path: ROUTE.HOME,
-    element: <PagePlanner />,
+    element: withSuspense(PagePlanner),
     label: '📐 Planner',
   },
   {
     path: ROUTE.ITEMS,
-    element: <PageItems />,
+    element: withSuspense(PageItems),
     label: '📦 Items',
   },
   {
     path: ROUTE.RECIPES,
-    element: <PageRecipes />,
+    element: withSuspense(PageRecipes),
     label: '🏭 Buildings',
   },
   {
     path: ROUTE.CORPORATIONS,
-    element: <PageCorporations />,
+    element: withSuspense(PageCorporations),
     label: '🏢 Corporations',
   },
 ]

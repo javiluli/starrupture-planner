@@ -17,7 +17,6 @@
 
 - **📟 Production Flow**: Set your desired items per minute and let the planner calculate every machine and belt needed.
 - **🔋 Supply Management**: Importing resources from another outpost? Mark them as **Supply** to recalculate the local chain and save space.
-- **🌍 Global Logistics**: Instant toggle between **English & Spanish**. Perfect for cross-referencing community guides or the official wiki.
 - **📊 Visual Mapping**: Clear separation between machines and items. See exactly how your materials flow at a glance.
 - **🌡️ Critical Systems**: Live tracking of **Power** consumption and **Heat**. Ensure your base stays operational before the next wave hits.
 
@@ -25,8 +24,7 @@
 
 1. **🎯 Set a Target**: Pick an item and the rate/min you need for your defenses or upgrades.
 2. **📥 Filter Supplies**: If you already have materials coming in, toggle **Supply** to shrink the production tree.
-3. **🌐 Language Check**: Switch EN/ES on the fly to match your in-game settings.
-4. **📐 Grid Stability**: Check the total Power and Heat metrics to make sure your grid can handle the new load.
+3. **📐 Grid Stability**: Check the total Power and Heat metrics to make sure your grid can handle the new load.
 
 ---
 
@@ -41,7 +39,6 @@
 
 - **📟 Flujo de Producción**: Define cuántos objetos quieres por minuto y el planner calculará cada máquina y cinta necesaria.
 - **🔋 Gestión de Suministros**: ¿Traes recursos de otra base? Márcalos como **Supply** para recalcular la cadena y ahorrar espacio.
-- **🌍 Logística Global**: Cambia entre **Inglés y Español** al instante. Ideal para consultar guías de la comunidad o la wiki oficial.
 - **📊 Mapa Visual**: Diferenciación clara entre máquinas y objetos. Mira exactamente cómo fluyen tus materiales de un vistazo.
 - **🌡️ Sistemas Críticos**: Monitoriza el consumo de **Energía (Power)** y el **Calor (Heat)**. Asegúrate de que tu base aguante antes de la próxima oleada.
 
@@ -49,8 +46,7 @@
 
 1. **🎯 Elige Objetivo**: Selecciona un objeto y la cantidad/min que necesitas para tus defensas o mejoras.
 2. **📥 Filtra Suministros**: Si ya te llegan materiales de fuera, activa el **Supply** para reducir el árbol de producción.
-3. **🌐 Idioma**: Cambia entre ES/EN para que coincida con tu configuración de juego.
-4. **📐 Estabilidad**: Revisa las métricas de Energía y Calor para confirmar que tu red eléctrica soportará la nueva carga.
+3. **📐 Estabilidad**: Revisa las métricas de Energía y Calor para confirmar que tu red eléctrica soportará la nueva carga.
 
 ---
 

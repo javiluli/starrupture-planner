@@ -26,7 +26,7 @@ export const calculateCorporationLevelRequirements = (
 
   // Recorremos el diccionario (Key: Nombre de la Corp, Value: Corporation)
   for (const [corpName, corpData] of Object.entries(corporations)) {
-    // Buscamos si el item est� en alguno de los niveles de esta corporaci�n
+    // Buscamos si el item está en alguno de los niveles de esta corporación
     for (const level of corpData.levels) {
       const component = level.components.find((c) => c.id === itemId)
 

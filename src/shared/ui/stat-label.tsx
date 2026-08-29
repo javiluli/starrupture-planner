@@ -1,4 +1,4 @@
-import { Typography } from '@/shared/ui'
+import { Typography } from './typography'
 
 interface Props {
   value: string | number

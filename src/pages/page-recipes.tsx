@@ -1,12 +1,12 @@
 import { RecipesAccordion, useRecipesSummary } from '@/features/recipes'
-import { Flex, PageContainer, Panel, StatLabel, Typography } from '@/shared/ui'
+import { Flex, PageContainer, PageContent, PageHeader, StatLabel, Typography } from '@/shared/ui'
 
 export const PageRecipes = () => {
   const stats = useRecipesSummary()
 
   return (
     <PageContainer>
-      <Panel padding="sm">
+      <PageHeader>
         <Flex align="center" justify="between" gap="lg" wrap="wrap">
           <Typography as="h1" variant="h2">
             Buildings & Recipes
@@ -16,11 +16,11 @@ export const PageRecipes = () => {
             <StatLabel value={stats.recipesCount} label="Recipe" />
           </Flex>
         </Flex>
-      </Panel>
+      </PageHeader>
 
-      <div className="flex-1 overflow-y-auto">
+      <PageContent>
         <RecipesAccordion />
-      </div>
+      </PageContent>
     </PageContainer>
   )
 }

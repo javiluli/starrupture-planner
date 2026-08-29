@@ -1,14 +1,15 @@
-import { Typography } from '@/shared/ui'
+import { Panel, Typography } from '@/shared/ui'
+import type { ReactNode } from 'react'
 
 interface Props {
   id: string
   title: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const ComponentPlayground = ({ id, title, children }: Props) => (
-  <section id={id} className="px-6 py-8 border border-default rounded-2xl space-y-4">
+  <Panel as="section" id={id} variant="muted" padding="lg" className="scroll-mt-4 space-y-4">
     <Typography variant="h3">{title}</Typography>
     <div className="space-y-6">{children}</div>
-  </section>
+  </Panel>
 )

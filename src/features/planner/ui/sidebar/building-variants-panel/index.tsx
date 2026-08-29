@@ -16,7 +16,6 @@ export const BuildingVariantsPanel = () => {
   const plan = useProductionPlan()
 
   const buildingVariantByItemId = usePlannerStore(plannerSelectors.buildingVariantByItemId)
-
   const setBuildingVariantForItem = usePlannerStore(plannerSelectors.setBuildingVariantForItem)
 
   const itemNameMap = new Map(items.map((item) => [item.id, item.name]))

@@ -12,7 +12,7 @@ export const CorporationLevelRequirements: React.FC = () => {
   const corporations = useDataStore(dataSelectors.corporations)
 
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   const exportStats = useMemo(() => {
     if (!targetId || targetIpm <= 0) return []

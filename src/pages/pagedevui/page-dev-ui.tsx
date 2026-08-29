@@ -1,4 +1,4 @@
-import { Flex, PageContainer, Panel, Typography } from '@/shared/ui'
+import { Flex, PageContainer, PageContent, PageHeader, Typography } from '@/shared/ui'
 import { Sidebar } from './components'
 import {
   AccordionPlayground,
@@ -18,43 +18,46 @@ import {
   TooltipPlayground,
   TypographyPlayground,
 } from './playground'
-import { Theme, TreeListPlayground } from './playground/custom'
+import { LayoutPlayground, Theme, TreeListPlayground } from './playground/custom'
 
 const PageDevUI = () => {
   return (
-    <PageContainer className="gap-8">
-      <div className="mx-auto w-full max-w-6xl space-y-2">
-        <Panel className="p-4">
-          <Flex direction="col" gap="sm">
-            <Typography variant="h2">UI Playground</Typography>
-            <Typography tone="soft">Dev-only page to preview typography, components, and theme cohesion.</Typography>
-          </Flex>
-        </Panel>
+    <PageContainer>
+      <PageHeader className="mx-auto w-full max-w-6xl">
+        <Flex direction="col" align="start" gap="sm">
+          <Typography variant="h2">UI Playground</Typography>
+          <Typography tone="soft">Dev-only page to preview typography, components, and theme cohesion.</Typography>
+        </Flex>
+      </PageHeader>
 
-        <div className="grid grid-cols-[14rem_minmax(0,1fr)] gap-10 items-start py-4 pb-12">
-          <Sidebar />
-          <div className="space-y-10">
-            <Theme />
-            <TypographyPlayground />
-            <TreeListPlayground />
-            <AccordionPlayground />
-            <AutocompletePlayground />
-            <ButtonPlayground />
-            <CardsPlayground />
-            <CheckboxPlayground />
-            <ChipPlayground />
-            <DropdownPlayground />
-            <InputPlayground />
-            <LinkPlayground />
-            <ModalPlayground />
-            <NumberinputPlayground />
-            <SelectsPlayground />
-            <TablePlayground />
-            <TabsPlayground />
-            <TooltipPlayground />
+      <PageContent>
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="grid grid-cols-1 items-start gap-6 pb-12 pt-4 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-10">
+            <Sidebar />
+            <div className="space-y-10">
+              <Theme />
+              <TypographyPlayground />
+              <LayoutPlayground />
+              <TreeListPlayground />
+              <AccordionPlayground />
+              <AutocompletePlayground />
+              <ButtonPlayground />
+              <CardsPlayground />
+              <CheckboxPlayground />
+              <ChipPlayground />
+              <DropdownPlayground />
+              <InputPlayground />
+              <LinkPlayground />
+              <ModalPlayground />
+              <NumberinputPlayground />
+              <SelectsPlayground />
+              <TablePlayground />
+              <TabsPlayground />
+              <TooltipPlayground />
+            </div>
           </div>
         </div>
-      </div>
+      </PageContent>
     </PageContainer>
   )
 }

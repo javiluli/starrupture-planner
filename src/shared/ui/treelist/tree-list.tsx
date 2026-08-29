@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, type ReactNode } from 'react'
+import { memo, useMemo, type ReactNode } from 'react'
 import { TreeListLines } from './tree-lines'
 import { useTreeExpansion } from './use-tree-expansion'
 import type { TreeListLineConfig, TreeListNodeRenderProps, TreeListProps } from './types'
@@ -56,9 +56,9 @@ const TreeListNodeView = <TNode,>({
     return [...ancestorLineFlags, depth > 0 ? !isLast : false]
   }, [ancestorLineFlags, depth, isLast, hasChildren])
 
-  const toggle = useCallback(() => {
+  const toggle = () => {
     if (hasChildren) onToggle(nodeId)
-  }, [hasChildren, nodeId, onToggle])
+  }
 
   return (
     <div className="flex flex-col group/treelist-node">

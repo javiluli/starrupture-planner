@@ -9,7 +9,7 @@ import {
   useItemsTableData,
   useItemsFilters,
 } from '@/features/items'
-import { Flex, PageContainer, Panel, StatLabel } from '@/shared/ui'
+import { Flex, PageContainer, PageContent, PageHeader, StatLabel } from '@/shared/ui'
 import { useEffect } from 'react'
 
 export const PageItems = () => {
@@ -31,7 +31,7 @@ export const PageItems = () => {
   return (
     <PageContainer>
       {/* Header and filters */}
-      <Panel padding="sm">
+      <PageHeader>
         <Flex wrap="wrap" justify="between" align="end" gap="lg">
           {/* Filters menu */}
           <Flex wrap="wrap">
@@ -45,12 +45,12 @@ export const PageItems = () => {
           {/* Items count */}
           <StatLabel value={filteredItems.length} label="Item" />
         </Flex>
-      </Panel>
+      </PageHeader>
 
       {/* Main table */}
-      <div className="flex-1 overflow-y-scroll panel-muted">
+      <PageContent className="rounded-2xl border border-divider/70 bg-content1/20">
         <TableOfItems dataFiltered={filteredItems} />
-      </div>
+      </PageContent>
     </PageContainer>
   )
 }

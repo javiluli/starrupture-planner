@@ -1,5 +1,5 @@
 import { CorporationsAccordion, useCorporationsSummary } from '@/features/corporations'
-import { Flex, PageContainer, Panel, StatLabel, Typography } from '@/shared/ui'
+import { Flex, PageContainer, PageContent, PageHeader, StatLabel, Typography } from '@/shared/ui'
 import { formatNumber } from '@/shared/utils'
 
 export const PageCorporations = () => {
@@ -7,7 +7,7 @@ export const PageCorporations = () => {
 
   return (
     <PageContainer>
-      <Panel padding="sm">
+      <PageHeader>
         <Flex align="center" justify="between" gap="lg" wrap="wrap">
           <Typography as="h1" variant="h2">
             Corporations & Rewards
@@ -18,11 +18,11 @@ export const PageCorporations = () => {
             <StatLabel value={`${formatNumber(stats.costCount)} G`} label="Cost" />
           </Flex>
         </Flex>
-      </Panel>
+      </PageHeader>
 
-      <div className="flex-1 overflow-y-auto">
+      <PageContent>
         <CorporationsAccordion />
-      </div>
+      </PageContent>
     </PageContainer>
   )
 }
