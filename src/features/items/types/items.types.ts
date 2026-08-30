@@ -1,4 +1,3 @@
-import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 
 export type ItemFilterInput = {
@@ -11,5 +10,4 @@ export type ItemFilterInput = {
 export type ItemTableRow = Item & {
   buildingId: string | null
   production: string | undefined
-  corporations: CorporationLevelRef[] | undefined
 }

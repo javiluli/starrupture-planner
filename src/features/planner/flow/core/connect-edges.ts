@@ -1,11 +1,11 @@
 import type { ItemType } from '@/shared/@types/item.type'
 import type { Edge } from '@xyflow/react'
 import dagre from 'dagre'
-import { FLOW_STYLES } from '../config/flow-theme'
+import { FLOW_COLORS } from '../config/flow-theme'
 
 const EDGE_LABEL_STYLES = {
-  labelBgStyle: { fill: FLOW_STYLES.bg },
-  labelStyle: { fill: FLOW_STYLES.label, fontSize: '1.15rem', lineHeight: 1.375, fontWeight: 600 },
+  labelBgStyle: { fill: FLOW_COLORS.labelBackground },
+  labelStyle: { fill: FLOW_COLORS.labelText, fontSize: '1.15rem', lineHeight: 1.375, fontWeight: 600 },
 }
 
 interface ConnectParams {
@@ -55,7 +55,7 @@ export const connectSupplyAndProduction = ({
       label: `${itemName} x${taken.toFixed(1)}/m`,
       animated: true,
       style: {
-        stroke: '#6366f1',
+        stroke: FLOW_COLORS.supplyEdge,
         strokeWidth: 6,
         strokeDasharray: '5 5',
       },

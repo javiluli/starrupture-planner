@@ -1,30 +1,32 @@
-import type { Building } from '@/shared/@types/building.type'
-import type { CorporationLevelRef, CorporationsById } from '@/shared/@types/corporations.type'
-import type { Item } from '@/shared/@types/item.type'
 import type { ItemTableRow } from '@/features/items/types'
+import type { Building } from '@/shared/@types/building.type'
+import type { Item } from '@/shared/@types/item.type'
 
-const getBuildingForItem = (buildings: Building[], itemId: string) =>
-  buildings.find((building) => building.recipes?.some((recipe) => recipe.output.id === itemId))
+const indexBuildingsByOutput = (buildings: Building[]) => {
+  const buildingByItemId = new Map<string, Building>()
 
-const getCorporationsForItem = (corporations: CorporationsById, itemId: string): CorporationLevelRef[] =>
-  Object.values(corporations).flatMap((corp) =>
-    corp.levels
-      .filter((level) => level.components.some((component) => component.id === itemId))
-      .map((level) => ({
-        corporationId: corp.id,
-        level: level.level,
-      })),
-  )
-
-export const buildItemsTableData = (items: Item[], buildings: Building[], corporations: CorporationsById): ItemTableRow[] =>
-  items.map((item) => {
-    const building = getBuildingForItem(buildings, item.id)
-    const itemCorporations = getCorporationsForItem(corporations, item.id)
-
-    return {
-      ...item,
-      buildingId: building?.id ?? null,
-      production: building?.name,
-      corporations: itemCorporations,
+  for (const building of buildings) {
+    for (const recipe of building.recipes ?? []) {
+      if (!buildingByItemId.has(recipe.output.id)) buildingByItemId.set(recipe.output.id, building)
     }
-  })
+  }
+
+  return buildingByItemId
+}
+
+/** Builds the read-only rows consumed by the Items table. */
+export const buildItemsTableRows = (items: Item[], buildings: Building[]): ItemTableRow[] => {
+  const buildingByItemId = indexBuildingsByOutput(buildings)
+
+  return items
+    .map((item) => {
+      const building = buildingByItemId.get(item.id)
+
+      return {
+        ...item,
+        buildingId: building?.id ?? null,
+        production: building?.name,
+      }
+    })
+    .sort((firstItem, secondItem) => firstItem.name.localeCompare(secondItem.name))
+}

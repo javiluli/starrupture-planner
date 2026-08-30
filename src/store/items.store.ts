@@ -1,6 +1,5 @@
 import type { ItemFilterInput } from '@/features/items'
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface ItemsStoreState {
   filters: ItemFilterInput
@@ -9,6 +8,13 @@ interface ItemsStoreState {
   setSelectedCorporationId: (value: string) => void
   setSearchQuery: (value: string) => void
   resetFilter: () => void
+}
+
+const EMPTY_FILTERS: ItemFilterInput = {
+  selectedCategory: '',
+  selectedBuildingId: '',
+  selectedCorporationId: '',
+  searchQuery: '',
 }
 
 export const itemsSelectors = {
@@ -20,28 +26,11 @@ export const itemsSelectors = {
   resetFilter: (state: ItemsStoreState) => state.resetFilter,
 }
 
-export const useItemsStore = create<ItemsStoreState>()(
-  persist(
-    (set, get) => ({
-      filters: {
-        selectedCategory: '',
-        selectedBuildingId: '',
-        selectedCorporationId: '',
-        searchQuery: '',
-      },
-      setSelectedCategory: (value) => set({ filters: { ...get().filters, selectedCategory: value } }),
-      setSelectedBuildingId: (value) => set({ filters: { ...get().filters, selectedBuildingId: value } }),
-      setSelectedCorporationId: (value) => set({ filters: { ...get().filters, selectedCorporationId: value } }),
-      setSearchQuery: (value) => set({ filters: { ...get().filters, searchQuery: value } }),
-      resetFilter: () => {
-        set({
-          filters: { selectedCategory: '', selectedBuildingId: '', selectedCorporationId: '', searchQuery: '' },
-        })
-      },
-    }),
-    {
-      name: 'zstore.items',
-      storage: createJSONStorage(() => sessionStorage),
-    },
-  ),
-)
+export const useItemsStore = create<ItemsStoreState>()((set, get) => ({
+  filters: EMPTY_FILTERS,
+  setSelectedCategory: (value) => set({ filters: { ...get().filters, selectedCategory: value } }),
+  setSelectedBuildingId: (value) => set({ filters: { ...get().filters, selectedBuildingId: value } }),
+  setSelectedCorporationId: (value) => set({ filters: { ...get().filters, selectedCorporationId: value } }),
+  setSearchQuery: (value) => set({ filters: { ...get().filters, searchQuery: value } }),
+  resetFilter: () => set({ filters: EMPTY_FILTERS }),
+}))

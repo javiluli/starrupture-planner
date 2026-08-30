@@ -21,4 +21,3 @@ page-recipes -> RecipesAccordion -> RecipeRow -> RecipeInputs/RecipeOutput
 
 - useRecipesSummary: resumen de buildings y recipes
 - useRecipesAccordionData: lista de buildings con recetas + unlock info + itemMap
-```

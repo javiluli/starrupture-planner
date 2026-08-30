@@ -3,37 +3,21 @@ import {
   CategorySelect,
   ClearFiltersButton,
   CorporationSelect,
+  ItemsTable,
   SearchInput,
-  TableOfItems,
-  useFilteredItems,
-  useItemsTableData,
-  useItemsFilters,
+  useFilteredItemRows,
+  useItemsTableRows,
 } from '@/features/items'
 import { Flex, PageContainer, PageContent, PageHeader, StatLabel } from '@/shared/ui'
-import { useEffect } from 'react'
 
 export const PageItems = () => {
-  /**
-   * Hooks
-   */
-  const itemsWithProduction = useItemsTableData()
-  const { resetFilter } = useItemsFilters()
-  const filteredItems = useFilteredItems(itemsWithProduction)
-
-  /**
-   * Start with clean/empty filters
-   */
-  useEffect(() => {
-    resetFilter()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const itemRows = useItemsTableRows()
+  const filteredItems = useFilteredItemRows(itemRows)
 
   return (
     <PageContainer>
-      {/* Header and filters */}
       <PageHeader>
         <Flex wrap="wrap" justify="between" align="end" gap="lg">
-          {/* Filters menu */}
           <Flex wrap="wrap">
             <CategorySelect />
             <BuildingSelect />
@@ -42,14 +26,12 @@ export const PageItems = () => {
             <ClearFiltersButton />
           </Flex>
 
-          {/* Items count */}
           <StatLabel value={filteredItems.length} label="Item" />
         </Flex>
       </PageHeader>
 
-      {/* Main table */}
-      <PageContent className="rounded-2xl border border-divider/70 bg-content1/20">
-        <TableOfItems dataFiltered={filteredItems} />
+      <PageContent overflow="hidden" surface="muted">
+        <ItemsTable items={filteredItems} />
       </PageContent>
     </PageContainer>
   )

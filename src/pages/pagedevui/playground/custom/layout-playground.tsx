@@ -38,7 +38,7 @@ export const LayoutPlayground = () => (
       <PageHeader>
         <Typography variant="h4">Page header</Typography>
       </PageHeader>
-      <PageContent className="rounded-2xl border border-divider/70 bg-content1/20 p-4">
+      <PageContent surface="muted" padding="md">
         <Typography variant="small" tone="soft">
           Page content owns the remaining space and its scroll behavior.
         </Typography>

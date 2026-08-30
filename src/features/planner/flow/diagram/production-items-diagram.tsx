@@ -1,4 +1,4 @@
-﻿import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
+import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
 
 import { Flex, Typography } from '@/shared/ui'
 import { dataSelectors, useDataStore } from '@/store/data.store'
@@ -19,8 +19,10 @@ export function ProductionItemsDiagram() {
   if (!data) {
     return (
       <Flex align="center" justify="center" className="h-full min-h-0 p-6">
-        <Flex align="center" justify="center" className="w-full rounded-xl border border-dashed border-white/10 p-20">
-          <Typography className="text-slate-500 italic opacity-50">No production data available</Typography>
+        <Flex align="center" justify="center" className="w-full rounded-xl border border-dashed border-divider/70 p-20">
+          <Typography tone="soft" className="italic">
+            No production data available
+          </Typography>
         </Flex>
       </Flex>
     )

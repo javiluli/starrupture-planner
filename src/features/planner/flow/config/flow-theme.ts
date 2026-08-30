@@ -1,10 +1,14 @@
-export const FLOW_STYLES = {
-  bg: '#03050A', // background from Hero theme
-  color: '#121B30', // content3-DEFAULT from Hero theme
-  label: '#e6edf3', // foreground-DEFAULT from Hero theme
-} as const
-
-export const FLOW_FIT_VIEW = {
-  padding: 0.1,
-  duration: 600,
+/**
+ * Colores semanticos usados por React Flow.
+ *
+ * HeroUI expone canales HSL en `--heroui-*`; React Flow necesita recibir el
+ * color CSS completo en sus propiedades JavaScript. Los colores de dominio
+ * siguen viviendo como tokens Tailwind en `src/index.css`.
+ */
+export const FLOW_COLORS = {
+  canvas: 'hsl(var(--heroui-background) / 1)',
+  grid: 'hsl(var(--heroui-content3) / 1)',
+  labelBackground: 'hsl(var(--heroui-background) / 1)',
+  labelText: 'hsl(var(--heroui-foreground) / 1)',
+  supplyEdge: 'var(--color-item-component)',
 } as const

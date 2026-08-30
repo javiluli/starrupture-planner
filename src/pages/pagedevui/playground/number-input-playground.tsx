@@ -23,7 +23,7 @@ const defaultValues = {
   placement: 'inside' as Placements,
   isDisabled: false,
 }
-export const NumberinputPlayground = () => {
+export const NumberInputPlayground = () => {
   const [variant, setVariant] = useState<Variant>(defaultValues.variant)
   const [size, setSize] = useState<Size>(defaultValues.size)
   const [rounded, setRounded] = useState<Radius>(defaultValues.radius)

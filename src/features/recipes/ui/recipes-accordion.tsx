@@ -1,7 +1,7 @@
 import { Accordion, AccordionItemContent } from '@/shared/ui'
-import { accordionItemStyles } from '@/shared/ui/accordion/accordionItem.styles'
+import { accordionItemStyles } from '@/shared/ui/accordion/accordion-item.styles'
 import { AccordionItem } from '@heroui/react'
-import { useRecipesAccordionData } from '../hooks'
+import { useRecipesAccordionData } from '../hooks/use-recipes-accordion-data'
 import { RecipeRow } from './recipe-row'
 import { RecipeAccordionHeader } from './recipe-accordion-header'
 

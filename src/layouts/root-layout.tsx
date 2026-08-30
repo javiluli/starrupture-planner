@@ -14,19 +14,25 @@ const RootLayout = () => {
   return (
     <Flex id="__NEXT" direction="col" align="stretch" className="h-dvh min-h-0 gap-0 overflow-hidden">
       <Navbar className="shrink-0 border-b border-divider/60 bg-background/80 backdrop-blur" maxWidth="full">
-        <NavbarBrand className="space-x-2">
+        <NavbarBrand className="hidden space-x-2 sm:flex">
           <Typography variant="h2" as="h1">
             SR Planner
           </Typography>
         </NavbarBrand>
 
         <NavbarContent justify="center">
-          <Tabs selectedKey={location.pathname} onSelectionChange={(key) => navigate(key as string)} variant="light" size="sm">
+          <Tabs
+            selectedKey={location.pathname}
+            onSelectionChange={(key) => navigate(key as string)}
+            variant="light"
+            size="lg"
+            classNames={{ tabList: 'gap-1', tab: 'px-2' }}
+          >
             {productionRoutes.map((tab) => (
               <Tab
                 key={tab.path}
                 title={
-                  <Typography as="div" className="text-foreground/60 group-data-[selected=true]:text-foreground">
+                  <Typography as="div" className="text-foreground/80 group-data-[selected=true]:text-foreground">
                     {tab.label}
                   </Typography>
                 }
@@ -35,7 +41,7 @@ const RootLayout = () => {
           </Tabs>
         </NavbarContent>
 
-        <NavbarContent justify="end">
+        <NavbarContent justify="end" className="hidden sm:flex">
           <NavbarItem>
             <GithubButton />
           </NavbarItem>

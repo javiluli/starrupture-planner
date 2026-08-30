@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { dataSelectors, useDataStore } from '@/store/data.store'
-import { getBuildingUnlockInfo, hasRecipes } from '../lib'
+import { getBuildingUnlockInfo } from '../lib/building-unlock'
+import { hasRecipes } from '../lib/has-recipes'
 import { useItemMap } from '@/shared/hooks'
 
 export const useRecipesAccordionData = () => {

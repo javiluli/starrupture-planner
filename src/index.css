@@ -21,12 +21,13 @@
 }
 
 @theme {
-  --color-item-raw: #64748b; /* Slate / Steel Gray */
-  --color-item-processed: #a855f7; /* Electric Cyan */
-  --color-item-component: #6366f1; /* Neon Purple */
-  --color-item-material: #22d3ee; /* Indigo */
-  --color-item-ammo: #ef4444; /*  Danger Red */
-  --color-orbital_cargo_launcher: #00ff9f;
+  /* Colores de dominio compartidos por Items y las conexiones del Flow. */
+  --color-item-raw: #64748b;
+  --color-item-processed: #a855f7;
+  --color-item-component: #6366f1;
+  --color-item-material: #22d3ee;
+  --color-item-ammo: #ef4444;
+  --color-flow-export: #00ff9f;
 }
 
 @layer base {
@@ -88,18 +89,6 @@
     @apply rounded-2xl bg-content1/30;
   }
 
-  .panel-muted {
-    @apply rounded-2xl bg-content1/20;
-  }
-}
-
-.field-grid {
-  background-image:
-    linear-gradient(to right, hsla(0, 0%, 100%, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, hsla(0, 0%, 100%, 0.035) 1px, transparent 1px);
-  background-size: 10px 10px;
-  background-position: -1px -1px; /* Compensa el borde de 1px del nodo */
-  box-sizing: border-box;
 }
 
 .react-flow__edge-raw .react-flow__edge-path {
@@ -118,5 +107,33 @@
   stroke: var(--color-item-ammo);
 }
 .react-flow__edge-orbital_cargo_launcher .react-flow__edge-path {
-  stroke: var(--color-orbital_cargo_launcher);
+  stroke: var(--color-flow-export);
+}
+
+@layer utilities {
+  .page-enter {
+    animation: page-enter 180ms ease-out both;
+  }
+
+  .deferred-render {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 96px;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
 }

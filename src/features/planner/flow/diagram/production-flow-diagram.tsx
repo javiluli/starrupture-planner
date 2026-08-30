@@ -1,7 +1,7 @@
 import { Background, BackgroundVariant, Controls, ReactFlow, ReactFlowProvider } from '@xyflow/react'
 
 import { dataSelectors, useDataStore } from '@/store/data.store'
-import { FLOW_STYLES } from '@/features/planner/flow/config/flow-theme'
+import { FLOW_COLORS } from '@/features/planner/flow/config/flow-theme'
 import { FLOW_NODE_TYPES } from '@/features/planner/flow/config/node-types'
 import { useFlowDiagram } from '@/features/planner/hooks/use-flow-diagram'
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
@@ -29,7 +29,7 @@ function ProductionFlowDiagramInner() {
         colorMode="dark"
         fitView
       >
-        <Background bgColor={FLOW_STYLES.bg} color={FLOW_STYLES.color} variant={BackgroundVariant.Lines} gap={60} />
+        <Background bgColor={FLOW_COLORS.canvas} color={FLOW_COLORS.grid} variant={BackgroundVariant.Lines} gap={60} />
 
         <Controls position="bottom-right" />
       </ReactFlow>

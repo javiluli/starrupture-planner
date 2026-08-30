@@ -15,7 +15,7 @@ export const ItemsDiagramTable = ({ columns, rows, itemNameMap }: ItemsTableProp
     <Table removeWrapper isHeaderSticky aria-label="Game item table">
       <TableHeader columns={columns} className="bg-content1/60">
         {(column) => (
-          <TableColumn key={column.key} className={`uppercase text-foreground/50 ${column.key === 'item' ? 'w-20 max-w-20' : ''}`}>
+          <TableColumn key={column.key} className={`uppercase text-foreground/50 ${column.key === 'item' ? 'w-20' : ''}`}>
             <Typography as="span" variant="micro" tone="soft">
               {column.name}
             </Typography>

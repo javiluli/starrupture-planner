@@ -17,7 +17,7 @@ export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps) => {
         selected ? 'shadow-background' : 'shadow-none',
       )}
     >
-      <Handle type="target" position={Position.Left} style={{ background: '#ffffff' }} />
+      <Handle type="target" position={Position.Left} className="bg-foreground!" />
       <Handle type="source" position={Position.Right} className="opacity-0" />
 
       <Flex direction="col">

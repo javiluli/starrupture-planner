@@ -1,5 +1,5 @@
 import type { CorporationsById } from '@/shared/@types/corporations.type'
-import type { BuildingUnlockInfo } from '@/features/recipes/types'
+import type { BuildingUnlockInfo } from '../types/recipes.types'
 
 export const getBuildingUnlockInfo = (corporations: CorporationsById, buildingName: string): BuildingUnlockInfo | null => {
   for (const [corporationName, corporation] of Object.entries(corporations)) {

@@ -1,70 +1,63 @@
 # Project Structure
 
-This project follows a feature-first structure for product pages and a shared layer for cross-cutting UI and utilities.
+The repository follows a feature-first architecture. Product-specific code stays close to its feature; only genuinely cross-feature primitives belong in `shared/`.
 
-## Top-Level Overview
-
-```
+```text
 src/
-  assets/          # Static images and brand assets
-  features/        # Feature modules grouped by product area
-  layouts/         # App layout shells (Navbar, page wrappers)
-  pages/           # Route-level screens that compose features
-  router/          # Route config and navigation
-  shared/          # Cross-feature UI, utilities, i18n, and types
-  store/           # Global state (Zustand stores)
+|- assets/       # Bundled icons and visual assets
+|- features/     # Planner, Items, Recipes and Corporations
+|- layouts/      # Root shell and navbar
+|- pages/        # Route-level composition only
+|- router/       # Routes, lazy loading and navigation metadata
+|- shared/       # Reusable UI, static data, hooks, types and formatting
+`- store/        # Todos los stores Zustand, globales y especificos de feature
 ```
 
-## Features
+## Feature Shape
 
-Each feature folder owns its UI, logic, and hooks. Keep components close to their domain.
+A feature adds folders only when they contain a clear responsibility.
 
-```
-src/features/
-  planner/
-    core/          # Domain logic and calculations
-    flow/          # React Flow diagrams and layout helpers
-    hooks/         # Feature-specific hooks
-    ui/            # Planner UI components
-      controls/
-      sidebar/
-      stats/
-  items/
-    core/          # Filtering and domain helpers
-    hooks/         # Feature-specific hooks
-    ui/            # Filters and table components
-      filters/
-      table/
-  sketch/          # Experimental / in-progress feature
+```text
+feature/
+|- hooks/        # React orchestration local to the feature
+|- lib/          # Pure domain helpers
+|- types/        # Feature-only contracts
+|- ui/           # Feature-only components
+|- index.ts      # Public API used by pages/other features
+`- README.md
 ```
 
-## Shared Layer
+Planner additionally owns `flow/` and `providers/` because its calculated plan is shared by several visualizations.
 
-Reusable code that is not tied to a specific feature lives in `shared/`.
+## Import Boundaries
 
-```
-src/shared/
-  @types/          # Shared TypeScript types and data contracts
-  data/            # Static game datasets (buildings, recipes, corporations)
-  hooks/           # Cross-feature custom hooks
-  ui/              # Reusable UI building blocks (TreeList, Marquee, Layout)
-  utils/           # Cross-feature mathematical and format helpers
-```
+Feature-root `index.ts` files define public APIs for pages and other features. Inside a feature, import hooks, helpers, types and components directly from their source file. Avoid internal barrels that only forward a small number of local exports.
 
-## Pages and Layouts
+## Shared Rule
 
-- `pages/` are route-level screens that compose features and layout pieces.
-- `layouts/` contains the root layout and shared shells.
+Move code to `src/shared/` only after it is reused by multiple features and its API is domain-neutral. Examples: `Flex`, `Panel`, `PageContainer`, `Typography`, `AssetImage`, `Accordion` and `TreeList`.
 
-## Router
+## Shell Contract
 
-`router/` contains route definitions and the router setup.
+- `RootLayout` owns the viewport split between navigation and route content.
+- `PageContainer` owns responsive outer padding and the gap between page regions.
+- `PageHeader` owns the compact header surface and its internal padding.
+- `PageContent` owns remaining height, scrolling and an optional `Panel` surface.
+- Feature components own only spacing inside their own content.
 
----
+## Page Rule
 
-# Conventions
+Pages compose existing feature components inside `PageContainer`, `PageHeader` and `PageContent`. Business calculations, filtering and store actions remain in the owning feature.
 
-- **Feature-first**: Keep feature logic, hooks, and UI inside its feature.
-- **Shared stays generic**: If a component or helper is used in multiple features, it belongs in `shared/`.
-- **Pages compose**: Pages should stitch together feature components and avoid heavy logic.
-- **Naming**: Use descriptive component names that match their role in the UI (avoid redundant prefixes).
+## Bundle Policy
+
+Route pages are loaded with `React.lazy`; keep page-only dependencies behind that boundary. Continue importing supported components from `@heroui/react`: its package is tree-shakeable and the production source map confirms that only used HeroUI component packages enter each chunk. Do not import undeclared transitive `@heroui/*` packages or add `manualChunks` only to hide Vite's size warning; either change requires a measured reduction in initial gzip size.
+
+Current production baseline: the entry chunk is about `685 kB` raw / `194 kB` gzip. Most mapped bytes come from React DOM, HeroUI Theme, React Router and React Aria rather than application code.
+
+## Naming
+
+- Components and files describe UI roles: `ItemsTable`, `PlannerToolbar`, `PlannerSidebar`.
+- Hooks describe their result/action: `useItemsTableRows`, `useOpenPlanner`.
+- Builders describe their output: `buildItemsTableRows`, `buildProductionPlan`.
+- Avoid aliases during renames; update symbols, files, imports and barrels together.

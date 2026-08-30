@@ -19,12 +19,13 @@ const paddingClasses: Record<PanelPadding, string> = {
   lg: 'p-6',
 }
 
-const panelVariant = {
+const panelVariantClasses = {
+  plain: '',
   default: 'rounded-2xl border border-divider/70 bg-content1',
   muted: 'rounded-2xl border border-divider/70 bg-content1/20',
 } as const
 
-export type PanelVariant = keyof typeof panelVariant
+export type PanelVariant = keyof typeof panelVariantClasses
 
 export const Panel = <T extends ElementType = 'div'>({
   as,
@@ -37,7 +38,7 @@ export const Panel = <T extends ElementType = 'div'>({
   const Component = as ?? 'div'
 
   return (
-    <Component className={cn(panelVariant[variant], paddingClasses[padding], className)} {...props}>
+    <Component className={cn(panelVariantClasses[variant], paddingClasses[padding], className)} {...props}>
       {children}
     </Component>
   )

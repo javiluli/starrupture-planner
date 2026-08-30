@@ -1,4 +1,4 @@
-import type { BuildingUnlockInfo } from '@/features/recipes/types'
+import type { BuildingUnlockInfo } from '../types/recipes.types'
 import type { Building } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { RecipeAccordionMeta } from './recipe-accordion-meta'

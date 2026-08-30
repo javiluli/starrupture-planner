@@ -16,8 +16,8 @@ export function SupplyNode({ data, selected }: NodeProps) {
         selected ? 'shadow-background' : 'shadow-none',
       )}
     >
-      <Handle type="target" position={Position.Left} className="opacity-0" style={{ background: '#ffffff' }} />
-      <Handle type="source" position={Position.Right} style={{ background: '#ffffff' }} />
+      <Handle type="target" position={Position.Left} className="bg-foreground! opacity-0" />
+      <Handle type="source" position={Position.Right} className="bg-foreground!" />
 
       <Flex direction="col">
         <FlowNodeHeader title={buildingName} />

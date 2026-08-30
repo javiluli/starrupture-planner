@@ -1,199 +1,93 @@
-﻿# Planner (Feature)
+# Planner (Feature)
 
-Esta feature contiene el planner de produccion: UI, flow y logica de soporte.
+Planner calcula una linea de produccion, aplica supply y variantes de edificios, y presenta el mismo resultado en varios diagramas.
 
-## Enlaces rapidos
+## Enlaces
 
-- [Flow (React Flow)](./flow/README.md)
+- [Flow](./flow/README.md)
 - [Hooks](./hooks/README.md)
 - [Lib](./lib/README.md)
 - [Production plan](./lib/production-plan/README.md)
+- [Treelist](./ui/treelist-diagram/README.md)
 
 ## Estructura
 
-```
-src/features/planner
-+- flow/            # React Flow, layout y helpers del grafo
-+- hooks/           # Hooks propios de la feature
-+- lib/             # Helpers puros (calculos, filtros, lookups)
-+- state/           # (obsoleto) el store real vive en src/store/planner.store.ts
-+- ui/              # UI agrupada por dominio
-+- constants.ts     # Constantes de la feature
-+- index.ts         # Exports publicos
-```
-
-## Principios
-
-- UI solo renderiza y despacha acciones.
-- La logica del plan vive en `lib/production-plan/`.
-- El flow solo convierte un plan a nodos/edges.
-- El store mantiene estado y no calcula el plan.
-
-## Guia rapida del flujo
-
-1. `TargetItemSelect` / `TargetRateInput` actualizan el store via `usePlannerTarget`.
-2. `useProductionPlan` lee `targetId`, `targetIpm`, `supplyCountByItem` y variantes por item.
-3. `useProductionPlan` llama a `buildProductionPlan` y devuelve un `plan` unico.
-4. Cada diagrama consume el `plan`:
-   - `ProductionFlowDiagram` -> `useFlowDiagram` -> `buildProductionFlowFromPlan` -> `planToFlow` -> React Flow.
-   - `ProductionTreelistDiagram` -> `buildTree(plan.steps)`.
-   - `ProductionItemsDiagram` -> lista `plan.steps`.
-
-## Mini-diagrama (proposito por paso)
-
-```
-ProductionFlowDiagram
-  -> useFlowDiagram
-     (orquesta el render del flow: prepara nodes/edges/stats)
-  -> buildProductionFlowFromPlan
-     (convierte el plan en datos de flow)
-  -> planToFlow
-     (transforma pasos en nodos/edges)
-  -> React Flow
-     (renderiza el grafo y la interaccion)
+```text
+src/features/planner/
+|- flow/          # Adaptacion del plan a React Flow
+|- hooks/         # Acceso a target, plan compartido y diagramas
+|- lib/           # Reglas puras del dominio
+|- providers/     # Calculo unico y distribucion del ProductionPlan
+|- types/         # Contratos exclusivos de Planner
+|- ui/
+|  |- toolbar/    # Target, stats y requisitos de corporation
+|  |- sidebar/    # Supply y variantes de edificios
+|  |- items-diagram/
+|  `- treelist-diagram/
+|- constants.ts
+`- index.ts       # API publica de la feature
 ```
 
-**Resumen rapido**
-- `ProductionFlowDiagram`: UI, solo renderiza.
-- `useFlowDiagram`: prepara datos visuales a partir del plan.
-- `buildProductionFlowFromPlan`: plan -> flow (sin recalcular plan).
-- `planToFlow`: crea nodos/edges con la info del plan.
-- React Flow: dibuja el grafo.
+## Fuentes de verdad
 
-## Flujo principal (resumen)
+- `src/shared/data/*.json`: catalogo inmutable del juego.
+- `data.store.ts`: acceso reactivo de solo lectura al catalogo.
+- `planner.store.ts`: unicamente entradas editables del usuario.
+- `ProductionPlanProvider`: unico propietario del plan calculado.
+- `ProductionPlan`: resultado derivado; nunca se persiste ni se duplica en Zustand.
 
-```
-UI -> useProductionPlan -> buildProductionPlan -> buildPlanResolver -> calculateTotals -> buildSteps -> pruneSteps -> buildProductionFlowFromPlan -> planToFlow -> React Flow
-```
+## Recorrido principal
 
-## Flujo detallado (top-down)
+1. `PlannerToolbar` y `PlannerSidebar` actualizan target, IPM, supply o variantes en `planner.store.ts`.
+2. `ProductionPlanProvider` lee esas entradas y el catalogo.
+3. `buildProductionPlan` calcula una sola vez totals, steps y stats.
+4. `useProductionPlan` entrega el mismo objeto a toolbar, sidebar y diagramas.
+5. Cada diagrama transforma solo la representacion que necesita.
 
 ```mermaid
-flowchart TD
-  %% ===== UI =====
-  subgraph UI["ui/ (React components)"]
-    UIControls["controls/*"]
-    UISidebar["sidebar/*"]
-    UIStats["stats-bar.tsx"]
-  end
-
-  %% ===== Hooks =====
-  subgraph Hooks["hooks/"]
-    UseFlow["use-flow-diagram"]
-    UsePlan["use-production-plan"]
-    UseProd["use-production"]
-  end
-
-  %% ===== State =====
-  subgraph State["state/"]
-    PlannerStore["planner.store (zustand)"]
-  end
-
-  %% ===== Lib =====
-  subgraph Lib["lib/ (helpers)"]
-    Plan["production-plan/"]
-    Recipes["recipes"]
-    Corps["corporations"]
-    SupplyLib["supply-count + supply-count-items"]
-    Random["random-items"]
-    Logic["planner-logic (clamp)"]
-  end
-
-  %% ===== Flow =====
-  subgraph Flow["flow/"]
-    Builder["builder/build-production-flow"]
-    PlanToFlow["plan-to-flow"]
-    CoreEdges["core/flow-edges"]
-    CoreNodes["core/flow-nodes"]
-    CoreLookup["core/lookup"]
-    Layout["layout/flow-fit"]
-    Diagram["diagram/production-flow-diagram"]
-    Config["config/*"]
-  end
-
-  UIControls --> UsePlan
-  UISidebar --> UsePlan
-  UIStats --> PlannerStore
-  Diagram --> UsePlan
-  UsePlan --> UseFlow
-  UseFlow --> UseProd
-  UseFlow --> PlannerStore
-  UseFlow --> Builder
-  UseFlow --> Layout
-
-  PlannerStore --> Plan
-  PlannerStore --> Recipes
-  PlannerStore --> Corps
-
-  Builder --> PlanToFlow
-  Builder --> CoreEdges
-  Builder --> CoreNodes
-  Builder --> Config
-
-  CoreEdges --> CoreLookup
-  CoreNodes --> CoreLookup
-
-  UIControls --> SupplyLib
-  UISidebar --> SupplyLib
-  UIControls --> Random
+flowchart LR
+  UI[Toolbar / Sidebar] -->|actions| Store[planner.store]
+  Data[shared/data JSON] --> DataStore[data.store]
+  Store --> Provider[ProductionPlanProvider]
+  DataStore --> Provider
+  Provider --> Builder[buildProductionPlan]
+  Builder --> Plan[ProductionPlan]
+  Plan --> Stats[PlannerStats]
+  Plan --> Flow[React Flow]
+  Plan --> Tree[Treelist]
+  Plan --> Items[Items diagram]
 ```
 
-## Secuencia (alto nivel)
+## Secuencia
 
 ```mermaid
 sequenceDiagram
-  autonumber
-  participant UI as UI (controls/sidebar)
-  participant PlanHook as use-production-plan
-  participant Hook as use-flow-diagram
+  participant UI as Planner UI
   participant Store as planner.store
-  participant Builder as buildProductionFlowFromPlan
-  participant Plan as production-plan
-  participant PlanToFlow as plan-to-flow
-  participant CoreNodes as flow-nodes
-  participant CoreEdges as flow-edges
+  participant Provider as ProductionPlanProvider
+  participant Builder as buildProductionPlan
+  participant View as Active diagram
 
-  UI->>PlanHook: read targetId/targetIpm/supplyCountByItem
-  PlanHook->>Plan: buildProductionPlan
-  UI->>Hook: render + inputs
-  Hook->>Store: read targetId
-  Hook->>Builder: buildProductionFlowFromPlan(plan)
-  Builder->>PlanToFlow: planToFlow
-  PlanToFlow->>CoreNodes: buildSupplyNodes/buildProductionNodes
-  PlanToFlow->>CoreEdges: buildEdges
-  Hook-->>UI: setNodes/setEdges/setStats
+  UI->>Store: set target / supply / variant
+  Store-->>Provider: new editable inputs
+  Provider->>Builder: calculate once
+  Builder-->>Provider: ProductionPlan
+  Provider-->>View: useProductionPlan()
+  View->>View: adapt and render
 ```
 
-## Mapa de responsabilidad (store vs lib vs flow)
+## Responsabilidades
 
-**Store (estado y acciones)**
+- **Store:** target, target IPM, supply, variantes y acciones concretas.
+- **Provider:** ciclo de vida y reutilizacion del plan derivado.
+- **Lib:** calculos puros, recetas, corporations y requisitos.
+- **Flow:** nodos, edges, layout y ajuste de viewport.
+- **UI:** render e interaccion; no recalcula reglas de produccion.
 
-- `setTargetId`, `setTargetIpm`, `setPlannerStats`
-- `setSupplyCount`, `incrementSupplyCount`, `addSupplyItem`, `removeSupplyItem`
+## Cambios habituales
 
-**Lib (funciones puras / helpers)**
-
-- `buildProductionPlan`, `clampTargetIpm`
-- `findRecipeForItem`
-- `isItemExportableToCorporation`
-- `getSupplyCountItemIds`, `filterItemsByQuery`, `groupItemsByType`
-- `sortRequirementsByTime`, `pickRequirementByIndex`
-- `getRandomItemIds`
-
-**Flow (grafo y layout)**
-
-- `buildProductionFlowFromPlan` (plan -> flow)
-- `planToFlow`
-- `buildEdges`, `connectSupplyAndProduction`
-- `buildSupplyNodes`, `buildProductionNodes`, `buildLauncherNode`
-- `findItemById`, `getItemName`, `getItemType`, `getBuildingStats`
-- `scheduleFlowFitView`, `shouldFitFlowView`
-
-## Notas para devs
-
-- Si necesitas cambiar reglas de calculo, edita `lib/production-plan/`.
-- Si el layout se ve raro, revisa `flow/config/dagre-config.ts`.
-- Si cambias el nombre de un tipo o campo, ajusta `ProductionStep` y `planToFlow`.
-
-
-
+- Regla de calculo: `lib/production-plan/`.
+- Variante o receta: `lib/building-variants.ts` y `lib/recipes.ts`.
+- Nodos o edges: `flow/core/` y `flow/plan-to-flow.ts`.
+- Layout del grafo: `flow/config/dagre-config.ts`.
+- Supply UI: `ui/sidebar/supply-panel/`.

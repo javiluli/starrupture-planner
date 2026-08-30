@@ -5,7 +5,7 @@ type ItemFilterTarget = {
   name: string
   type: string
   buildingId: string | null
-  corporations: CorporationLevelRef[] | undefined
+  corporations?: CorporationLevelRef[]
 }
 
 export const filterItems = <T extends ItemFilterTarget>(items: T[], filters: ItemFilterInput): T[] => {

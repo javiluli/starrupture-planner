@@ -20,3 +20,7 @@ page-corporations -> CorporationsAccordion -> CorporationLevelRow
 
 - useCorporationsSummary: resumen de counts y coste total
 - useCorporationsAccordionData: lista de corporations + itemMap
+
+## Navegacion desde Items
+
+Cada referencia de corporation en la tabla `/items` usa una URL compartible con `corporation`, `level` y un anchor. `CorporationsAccordion` abre la corporation indicada y centra `CorporationLevelRow` en el nivel solicitado.

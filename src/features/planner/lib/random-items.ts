@@ -1,16 +1,13 @@
 import type { Item } from '@/shared/@types/item.type'
-import { pickRandomItems } from '@/shared/utils'
 
-/**
- * Devuelve ids aleatorios basados en el orden actual de items.
- *
- * Nota: no es estable, puede variar en cada render.
- *
- * @param items Lista completa de items.
- * @param count Cantidad de ids a devolver.
- * @returns Lista de ids aleatorios.
- */
+/** Returns a shuffled subset for the decorative Planner marquee. */
 export const getRandomItemIds = (items: Item[], count: number) => {
-  const ids = items.map((i) => i.id)
-  return pickRandomItems(ids, count)
+  const shuffledIds = items.map((item) => item.id)
+
+  for (let index = shuffledIds.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1))
+    ;[shuffledIds[index], shuffledIds[randomIndex]] = [shuffledIds[randomIndex], shuffledIds[index]]
+  }
+
+  return shuffledIds.slice(0, Math.max(0, count))
 }

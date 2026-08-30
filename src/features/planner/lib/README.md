@@ -1,27 +1,22 @@
-﻿# Lib (Planner)
+# Lib (Planner)
 
-Helpers puros que no dependen de React.
+Funciones puras del dominio, sin estado React ni acceso directo a Zustand.
 
-## Enlaces rapidos
+## Enlaces
 
-- [Planner (overview)](../README.md)
+- [Planner](../README.md)
 - [Flow](../flow/README.md)
-- [Hooks](../hooks/README.md)
 - [Production plan](./production-plan/README.md)
 
-## Archivos
+## Indice
 
-- `planner-logic.ts`: normaliza valores de entrada (clamp).
-- `production-plan/`: calculos de demanda, steps, stats y contexto de variantes.
-- `recipes.ts`: helpers de recetas.
-- `corporations.ts`: helpers de corporaciones.
-- `corporation-requirements.ts`: ordenamiento y picks de requirements.
-- `random-items.ts`: ids aleatorios para el marquee.
-- `supply-count.ts`: helpers simples de ids para supply.
-- `supply-count-items.ts`: filtros y agrupacion para el modal de supply.
+- `production-plan/`: demanda, steps, stats y resolucion de variantes.
+- `planner-logic.ts`: normalizacion de IPM.
+- `recipes.ts`: busqueda y seleccion de recetas.
+- `building-variants.ts`: variantes relevantes por item.
+- `corporation-requirements.ts`: calculo y seleccion de requisitos de nivel.
+- `random-items.ts`: muestra aleatoria del marquee.
+- `supply-count.ts`: operaciones puras sobre cantidades de supply.
+- `supply-count-items.ts`: filtros y agrupacion para el modal.
 
-## Flujo
-
-1. `production-plan/` calcula el total requerido por item y genera steps.
-2. `corporation-requirements.ts` ordena y calcula tiempos.
-3. `random-items.ts` alimenta el marquee.
+Si una funcion necesita React o Zustand, no pertenece aqui. Si solo adapta un `ProductionPlan` a una vista, pertenece a la carpeta de ese diagrama.

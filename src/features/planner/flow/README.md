@@ -1,4 +1,4 @@
-﻿# Flow (Planner)
+# Flow (Planner)
 
 React Flow + helpers de layout y construccion de nodos/edges.
 
@@ -37,3 +37,10 @@ flow/
 - Cambios de nodos: `core/flow-nodes.ts`.
 - Cambios de edges: `core/flow-edges.ts`.
 - Ajustes de nombres/labels: `core/lookup.ts`.
+
+## Tokens visuales
+
+- `config/flow-theme.ts` adapta los tokens HSL de HeroUI a las propiedades JavaScript de React Flow.
+- `src/index.css` contiene solo los colores de dominio: categorias de item y conexion de exportacion.
+- Nodos, estados vacios y handles usan clases semanticas HeroUI (`content*`, `foreground`, `divider`, `primary`).
+- No se deben introducir colores hexadecimales directamente en componentes o builders del Flow.

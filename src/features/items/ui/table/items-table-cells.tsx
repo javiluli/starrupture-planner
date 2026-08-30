@@ -1,9 +1,10 @@
-import { usePlannerTarget } from '@/features/planner'
+import { useOpenPlanner } from '@/features/planner'
+import { getCorporationLevelPath } from '@/features/corporations/lib/corporation-level-navigation'
 import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { Button, Chip } from '@heroui/react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export const ItemCell = ({ item }: { item: Item }) => {
   return (
@@ -36,21 +37,12 @@ export const ProductionCell = ({ itemProduction }: { itemProduction: string | un
 }
 
 export const ActionsCell = ({ item }: { item: Item }) => {
-  const navigate = useNavigate()
-  const { selectTargetItem } = usePlannerTarget()
-
-  const handlerRedirect = (id: string) => {
-    selectTargetItem(id)
-    // Un ligero delay, opcional permite que el estado se sincronice antes del cambio de vista
-    setTimeout(() => {
-      navigate('/')
-    }, 100)
-  }
+  const openPlanner = useOpenPlanner()
 
   return (
     <Flex>
       {item.type !== 'raw' && (
-        <Button size="sm" onPress={() => handlerRedirect(item.id)}>
+        <Button size="sm" onPress={() => openPlanner(item.id)}>
           Planner
         </Button>
       )}
@@ -60,14 +52,21 @@ export const ActionsCell = ({ item }: { item: Item }) => {
 
 export const CorporationsCell = ({ corporations }: { corporations: CorporationLevelRef[] | undefined }) => {
   return (
-    <Flex gap="lg">
-      {corporations?.map((c) => (
-        <Flex key={`${c.corporationId}-${c.level}`} gap="sm">
-          <AssetImage kind="corporations" id={c.corporationId} width={24} />
-          <Typography as="span" variant="small" tone="soft" className="capitalize">
-            {c.corporationId.split('_')[0]} <span>L.{c.level}</span>
-          </Typography>
-        </Flex>
+    <Flex gap="lg" wrap="wrap">
+      {corporations?.map((corporation) => (
+        <Link
+          key={`${corporation.corporationId}-${corporation.level}`}
+          to={getCorporationLevelPath(corporation.corporationId, corporation.level)}
+          aria-label={`Open ${corporation.corporationName} level ${corporation.level}`}
+          className="rounded-lg px-2 py-1 transition-colors hover:bg-content2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+        >
+          <Flex gap="sm">
+            <AssetImage kind="corporations" id={corporation.corporationId} width={24} />
+            <Typography as="span" variant="small" tone="soft" className="capitalize">
+              {corporation.corporationName} <span>L.{corporation.level}</span>
+            </Typography>
+          </Flex>
+        </Link>
       ))}
     </Flex>
   )

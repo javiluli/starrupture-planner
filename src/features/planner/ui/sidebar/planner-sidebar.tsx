@@ -20,12 +20,12 @@ import { SupplyPanel } from './supply-panel'
  * Componente que lista todos los recursos de la cadena actual.
  * Utiliza React.memo para evitar re-renderizados pesados durante el arrastre de nodos.
  */
-export const SidebarPanel = memo(() => {
+export const PlannerSidebar = memo(() => {
   return (
     <Tabs
       placement="top"
       variant="underlined"
-      aria-label="Supply sidebar"
+      aria-label="Planner settings"
       fullWidth
       classNames={{
         tabWrapper: 'flex h-full min-h-0 w-full flex-col overflow-hidden',

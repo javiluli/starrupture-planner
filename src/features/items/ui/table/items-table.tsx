@@ -1,62 +1,45 @@
-import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
-import type { Item } from '@/shared/@types/item.type'
-import { Typography } from '@/shared/ui'
-import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@heroui/react'
-import { ActionsCell, CategoryCell, CorporationsCell, ItemCell, ProductionCell } from './table-cells'
-import { getColumns, type ColumnKey } from './table-columns'
+import type { ItemTableRow } from '@/features/items/types'
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { useRef } from 'react'
+import { ItemsTableBody } from './items-table-body'
+import { ITEMS_TABLE_ESTIMATED_ROW_HEIGHT, ITEMS_TABLE_OVERSCAN } from './items-table-columns'
+import { ItemsTableHeader } from './items-table-header'
+import { itemsTableStyles } from './items-table.styles'
 
-interface Props {
-  dataFiltered: (Item & {
-    buildingId: string | null
-    production: string | undefined
-    corporations: CorporationLevelRef[] | undefined
-  })[]
+interface ItemsTableProps {
+  items: ItemTableRow[]
 }
 
-export const TableOfItems = ({ dataFiltered }: Props) => {
-  const columns = getColumns()
-  const renderCell = (item: (typeof dataFiltered)[number], columnKey: React.Key) => {
-    const key = columnKey as ColumnKey
+export const ItemsTable = ({ items }: ItemsTableProps) => {
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-    switch (key) {
-      case 'item':
-        return <ItemCell item={item} />
-      case 'category':
-        return <CategoryCell itemType={item.type} />
-      case 'production':
-        return <ProductionCell itemProduction={item.production} />
-      case 'actions':
-        return <ActionsCell item={item} />
-      case 'corporations':
-        return <CorporationsCell corporations={item.corporations} />
-      default:
-        return null
-    }
-  }
+  // TanStack Virtual returns functions that React Compiler cannot memoize safely.
+  // eslint-disable-next-line react-hooks/incompatible-library
+  const virtualizer = useVirtualizer({
+    count: items.length,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => ITEMS_TABLE_ESTIMATED_ROW_HEIGHT,
+    getItemKey: (index) => items[index].id,
+    overscan: ITEMS_TABLE_OVERSCAN,
+  })
+
+  const virtualRows = virtualizer.getVirtualItems()
 
   return (
-    <Table removeWrapper isHeaderSticky aria-label="Game item table">
-      <TableHeader columns={columns} className="bg-content1/60">
-        {(column) => (
-          <TableColumn key={column.key} className="uppercase text-foreground/50">
-            <Typography as="span" variant="micro" tone="soft">
-              {column.name}
-            </Typography>
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody
-        emptyContent={'No rows to display.'}
-        items={dataFiltered.sort((a, b) => {
-          return a.name.localeCompare(b.name)
-        })}
+    <div ref={scrollRef} className={itemsTableStyles.base}>
+      <table
+        aria-label="Game items catalog"
+        aria-rowcount={items.length + 1}
+        className={itemsTableStyles.table}
       >
-        {(item) => (
-          <TableRow key={item.id} className="border-b border-divider/60 hover:bg-content1/30 transition-colors">
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+        <ItemsTableHeader />
+        <ItemsTableBody
+          items={items}
+          virtualRows={virtualRows}
+          totalHeight={virtualizer.getTotalSize()}
+          measureElement={virtualizer.measureElement}
+        />
+      </table>
+    </div>
   )
 }

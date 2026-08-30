@@ -34,17 +34,6 @@ export interface CorporationsById {
  */
 export interface CorporationLevelRef {
   corporationId: string
+  corporationName: string
   level: number
 }
-
-/**
- * Alias legacy para no romper imports antiguos.
- * Usa CorporationsById en nuevos archivos.
- */
-export type CorporationsData = CorporationsById
-
-/**
- * Alias legacy para no romper imports antiguos.
- * Usa CorporationLevelRef en nuevos archivos.
- */
-export type CorporationLevelMatch = CorporationLevelRef

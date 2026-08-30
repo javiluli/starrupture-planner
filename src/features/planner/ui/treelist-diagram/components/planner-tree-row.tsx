@@ -31,7 +31,7 @@ export const PlannerTreeRow = memo(({ node, itemNameMap, hasChildren, isExpanded
         <Flex direction="col" align="start" gap="xs" className="min-w-0">
           <Flex gap="xs" align="center" className="min-w-0">
             {node.isFinalProduct ? <Typography variant="h4">{node.targetIpm?.toFixed(0)}x</Typography> : null}
-            <Typography variant="h4" className={`${node.isFinalProduct ? 'text-primary' : 'text-white'} truncate`}>
+            <Typography variant="h4" className={`${node.isFinalProduct ? 'text-primary' : 'text-foreground'} truncate`}>
               {label}
             </Typography>
             {showBuildingCount ? <Typography variant="h4">(x{node.buildingCount})</Typography> : null}

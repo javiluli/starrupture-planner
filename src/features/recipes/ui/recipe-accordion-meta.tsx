@@ -3,7 +3,7 @@ import { Chip, Divider } from '@heroui/react'
 import { Flame, Zap } from 'lucide-react'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import type { Building } from '@/shared/@types/building.type'
-import type { BuildingUnlockInfo } from '@/features/recipes/types'
+import type { BuildingUnlockInfo } from '../types/recipes.types'
 
 const RecipesChip = ({ count }: { count: number }) => <Chip variant="solid">{count} recipes</Chip>
 

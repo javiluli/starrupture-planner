@@ -1,6 +1,7 @@
 import RootLayout from '@/layouts/root-layout'
 import { NotFound } from '@/pages/not-found'
 import { ROUTE } from '@/router/routes'
+import { PageLoadingSkeleton } from '@/shared/ui'
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
@@ -11,7 +12,7 @@ const PageCorporations = lazy(() => import('@/pages/page-corporations').then((m)
 const PageDevUI = lazy(() => import('@/pages/pagedevui/page-dev-ui'))
 
 const withSuspense = (Component: React.ComponentType) => (
-  <Suspense fallback={<div className="flex h-full w-full items-center justify-center min-h-0 flex-1" />}>
+  <Suspense fallback={<PageLoadingSkeleton />}>
     <Component />
   </Suspense>
 )

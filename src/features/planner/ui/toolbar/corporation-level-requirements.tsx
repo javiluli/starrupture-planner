@@ -1,23 +1,25 @@
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { calculateCorporationLevelRequirements, formatTime, formatNumber } from '@/shared/utils'
-import { sortRequirementsByTime, pickRequirementByIndex } from '@/features/planner/lib/corporation-requirements'
+import { formatTime, formatNumber } from '@/shared/utils'
+import { calculateCorporationLevelRequirements, sortRequirementsByTime, pickRequirementByIndex } from '@/features/planner/lib/corporation-requirements'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { Button, Card, Chip, Divider, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 
-export const CorporationLevelRequirements: React.FC = () => {
+export const CorporationLevelRequirements = () => {
   const targetId = usePlannerStore(plannerSelectors.targetId)
   const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
+  const items = useDataStore(dataSelectors.items)
   const corporations = useDataStore(dataSelectors.corporations)
+  const selectedItem = useMemo(() => items.find((item) => item.id === targetId), [items, targetId])
 
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
 
   const exportStats = useMemo(() => {
-    if (!targetId || targetIpm <= 0) return []
-    return calculateCorporationLevelRequirements(targetId, targetIpm, corporations)
-  }, [targetId, targetIpm, corporations])
+    if (!selectedItem || targetIpm <= 0) return []
+    return calculateCorporationLevelRequirements(selectedItem, targetIpm, corporations)
+  }, [selectedItem, targetIpm, corporations])
 
   const displayStats = useMemo(() => {
     return sortRequirementsByTime(exportStats)
@@ -25,13 +27,15 @@ export const CorporationLevelRequirements: React.FC = () => {
 
   const { selectedStat, safeIndex } = pickRequirementByIndex(displayStats, selectedIndex)
 
-  if (!selectedStat) {
+  if (!targetId) {
     return (
       <Button variant="light" className="px-4 panel" isDisabled>
         Select an item to see corporation requirements
       </Button>
     )
   }
+
+  if (!selectedStat) return null
 
   const handleSelect = (index: number) => {
     setSelectedIndex(index)
