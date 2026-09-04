@@ -1,6 +1,6 @@
+import { Graph, layout } from '@dagrejs/dagre'
 import type { Edge, Node } from '@xyflow/react'
 import { Position } from '@xyflow/react'
-import dagre from 'dagre'
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
 import { DAGRE_GRAPH_CONFIG } from '@/features/planner/flow/config/dagre-config'
@@ -25,7 +25,7 @@ export const planToFlow = ({ plan, items, buildings, setSupplyCount }: PlanToFlo
     return { nodes: [], edges: [] }
   }
 
-  const dagreGraph = new dagre.graphlib.Graph()
+  const dagreGraph = new Graph()
   dagreGraph.setDefaultEdgeLabel(() => ({}))
   dagreGraph.setGraph(DAGRE_GRAPH_CONFIG)
 
@@ -44,7 +44,7 @@ export const planToFlow = ({ plan, items, buildings, setSupplyCount }: PlanToFlo
     dagreGraph,
   )
 
-  dagre.layout(dagreGraph)
+  layout(dagreGraph)
 
   const layoutedNodes = nodes.map((n) => {
     const pos = dagreGraph.node(n.id)

@@ -1,8 +1,8 @@
 import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, PACKAGE_RECEIVER_ID } from '@/features/planner/constants'
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
+import type { Graph } from '@dagrejs/dagre'
 import { type Node } from '@xyflow/react'
-import dagre from 'dagre'
 import { getBuildingStats, getItemName } from './lookup'
 import type { ProductionStep } from '@/features/planner/lib/production-plan'
 
@@ -21,7 +21,7 @@ export const buildSupplyNodes = (
   buildings: Building[],
   items: Item[],
   onSupplyCountChange: (id: string, val: number) => void,
-  dagreGraph: dagre.graphlib.Graph,
+  dagreGraph: Graph,
 ): Node[] => {
   const buildingData = buildings.find((b) => b.id === PACKAGE_RECEIVER_ID)
   const { power, heat } = getBuildingStats(buildingData)
@@ -64,7 +64,7 @@ export const buildProductionNodes = (
   steps: ProductionStep[],
   items: Item[],
   onSupplyCountChange: (id: string, val: number) => void,
-  dagreGraph: dagre.graphlib.Graph,
+  dagreGraph: Graph,
 ): Node[] =>
   steps.map((step) => {
     // Ajuste de altura para compactar en vertical.
@@ -108,7 +108,7 @@ export const buildLauncherNode = (
   targetIpm: number,
   items: Item[],
   buildings: Building[],
-  dagreGraph: dagre.graphlib.Graph,
+  dagreGraph: Graph,
 ): Node[] => {
   const buildingData = buildings.find((b) => b.id === ORBITAL_CARGO_LAUNCHER_ID)
   const targetItemName = getItemName(items, targetId)

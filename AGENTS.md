@@ -17,7 +17,6 @@ Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. 
 - `pnpm test:e2e`: run Playwright browser journeys in Chromium.
 - `pnpm test:e2e:ui`: open Playwright UI mode for local debugging.
 - `pnpm preview`: serve the production build locally.
-- `pnpm copy:fonts`: refresh the local Geist font assets.
 
 ## Coding Style & Naming Conventions
 

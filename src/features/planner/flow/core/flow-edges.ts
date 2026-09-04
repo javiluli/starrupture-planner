@@ -1,7 +1,7 @@
 import { ORBITAL_CARGO_LAUNCHER_ID } from '@/features/planner/constants'
 import type { Item } from '@/shared/@types/item.type'
+import type { Graph } from '@dagrejs/dagre'
 import { type Edge } from '@xyflow/react'
-import dagre from 'dagre'
 import { getItemName, getItemType } from './lookup'
 import { connectSupplyAndProduction } from './connect-edges'
 import type { ProductionStep } from '@/features/planner/lib/production-plan'
@@ -25,7 +25,7 @@ export const buildEdges = (
   supplyCountInventory: Record<string, number>,
   items: Item[],
   addOrgitalExportSystem: boolean,
-  dagreGraph: dagre.graphlib.Graph,
+  dagreGraph: Graph,
 ): Edge[] => {
   const edges: Edge[] = []
 

@@ -1,6 +1,6 @@
 import type { ItemType } from '@/shared/@types/item.type'
+import type { Graph } from '@dagrejs/dagre'
 import type { Edge } from '@xyflow/react'
-import dagre from 'dagre'
 import { FLOW_COLORS } from '../config/flow-theme'
 
 const EDGE_LABEL_STYLES = {
@@ -10,7 +10,7 @@ const EDGE_LABEL_STYLES = {
 
 interface ConnectParams {
   edges: Edge[]
-  dagreGraph: dagre.graphlib.Graph
+  dagreGraph: Graph
   itemName: string
   itemId: string
   itemType: ItemType

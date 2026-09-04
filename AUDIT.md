@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Hito 1.1 completado y validado.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Hitos 1.1 y 1.2 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1091,7 +1091,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** conseguir que una instalación limpia pueda ejecutar los mismos gates que la auditoría y que los contratos que no se pueden romper queden escritos y automatizados.
 
-**Progreso:** 1/4 hitos cerrados; Fase 1 en curso.
+**Progreso:** 2/4 hitos cerrados; Fase 1 en curso.
 
 **Por qué ahora:** cualquier refactor posterior sería difícil de atribuir mientras el gestor de paquetes, el navegador E2E y CI dependan del entorno local. Además, esta fase deja explícito que el trabajo siguiente no debe corregir problemas editando los JSON de origen.
 
@@ -1123,7 +1123,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 1.2 — Reducir y actualizar la superficie de dependencias
 
 - **Prioridad:** P1
-- **Estado:** PENDIENTE.
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** eliminar dependencias sin uso o mal clasificadas y cerrar advisories aplicables sin una actualización masiva.
 - **Problema resuelto:** `DEP-001`.
 - **Qué cambiar:** sustituir el uso puntual de `geist` por assets locales/versionados o un script sin Next; retirar `@heroicons/react` y `lucide` si la búsqueda final confirma que siguen sin uso; mover herramientas/tipos a `devDependencies`; actualizar React Router a una versión que incluya los parches actuales; preparar la migración de `dagre` al paquete mantenido `@dagrejs/dagre` con sus tipos.
@@ -1137,6 +1137,22 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** búsqueda de imports, instalación congelada, suite de layouts, Vitest completo, build, navegación manual y E2E cuando 1.3 esté listo; comparar snapshots/posiciones mediante tolerancias, no píxel perfecto.
 - **Resultado esperado:** manifest mínimo y explicable, sin Next como transitiva de producción ni paquetes de iconos redundantes, y sin advisories conocidos aplicables a las versiones directas.
 - **Criterios de aceptación:** toda dependencia de producción tiene consumidor runtime; herramientas/tipos están en desarrollo; actualización de Router no rompe rutas; layout conserva conectividad y no solapa nodos en fixtures representativas; el informe de audit restante documenta su aplicabilidad.
+- **Inventario final de runtime:**
+
+  | Dependencia | Consumidor o motivo |
+  | --- | --- |
+  | `@dagrejs/dagre` | Layout del diagrama de producción; sustituye `dagre` y sus tipos externos. |
+  | `@heroui/react` | Componentes y provider de la interfaz. |
+  | `framer-motion` | Peer runtime requerido por HeroUI. |
+  | `@tanstack/react-virtual` | Virtualización de la tabla de Items. |
+  | `@xyflow/react` | Diagramas del Planner y Base Designer. |
+  | `lucide-react` | Iconos usados por Planner, Base Designer, Items, Recipes y playground. |
+  | `react` / `react-dom` | Runtime y montaje de la aplicación. |
+  | `react-router-dom` | Router, navegación, enlaces y parámetros de búsqueda. |
+  | `zustand` | Stores del Planner, Items, datos y Base Designer. |
+
+- **Limpieza aplicada:** retirados `@heroicons/react` y `lucide` por falta de imports; retirado `geist` y su script porque los WOFF2 ya están versionados; añadida la licencia OFL y la procedencia de las fuentes; migrado Dagre a `@dagrejs/dagre` `3.1.1` con tipos nativos; actualizado React Router DOM a `7.18.3`.
+- **Cierre y validación:** el usuario confirmó instalación, formato, lint, Vitest, build, auditoría de producción, navegación y recarga de rutas, además de la revisión visual de un diagrama con ramas y supplies. El nuevo test de layout comprueba conectividad, dirección y ausencia de solapes sin fijar coordenadas a píxel.
 
 ## Hito 1.3 — Hacer ejecutable Playwright y crear CI mínima
 
