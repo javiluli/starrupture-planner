@@ -27,7 +27,7 @@ const devRoutes = import.meta.env.DEV
     ]
   : []
 
-export const productionRoutes = [
+const productionRoutes = [
   {
     path: ROUTE.HOME,
     element: withSuspense(PagePlanner),

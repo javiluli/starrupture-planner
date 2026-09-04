@@ -1319,6 +1319,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** simplificar la dirección de dependencias y establecer un único modelo tipado derivado de los JSON, manteniendo la estructura feature-first y Zustand donde sí hay estado de usuario.
 
+**Progreso:** 1/5 hitos cerrados; Fase 3 en curso.
+
 **Por qué ahora:** los fallos P1 ya estarán cubiertos; se puede refactorizar con tests que preserven el comportamiento correcto recién fijado.
 
 **Resultado acumulativo:** router acíclico, APIs públicas de features explícitas, catálogo derivado compartido, Flow tipado y código muerto retirado sin introducir capas genéricas innecesarias.
@@ -1330,6 +1332,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 3.1 — Separar metadata de rutas del layout
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** eliminar el ciclo router↔`RootLayout` y convertir la navegación en semántica web real.
 - **Problema resuelto:** `ARCH-001` y parte de `UI-001`.
 - **Qué cambiar:** mover IDs/path/labels/icon metadata a un módulo neutral sin importar JSX de página/layout; hacer que router y navbar dependan de él en una sola dirección; renderizar links mediante React Router.
@@ -1338,6 +1341,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** grafo de imports sin ciclo, build, tests de active route, deep links y E2E de navegación/History.
 - **Resultado esperado:** layout no necesita importar el router completo y los destinos funcionan como enlaces.
 - **Criterios de aceptación:** no existe SCC router/layout; cada metadata tiene una sola fuente; click, teclado, back/forward y abrir en nueva pestaña funcionan.
+- **Cierre y validación:** rutas y navegación comparten constantes y metadata neutrales en `routes.ts`, mientras `router.tsx` conserva exclusivamente páginas lazy y el árbol React. `RootLayout` ya no importa la configuración del router ni usa navegación imperativa: renderiza enlaces reales con estado activo. La configuración interna dejó de exportarse, el límite quedó documentado y el E2E cubre deep link, `aria-current`, atrás y adelante. El usuario validó build y navegación.
 
 ## Hito 3.2 — Definir APIs públicas de features sin autociclos
 

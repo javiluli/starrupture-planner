@@ -4,9 +4,9 @@ This folder encapsulates routing concerns.
 
 ## Files
 
-- `routes.ts`: route path constants used across the app.
-- `router.tsx`: React Router configuration (route tree).
+- `routes.ts`: neutral path constants and primary-navigation metadata; it does not import layouts, pages or JSX.
+- `router.tsx`: React Router configuration, lazy page elements and route tree.
 
 ## Usage
 
-Import the router in `src/app/App.tsx`, and route constants in layouts/pages.
+Import the router only at the application entry. Layouts and features consume `routes.ts`; they must not import `router.tsx`. This keeps the dependency direction `router -> layout -> route metadata` and prevents a router/layout cycle.

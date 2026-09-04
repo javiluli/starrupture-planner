@@ -25,3 +25,24 @@ test('permite recorrer las secciones principales desde la navegacion', async ({ 
   await navigation.getByRole('link', { name: /Planner/ }).click()
   await expect(page).toHaveURL(/\/$/)
 })
+
+test('conserva deep links, estado activo e historial del navegador', async ({ page }) => {
+  await page.goto('/items')
+
+  const navigation = page.getByRole('navigation', { name: 'Primary navigation' })
+  const itemsLink = navigation.getByRole('link', { name: 'Items' })
+  const buildingsLink = navigation.getByRole('link', { name: 'Buildings' })
+
+  await expect(itemsLink).toHaveAttribute('aria-current', 'page')
+  await buildingsLink.click()
+  await expect(page).toHaveURL(/\/recipes$/)
+  await expect(buildingsLink).toHaveAttribute('aria-current', 'page')
+
+  await page.goBack()
+  await expect(page).toHaveURL(/\/items$/)
+  await expect(itemsLink).toHaveAttribute('aria-current', 'page')
+
+  await page.goForward()
+  await expect(page).toHaveURL(/\/recipes$/)
+  await expect(buildingsLink).toHaveAttribute('aria-current', 'page')
+})
