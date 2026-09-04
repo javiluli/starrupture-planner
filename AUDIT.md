@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Hitos 1.1 y 1.2 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Hitos 1.1, 1.2 y 1.3 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1091,7 +1091,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** conseguir que una instalación limpia pueda ejecutar los mismos gates que la auditoría y que los contratos que no se pueden romper queden escritos y automatizados.
 
-**Progreso:** 2/4 hitos cerrados; Fase 1 en curso.
+**Progreso:** 3/4 hitos cerrados; Fase 1 en curso.
 
 **Por qué ahora:** cualquier refactor posterior sería difícil de atribuir mientras el gestor de paquetes, el navegador E2E y CI dependan del entorno local. Además, esta fase deja explícito que el trabajo siguiente no debe corregir problemas editando los JSON de origen.
 
@@ -1157,7 +1157,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 1.3 — Hacer ejecutable Playwright y crear CI mínima
 
 - **Prioridad:** P1
-- **Estado:** PENDIENTE.
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** transformar dos specs nominales en un gate que cualquier colaborador y CI puedan ejecutar.
 - **Problema resuelto:** `E2E-001` y precondición de `TEST-002`.
 - **Qué cambiar:** alinear `webServer.command` con el toolchain fijado; documentar/automatizar `playwright install chromium`; añadir typecheck de `playwright.config.ts` y `e2e/**`; crear workflow de CI con instalación congelada, store de pnpm cacheado, navegador instalado según la guía oficial y artefactos solo cuando aporten diagnóstico.
@@ -1172,6 +1172,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Resultado esperado:** el gate falla por comportamiento de producto, no por falta de binario o por el package manager del host.
 - **Criterios de aceptación:** Chromium se instala mediante un comando documentado; ambos specs actuales pasan localmente y en CI; configuración/specs se typecheckean; CI conserva trace en primer retry o fallo según política explícita.
 - **Decisión de caché:** no cachear binarios de Chromium. Playwright indica que restaurarlos suele costar lo mismo que descargarlos y que las dependencias Linux no se pueden cachear; CI cachea solo el store de pnpm e instala Chromium con sus dependencias en cada ejecución.
+- **Cierre y validación:** Playwright usa el servidor Vite fijado, la configuración y los specs tienen un typecheck estricto propio y `test:all` reproduce localmente la secuencia completa de gates. El workflow instala con lockfile congelado, cachea solo el store de pnpm, instala Chromium headless con sus dependencias y conserva artefactos únicamente ante fallos E2E; la política mantiene trace en el primer retry, screenshot al fallar y vídeo de los fallos. El usuario confirmó la instalación de Chromium, el listado de los dos specs, la ejecución completa de `test:all` y la revisión visual de la aplicación. La primera ejecución remota de GitHub Actions queda aplazada hasta publicar el repositorio, conforme al acuerdo de mantener esta fase solo en local.
 
 ## Hito 1.4 — Documentar la restricción de edición de datos
 

@@ -14,8 +14,10 @@ Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. 
 - `pnpm format`: format supported project files with the repository's pinned Prettier version.
 - `pnpm format:check`: verify formatting without changing files.
 - `pnpm test`: run component and unit tests once with Vitest.
+- `pnpm typecheck:e2e`: type-check Playwright configuration and browser journeys.
 - `pnpm test:e2e`: run Playwright browser journeys in Chromium.
 - `pnpm test:e2e:ui`: open Playwright UI mode for local debugging.
+- `pnpm test:all`: run formatting, lint, unit tests, E2E type-checking, build, and Chromium journeys.
 - `pnpm preview`: serve the production build locally.
 
 ## Coding Style & Naming Conventions

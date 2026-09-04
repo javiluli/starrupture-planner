@@ -7,6 +7,22 @@ Las pruebas de navegador viven aqui y se agrupan por recorrido o feature:
 
 Usa locators por rol, nombre accesible o texto estable. Evita clases CSS, estructura interna de HeroUI y esperas manuales. Playwright arranca Vite automaticamente si no existe un servidor reutilizable.
 
+## Preparacion local
+
+Instala el Chromium exacto que corresponde a la version de Playwright declarada en el lockfile:
+
+```bash
+pnpm exec playwright install chromium
+```
+
+En Linux o CI, instala tambien sus dependencias del sistema:
+
+```bash
+pnpm exec playwright install --with-deps --only-shell chromium
+```
+
+Los binarios del navegador no se cachean en CI. Solo se cachea el store de pnpm y Chromium se instala en cada ejecucion.
+
 ## Comandos frecuentes
 
 ```bash
@@ -15,6 +31,8 @@ pnpm test:e2e:headed
 pnpm test:e2e:ui
 pnpm test:e2e:debug
 pnpm test:e2e:report
+pnpm typecheck:e2e
+pnpm test:all
 ```
 
 ## CLI de Playwright
