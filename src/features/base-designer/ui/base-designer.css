@@ -1,0 +1,14 @@
+.base-designer-field {
+  box-sizing: border-box;
+  border: 1px solid hsl(var(--heroui-divider) / 0.8);
+  background-color: hsl(var(--heroui-content1) / 0.32);
+  background-image:
+    linear-gradient(to right, hsl(var(--heroui-content3) / 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--heroui-content3) / 0.22) 1px, transparent 1px);
+  background-position: -1px -1px;
+  background-size: 10px 10px;
+}
+[data-base-designer-canvas] .react-flow {
+  --xy-selection-background-color: hsl(var(--heroui-primary) / 0.1);
+  --xy-selection-border: 1px solid hsl(var(--heroui-primary) / 0.75);
+}

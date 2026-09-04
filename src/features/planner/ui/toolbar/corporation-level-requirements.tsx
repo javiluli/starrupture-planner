@@ -1,0 +1,133 @@
+import { AssetImage, Flex, Typography } from '@/shared/ui'
+import { formatTime, formatNumber } from '@/shared/utils'
+import { calculateCorporationLevelRequirements, sortRequirementsByTime, pickRequirementByIndex } from '@/features/planner/lib/corporation-requirements'
+import { dataSelectors, useDataStore } from '@/store/data.store'
+import { Button, Card, Chip, Divider, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
+import { useMemo, useState } from 'react'
+import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
+
+export const CorporationLevelRequirements = () => {
+  const targetId = usePlannerStore(plannerSelectors.targetId)
+  const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
+  const items = useDataStore(dataSelectors.items)
+  const corporations = useDataStore(dataSelectors.corporations)
+  const selectedItem = useMemo(() => items.find((item) => item.id === targetId), [items, targetId])
+
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const exportStats = useMemo(() => {
+    if (!selectedItem || targetIpm <= 0) return []
+    return calculateCorporationLevelRequirements(selectedItem, targetIpm, corporations)
+  }, [selectedItem, targetIpm, corporations])
+
+  const displayStats = useMemo(() => {
+    return sortRequirementsByTime(exportStats)
+  }, [exportStats])
+
+  const { selectedStat, safeIndex } = pickRequirementByIndex(displayStats, selectedIndex)
+
+  if (!targetId) {
+    return (
+      <Button variant="light" className="px-4 panel" isDisabled>
+        Select an item to see corporation requirements
+      </Button>
+    )
+  }
+
+  if (!selectedStat) return null
+
+  const handleSelect = (index: number) => {
+    setSelectedIndex(index)
+    setIsOpen(false)
+  }
+
+  const content = (
+    <PopoverContent className="p-0 border-none bg-transparent shadow-none">
+      <div className="p-2 bg-background border border-divider/60 rounded-2xl overflow-y-auto max-h-100 shadow-xl">
+        <Flex direction="col" gap="sm">
+          {displayStats.map((stat, index) => {
+            const isSelected = index === safeIndex
+
+            return (
+              <Card
+                key={stat.corporationName}
+                isPressable
+                onPress={() => handleSelect(index)}
+                className={`w-full p-3 transition-all duration-200 group border border-divider/60 shadow-none
+                  ${isSelected ? 'bg-content1/40 ring-2 ring-primary/30' : 'bg-transparent hover:bg-content1'}
+                `}
+              >
+                <Flex justify="between" className="mb-3">
+                  <Flex gap="sm">
+                    <div className="p-1.5 bg-content2 rounded-lg border border-divider/60">
+                      <AssetImage kind="corporations" id={stat.corporationId} width={20} />
+                    </div>
+                    <Flex direction="col" gap="none">
+                      <Typography as="span" variant="small" tone="muted" className="font-semibold">
+                        {stat.corporationName}{' '}
+                        <Typography as="span" variant="micro" tone="soft" className="font-bold">
+                          L.{stat.level}
+                        </Typography>
+                      </Typography>
+                    </Flex>
+                  </Flex>
+
+                  <Flex gap="sm">
+                    {isSelected ? (
+                      <Chip size="sm" color="primary" variant="flat">
+                        Selected
+                      </Chip>
+                    ) : null}
+                    <Chip size="sm" variant="bordered">
+                      {formatNumber(stat.xpRequired)} <span className="opacity-60">xp</span>
+                    </Chip>
+                  </Flex>
+                </Flex>
+
+                <div className="grid grid-cols-3 gap-1 bg-content1/60 rounded-lg p-1.5">
+                  <StatBox label="Time" value={formatTime(stat.timeMinutes)} />
+                  <StatBox label="Items" value={formatNumber(stat.totalItemsNeeded)} />
+                  <StatBox label="XP/u" value={`${stat.pointsPerItem}`} />
+                </div>
+              </Card>
+            )
+          })}
+        </Flex>
+      </div>
+    </PopoverContent>
+  )
+
+  return (
+    <Popover placement="bottom-start" isOpen={isOpen} onOpenChange={setIsOpen} offset={10} showArrow={false}>
+      <PopoverTrigger>
+        <Button variant="light" className="px-4 panel">
+          <Flex gap="md">
+            <AssetImage kind="corporations" id={selectedStat.corporationId} width={24} />
+            <Flex className="h-5 px-3" gap="md">
+              <Typography as="span" variant="small">
+                {formatNumber(selectedStat.totalItemsNeeded)} Items
+              </Typography>
+              <Divider orientation="vertical" className="bg-foreground/60" />
+              <Typography as="span" variant="small">
+                {formatTime(selectedStat.timeMinutes)}
+              </Typography>
+            </Flex>
+          </Flex>
+        </Button>
+      </PopoverTrigger>
+      {content}
+    </Popover>
+  )
+}
+
+const StatBox = ({ label, value }: { label: string; value: string }) => (
+  <Flex align="center" justify="center" className="py-1">
+    <Typography as="span" variant="micro" tone="soft" className="tracking-tight mb-0.5">
+      {label}
+    </Typography>
+    <Typography as="span" variant="small" tone="normal" className="font-mono font-bold">
+      {value}
+    </Typography>
+  </Flex>
+)
