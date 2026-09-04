@@ -26,7 +26,9 @@ export function SupplyModal() {
   return (
     <>
       <Flex justify="end" className="w-full mb-4">
-        <Button onPress={onOpen}>Add an item</Button>
+        <Button aria-label="Add supply item" onPress={onOpen}>
+          Add an item
+        </Button>
       </Flex>
       <Modal isOpen={isOpen} size="5xl" scrollBehavior="inside" onOpenChange={onOpenChange}>
         <ModalContent>
@@ -38,6 +40,7 @@ export function SupplyModal() {
               <ModalBody>
                 <Input
                   fullWidth
+                  aria-label="Search supply items"
                   variant="bordered"
                   placeholder="Type to search..."
                   startContent={<SearchIcon size={18} />}
@@ -63,25 +66,27 @@ export function SupplyModal() {
 
                       <ul className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-3">
                         {sectionItems.map((i) => (
-                          <Flex
-                            as="li"
-                            key={i.id}
-                            direction="col"
-                            align="center"
-                            gap="sm"
-                            className="group p-3 cursor-pointer transition-colors rounded-2xl hover:bg-content3/60"
-                            onClick={() => handleSupply(i.id)}
-                          >
-                            <AssetImage kind="items" id={i.id} width={96} />
-                            <Typography
-                              as="span"
-                              variant="micro"
-                              tone="soft"
-                              className="text-center transition-colors group-hover:text-foreground"
+                          <li key={i.id}>
+                            <button
+                              type="button"
+                              aria-label={`Add ${i.name} as supply`}
+                              className={
+                                'group flex w-full flex-col items-center gap-2 rounded-2xl p-3 transition-colors hover:bg-content3/60 ' +
+                                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary'
+                              }
+                              onClick={() => handleSupply(i.id)}
                             >
-                              {i.name}
-                            </Typography>
-                          </Flex>
+                              <AssetImage kind="items" id={i.id} width={96} alt="" />
+                              <Typography
+                                as="span"
+                                variant="micro"
+                                tone="soft"
+                                className="text-center transition-colors group-hover:text-foreground"
+                              >
+                                {i.name}
+                              </Typography>
+                            </button>
+                          </li>
                         ))}
                       </ul>
                     </div>

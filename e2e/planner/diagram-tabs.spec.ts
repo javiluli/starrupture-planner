@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('muestra solo diagramas implementados y conserva el catalogo de buildings', async ({ page }) => {
   await page.goto('/')
 
-  const targetItem = page.getByRole('combobox', { name: 'Select an item' })
+  const targetItem = page.getByRole('combobox', { name: 'Select production target' })
   await targetItem.fill('Accumulator')
   await page.getByRole('option', { name: /Accumulator/ }).click()
 

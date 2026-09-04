@@ -11,13 +11,15 @@ export function TargetItemSelect() {
 
   return (
     <Autocomplete
+      aria-label="Select production target"
       size="sm"
       variant="faded"
       className="w-64"
       placeholder="Select an item"
       maxListboxHeight={600}
+      clearButtonProps={{ 'aria-label': 'Clear production target' }}
       selectedKey={targetId}
-      onSelectionChange={(id) => selectTargetItem(id as string)}
+      onSelectionChange={(id) => selectTargetItem(typeof id === 'string' ? id : '')}
     >
       {items.map((i) => (
         <AutocompleteItem key={i.id} textValue={i.name} startContent={<AssetImage kind="items" id={i.id} width={32} />}>

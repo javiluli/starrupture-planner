@@ -18,6 +18,7 @@ import { memo } from 'react'
 
 interface SupplyCardProps {
   itemId: string
+  itemName: string
   value: number
 }
 
@@ -28,9 +29,10 @@ interface SupplyCardProps {
  * y un boton para elinar el item "supply"
  *
  * @param itemId ID del item al que se le suma un "supply"
+ * @param itemName Nombre legible del item
  * @param value Cantidad de la suma "supply"
  */
-export const SupplyCard = memo(({ itemId, value }: SupplyCardProps) => {
+export const SupplyCard = memo(({ itemId, itemName, value }: SupplyCardProps) => {
   const incrementSupply = usePlannerStore(plannerSelectors.incrementSupply)
   const setSupply = usePlannerStore(plannerSelectors.setSupply)
 
@@ -52,18 +54,18 @@ export const SupplyCard = memo(({ itemId, value }: SupplyCardProps) => {
       <CardBody className="py-2">
         <Flex gap="md">
           {/* Imagen del item */}
-          <AssetImage kind="items" id={itemId} width={72} />
+          <AssetImage kind="items" id={itemId} width={72} alt={itemName} />
 
           {/* Input supply, con botones para sumar o restar de 10 */}
           <Flex className="bg-content2/60 rounded-lg border border-divider/60">
-            <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemId} supply by 10`} onPress={removex10ItemsSupply}>
+            <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemName} supply by 10`} onPress={removex10ItemsSupply}>
               <ChevronsLeft />
             </Button>
-            <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemId} supply by 1`} onPress={removex1ItemsSupply}>
+            <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemName} supply by 1`} onPress={removex1ItemsSupply}>
               <ChevronLeft />
             </Button>
             <NumberInput
-              aria-label={`${itemId} supply per minute`}
+              aria-label={`${itemName} supply per minute`}
               hideStepper
               size="sm"
               variant="faded"
@@ -74,10 +76,10 @@ export const SupplyCard = memo(({ itemId, value }: SupplyCardProps) => {
               value={value}
               onChange={(val) => handleUpdateSupply(Number(val))}
             />
-            <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemId} supply by 1`} onPress={addx1ItemsSupply}>
+            <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemName} supply by 1`} onPress={addx1ItemsSupply}>
               <ChevronRight />
             </Button>
-            <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemId} supply by 10`} onPress={addx10ItemsSupply}>
+            <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemName} supply by 10`} onPress={addx10ItemsSupply}>
               <ChevronsRight />
             </Button>
           </Flex>

@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.3 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.4 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1196,7 +1196,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** eliminar inconsistencias visibles de dominio y barreras de uso antes de mover límites internos.
 
-**Progreso:** 3/6 hitos cerrados; Fase 2 en curso.
+**Progreso:** 4/6 hitos cerrados; Fase 2 en curso.
 
 **Por qué ahora:** son fallos que alteran planes, ocultan productores o impiden operar con teclado/móvil; tienen más impacto que la deuda arquitectónica restante.
 
@@ -1262,6 +1262,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 2.4 — Convertir supply en controles accesibles
 
 - **Prioridad:** P1
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** permitir completar el flujo supply con teclado, lector de pantalla y puntero.
 - **Problema resuelto:** `A11Y-001`.
 - **Qué cambiar:** sustituir `li` clicable por botones/opciones con semántica; etiquetar autocomplete, clear, cantidad y cuatro botones de cada card; devolver foco al cerrar modal; exponer errores/estado de forma comprensible.
@@ -1274,6 +1275,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** Testing Library con `userEvent.keyboard`, queries por role/name, axe/Lighthouse como apoyo y E2E solo teclado para añadir y eliminar supply.
 - **Resultado esperado:** ninguna acción principal de supply depende de click en un contenedor genérico o de icono sin nombre.
 - **Criterios de aceptación:** flujo completo operable sin ratón; todos los controles tienen nombre único; foco no se pierde al cerrar; no hay warnings de label del autocomplete.
+- **Cierre y validación:** la selección de items dejó de depender de un `li` clicable y utiliza un botón nativo con foco visible y activación por teclado. El target, la búsqueda, la cantidad y las cuatro acciones de cada supply exponen nombres accesibles específicos y legibles; el modal devuelve el foco a su disparador. Se mantuvo un cambio mínimo, sin estados anunciados adicionales ni dependencias nuevas. El E2E comprueba la acción antes inaccesible mediante teclado y el usuario validó build, recorrido y presentación.
 
 ## Hito 2.5 — Corregir navegación y toolbar responsive
 
