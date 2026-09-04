@@ -28,10 +28,10 @@ export const CategoryCell = ({ itemType }: { itemType: string }) => {
   )
 }
 
-export const ProductionCell = ({ itemProduction }: { itemProduction: string | undefined }) => {
+export const ProductionCell = ({ producerName }: { producerName: string | undefined }) => {
   return (
     <Typography as="span" variant="small" tone="muted">
-      {itemProduction}
+      {producerName}
     </Typography>
   )
 }
@@ -41,11 +41,9 @@ export const ActionsCell = ({ item }: { item: Item }) => {
 
   return (
     <Flex>
-      {item.type !== 'raw' && (
-        <Button size="sm" onPress={() => openPlanner(item.id)}>
-          Planner
-        </Button>
-      )}
+      <Button size="sm" onPress={() => openPlanner(item.id)}>
+        Planner
+      </Button>
     </Flex>
   )
 }

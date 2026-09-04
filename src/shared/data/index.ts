@@ -24,3 +24,4 @@ const items = (itemsCatalog as Item[]).map((item) => ({
 }))
 
 export { items, buildings, corporations }
+export { indexProducerBuildingsByItemId } from './building-production'

@@ -20,6 +20,7 @@ const buildings: Building[] = [{ id: 'package_receiver', name: 'Package Receiver
 const plan: ProductionPlan = {
   targetId: 'plate',
   targetIpm: 10,
+  isRawTarget: false,
   supplyCountByItem: { ore: 40, copper: 20, invalid: 0 },
   supplyCountInventory: { ore: 40, copper: 20, invalid: 0 },
   isExportable: false,

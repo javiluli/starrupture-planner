@@ -25,9 +25,10 @@ src/features/items/
 ## Flujo
 
 1. `useItemsTableRows` lee el catalogo estatico.
-2. `src/shared/data` asocia cada item con sus niveles de corporation; `buildItemsTableRows` solo añade su building y ordena una vez.
-3. `useFilteredItemRows` aplica los filtros de `items.store.ts`.
-4. `ItemsTable` virtualiza y renderiza solo el segmento visible.
+2. `src/shared/data` asocia cada item con sus niveles de corporation y conserva todos sus buildings productores.
+3. `buildItemsTableRows` añade la colección de productores, elige el primero solo para presentación y ordena una vez.
+4. `useFilteredItemRows` aplica los filtros de `items.store.ts`, incluido cualquiera de los productores asociados.
+5. `ItemsTable` virtualiza y renderiza solo el segmento visible.
 
 ## Tabla virtualizada
 

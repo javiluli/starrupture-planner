@@ -77,6 +77,7 @@ export const buildProductionPlan = ({
   buildings,
   targetId,
   targetIpm,
+  isRawTarget,
   supplyCountByItem,
   buildingVariantByItemId,
   isExportable,
@@ -91,6 +92,7 @@ export const buildProductionPlan = ({
   return {
     targetId,
     targetIpm,
+    isRawTarget,
     supplyCountByItem: normalizedSupplyCountByItem,
     supplyCountInventory,
     isExportable,

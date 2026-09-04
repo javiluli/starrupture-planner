@@ -30,6 +30,7 @@ export const ProductionPlanProvider = ({ children }: ProductionPlanProviderProps
       buildings,
       targetId,
       targetIpm,
+      isRawTarget: targetItem?.type === 'raw',
       supplyCountByItem,
       buildingVariantByItemId,
       isExportable: Boolean(targetItem?.corporations?.length),

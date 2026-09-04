@@ -5,6 +5,8 @@ import type { ComponentType } from 'react'
 import { ProductionFlowDiagram } from './production-flow-diagram'
 import { ProductionTreelistDiagram } from './production-treelist-diagram'
 import { ProductionItemsDiagram } from './production-items-diagram'
+import { RawTargetDiagram } from './raw-target-diagram'
+import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
 
 type DiagramTab = {
   key: string
@@ -41,6 +43,10 @@ const DIAGRAM_TABS: DiagramTab[] = [
 ]
 
 export function ProductionDiagramTabs() {
+  const plan = useProductionPlan()
+
+  if (plan?.isRawTarget) return <RawTargetDiagram />
+
   return (
     <Tabs
       fullWidth

@@ -32,30 +32,30 @@ describe('Component <AssetImage />', () => {
   })
 
   it('hides alternative text visually behind a skeleton until the image loads', () => {
-    const { container } = render(<AssetImage kind="items" id="accumulator" width={48} />)
+    render(<AssetImage kind="items" id="accumulator" width={48} />)
     const image = screen.getByRole('img', { name: 'accumulator' })
     const imageContainer = image.parentElement
 
     expect(imageContainer).toHaveAttribute('data-load-state', 'loading')
-    expect(container.querySelector('[data-asset-placeholder]')).toBeInTheDocument()
+    expect(screen.getByTestId('asset-image-placeholder')).toBeInTheDocument()
     expect(image).toHaveStyle({ opacity: '0' })
 
     fireEvent.load(image)
 
     expect(imageContainer).toHaveAttribute('data-load-state', 'loaded')
-    expect(container.querySelector('[data-asset-placeholder]')).not.toBeInTheDocument()
+    expect(screen.queryByTestId('asset-image-placeholder')).not.toBeInTheDocument()
     expect(image).toHaveStyle({ opacity: '1' })
   })
 
   it('shows a neutral fallback without exposing broken-image text', () => {
-    const { container } = render(<AssetImage kind="items" id="missing" width={48} alt="Missing icon" />)
+    render(<AssetImage kind="items" id="missing" width={48} alt="Missing icon" />)
     const image = screen.getByRole('img', { name: 'Missing icon' })
 
     fireEvent.error(image)
 
     expect(image.parentElement).toHaveAttribute('data-load-state', 'error')
-    expect(container.querySelector('[data-asset-placeholder]')).not.toBeInTheDocument()
-    expect(container.querySelector('[data-asset-fallback]')).toBeInTheDocument()
+    expect(screen.queryByTestId('asset-image-placeholder')).not.toBeInTheDocument()
+    expect(screen.getByTestId('asset-image-fallback')).toBeInTheDocument()
     expect(image).toHaveStyle({ opacity: '0' })
   })
 

@@ -4,7 +4,7 @@ import type { ItemFilterInput } from '@/features/items/types'
 type ItemFilterTarget = {
   name: string
   type: string
-  buildingId: string | null
+  producerBuildingIds: string[]
   corporations?: CorporationLevelRef[]
 }
 
@@ -14,7 +14,7 @@ export const filterItems = <T extends ItemFilterTarget>(items: T[], filters: Ite
 
   return items
     .filter((item) => (selectedCategory ? item.type === selectedCategory : true))
-    .filter((item) => (selectedBuildingId ? item.buildingId === selectedBuildingId : true))
+    .filter((item) => (selectedBuildingId ? item.producerBuildingIds.includes(selectedBuildingId) : true))
     .filter((item) => (selectedCorporationId ? item.corporations?.some((c) => c.corporationId === selectedCorporationId) : true))
     .filter((item) => (normalizedQuery ? item.name.toLowerCase().includes(normalizedQuery) : true))
 }

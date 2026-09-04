@@ -35,7 +35,7 @@ const PlannerPageContent = () => {
             <RandomItemMarquee />
             <Typography variant="h2">Select an object to begin production</Typography>
             <Typography tone="soft">
-              Choose any processed item, component, or ammunition to see the necessary buildings and resource flow.
+              Choose any item to see its production chain, or select a raw material to use it as a terminal target.
             </Typography>
           </Flex>
         )}

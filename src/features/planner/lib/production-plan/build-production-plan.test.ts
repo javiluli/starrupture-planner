@@ -54,18 +54,25 @@ const buildings = [
 ] satisfies Building[]
 
 const buildPlan = ({
+  targetId = 'plate',
+  targetIpm = 10,
+  isRawTarget = false,
   supplyCountByItem = {},
   buildingVariantByItemId = {},
   isExportable = false,
 }: {
+  targetId?: string
+  targetIpm?: number
+  isRawTarget?: boolean
   supplyCountByItem?: Record<string, number>
   buildingVariantByItemId?: Record<string, string>
   isExportable?: boolean
 } = {}) =>
   buildProductionPlan({
     buildings,
-    targetId: 'plate',
-    targetIpm: 10,
+    targetId,
+    targetIpm,
+    isRawTarget,
     supplyCountByItem,
     buildingVariantByItemId,
     isExportable,
@@ -109,6 +116,18 @@ describe('buildProductionPlan', () => {
 
     expect(plan.steps.map((step) => step.itemId)).toEqual(['plate'])
     expect(plan.stats).toEqual({ buildings: 2, power: 20, heat: 8 })
+  })
+
+  it('returns a terminal plan for a raw target without inventing a recipe or building', () => {
+    const plan = buildPlan({ targetId: 'ore', targetIpm: 20, isRawTarget: true })
+
+    expect(plan).toMatchObject({
+      targetId: 'ore',
+      targetIpm: 20,
+      isRawTarget: true,
+      steps: [],
+      stats: { buildings: 0, power: 0, heat: 0 },
+    })
   })
 
   it('resolves the selected building variant and its recipe', () => {

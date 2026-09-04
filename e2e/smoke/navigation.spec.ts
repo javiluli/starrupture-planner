@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('permite recorrer las secciones principales desde la navegacion', async ({ page }) => {
   await page.goto('/')
 
-  const navigation = page.getByRole('tablist')
+  const navigation = page.getByRole('tablist', { name: 'Primary navigation' })
   await expect(navigation).toBeVisible()
 
   await navigation.getByRole('tab', { name: /Items/ }).click()

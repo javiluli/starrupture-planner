@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hito 2.1 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.2 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1196,7 +1196,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** eliminar inconsistencias visibles de dominio y barreras de uso antes de mover límites internos.
 
-**Progreso:** 1/6 hitos cerrados; Fase 2 en curso.
+**Progreso:** 2/6 hitos cerrados; Fase 2 en curso.
 
 **Por qué ahora:** son fallos que alteran planes, ocultan productores o impiden operar con teclado/móvil; tienen más impacto que la deuda arquitectónica restante.
 
@@ -1228,6 +1228,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 2.2 — Soportar raw items y relaciones productor one-to-many
 
 - **Prioridad:** P1
+- **Estado:** COMPLETADO con seguimiento E2E pendiente (4 de septiembre de 2026).
 - **Objetivo específico:** alinear el Planner y el catálogo con el modelo real del juego.
 - **Problemas resueltos:** `BUG-002`, `BUG-003`.
 - **Qué cambiar:** modelar productores como colección estable; cambiar el filtro de Items de igualdad singular a pertenencia; evitar que `buildItemsTableRows` descarte productores; definir el plan válido para raw items sin receta y mostrar acción/copy coherentes en Items y Planner.
@@ -1241,6 +1242,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** fixtures con cero, uno y dos productores; filtro por cada productor; raw target en store/calculador/UI; E2E catálogo→raw target→Planner y multi-productor→filtro.
 - **Resultado esperado:** los 26 items multi-productor conservan todas sus asociaciones y los raw items son objetivos válidos, no una excepción oculta.
 - **Criterios de aceptación:** filtrar por cualquiera de los productores devuelve el item; no se usa `find` para colapsar cardinalidad; un raw target se guarda/restaura y produce vista terminal sin error; CTA/copy son consistentes.
+- **Cierre y validación:** un índice compartido conserva todos los buildings productores en orden de catálogo; Items filtra contra la colección completa y usa el primero solo como presentación. Las materias primas exponen el CTA Planner y muestran una vista terminal explícita sin inventar receta ni edificio. Los tests unitarios cubren relaciones 0/1/N y el filtro por productor alternativo; el E2E de `Calcium Ore` pasa. La revisión adicional dejó roles/nombres accesibles como primera opción y `data-testid` solo para elementos sin referencia semántica, con la convención documentada en `AGENTS.md` y `e2e/README.md`. Ningún catálogo JSON fue modificado.
+- **Seguimiento pendiente:** el E2E que opera el filtro multi-productor queda marcado como `fixme`: HeroUI abre correctamente el Select, pero su opción renderizada no ofrece todavía un locator estable sin acoplarse al DOM interno. El comportamiento sigue protegido por tests puros y esta deuda se retomará al consolidar los journeys de Items en el Hito 5.3.
 
 ## Hito 2.3 — Retirar el tab interno `Buildings`
 

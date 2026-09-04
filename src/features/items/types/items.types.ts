@@ -8,6 +8,6 @@ export type ItemFilterInput = {
 }
 
 export type ItemTableRow = Item & {
-  buildingId: string | null
-  production: string | undefined
+  producerBuildingIds: string[]
+  primaryProducerName?: string
 }

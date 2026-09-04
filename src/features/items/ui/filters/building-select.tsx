@@ -18,6 +18,7 @@ export const BuildingSelect = () => {
 
   return (
     <Select
+      aria-label="Filter items by building"
       size="sm"
       variant="bordered"
       className="w-57.5"

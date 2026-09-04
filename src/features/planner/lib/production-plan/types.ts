@@ -17,6 +17,7 @@ export interface ProductionStep {
 export interface ProductionPlan {
   targetId: string
   targetIpm: number
+  isRawTarget: boolean
   supplyCountByItem: Record<string, number>
   supplyCountInventory: Record<string, number>
   isExportable: boolean
@@ -28,6 +29,7 @@ export interface BuildProductionPlanParams {
   buildings: Building[]
   targetId: string
   targetIpm: number
+  isRawTarget: boolean
   supplyCountByItem: Record<string, number>
   buildingVariantByItemId: Record<string, string>
   isExportable: boolean

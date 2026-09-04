@@ -1,0 +1,53 @@
+import type { Building } from '@/shared/@types/building.type'
+import type { Item } from '@/shared/@types/item.type'
+import { describe, expect, it } from 'vitest'
+import { buildItemsTableRows } from './build-items-table-rows'
+
+const items = [
+  { id: 'ceramics', name: 'Ceramics', type: 'processed' },
+  { id: 'ore_calcium', name: 'Calcium Ore', type: 'raw' },
+  { id: 'plate', name: 'Plate', type: 'component' },
+] satisfies Item[]
+
+const buildings = [
+  {
+    id: 'furnace',
+    name: 'Furnace',
+    power: 20,
+    heat: 8,
+    type: 'production',
+    recipes: [{ output: { id: 'ceramics', amount_per_minute: 60 }, inputs: [] }],
+  },
+  {
+    id: 'furnacetier2',
+    name: 'Furnace v.2',
+    power: 40,
+    heat: 16,
+    type: 'production',
+    recipes: [{ output: { id: 'ceramics', amount_per_minute: 120 }, inputs: [] }],
+  },
+  {
+    id: 'assembler',
+    name: 'Assembler',
+    power: 10,
+    heat: 4,
+    type: 'production',
+    recipes: [{ output: { id: 'plate', amount_per_minute: 30 }, inputs: [] }],
+  },
+] satisfies Building[]
+
+describe('buildItemsTableRows', () => {
+  it('preserves zero, one or multiple producers without changing the presentation order', () => {
+    const rows = buildItemsTableRows(items, buildings)
+
+    expect(rows).toEqual([
+      expect.objectContaining({ id: 'ore_calcium', producerBuildingIds: [], primaryProducerName: undefined }),
+      expect.objectContaining({
+        id: 'ceramics',
+        producerBuildingIds: ['furnace', 'furnacetier2'],
+        primaryProducerName: 'Furnace',
+      }),
+      expect.objectContaining({ id: 'plate', producerBuildingIds: ['assembler'], primaryProducerName: 'Assembler' }),
+    ])
+  })
+})

@@ -4,6 +4,8 @@ Las pruebas de navegador viven aqui y se agrupan por recorrido o feature:
 
 - `smoke/`: navegacion y disponibilidad de rutas criticas.
 - `base-designer/`: comportamiento visible del editor de bases.
+- `items/`: filtros del catalogo y entrada al Planner.
+- `planner/`: recorridos de target, supply y diagramas.
 
 Usa locators por rol, nombre accesible o texto estable. Evita clases CSS, estructura interna de HeroUI y esperas manuales. Playwright arranca Vite automaticamente si no existe un servidor reutilizable.
 

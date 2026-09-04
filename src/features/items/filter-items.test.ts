@@ -7,21 +7,21 @@ const items = [
     id: 'titanium_plate',
     name: 'Titanium Plate',
     type: 'component',
-    buildingId: 'fabricator',
+    producerBuildingIds: ['fabricator', 'factorytier2'],
     corporations: [{ corporationId: 'moon_energy', corporationName: 'Moon Energy', level: 2 }],
   },
   {
     id: 'wolfram_powder',
     name: 'Wolfram Powder',
     type: 'processed',
-    buildingId: 'furnace',
+    producerBuildingIds: ['furnace'],
     corporations: [{ corporationId: 'clever_robotics', corporationName: 'Clever Robotics', level: 1 }],
   },
   {
     id: 'calcium_ore',
     name: 'Calcium Ore',
     type: 'raw',
-    buildingId: null,
+    producerBuildingIds: [],
     corporations: undefined,
   },
 ]
@@ -41,6 +41,7 @@ describe('filterItems', () => {
   it('filters by category, building and corporation', () => {
     expect(filterItems(items, { ...EMPTY_FILTERS, selectedCategory: 'processed' }).map((item) => item.id)).toEqual(['wolfram_powder'])
     expect(filterItems(items, { ...EMPTY_FILTERS, selectedBuildingId: 'fabricator' }).map((item) => item.id)).toEqual(['titanium_plate'])
+    expect(filterItems(items, { ...EMPTY_FILTERS, selectedBuildingId: 'factorytier2' }).map((item) => item.id)).toEqual(['titanium_plate'])
     expect(filterItems(items, { ...EMPTY_FILTERS, selectedCorporationId: 'moon_energy' }).map((item) => item.id)).toEqual([
       'titanium_plate',
     ])

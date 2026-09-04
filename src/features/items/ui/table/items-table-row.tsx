@@ -17,7 +17,7 @@ const renderCell = (item: ItemTableRow, columnKey: ColumnKey) => {
     case 'category':
       return <CategoryCell itemType={item.type} />
     case 'production':
-      return <ProductionCell itemProduction={item.production} />
+      return <ProductionCell producerName={item.primaryProducerName} />
     case 'corporations':
       return <CorporationsCell corporations={item.corporations} />
     case 'actions':

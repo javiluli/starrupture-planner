@@ -1,4 +1,5 @@
 import type { Building } from '@/shared/@types/building.type'
+import { indexProducerBuildingsByItemId } from '@/shared/data/building-production'
 
 /**
  * Busca en el catalogo que edificio y que receta corresponden a un item especifico.
@@ -8,7 +9,7 @@ import type { Building } from '@/shared/@types/building.type'
  * @returns Objeto con building y recipe (si existen).
  */
 export const findRecipeForItem = (buildings: Building[], itemId: string) => {
-  const building = buildings.find((b) => b.recipes?.some((r) => r.output.id === itemId))
+  const building = indexProducerBuildingsByItemId(buildings).get(itemId)?.[0]
   const recipe = building?.recipes?.find((r) => r.output.id === itemId)
   return { building, recipe }
 }

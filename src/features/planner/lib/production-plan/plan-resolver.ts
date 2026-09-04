@@ -1,5 +1,5 @@
 import type { Building } from '@/shared/@types/building.type'
-import { findRecipeForItem } from '../recipes'
+import { indexProducerBuildingsByItemId } from '@/shared/data/building-production'
 import { resolveBuildingVariant } from '../building-variants'
 import type { PlanResolver } from './types'
 
@@ -8,8 +8,10 @@ import type { PlanResolver } from './types'
  * Centraliza la logica de variantes para reutilizarla en todo el plan.
  */
 export const buildPlanResolver = (buildings: Building[], buildingVariantByItemId: Record<string, string>): PlanResolver => {
+  const producersByItemId = indexProducerBuildingsByItemId(buildings)
+
   const getBuildingForItem = (itemId: string) => {
-    const { building } = findRecipeForItem(buildings, itemId)
+    const building = producersByItemId.get(itemId)?.[0]
     if (!building) return null
     return resolveBuildingVariant(buildings, building, buildingVariantByItemId[itemId])
   }

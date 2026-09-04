@@ -22,6 +22,7 @@ const RootLayout = () => {
 
         <NavbarContent justify="center">
           <Tabs
+            aria-label="Primary navigation"
             selectedKey={location.pathname}
             onSelectionChange={(key) => navigate(key as string)}
             variant="light"
