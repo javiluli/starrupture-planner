@@ -1,5 +1,5 @@
 import { Tab, Tabs } from '@heroui/react'
-import { Factory, ListTree, Network, Package, type LucideIcon } from 'lucide-react'
+import { ListTree, Network, Package, type LucideIcon } from 'lucide-react'
 import type { ComponentType } from 'react'
 
 import { ProductionFlowDiagram } from './production-flow-diagram'
@@ -32,12 +32,6 @@ const DIAGRAM_TABS: DiagramTab[] = [
     key: 'items',
     label: 'Items',
     icon: Package,
-    component: ProductionItemsDiagram,
-  },
-  {
-    key: 'buildings',
-    label: 'Buildings',
-    icon: Factory,
     component: ProductionItemsDiagram,
   },
 ]

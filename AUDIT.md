@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.2 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.3 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1196,7 +1196,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** eliminar inconsistencias visibles de dominio y barreras de uso antes de mover límites internos.
 
-**Progreso:** 2/6 hitos cerrados; Fase 2 en curso.
+**Progreso:** 3/6 hitos cerrados; Fase 2 en curso.
 
 **Por qué ahora:** son fallos que alteran planes, ocultan productores o impiden operar con teclado/móvil; tienen más impacto que la deuda arquitectónica restante.
 
@@ -1248,6 +1248,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 2.3 — Retirar el tab interno `Buildings`
 
 - **Prioridad:** P1
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** eliminar una affordance que promete una funcionalidad todavía inexistente.
 - **Problema resuelto:** `UI-002`.
 - **Qué cambiar:** retirar tab, estado, query/hash y rama que renderizan `Buildings` dentro de Planner; conservar la ruta catálogo Buildings independiente; no crear sustituto vacío.
@@ -1256,6 +1257,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** Vitest de selección inicial/fallback y E2E que confirma que Planner abre Production mientras `/buildings` sigue accesible.
 - **Resultado esperado:** Planner muestra únicamente funciones operativas y el catálogo Buildings no cambia.
 - **Criterios de aceptación:** no aparece el tab interno; no existe rama duplicada que renderice el mismo diagrama; deep link antiguo no deja pantalla rota; ruta Buildings permanece navegable.
+- **Cierre y validación:** se retiró únicamente la entrada interna `Buildings`, que duplicaba el diagrama `Items`, junto con su icono sin uso. El Planner conserva `Network graph`, `Tree list` e `Items`; no existía estado ni deep link específico que migrar. El E2E confirma la selección inicial operativa y que el catálogo principal `Buildings & Recipes` continúa accesible en `/recipes`. El usuario validó el recorrido y la presentación.
 
 ## Hito 2.4 — Convertir supply en controles accesibles
 
