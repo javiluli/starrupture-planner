@@ -60,8 +60,9 @@ describe('Component <AssetImage />', () => {
   })
 
   it('supports a custom accessible name and eager loading', () => {
-    render(<AssetImage kind="items" id="accumulator" width={32} alt="Accumulator" loading="eager" />)
+    render(<AssetImage kind="items" id="accumulator" width={32} alt="Accumulator" loading="eager" fetchPriority="high" />)
 
     expect(screen.getByRole('img', { name: 'Accumulator' })).toHaveAttribute('loading', 'eager')
+    expect(screen.getByRole('img', { name: 'Accumulator' })).toHaveAttribute('fetchpriority', 'high')
   })
 })

@@ -32,11 +32,13 @@ const PlannerPageContent = () => {
           </Grid>
         ) : (
           <Flex direction="col" align="center" justify="center" className="h-full min-h-0 overflow-hidden text-center">
-            <RandomItemMarquee />
             <Typography variant="h2">Select an object to begin production</Typography>
             <Typography tone="soft">
               Choose any item to see its production chain, or select a raw material to use it as a terminal target.
             </Typography>
+            <div className="order-first w-full">
+              <RandomItemMarquee />
+            </div>
           </Flex>
         )}
       </PageContent>

@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.5 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fases 1–2 completadas y validadas.
 
 ## 1. Executive Summary
 
@@ -1196,7 +1196,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** eliminar inconsistencias visibles de dominio y barreras de uso antes de mover límites internos.
 
-**Progreso:** 5/6 hitos cerrados; Fase 2 en curso.
+**Progreso:** 6/6 hitos cerrados; Fase 2 completada.
 
 **Por qué ahora:** son fallos que alteran planes, ocultan productores o impiden operar con teclado/móvil; tienen más impacto que la deuda arquitectónica restante.
 
@@ -1299,6 +1299,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 2.6 — Sacar el marquee del camino crítico
 
 - **Prioridad:** P1
+- **Estado:** COMPLETADO con medición cuantitativa trasladada al Hito 4.2 (4 de septiembre de 2026).
 - **Objetivo específico:** reducir el LCP móvil del empty state y eliminar trabajo de layout forzado.
 - **Problema resuelto:** `PERF-001` y parte de `A11Y-002`.
 - **Qué cambiar:** reemplazar el marquee aleatorio por contenido determinista y ligero o cargarlo después del contenido esencial; quitar lectura sincrónica de `offsetWidth`; hacer clones no interactivos; respetar `prefers-reduced-motion`; elevar prioridad solo del asset que realmente sea LCP si sigue siendo necesario.
@@ -1311,6 +1312,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** trace móvil CPU 4×/Slow 4G, prueba de reduced motion, test DOM de `aria-hidden`/tabindex para clones y comparación de métricas en tres corridas.
 - **Resultado esperado:** el contenido esencial se descubre antes y el empty state no introduce controles duplicados ni reflow medible de 63 ms.
 - **Criterios de aceptación:** mediana LCP móvil claramente inferior a la baseline de 4.827 ms y objetivo inicial ≤3.500 ms en el perfil auditado; forced reflow atribuible al marquee <10 ms; clones fuera del árbol interactivo; reduced motion detiene movimiento no esencial.
+- **Ajuste de alcance aprobado:** se conservan los 16 items aleatorios y todas las copias visibles permanecen clicables; por tanto, se retiran de este hito los requisitos de muestra determinista y clones inertes. La accesibilidad restante de las copias se revisará en 4.1 sin sacrificar la interacción indicada por el usuario.
+- **Cierre y validación:** el marquee mantiene tamaño, posición, velocidad, aleatoriedad, repetición dinámica y enlaces en ambos extremos. `ResizeObserver` sustituye las lecturas síncronas de `offsetWidth`, el foco también pausa la cinta y `prefers-reduced-motion` elimina la animación. El heading precede a las imágenes en el DOM sin cambiar su orden visual y solo el primer asset recibe carga eager/prioridad alta. Vitest, build, E2E y comportamiento visual fueron validados por el usuario. No se registraron las tres trazas móviles requeridas; la medición LCP/reflow se incorpora a la baseline y presupuesto del Hito 4.2.
 
 # FASE 3 — Límites arquitectónicos y modelo derivado
 
@@ -1436,6 +1439,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** `pnpm build`, inspección de chunks/sourcemap, trace de primera ruta y navegación diferida, comparación gzip y ausencia de chunk DEV en manifest de producción.
 - **Resultado esperado:** entry menor que la baseline de 687,02 kB min/194,16 kB gzip y CSS inicial menor que 273 kB, sin retrasar la primera interacción de rutas lazy.
 - **Criterios de aceptación:** chunk Dev UI de 56,45 kB no se emite en producción; XYFlow no carga en rutas que nunca muestran grafos cuando técnicamente separable; budgets están versionados; métricas de navegación no empeoran materialmente.
+- **Seguimiento heredado de 2.6:** repetir tres trazas móviles CPU 4×/Slow 4G sobre el empty state, registrar mediana LCP y confirmar que el marquee no vuelve a introducir reflow forzado.
 
 # FASE 5 — Cobertura de riesgos y flujo humano → Playwright
 

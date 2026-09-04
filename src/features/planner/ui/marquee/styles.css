@@ -6,7 +6,8 @@
   animation: marquee-reverse var(--duration, 30s) linear infinite;
 }
 
-.animate-marquee-pause:hover {
+.animate-marquee-pause:hover,
+.animate-marquee-pause:focus-within {
   animation-play-state: paused;
 }
 
@@ -25,5 +26,13 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none;
+    transform: none;
   }
 }

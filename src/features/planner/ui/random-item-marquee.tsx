@@ -24,7 +24,13 @@ export function RandomItemMarquee() {
               selectTargetItem(id)
             }}
           >
-            <AssetImage id={id} kind="items" width={96} />
+            <AssetImage
+              id={id}
+              kind="items"
+              width={96}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              fetchPriority={index === 0 ? 'high' : 'auto'}
+            />
           </Link>
         </Flex>
       ))}

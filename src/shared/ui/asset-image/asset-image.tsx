@@ -9,6 +9,7 @@ type AssetImageProps = {
   width?: number
   alt?: string
   loading?: 'eager' | 'lazy'
+  fetchPriority?: 'high' | 'low' | 'auto'
   className?: string
 }
 
@@ -16,7 +17,7 @@ type ImageLoadState = 'loading' | 'loaded' | 'error'
 
 const getIconSource = (kind: IconKind, id: string) => `${import.meta.env.BASE_URL}assets/icons/${kind}/${id}.webp`
 
-const AssetImageResource = ({ id, kind, width, alt, loading = 'lazy', className }: AssetImageProps) => {
+const AssetImageResource = ({ id, kind, width, alt, loading = 'lazy', fetchPriority = 'auto', className }: AssetImageProps) => {
   const [loadState, setLoadState] = useState<ImageLoadState>('loading')
   const isLoaded = loadState === 'loaded'
 
@@ -62,6 +63,7 @@ const AssetImageResource = ({ id, kind, width, alt, loading = 'lazy', className 
         width={width}
         height={width}
         loading={loading}
+        fetchPriority={fetchPriority}
         decoding="async"
         className="h-full w-full rounded-none object-contain transition-opacity duration-200"
         style={{ opacity: isLoaded ? 1 : 0 }}

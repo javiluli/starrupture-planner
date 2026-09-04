@@ -14,21 +14,31 @@ export function Marquee({ children, animationDuration = 200, reverse = false }: 
   const [repetitions, setRepetitions] = useState(2)
 
   useEffect(() => {
-    const calculateRepetitions = () => {
-      if (containerRef.current && contentRef.current) {
-        const containerWidth = containerRef.current.offsetWidth
-        const contentWidth = contentRef.current.offsetWidth
-        if (contentWidth > 0) {
-          // Calculamos cuántos bloques caben + buffer para que no haya huecos
-          const needed = Math.ceil(containerWidth / contentWidth) + 2
-          setRepetitions(needed)
-        }
-      }
+    const container = containerRef.current
+    const content = contentRef.current
+    if (!container || !content) return
+
+    let containerWidth = 0
+    let contentWidth = 0
+
+    const updateRepetitions = () => {
+      if (contentWidth <= 0) return
+
+      const needed = Math.ceil(containerWidth / contentWidth) + 2
+      setRepetitions((current) => (current === needed ? current : needed))
     }
 
-    calculateRepetitions()
-    window.addEventListener('resize', calculateRepetitions)
-    return () => window.removeEventListener('resize', calculateRepetitions)
+    const observer = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === container) containerWidth = entry.contentRect.width
+        if (entry.target === content) contentWidth = entry.contentRect.width
+      })
+      updateRepetitions()
+    })
+
+    observer.observe(container)
+    observer.observe(content)
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -36,6 +46,7 @@ export function Marquee({ children, animationDuration = 200, reverse = false }: 
       <div className="bg-linear-to-r/srgb from-background from-5% via-transparent to-background to-95% pointer-events-none absolute inset-y-0 top-0 right-0 w-full h-full z-10" />
 
       <div
+        data-testid="planner-marquee-track"
         className={cn('animate-marquee-pause flex w-max flex-nowrap', reverse ? 'animate-marquee-reverse' : 'animate-marquee')}
         style={
           {
@@ -46,7 +57,12 @@ export function Marquee({ children, animationDuration = 200, reverse = false }: 
       >
         {/* Renderizado dinámico */}
         {[...Array(repetitions)].map((_, i) => (
-          <div key={i} ref={i === 0 ? contentRef : null} className="flex shrink-0 items-center gap-4 px-2">
+          <div
+            key={i}
+            ref={i === 0 ? contentRef : null}
+            data-testid={i === 0 ? 'planner-marquee-primary' : 'planner-marquee-copy'}
+            className="flex shrink-0 items-center gap-4 px-2"
+          >
             {children}
           </div>
         ))}
