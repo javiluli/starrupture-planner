@@ -39,12 +39,8 @@ describe('filterItems', () => {
   })
 
   it('filters by category, building and corporation', () => {
-    expect(filterItems(items, { ...EMPTY_FILTERS, selectedCategory: 'processed' }).map((item) => item.id)).toEqual([
-      'wolfram_powder',
-    ])
-    expect(filterItems(items, { ...EMPTY_FILTERS, selectedBuildingId: 'fabricator' }).map((item) => item.id)).toEqual([
-      'titanium_plate',
-    ])
+    expect(filterItems(items, { ...EMPTY_FILTERS, selectedCategory: 'processed' }).map((item) => item.id)).toEqual(['wolfram_powder'])
+    expect(filterItems(items, { ...EMPTY_FILTERS, selectedBuildingId: 'fabricator' }).map((item) => item.id)).toEqual(['titanium_plate'])
     expect(filterItems(items, { ...EMPTY_FILTERS, selectedCorporationId: 'moon_energy' }).map((item) => item.id)).toEqual([
       'titanium_plate',
     ])

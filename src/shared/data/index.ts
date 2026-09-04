@@ -24,4 +24,3 @@ const items = (itemsCatalog as Item[]).map((item) => ({
 }))
 
 export { items, buildings, corporations }
-

@@ -21,4 +21,3 @@ export const useTreeData = (steps: ProductionStep[] | undefined, supplyCountByIt
     return buildTree(stepMap, rootNode.itemId, true, rootNode.targetIpm, supplyRemaining)
   }, [steps, supplyCountByItem])
 }
-

@@ -51,8 +51,7 @@ export const usePlannerStore = create<PlannerStoreState>()(
           targetId,
           targetIpm: normalizeTargetIpm(state.targetIpm, Boolean(targetId)),
         })),
-      setTargetIpm: (targetIpm) =>
-        set((state) => ({ targetIpm: normalizeTargetIpm(targetIpm, Boolean(state.targetId)) })),
+      setTargetIpm: (targetIpm) => set((state) => ({ targetIpm: normalizeTargetIpm(targetIpm, Boolean(state.targetId)) })),
       setBuildingVariantForItem: (itemId, variantId) =>
         set((state) => ({
           buildingVariantByItemId: { ...state.buildingVariantByItemId, [itemId]: variantId },
@@ -70,17 +69,14 @@ export const usePlannerStore = create<PlannerStoreState>()(
           const amount = (state.supplyCountByItem[itemId] ?? 0) + delta
           return {
             supplyCountByItem:
-              amount <= 0
-                ? removeSupply(state.supplyCountByItem, itemId)
-                : { ...state.supplyCountByItem, [itemId]: amount },
+              amount <= 0 ? removeSupply(state.supplyCountByItem, itemId) : { ...state.supplyCountByItem, [itemId]: amount },
           }
         }),
       addSupplyItem: (itemId) =>
         set((state) => ({
           supplyCountByItem: { ...state.supplyCountByItem, [itemId]: state.supplyCountByItem[itemId] ?? 0 },
         })),
-      removeSupplyItem: (itemId) =>
-        set((state) => ({ supplyCountByItem: removeSupply(state.supplyCountByItem, itemId) })),
+      removeSupplyItem: (itemId) => set((state) => ({ supplyCountByItem: removeSupply(state.supplyCountByItem, itemId) })),
     }),
     {
       name: 'zstore.planner',

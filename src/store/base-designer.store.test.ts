@@ -19,9 +19,7 @@ const createNode = (id: string, suppliesItems: boolean, acceptsItems: boolean): 
     height: 40,
     suppliesItems,
     acceptsItems,
-    recipeProfiles: suppliesItems
-      ? [{ outputItemId: 'shared-item', inputItemIds: acceptsItems ? ['shared-item'] : [] }]
-      : [],
+    recipeProfiles: suppliesItems ? [{ outputItemId: 'shared-item', inputItemIds: acceptsItems ? ['shared-item'] : [] }] : [],
   },
 })
 
@@ -58,12 +56,8 @@ describe('base designer store', () => {
     useBaseDesignerStore.getState().addBuildingNode(target)
     useBaseDesignerStore.setState({ history: { past: [], future: [] } })
 
-    useBaseDesignerStore.getState().applyNodeChanges([
-      { id: target.id, type: 'position', position: { x: 40, y: 20 }, dragging: true },
-    ])
-    useBaseDesignerStore.getState().applyNodeChanges([
-      { id: target.id, type: 'position', position: { x: 40, y: 20 }, dragging: false },
-    ])
+    useBaseDesignerStore.getState().applyNodeChanges([{ id: target.id, type: 'position', position: { x: 40, y: 20 }, dragging: true }])
+    useBaseDesignerStore.getState().applyNodeChanges([{ id: target.id, type: 'position', position: { x: 40, y: 20 }, dragging: false }])
 
     expect(useBaseDesignerStore.getState().nodes.find((node) => node.id === target.id)?.position).toEqual({ x: 80, y: 20 })
     expect(useBaseDesignerStore.getState().history.past).toEqual([])
@@ -90,15 +84,9 @@ describe('base designer store', () => {
     useBaseDesignerStore.getState().addBuildingNode(node)
     useBaseDesignerStore.setState({ history: { past: [], future: [] } })
 
-    useBaseDesignerStore.getState().applyNodeChanges([
-      { id: node.id, type: 'position', position: { x: 40, y: 40 }, dragging: true },
-    ])
-    useBaseDesignerStore.getState().applyNodeChanges([
-      { id: node.id, type: 'position', position: { x: 60, y: 60 }, dragging: true },
-    ])
-    useBaseDesignerStore.getState().applyNodeChanges([
-      { id: node.id, type: 'position', position: { x: 80, y: 80 }, dragging: false },
-    ])
+    useBaseDesignerStore.getState().applyNodeChanges([{ id: node.id, type: 'position', position: { x: 40, y: 40 }, dragging: true }])
+    useBaseDesignerStore.getState().applyNodeChanges([{ id: node.id, type: 'position', position: { x: 60, y: 60 }, dragging: true }])
+    useBaseDesignerStore.getState().applyNodeChanges([{ id: node.id, type: 'position', position: { x: 80, y: 80 }, dragging: false }])
 
     expect(useBaseDesignerStore.getState().history.past).toHaveLength(1)
     useBaseDesignerStore.getState().undo()
@@ -246,8 +234,18 @@ describe('base designer store', () => {
 
     useBaseDesignerStore.getState().selectAllBuildings()
 
-    expect(useBaseDesignerStore.getState().nodes.filter((node) => node.data.kind === 'building').every((node) => node.selected)).toBe(true)
-    expect(useBaseDesignerStore.getState().nodes.filter((node) => node.data.kind !== 'building').some((node) => node.selected)).toBe(false)
+    expect(
+      useBaseDesignerStore
+        .getState()
+        .nodes.filter((node) => node.data.kind === 'building')
+        .every((node) => node.selected),
+    ).toBe(true)
+    expect(
+      useBaseDesignerStore
+        .getState()
+        .nodes.filter((node) => node.data.kind !== 'building')
+        .some((node) => node.selected),
+    ).toBe(false)
     expect(useBaseDesignerStore.getState().edges.some((edge) => edge.selected)).toBe(false)
 
     useBaseDesignerStore.getState().clearSelection()

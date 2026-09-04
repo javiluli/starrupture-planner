@@ -49,9 +49,7 @@ const AssetImageResource = ({ id, kind, width, alt, loading = 'lazy', className 
         <Skeleton data-asset-placeholder aria-hidden className="absolute inset-0 h-full w-full rounded-md bg-content2" />
       )}
 
-      {loadState === 'error' && (
-        <span data-asset-fallback aria-hidden className="absolute inset-0 rounded-md bg-content2/60" />
-      )}
+      {loadState === 'error' && <span data-asset-fallback aria-hidden className="absolute inset-0 rounded-md bg-content2/60" />}
 
       <Image
         ref={bindImageEvents}

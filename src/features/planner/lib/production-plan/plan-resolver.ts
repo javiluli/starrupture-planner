@@ -7,10 +7,7 @@ import type { PlanResolver } from './types'
  * Crea un contexto para resolver building + receta efectiva por item.
  * Centraliza la logica de variantes para reutilizarla en todo el plan.
  */
-export const buildPlanResolver = (
-  buildings: Building[],
-  buildingVariantByItemId: Record<string, string>,
-): PlanResolver => {
+export const buildPlanResolver = (buildings: Building[], buildingVariantByItemId: Record<string, string>): PlanResolver => {
   const getBuildingForItem = (itemId: string) => {
     const { building } = findRecipeForItem(buildings, itemId)
     if (!building) return null

@@ -25,14 +25,7 @@ import { createBaseDesignerStateStorage } from '@/features/base-designer/lib/des
 import type { BaseDesignerBuildingNode, BaseDesignerEdge, BaseDesignerNode } from '@/features/base-designer/types'
 import type { Building } from '@/shared/@types/building.type'
 import { buildings as buildingsCatalog } from '@/shared/data'
-import {
-  addEdge,
-  applyEdgeChanges,
-  applyNodeChanges,
-  type Connection,
-  type EdgeChange,
-  type NodeChange,
-} from '@xyflow/react'
+import { addEdge, applyEdgeChanges, applyNodeChanges, type Connection, type EdgeChange, type NodeChange } from '@xyflow/react'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
@@ -136,9 +129,7 @@ export const useBaseDesignerStore = create<BaseDesignerStoreState>()(
           if (isDragging) {
             return {
               nodes,
-              history: state.history.dragStart
-                ? state.history
-                : { ...state.history, dragStart: captureCurrentState(state) },
+              history: state.history.dragStart ? state.history : { ...state.history, dragStart: captureCurrentState(state) },
             }
           }
 
@@ -155,7 +146,8 @@ export const useBaseDesignerStore = create<BaseDesignerStoreState>()(
             ...(edges !== state.edges ? { edges } : {}),
             ...(hasRecordableNodeChange(appliedChanges) ? { history: commitHistory(state) } : {}),
           }
-        }),      applyEdgeChanges: (changes) =>
+        }),
+      applyEdgeChanges: (changes) =>
         set((state) => {
           const edges = applyEdgeChanges(changes, state.edges)
           const didChange = edges.length !== state.edges.length || edges.some((edge, index) => edge !== state.edges[index])

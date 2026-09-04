@@ -103,13 +103,7 @@ export const buildProductionNodes = (
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
  * @returns Lista con el nodo del launcher.
  */
-export const buildLauncherNode = (
-  targetId: string,
-  targetIpm: number,
-  items: Item[],
-  buildings: Building[],
-  dagreGraph: Graph,
-): Node[] => {
+export const buildLauncherNode = (targetId: string, targetIpm: number, items: Item[], buildings: Building[], dagreGraph: Graph): Node[] => {
   const buildingData = buildings.find((b) => b.id === ORBITAL_CARGO_LAUNCHER_ID)
   const targetItemName = getItemName(items, targetId)
   const { power, heat } = getBuildingStats(buildingData)

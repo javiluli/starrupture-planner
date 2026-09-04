@@ -88,7 +88,6 @@
   .panel {
     @apply rounded-2xl bg-content1/30;
   }
-
 }
 
 .react-flow__edge-raw .react-flow__edge-path {

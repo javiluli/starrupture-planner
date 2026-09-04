@@ -15,9 +15,7 @@ const items: Item[] = [
   { id: 'copper', name: 'Copper', type: 'raw' },
 ]
 
-const buildings: Building[] = [
-  { id: 'package_receiver', name: 'Package Receiver', power: 1, heat: 1, type: 'transport', recipes: [] },
-]
+const buildings: Building[] = [{ id: 'package_receiver', name: 'Package Receiver', power: 1, heat: 1, type: 'transport', recipes: [] }]
 
 const plan: ProductionPlan = {
   targetId: 'plate',
@@ -72,10 +70,7 @@ const plan: ProductionPlan = {
   stats: { buildings: 3, power: 20, heat: 8 },
 }
 
-const rectanglesOverlap = (
-  first: { position: { x: number; y: number } },
-  second: { position: { x: number; y: number } },
-) =>
+const rectanglesOverlap = (first: { position: { x: number; y: number } }, second: { position: { x: number; y: number } }) =>
   first.position.x < second.position.x + NODE_WIDTH &&
   first.position.x + NODE_WIDTH > second.position.x &&
   first.position.y < second.position.y + NODE_HEIGHT &&

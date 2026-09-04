@@ -18,12 +18,13 @@ export interface BaseDesignerHistory {
 
 export const EMPTY_BASE_DESIGNER_HISTORY: BaseDesignerHistory = { past: [], future: [] }
 
-const cloneNode = (node: BaseDesignerNode): BaseDesignerNode => ({
-  ...node,
-  position: { ...node.position },
-  data: { ...node.data },
-  ...(node.style ? { style: { ...node.style } } : {}),
-}) as BaseDesignerNode
+const cloneNode = (node: BaseDesignerNode): BaseDesignerNode =>
+  ({
+    ...node,
+    position: { ...node.position },
+    data: { ...node.data },
+    ...(node.style ? { style: { ...node.style } } : {}),
+  }) as BaseDesignerNode
 
 const cloneEdge = (edge: BaseDesignerEdge): BaseDesignerEdge => ({
   ...edge,
@@ -32,10 +33,7 @@ const cloneEdge = (edge: BaseDesignerEdge): BaseDesignerEdge => ({
 })
 
 /** Captures an immutable runtime snapshot for undo and redo. */
-export const captureBaseDesignerSnapshot = (
-  nodes: BaseDesignerNode[],
-  edges: BaseDesignerEdge[],
-): BaseDesignerSnapshot => ({
+export const captureBaseDesignerSnapshot = (nodes: BaseDesignerNode[], edges: BaseDesignerEdge[]): BaseDesignerSnapshot => ({
   nodes: nodes.map(cloneNode),
   edges: edges.map(cloneEdge),
 })
@@ -50,10 +48,7 @@ export const haveNodePositionsChanged = (snapshot: BaseDesignerSnapshot, nodes: 
   })
 }
 /** Adds one user-visible operation to history and invalidates the redo branch. */
-export const pushBaseDesignerHistory = (
-  history: BaseDesignerHistory,
-  snapshot: BaseDesignerSnapshot,
-): BaseDesignerHistory => ({
+export const pushBaseDesignerHistory = (history: BaseDesignerHistory, snapshot: BaseDesignerSnapshot): BaseDesignerHistory => ({
   past: [...history.past, snapshot].slice(-HISTORY_LIMIT),
   future: [],
 })
@@ -103,11 +98,10 @@ export const duplicateSelectedBuildingNodes = (
   const duplicates: BaseDesignerBuildingNode[] = []
   for (const node of selectedBuildings) {
     const size = { width: node.data.width, height: node.data.height }
-    const position = findNearestAvailableBuildingPosition(
-      [...nodes, ...duplicates],
-      size,
-      { x: node.position.x + DUPLICATE_OFFSET, y: node.position.y + DUPLICATE_OFFSET },
-    )
+    const position = findNearestAvailableBuildingPosition([...nodes, ...duplicates], size, {
+      x: node.position.x + DUPLICATE_OFFSET,
+      y: node.position.y + DUPLICATE_OFFSET,
+    })
     if (!position) continue
 
     duplicates.push({
@@ -127,16 +121,12 @@ export const removeSelectedBaseDesignerElements = (
   nodes: BaseDesignerNode[],
   edges: BaseDesignerEdge[],
 ): BaseDesignerSnapshot | undefined => {
-  const selectedBuildingIds = new Set(
-    nodes.flatMap((node) => (node.data.kind === 'building' && node.selected ? [node.id] : [])),
-  )
+  const selectedBuildingIds = new Set(nodes.flatMap((node) => (node.data.kind === 'building' && node.selected ? [node.id] : [])))
   const hasSelectedEdges = edges.some((edge) => edge.selected)
   if (selectedBuildingIds.size === 0 && !hasSelectedEdges) return undefined
 
   return {
     nodes: nodes.filter((node) => !selectedBuildingIds.has(node.id)),
-    edges: edges.filter(
-      (edge) => !edge.selected && !selectedBuildingIds.has(edge.source) && !selectedBuildingIds.has(edge.target),
-    ),
+    edges: edges.filter((edge) => !edge.selected && !selectedBuildingIds.has(edge.source) && !selectedBuildingIds.has(edge.target)),
   }
 }

@@ -23,11 +23,7 @@ const clamp = (value: number, maximum: number) => Math.min(Math.max(value, 0), m
  * Converts a center point in flow coordinates into the snapped top-left position
  * used by a building node. Preview and final placement share this calculation.
  */
-export const calculateBuildingPlacement = ({
-  buildingId,
-  absolutePosition,
-  parentPosition = { x: 0, y: 0 },
-}: BuildingPlacementOptions) => {
+export const calculateBuildingPlacement = ({ buildingId, absolutePosition, parentPosition = { x: 0, y: 0 } }: BuildingPlacementOptions) => {
   const size = footprintToPixels(getBuildingFootprint(buildingId))
   const fieldSize = getBaseFieldPixelSize()
   const relativeX = absolutePosition.x - parentPosition.x - size.width / 2

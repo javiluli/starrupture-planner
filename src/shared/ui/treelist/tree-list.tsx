@@ -72,7 +72,9 @@ const TreeListNodeView = <TNode,>({
       </div>
 
       {hasChildren ? (
-        <div className={`transition-all duration-300 ease-out ${isExpanded ? 'opacity-100 translate-y-0 h-auto visible' : 'opacity-0 -translate-y-3 h-0 overflow-hidden invisible'}`}>
+        <div
+          className={`transition-all duration-300 ease-out ${isExpanded ? 'opacity-100 translate-y-0 h-auto visible' : 'opacity-0 -translate-y-3 h-0 overflow-hidden invisible'}`}
+        >
           {isExpanded
             ? children.map((child, index) => (
                 <TreeListNodeView

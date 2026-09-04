@@ -54,9 +54,10 @@ describe('evaluateBaseDesignerConnection', () => {
     const incompatibleTarget = createNode('target', target.data.recipeProfiles, 'plate')
     const compatibleTarget = createNode('target', target.data.recipeProfiles, 'wire')
 
-    expect(
-      evaluateBaseDesignerConnection({ connection, nodes: [selectedSource, incompatibleTarget], edges: [] }),
-    ).toEqual({ isValid: false, reason: 'incompatible-items' })
+    expect(evaluateBaseDesignerConnection({ connection, nodes: [selectedSource, incompatibleTarget], edges: [] })).toEqual({
+      isValid: false,
+      reason: 'incompatible-items',
+    })
     expect(evaluateBaseDesignerConnection({ connection, nodes: [selectedSource, compatibleTarget], edges: [] })).toEqual({
       isValid: true,
       compatibleItemIds: ['copper'],

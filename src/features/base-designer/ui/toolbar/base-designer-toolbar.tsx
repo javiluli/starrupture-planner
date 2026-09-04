@@ -70,13 +70,7 @@ export const BaseDesignerToolbar = () => {
               onPress={duplicateSelectedBuildings}
               icon={CopyPlus}
             />
-            <ToolbarButton
-              label="Delete selection"
-              shortcut="Delete"
-              isDisabled={!hasSelection}
-              onPress={deleteSelection}
-              icon={CircleX}
-            />
+            <ToolbarButton label="Delete selection" shortcut="Delete" isDisabled={!hasSelection} onPress={deleteSelection} icon={CircleX} />
           </>
         )}
 

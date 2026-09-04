@@ -28,12 +28,7 @@ export const buildSupplyCountInventory = (supplyCountByItem: Record<string, numb
  * @param supplyCountByItem Supply externo por item.
  * @returns Mapa itemId -> ipm requerido (neto).
  */
-export const calculateTotals = (
-  resolver: PlanResolver,
-  targetId: string,
-  targetIpm: number,
-  supplyCountByItem: Record<string, number>,
-) => {
+export const calculateTotals = (resolver: PlanResolver, targetId: string, targetIpm: number, supplyCountByItem: Record<string, number>) => {
   const totals = new Map<string, number>()
   const runningInventory = buildSupplyCountInventory(supplyCountByItem)
 

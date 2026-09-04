@@ -65,4 +65,3 @@ describe('Component <AssetImage />', () => {
     expect(screen.getByRole('img', { name: 'Accumulator' })).toHaveAttribute('loading', 'eager')
   })
 })
-

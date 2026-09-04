@@ -19,15 +19,7 @@ export const ClearDesignButton = ({ isDisabled, onClear }: ClearDesignButtonProp
   return (
     <Popover placement="bottom-end" isOpen={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger>
-        <Button
-          isIconOnly
-          size="sm"
-          variant="light"
-          color="danger"
-          aria-label="Clear design"
-          title="Clear design"
-          isDisabled={isDisabled}
-        >
+        <Button isIconOnly size="sm" variant="light" color="danger" aria-label="Clear design" title="Clear design" isDisabled={isDisabled}>
           <Trash2 aria-hidden className="size-4" />
         </Button>
       </PopoverTrigger>

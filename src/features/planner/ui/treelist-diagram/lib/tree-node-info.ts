@@ -21,4 +21,3 @@ export const getTreeNodeInfo = (node: TreeNodeData, itemNameMap: Map<string, str
     supplyCount: node.supplyCount ?? 0,
   }
 }
-

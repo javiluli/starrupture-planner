@@ -17,6 +17,7 @@ Componente generico para renderizar arboles con filas custom.
 ## Shape por defecto
 
 Si no pasas `getNodeId` ni `getChildren`, el componente usa:
+
 - `node.id`
 - `node.children`
 

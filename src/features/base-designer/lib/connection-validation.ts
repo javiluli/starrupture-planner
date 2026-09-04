@@ -12,8 +12,7 @@ export type ConnectionRejectionReason =
   | 'incompatible-items'
 
 export type ConnectionValidationResult =
-  | { isValid: true; compatibleItemIds: string[] }
-  | { isValid: false; reason: ConnectionRejectionReason }
+  { isValid: true; compatibleItemIds: string[] } | { isValid: false; reason: ConnectionRejectionReason }
 
 interface ConnectionValidationOptions {
   connection: Connection | Edge
@@ -21,10 +20,7 @@ interface ConnectionValidationOptions {
   edges: BaseDesignerEdge[]
 }
 
-const getActiveRecipeProfiles = (
-  recipeProfiles: BaseDesignerRecipeProfile[],
-  selectedRecipeOutputId?: string,
-) => {
+const getActiveRecipeProfiles = (recipeProfiles: BaseDesignerRecipeProfile[], selectedRecipeOutputId?: string) => {
   if (!selectedRecipeOutputId) return recipeProfiles
   return recipeProfiles.filter((recipe) => recipe.outputItemId === selectedRecipeOutputId)
 }
@@ -57,11 +53,7 @@ const createsCycle = (sourceId: string, targetId: string, edges: BaseDesignerEdg
  *
  * @returns Los items compatibles o un motivo estable por el que se rechaza el enlace.
  */
-export const evaluateBaseDesignerConnection = ({
-  connection,
-  nodes,
-  edges,
-}: ConnectionValidationOptions): ConnectionValidationResult => {
+export const evaluateBaseDesignerConnection = ({ connection, nodes, edges }: ConnectionValidationOptions): ConnectionValidationResult => {
   if (!connection.source || !connection.target) return { isValid: false, reason: 'missing-endpoint' }
   if (connection.source === connection.target) return { isValid: false, reason: 'self-connection' }
   if (connection.sourceHandle !== 'item-output' || connection.targetHandle !== 'item-input') {
@@ -93,10 +85,7 @@ export const evaluateBaseDesignerConnection = ({
   const targetInputIds = new Set(targetRecipes.flatMap((recipe) => recipe.inputItemIds))
   const compatibleItemIds = [...sourceOutputIds].filter((itemId) => targetInputIds.has(itemId)).sort()
 
-  return compatibleItemIds.length > 0
-    ? { isValid: true, compatibleItemIds }
-    : { isValid: false, reason: 'incompatible-items' }
+  return compatibleItemIds.length > 0 ? { isValid: true, compatibleItemIds } : { isValid: false, reason: 'incompatible-items' }
 }
 
-export const isBaseDesignerConnectionValid = (options: ConnectionValidationOptions) =>
-  evaluateBaseDesignerConnection(options).isValid
+export const isBaseDesignerConnectionValid = (options: ConnectionValidationOptions) => evaluateBaseDesignerConnection(options).isValid

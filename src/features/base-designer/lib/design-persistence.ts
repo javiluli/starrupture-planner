@@ -51,9 +51,7 @@ const normalizeBuilding = (value: unknown): PersistedBuildingV1 | undefined => {
     instanceId: value.instanceId,
     buildingId: value.buildingId,
     position: { x: value.position.x, y: value.position.y },
-    ...(typeof value.selectedRecipeOutputId === 'string'
-      ? { selectedRecipeOutputId: value.selectedRecipeOutputId }
-      : {}),
+    ...(typeof value.selectedRecipeOutputId === 'string' ? { selectedRecipeOutputId: value.selectedRecipeOutputId } : {}),
   }
 }
 
@@ -89,10 +87,7 @@ const normalizeDesign = (value: unknown): BaseDesignerDesignV1 => {
 }
 
 /** Serializes only user-owned design input; visual and catalog-derived node data stays out of storage. */
-export const serializeBaseDesignerDesign = (
-  nodes: BaseDesignerNode[],
-  edges: BaseDesignerEdge[],
-): BaseDesignerDesignV1 => {
+export const serializeBaseDesignerDesign = (nodes: BaseDesignerNode[], edges: BaseDesignerEdge[]): BaseDesignerDesignV1 => {
   const buildingNodes = nodes.filter((node): node is BaseDesignerBuildingNode => node.data.kind === 'building')
   const instanceIdByNodeId = new Map(buildingNodes.map((node) => [node.id, getBuildingInstanceId(node.id)]))
 
@@ -148,9 +143,7 @@ export const restoreBaseDesignerDesign = (
       },
     })
 
-    const selectedRecipeExists = building.recipes?.some(
-      (recipe) => recipe.output.id === persistedBuilding.selectedRecipeOutputId,
-    )
+    const selectedRecipeExists = building.recipes?.some((recipe) => recipe.output.id === persistedBuilding.selectedRecipeOutputId)
     if (selectedRecipeExists) node.data.selectedRecipeOutputId = persistedBuilding.selectedRecipeOutputId
     if (isBuildingNodePlacementAvailable(node, nodes)) nodes.push(node)
   }
@@ -181,10 +174,7 @@ export const restoreBaseDesignerDesign = (
 }
 
 /** Migrates persisted payloads without exposing legacy shapes to the runtime store. */
-export const migrateBaseDesignerPersistedState = (
-  persistedState: unknown,
-  persistedVersion: number,
-): BaseDesignerPersistedStateV1 => {
+export const migrateBaseDesignerPersistedState = (persistedState: unknown, persistedVersion: number): BaseDesignerPersistedStateV1 => {
   if (persistedVersion === BASE_DESIGNER_STORAGE_VERSION && isRecord(persistedState)) {
     return { design: normalizeDesign(persistedState.design) }
   }

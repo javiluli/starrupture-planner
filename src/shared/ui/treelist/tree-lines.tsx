@@ -30,7 +30,9 @@ const CurrentLine = ({ isLast, lineConfig }: { isLast: boolean; lineConfig: Tree
   <div className={`${lineConfig.indentWidthClass} relative`}>
     <LineCap lineConfig={lineConfig} />
     <div className={`absolute ${lineConfig.lineXClass} ${isLast ? 'h-1/2 top-0' : 'h-full top-0'} w-0.5 ${lineConfig.lineColorClass}`} />
-    <div className={`absolute ${lineConfig.lineXClass} ${lineConfig.lineYClass} ${lineConfig.lineGapClass} h-0.5 ${lineConfig.lineColorClass}`} />
+    <div
+      className={`absolute ${lineConfig.lineXClass} ${lineConfig.lineYClass} ${lineConfig.lineGapClass} h-0.5 ${lineConfig.lineColorClass}`}
+    />
   </div>
 )
 

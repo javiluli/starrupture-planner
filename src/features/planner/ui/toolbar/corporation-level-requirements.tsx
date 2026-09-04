@@ -1,6 +1,10 @@
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { formatTime, formatNumber } from '@/shared/utils'
-import { calculateCorporationLevelRequirements, sortRequirementsByTime, pickRequirementByIndex } from '@/features/planner/lib/corporation-requirements'
+import {
+  calculateCorporationLevelRequirements,
+  sortRequirementsByTime,
+  pickRequirementByIndex,
+} from '@/features/planner/lib/corporation-requirements'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { Button, Card, Chip, Divider, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
 import { useMemo, useState } from 'react'

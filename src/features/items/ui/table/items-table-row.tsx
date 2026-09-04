@@ -26,12 +26,7 @@ const renderCell = (item: ItemTableRow, columnKey: ColumnKey) => {
 }
 
 export const ItemsTableRow = ({ item, virtualRow, measureElement }: ItemsTableRowProps) => (
-  <tr
-    ref={measureElement}
-    data-index={virtualRow.index}
-    aria-rowindex={virtualRow.index + 2}
-    className={itemsTableStyles.row}
-  >
+  <tr ref={measureElement} data-index={virtualRow.index} aria-rowindex={virtualRow.index + 2} className={itemsTableStyles.row}>
     {ITEMS_TABLE_COLUMNS.map((column) => (
       <td key={column.key} className={itemsTableStyles.cell}>
         {renderCell(item, column.key)}

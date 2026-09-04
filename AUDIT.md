@@ -1139,17 +1139,17 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Criterios de aceptación:** toda dependencia de producción tiene consumidor runtime; herramientas/tipos están en desarrollo; actualización de Router no rompe rutas; layout conserva conectividad y no solapa nodos en fixtures representativas; el informe de audit restante documenta su aplicabilidad.
 - **Inventario final de runtime:**
 
-  | Dependencia | Consumidor o motivo |
-  | --- | --- |
-  | `@dagrejs/dagre` | Layout del diagrama de producción; sustituye `dagre` y sus tipos externos. |
-  | `@heroui/react` | Componentes y provider de la interfaz. |
-  | `framer-motion` | Peer runtime requerido por HeroUI. |
-  | `@tanstack/react-virtual` | Virtualización de la tabla de Items. |
-  | `@xyflow/react` | Diagramas del Planner y Base Designer. |
-  | `lucide-react` | Iconos usados por Planner, Base Designer, Items, Recipes y playground. |
-  | `react` / `react-dom` | Runtime y montaje de la aplicación. |
-  | `react-router-dom` | Router, navegación, enlaces y parámetros de búsqueda. |
-  | `zustand` | Stores del Planner, Items, datos y Base Designer. |
+  | Dependencia               | Consumidor o motivo                                                        |
+  | ------------------------- | -------------------------------------------------------------------------- |
+  | `@dagrejs/dagre`          | Layout del diagrama de producción; sustituye `dagre` y sus tipos externos. |
+  | `@heroui/react`           | Componentes y provider de la interfaz.                                     |
+  | `framer-motion`           | Peer runtime requerido por HeroUI.                                         |
+  | `@tanstack/react-virtual` | Virtualización de la tabla de Items.                                       |
+  | `@xyflow/react`           | Diagramas del Planner y Base Designer.                                     |
+  | `lucide-react`            | Iconos usados por Planner, Base Designer, Items, Recipes y playground.     |
+  | `react` / `react-dom`     | Runtime y montaje de la aplicación.                                        |
+  | `react-router-dom`        | Router, navegación, enlaces y parámetros de búsqueda.                      |
+  | `zustand`                 | Stores del Planner, Items, datos y Base Designer.                          |
 
 - **Limpieza aplicada:** retirados `@heroicons/react` y `lucide` por falta de imports; retirado `geist` y su script porque los WOFF2 ya están versionados; añadida la licencia OFL y la procedencia de las fuentes; migrado Dagre a `@dagrejs/dagre` `3.1.1` con tipos nativos; actualizado React Router DOM a `7.18.3`.
 - **Cierre y validación:** el usuario confirmó instalación, formato, lint, Vitest, build, auditoría de producción, navegación y recarga de rutas, además de la revisión visual de un diagrama con ramas y supplies. El nuevo test de layout comprueba conectividad, dirección y ausencia de solapes sin fijar coordenadas a píxel.

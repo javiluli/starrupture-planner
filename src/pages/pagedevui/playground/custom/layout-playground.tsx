@@ -5,9 +5,7 @@ const paddingVariants = ['none', 'sm', 'md', 'lg'] as const
 
 export const LayoutPlayground = () => (
   <ComponentPlayground id="layout" title="Layout surfaces">
-    <Typography tone="soft">
-      Shared page primitives define surface depth, spacing, and the page scroll boundary.
-    </Typography>
+    <Typography tone="soft">Shared page primitives define surface depth, spacing, and the page scroll boundary.</Typography>
 
     <div className="grid gap-4 md:grid-cols-2">
       <Panel padding="md">

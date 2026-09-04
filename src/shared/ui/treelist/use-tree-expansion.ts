@@ -1,13 +1,13 @@
 import { useCallback, useMemo, useState } from 'react'
 
-const getResolvedNodeId = <TNode,>(node: TNode, path: string, getNodeId?: (node: TNode, path: string) => string) => {
+const getResolvedNodeId = <TNode>(node: TNode, path: string, getNodeId?: (node: TNode, path: string) => string) => {
   if (getNodeId) return getNodeId(node, path)
 
   const nodeId = (node as { id?: string }).id
   return nodeId ? `${path}::${nodeId}` : path
 }
 
-const collectNodeIds = <TNode,>(
+const collectNodeIds = <TNode>(
   data: TNode[],
   getChildren: (node: TNode) => TNode[] | undefined,
   getNodeId?: (node: TNode, path: string) => string,
@@ -29,13 +29,15 @@ const collectNodeIds = <TNode,>(
   return ids
 }
 
-export const useTreeExpansion = <TNode,>(
+export const useTreeExpansion = <TNode>(
   data: TNode[],
   getChildren: (node: TNode) => TNode[] | undefined,
   getNodeId?: (node: TNode, path: string) => string,
   defaultExpanded = true,
 ) => {
-  const [collapsedSet, setCollapsedSet] = useState<Set<string>>(() => (defaultExpanded ? new Set() : new Set(collectNodeIds(data, getChildren, getNodeId))))
+  const [collapsedSet, setCollapsedSet] = useState<Set<string>>(() =>
+    defaultExpanded ? new Set() : new Set(collectNodeIds(data, getChildren, getNodeId)),
+  )
 
   const expandedMap = useMemo(() => {
     const map = new Map<string, boolean>()

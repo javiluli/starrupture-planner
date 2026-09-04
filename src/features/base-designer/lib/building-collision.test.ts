@@ -29,16 +29,10 @@ const nodes: BaseDesignerNode[] = [createBuildingNode('first', 0, 0)]
 describe('base designer building collision', () => {
   it('allows touching borders but rejects intersecting footprints', () => {
     expect(
-      doBuildingRectsOverlap(
-        { position: { x: 0, y: 0 }, width: 40, height: 40 },
-        { position: { x: 40, y: 0 }, width: 40, height: 40 },
-      ),
+      doBuildingRectsOverlap({ position: { x: 0, y: 0 }, width: 40, height: 40 }, { position: { x: 40, y: 0 }, width: 40, height: 40 }),
     ).toBe(false)
     expect(
-      doBuildingRectsOverlap(
-        { position: { x: 0, y: 0 }, width: 40, height: 40 },
-        { position: { x: 30, y: 0 }, width: 40, height: 40 },
-      ),
+      doBuildingRectsOverlap({ position: { x: 0, y: 0 }, width: 40, height: 40 }, { position: { x: 30, y: 0 }, width: 40, height: 40 }),
     ).toBe(true)
   })
 

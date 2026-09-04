@@ -120,4 +120,3 @@ export const buildTree = (
     children: buildChildren(step, effectiveTarget, stepsByItem, supplyMap),
   }
 }
-

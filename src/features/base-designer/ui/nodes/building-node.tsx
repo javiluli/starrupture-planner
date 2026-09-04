@@ -18,20 +18,10 @@ export const BuildingNode = ({ data, selected }: NodeProps<BaseDesignerBuildingN
       <BuildingIcon buildingId={data.buildingId} label={data.label} width={imageSize} />
 
       {data.acceptsItems && (
-        <Handle
-          id="item-input"
-          type="target"
-          position={Position.Left}
-          className="!size-2.5 !border-2 !border-background !bg-secondary"
-        />
+        <Handle id="item-input" type="target" position={Position.Left} className="!size-2.5 !border-2 !border-background !bg-secondary" />
       )}
       {data.suppliesItems && (
-        <Handle
-          id="item-output"
-          type="source"
-          position={Position.Right}
-          className="!size-2.5 !border-2 !border-background !bg-primary"
-        />
+        <Handle id="item-output" type="source" position={Position.Right} className="!size-2.5 !border-2 !border-background !bg-primary" />
       )}
     </div>
   )

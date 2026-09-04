@@ -27,11 +27,7 @@ export const ItemsTable = ({ items }: ItemsTableProps) => {
 
   return (
     <div ref={scrollRef} className={itemsTableStyles.base}>
-      <table
-        aria-label="Game items catalog"
-        aria-rowcount={items.length + 1}
-        className={itemsTableStyles.table}
-      >
+      <table aria-label="Game items catalog" aria-rowcount={items.length + 1} className={itemsTableStyles.table}>
         <ItemsTableHeader />
         <ItemsTableBody
           items={items}

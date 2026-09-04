@@ -42,11 +42,7 @@ export const isBuildingAreaAvailable = (
   })
 
 export const isBuildingNodePlacementAvailable = (node: BaseDesignerBuildingNode, nodes: BaseDesignerNode[]) =>
-  isBuildingAreaAvailable(
-    { position: node.position, width: node.data.width, height: node.data.height },
-    nodes,
-    new Set([node.id]),
-  )
+  isBuildingAreaAvailable({ position: node.position, width: node.data.width, height: node.data.height }, nodes, new Set([node.id]))
 
 /** Valida de forma conjunta las posiciones candidatas emitidas por un drag simple o multiple. */
 export const areChangedBuildingPositionsAvailable = (nodes: BaseDesignerNode[], changedNodeIds: ReadonlySet<string>) =>
