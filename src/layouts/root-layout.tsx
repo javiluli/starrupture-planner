@@ -1,48 +1,52 @@
-import { productionRoutes } from '@/router/router'
+import { PRIMARY_NAVIGATION, ROUTE } from '@/router/routes'
 import { Flex, Typography } from '@/shared/ui'
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Tab, Tabs } from '@heroui/react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { cn, Navbar, NavbarBrand, NavbarContent, NavbarItem } from '@heroui/react'
+import { NavLink, Outlet } from 'react-router-dom'
 import { GithubButton } from './components/github-button'
 
 /**
  * Componente principal que contiene el menu pincipal de la web y el <Outlet/> con el contenido/body
  */
 const RootLayout = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-
   return (
     <Flex id="__NEXT" direction="col" align="stretch" className="h-dvh min-h-0 gap-0 overflow-hidden">
-      <Navbar className="shrink-0 border-b border-divider/60 bg-background/80 backdrop-blur" maxWidth="full">
-        <NavbarBrand className="hidden space-x-2 sm:flex">
+      <Navbar
+        className="shrink-0 border-b border-divider/60 bg-background/80 backdrop-blur"
+        classNames={{ wrapper: 'min-w-0 gap-2 px-3 sm:px-4 lg:px-6' }}
+        maxWidth="full"
+      >
+        <NavbarBrand className="hidden space-x-2 lg:flex">
           <Typography variant="h2" as="h1">
             SR Planner
           </Typography>
         </NavbarBrand>
 
-        <NavbarContent justify="center">
-          <Tabs
-            aria-label="Primary navigation"
-            selectedKey={location.pathname}
-            onSelectionChange={(key) => navigate(key as string)}
-            variant="light"
-            size="lg"
-            classNames={{ tabList: 'gap-1', tab: 'px-2' }}
-          >
-            {productionRoutes.map((tab) => (
-              <Tab
-                key={tab.path}
-                title={
-                  <Typography as="div" className="text-foreground/80 group-data-[selected=true]:text-foreground">
-                    {tab.label}
-                  </Typography>
-                }
-              />
+        <nav aria-label="Primary navigation" className="min-w-0 flex-1 overflow-hidden lg:flex-[3]">
+          <NavbarContent justify="center" className="w-full min-w-0 gap-1">
+            {PRIMARY_NAVIGATION.map((item) => (
+              <NavbarItem key={item.path} className="shrink-0">
+                <NavLink
+                  to={item.path}
+                  end={item.path === ROUTE.HOME}
+                  aria-label={item.label}
+                  className={({ isActive }) =>
+                    cn(
+                      'inline-flex gap-1.5 rounded-medium px-2 py-2 text-foreground/80 outline-none transition-colors',
+                      'hover:bg-default/40 hover:text-foreground',
+                      'focus-visible:ring-2 focus-visible:ring-focus',
+                      isActive && 'bg-default text-foreground',
+                    )
+                  }
+                >
+                  <span aria-hidden>{item.icon}</span>
+                  <span className="hidden sm:inline">{item.label}</span>
+                </NavLink>
+              </NavbarItem>
             ))}
-          </Tabs>
-        </NavbarContent>
+          </NavbarContent>
+        </nav>
 
-        <NavbarContent justify="end" className="hidden sm:flex">
+        <NavbarContent justify="end" className="hidden lg:flex">
           <NavbarItem>
             <GithubButton />
           </NavbarItem>

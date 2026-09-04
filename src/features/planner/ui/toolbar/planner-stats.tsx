@@ -31,7 +31,7 @@ export const PlannerStats = () => {
   const { buildings = 0, power = 0, heat = 0 } = useProductionPlan()?.stats ?? {}
 
   return (
-    <Flex className="h-5 px-3" gap="sm">
+    <Flex className="h-5 px-0 sm:px-3" gap="sm">
       <PlannerStat icon={<Factory aria-hidden size={18} />} value={buildings} tooltip="Production buildings required" />
       <Divider orientation="vertical" className="bg-foreground/60" />
       <PlannerStat icon={<Zap aria-hidden size={18} />} value={power} tooltip="Total power consumption" />

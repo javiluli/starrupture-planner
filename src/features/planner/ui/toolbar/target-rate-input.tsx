@@ -14,7 +14,7 @@ export const TargetRateInput = () => {
       aria-label="Target production per minute"
       size="sm"
       variant="faded"
-      className="w-28"
+      className="w-24 shrink-0 sm:w-28"
       isDisabled={!hasTarget}
       minValue={hasTarget ? 1 : 0}
       value={hasTarget ? targetIpm : 0}

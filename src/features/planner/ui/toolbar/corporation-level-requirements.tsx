@@ -33,8 +33,14 @@ export const CorporationLevelRequirements = () => {
 
   if (!targetId) {
     return (
-      <Button variant="light" className="px-4 panel" isDisabled>
-        Select an item to see corporation requirements
+      <Button
+        aria-label="Select an item to see corporation requirements"
+        variant="light"
+        className="panel max-w-full px-3 sm:px-4"
+        isDisabled
+      >
+        <span className="sm:hidden">Corporation requirements</span>
+        <span className="hidden sm:inline">Select an item to see corporation requirements</span>
       </Button>
     )
   }

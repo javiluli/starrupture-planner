@@ -31,27 +31,22 @@ export const productionRoutes = [
   {
     path: ROUTE.HOME,
     element: withSuspense(PagePlanner),
-    label: '📐 Planner',
   },
   {
     path: ROUTE.ITEMS,
     element: withSuspense(PageItems),
-    label: '📦 Items',
   },
   {
     path: ROUTE.RECIPES,
     element: withSuspense(PageRecipes),
-    label: '🏭 Buildings',
   },
   {
     path: ROUTE.CORPORATIONS,
     element: withSuspense(PageCorporations),
-    label: '🏢 Corporations',
   },
   {
     path: ROUTE.MY_BASE,
     element: withSuspense(PageBaseDesigner),
-    label: '🗺️ My Base',
   },
 ]
 

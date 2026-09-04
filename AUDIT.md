@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.4 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hitos 2.1–2.5 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1196,7 +1196,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** eliminar inconsistencias visibles de dominio y barreras de uso antes de mover límites internos.
 
-**Progreso:** 4/6 hitos cerrados; Fase 2 en curso.
+**Progreso:** 5/6 hitos cerrados; Fase 2 en curso.
 
 **Por qué ahora:** son fallos que alteran planes, ocultan productores o impiden operar con teclado/móvil; tienen más impacto que la deuda arquitectónica restante.
 
@@ -1280,6 +1280,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 2.5 — Corregir navegación y toolbar responsive
 
 - **Prioridad:** P1
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** hacer accesibles todas las rutas y controles del Planner a 320–390 px sin scroll horizontal oculto.
 - **Problema resuelto:** `UI-001`.
 - **Qué cambiar:** definir patrón compacto de navegación móvil (menú o scroll explícito con affordance), permitir wrap/stack del selector y rate, reservar el ancho de acciones y retirar dependencias de `overflow-hidden` que corten controles.
@@ -1293,6 +1294,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** Playwright con viewports móviles, assertions de bounding boxes/visibilidad y recorrido de cada ruta; revisión manual de zoom y texto largo.
 - **Resultado esperado:** no hay elementos cortados ni rutas inaccesibles, y la composición desktop permanece estable.
 - **Criterios de aceptación:** ancho de documento no supera viewport; todos los destinos y controles son visibles/operables; selector y rate no se solapan; navegación usa URLs y soporta abrir en nueva pestaña.
+- **Cierre y validación:** la navegación principal usa enlaces reales con estado activo; reserva más ancho para los destinos y reduce cada entrada a su icono en pantallas pequeñas, sin generar scroll en el menú. La marca y el acceso a GitHub se reservan para desktop. El selector y el rate comparten el ancho disponible en móvil, mientras estadísticas y requisitos saltan de línea centrados cuando lo necesitan. El E2E cubre 320, 360, 390 y 768 px, ausencia de overflow, enlaces y separación de controles. La revisión visual detectó y corrigió tanto la alineación vertical de los stats como el scroll horizontal del menú, sin cambiar colores, superficies ni componentes HeroUI.
 
 ## Hito 2.6 — Sacar el marquee del camino crítico
 

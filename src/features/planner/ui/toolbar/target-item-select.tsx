@@ -14,7 +14,7 @@ export function TargetItemSelect() {
       aria-label="Select production target"
       size="sm"
       variant="faded"
-      className="w-64"
+      className="min-w-0 flex-1 sm:w-64 sm:flex-none"
       placeholder="Select an item"
       maxListboxHeight={600}
       clearButtonProps={{ 'aria-label': 'Clear production target' }}
