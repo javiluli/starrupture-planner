@@ -61,11 +61,17 @@
 
 ### 📦 Instalación / Installation
 
-```bash
-# 1. Instalar dependencias / Install dependencies
-pnpm install
+Requisitos / Requirements: Node.js 24.20.0 and pnpm 11.19.0.
 
-# 2. Iniciar / Run
+```bash
+# 1. Activar la versión fijada de pnpm / Enable the pinned pnpm version
+corepack enable
+corepack prepare pnpm@11.19.0 --activate
+
+# 2. Instalar desde el lockfile / Install from the lockfile
+pnpm install --frozen-lockfile
+
+# 3. Iniciar / Run
 pnpm dev
 ```
 

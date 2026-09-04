@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; todos los hitos vuelven a estar pendientes.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Hito 1.1 completado y validado.
 
 ## 1. Executive Summary
 
@@ -1091,7 +1091,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** conseguir que una instalación limpia pueda ejecutar los mismos gates que la auditoría y que los contratos que no se pueden romper queden escritos y automatizados.
 
-**Progreso:** 0/4 hitos cerrados; Fase 1 pendiente.
+**Progreso:** 1/4 hitos cerrados; Fase 1 en curso.
 
 **Por qué ahora:** cualquier refactor posterior sería difícil de atribuir mientras el gestor de paquetes, el navegador E2E y CI dependan del entorno local. Además, esta fase deja explícito que el trabajo siguiente no debe corregir problemas editando los JSON de origen.
 
@@ -1104,7 +1104,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 1.1 — Fijar Node, pnpm y el contrato de instalación
 
 - **Prioridad:** P1
-- **Estado:** PENDIENTE.
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** convertir el entorno implícito en una baseline repetible local y en CI.
 - **Problema resuelto:** `DX-001`.
 - **Qué cambiar:** declarar una versión LTS concreta de Node y `packageManager` en `package.json`; añadir el mecanismo de versionado que el equipo use realmente; regenerar `pnpm-lock.yaml` una sola vez con esa versión; añadir `format`/`format:check` con Prettier como dependencia de desarrollo.
@@ -1118,7 +1118,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** `pnpm install --frozen-lockfile`, `pnpm format:check`, `pnpm lint`, `pnpm test` y `pnpm build` desde entorno limpio.
 - **Resultado esperado:** dos máquinas con las versiones declaradas resuelven el mismo lockfile y ejecutan los mismos scripts sin prompts ni reconciliación automática.
 - **Criterios de aceptación:** no se modifica ninguno de los cuatro JSON; `packageManager` y Node están declarados; instalación congelada termina con código 0; Prettier está versionado y el gate no depende de instalación global.
-- **Baseline disponible, no cierre:** Node `24.20.0`, pnpm `11.19.0`, lockfile v9 y el hoist de HeroUI ya están estabilizados. El hito sigue pendiente hasta completar y volver a validar todos sus criterios de aceptación.
+- **Cierre y validación:** Node `24.20.0`, pnpm `11.19.0`, lockfile v9 y el hoist de HeroUI quedan estabilizados; Prettier `3.9.6` está versionado con gates de escritura y comprobación; los catálogos JSON están excluidos del formateo. El usuario confirmó instalación congelada, `format:check`, lint, tests, build y comprobación visual de la aplicación sin regresiones de HeroUI.
 
 ## Hito 1.2 — Reducir y actualizar la superficie de dependencias
 

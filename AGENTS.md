@@ -6,11 +6,13 @@ This Vite, React, and TypeScript application follows a feature-first structure. 
 
 ## Build, Test, and Development Commands
 
-Use `pnpm` and commit changes to `pnpm-lock.yaml` when dependencies change.
+Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. Install with `pnpm install --frozen-lockfile` and commit changes to `pnpm-lock.yaml` when dependencies change.
 
 - `pnpm dev`: start the Vite development server.
 - `pnpm build`: type-check with TypeScript and create the production bundle.
 - `pnpm lint`: run ESLint across TypeScript and React files.
+- `pnpm format`: format supported project files with the repository's pinned Prettier version.
+- `pnpm format:check`: verify formatting without changing files.
 - `pnpm test`: run component and unit tests once with Vitest.
 - `pnpm test:e2e`: run Playwright browser journeys in Chromium.
 - `pnpm test:e2e:ui`: open Playwright UI mode for local debugging.

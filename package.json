@@ -3,6 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "packageManager": "pnpm@11.19.0",
+  "engines": {
+    "node": ">=24.19.0 <25"
+  },
   "type": "module",
   "description": "A website that allows you to create a detailed production workflow for the video game StarRupture.",
   "homepage": "https://sr-planner.vercel.app/",
@@ -23,6 +26,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "preview": "vite preview",
     "copy:fonts": "node scripts/copy-geist-fonts.cjs",
     "test": "vitest run src",
@@ -63,6 +68,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "globals": "^16.5.0",
     "jsdom": "^30.0.1",
+    "prettier": "3.9.6",
     "tailwindcss": "^4.3.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.59.4",
