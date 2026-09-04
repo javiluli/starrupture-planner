@@ -8,7 +8,8 @@ import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 
 export function SupplyModal() {
   const items = useDataStore(dataSelectors.items)
-  const addSupplyItem = usePlannerStore(plannerSelectors.addSupplyItem)
+  const supplyCountByItem = usePlannerStore(plannerSelectors.supplyCountByItem)
+  const setSupply = usePlannerStore(plannerSelectors.setSupply)
 
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [search, setSearch] = useState('')
@@ -17,7 +18,7 @@ export function SupplyModal() {
   const itemsByType = useMemo(() => groupItemsByType(filteredItems), [filteredItems])
 
   const handleSupply = (itemId: string) => {
-    addSupplyItem(itemId)
+    setSupply(itemId, supplyCountByItem[itemId] ?? 1)
     setSearch('')
     onClose()
   }

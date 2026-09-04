@@ -89,6 +89,21 @@ describe('buildProductionPlan', () => {
     expect(ingotStep).toEqual(expect.objectContaining({ targetIpm: 15, buildingLoad: 1.5, buildingCount: 2, supplyCount: 5 }))
   })
 
+  it('removes invalid supply before exposing the production plan', () => {
+    const plan = buildPlan({
+      supplyCountByItem: {
+        ingot: 5,
+        zero: 0,
+        negative: -1,
+        notANumber: Number.NaN,
+        infinite: Number.POSITIVE_INFINITY,
+      },
+    })
+
+    expect(plan.supplyCountByItem).toEqual({ ingot: 5 })
+    expect(plan.supplyCountInventory).toEqual({ ingot: 5 })
+  })
+
   it('removes a production branch when supply covers its complete demand', () => {
     const plan = buildPlan({ supplyCountByItem: { ingot: 20 } })
 

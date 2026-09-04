@@ -1,22 +1,15 @@
 import type { PlanResolver } from './types'
 import type { RecipeInput } from '@/shared/@types/building.type'
+import { normalizeSupplyCountByItem } from '../supply-count'
 
 /**
  * Crea un inventario temporal a partir del supply.
  * Regla: minimo 1 unidad para cualquier supply activo.
  *
  * @param supplyCountByItem Supply externo por item.
- * @returns Inventario clonado con minimo 1 unidad por item supply.
+ * @returns Inventario clonado que contiene solo cantidades positivas validas.
  */
-export const buildSupplyCountInventory = (supplyCountByItem: Record<string, number>) => {
-  const inventory: Record<string, number> = {}
-
-  Object.keys(supplyCountByItem).forEach((id) => {
-    inventory[id] = Math.max(1, supplyCountByItem[id])
-  })
-
-  return inventory
-}
+export const buildSupplyCountInventory = (supplyCountByItem: Record<string, number>) => normalizeSupplyCountByItem(supplyCountByItem)
 
 /**
  * Calcula la demanda neta por item resolviendo recetas de forma recursiva.

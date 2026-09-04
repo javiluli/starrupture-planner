@@ -12,7 +12,7 @@ interface PlanToFlowParams {
   plan: ProductionPlan
   items: Item[]
   buildings: Building[]
-  setSupplyCount: (id: string, val: number) => void
+  setSupply: (id: string, val: number) => void
 }
 
 interface PlanToFlowResult {
@@ -20,7 +20,7 @@ interface PlanToFlowResult {
   edges: Edge[]
 }
 
-export const planToFlow = ({ plan, items, buildings, setSupplyCount }: PlanToFlowParams): PlanToFlowResult => {
+export const planToFlow = ({ plan, items, buildings, setSupply }: PlanToFlowParams): PlanToFlowResult => {
   if (!plan.targetId || plan.targetIpm <= 0) {
     return { nodes: [], edges: [] }
   }
@@ -29,8 +29,8 @@ export const planToFlow = ({ plan, items, buildings, setSupplyCount }: PlanToFlo
   dagreGraph.setDefaultEdgeLabel(() => ({}))
   dagreGraph.setGraph(DAGRE_GRAPH_CONFIG)
 
-  const supplyNodes = buildSupplyNodes(plan.supplyCountByItem, buildings, items, setSupplyCount, dagreGraph)
-  const productionNodes = buildProductionNodes(plan.targetId, plan.steps, items, setSupplyCount, dagreGraph)
+  const supplyNodes = buildSupplyNodes(plan.supplyCountByItem, buildings, items, setSupply, dagreGraph)
+  const productionNodes = buildProductionNodes(plan.targetId, plan.steps, items, setSupply, dagreGraph)
   const launcherNodes = plan.isExportable ? buildLauncherNode(plan.targetId, plan.targetIpm, items, buildings, dagreGraph) : []
 
   const nodes = [...supplyNodes, ...productionNodes, ...launcherNodes]

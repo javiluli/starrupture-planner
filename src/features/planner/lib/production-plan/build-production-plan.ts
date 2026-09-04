@@ -4,6 +4,7 @@ import { buildSteps } from './build-steps'
 import { buildSupplyCountInventory, calculateTotals } from './calculate-totals'
 import { buildPlanResolver } from './plan-resolver'
 import type { BuildProductionPlanParams, ProductionPlan, ProductionStep } from './types'
+import { normalizeSupplyCountByItem } from '../supply-count'
 
 /**
  * Calcula stats globales a partir de los pasos.
@@ -80,16 +81,17 @@ export const buildProductionPlan = ({
   buildingVariantByItemId,
   isExportable,
 }: BuildProductionPlanParams): ProductionPlan => {
+  const normalizedSupplyCountByItem = normalizeSupplyCountByItem(supplyCountByItem)
   const resolver = buildPlanResolver(buildings, buildingVariantByItemId)
-  const totals = calculateTotals(resolver, targetId, targetIpm, supplyCountByItem)
-  const rawSteps = buildSteps(resolver, totals, supplyCountByItem)
+  const totals = calculateTotals(resolver, targetId, targetIpm, normalizedSupplyCountByItem)
+  const rawSteps = buildSteps(resolver, totals, normalizedSupplyCountByItem)
   const steps = pruneSteps(rawSteps, targetId)
-  const supplyCountInventory = buildSupplyCountInventory(supplyCountByItem)
+  const supplyCountInventory = buildSupplyCountInventory(normalizedSupplyCountByItem)
 
   return {
     targetId,
     targetIpm,
-    supplyCountByItem,
+    supplyCountByItem: normalizedSupplyCountByItem,
     supplyCountInventory,
     isExportable,
     steps,

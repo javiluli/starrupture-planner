@@ -12,7 +12,7 @@ export interface FlowBuildParams {
   /** Plan de produccion ya calculado. */
   plan: ProductionPlan
   /** Callback para actualizar supply desde nodos. */
-  setSupplyCount: (id: string, val: number) => void
+  setSupply: (id: string, val: number) => void
 }
 
 export interface FlowBuildResult {
@@ -25,12 +25,12 @@ export interface FlowBuildResult {
  * Construye el flujo a partir de un plan ya calculado.
  * Evita recalcular el plan cuando la UI muestra varias vistas.
  */
-export const buildProductionFlowFromPlan = ({ plan, items, buildings, setSupplyCount }: FlowBuildParams): FlowBuildResult => {
+export const buildProductionFlowFromPlan = ({ plan, items, buildings, setSupply }: FlowBuildParams): FlowBuildResult => {
   const { nodes, edges } = planToFlow({
     plan,
     items,
     buildings,
-    setSupplyCount,
+    setSupply,
   })
 
   return {

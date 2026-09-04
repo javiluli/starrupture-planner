@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 completada y validada.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 e Hito 2.1 completados y validados.
 
 ## 1. Executive Summary
 
@@ -1196,17 +1196,20 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** eliminar inconsistencias visibles de dominio y barreras de uso antes de mover límites internos.
 
+**Progreso:** 1/6 hitos cerrados; Fase 2 en curso.
+
 **Por qué ahora:** son fallos que alteran planes, ocultan productores o impiden operar con teclado/móvil; tienen más impacto que la deuda arquitectónica restante.
 
 **Resultado acumulativo:** supply canónico, materias primas soportadas de extremo a extremo, todos los productores visibles, placeholder retirado y shell utilizable y rápido en móvil.
 
 **Riesgo global:** medio-alto; supply y productores atraviesan stores, selectors, diagramas, persistencia y UI. Los cambios deben aterrizar por slices verticales pequeños.
 
-**Dependencias:** Fase 1 pendiente. Hitos 2.1 y 2.2 requieren el gate unitario; 2.4 usa las reglas semánticas definidas en los findings; 2.6 debe medirse con build estable.
+**Dependencias:** Fase 1 completada. Hitos 2.1 y 2.2 requieren el gate unitario; 2.4 usa las reglas semánticas definidas en los findings; 2.6 debe medirse con build estable.
 
 ## Hito 2.1 — Imponer el invariante de supply `>= 1` o ausencia
 
 - **Prioridad:** P1
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** hacer que store, persistencia y vistas interpreten supply de una sola manera.
 - **Problema resuelto:** `BUG-001`.
 - **Qué cambiar:** introducir operaciones canónicas `setSupply`, `incrementSupply` y `removeSupply`; borrar la clave cuando el valor resulte cero/no finito; normalizar estado rehidratado; derivar nodos únicamente de entradas positivas.
@@ -1220,6 +1223,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** unitarios para add/set/decrement/remove, cero, negativo, `NaN` y rehidratación; integración plan→lista→diagrama; E2E de añadir, editar a uno, reducir a cero y comprobar desaparición.
 - **Resultado esperado:** no existe estado observable con una clave supply de cantidad menor que uno.
 - **Criterios de aceptación:** todas las escrituras pasan por acciones canónicas; estado persistido antiguo queda normalizado; cero elimina item y conexiones; ninguna vista muestra supply huérfano.
+- **Cierre y validación:** el store expone únicamente `setSupply`, `incrementSupply` y `removeSupply`; crear un supply parte de 1, mientras cero, negativos y valores no finitos eliminan su clave. La rehidratación, el plan y los constructores visuales normalizan entradas antiguas o externas antes de exponerlas. Los tests cubren mutaciones, rehidratación y plan→diagrama; el usuario confirmó el recorrido E2E y comprobó manualmente que tarjeta, nodo y conexión desaparecen al reducir el supply a cero. Ningún catálogo JSON ni estilo de HeroUI fue modificado.
 
 ## Hito 2.2 — Soportar raw items y relaciones productor one-to-many
 

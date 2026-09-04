@@ -5,6 +5,7 @@ import type { Graph } from '@dagrejs/dagre'
 import { type Node } from '@xyflow/react'
 import { getBuildingStats, getItemName } from './lookup'
 import type { ProductionStep } from '@/features/planner/lib/production-plan'
+import { isPositiveSupplyCount } from '@/features/planner/lib/supply-count'
 
 /**
  * Fabrica de nodos de suministro (inputs).
@@ -26,7 +27,9 @@ export const buildSupplyNodes = (
   const buildingData = buildings.find((b) => b.id === PACKAGE_RECEIVER_ID)
   const { power, heat } = getBuildingStats(buildingData)
 
-  return Object.keys(supplyCountByItem).map((id) => {
+  return Object.entries(supplyCountByItem).flatMap(([id, supplyCount]) => {
+    if (!isPositiveSupplyCount(supplyCount)) return []
+
     // Reservamos un poco mas de alto para evitar solapes con produccion.
     dagreGraph.setNode(`supply-${id}`, { width: 260, height: 350 })
 
@@ -41,7 +44,7 @@ export const buildSupplyNodes = (
         buildingHeat: heat,
         itemId: id,
         itemName: getItemName(items, id),
-        supplyCount: supplyCountByItem[id],
+        supplyCount,
         onSupplyCountChange,
       },
       position: { x: 0, y: 0 },

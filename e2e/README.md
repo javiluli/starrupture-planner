@@ -7,6 +7,8 @@ Las pruebas de navegador viven aqui y se agrupan por recorrido o feature:
 
 Usa locators por rol, nombre accesible o texto estable. Evita clases CSS, estructura interna de HeroUI y esperas manuales. Playwright arranca Vite automaticamente si no existe un servidor reutilizable.
 
+Cuando un elemento no tenga una referencia semantica estable o su nombre sea ambiguo, añade `data-testid` al componente y usa `getByTestId`. Mantén los valores en kebab-case con el patrón `<feature>-<elemento>[-<identificador>]`; no mezcles esta convención con IDs de DOM, `data-name` o selectores de clases.
+
 ## Preparacion local
 
 Instala el Chromium exacto que corresponde a la version de Playwright declarada en el lockfile:

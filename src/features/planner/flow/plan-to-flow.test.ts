@@ -20,8 +20,8 @@ const buildings: Building[] = [{ id: 'package_receiver', name: 'Package Receiver
 const plan: ProductionPlan = {
   targetId: 'plate',
   targetIpm: 10,
-  supplyCountByItem: { ore: 40, copper: 20 },
-  supplyCountInventory: { ore: 40, copper: 20 },
+  supplyCountByItem: { ore: 40, copper: 20, invalid: 0 },
+  supplyCountInventory: { ore: 40, copper: 20, invalid: 0 },
   isExportable: false,
   steps: [
     {
@@ -78,7 +78,7 @@ const rectanglesOverlap = (first: { position: { x: number; y: number } }, second
 
 describe('planToFlow layout', () => {
   it('keeps the production graph connected, left-to-right and without overlapping nodes', () => {
-    const { nodes, edges } = planToFlow({ plan, items, buildings, setSupplyCount: () => undefined })
+    const { nodes, edges } = planToFlow({ plan, items, buildings, setSupply: () => undefined })
     const nodeById = new Map(nodes.map((node) => [node.id, node]))
 
     expect(new Set(nodes.map((node) => node.id))).toEqual(new Set(['plate', 'ingot', 'wire', 'supply-ore', 'supply-copper']))

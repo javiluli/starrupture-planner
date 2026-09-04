@@ -16,7 +16,7 @@ interface UseFlowDiagramParams {
 
 export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams) => {
   const targetId = usePlannerStore(plannerSelectors.targetId)
-  const setSupplyCount = usePlannerStore(plannerSelectors.setSupplyCount)
+  const setSupply = usePlannerStore(plannerSelectors.setSupply)
 
   const { nodes, setNodes, edges, setEdges, onNodesChange } = useProduction()
   const { fitView } = useReactFlow()
@@ -30,7 +30,7 @@ export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams)
       plan,
       items,
       buildings,
-      setSupplyCount,
+      setSupply,
     })
 
     setNodes(newNodes)
@@ -42,7 +42,7 @@ export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plan, items, buildings, targetId, fitView, setSupplyCount])
+  }, [plan, items, buildings, targetId, fitView, setSupply])
 
   return { nodes, edges, onNodesChange }
 }

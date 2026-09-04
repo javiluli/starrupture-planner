@@ -47,29 +47,62 @@ describe('planner store', () => {
     expect(usePlannerStore.getState().buildingVariantByItemId).toEqual({})
   })
 
-  it('sets supply and removes invalid or exhausted amounts', () => {
+  it('sets only finite supply amounts greater than or equal to one', () => {
     const actions = usePlannerStore.getState()
 
-    actions.setSupplyCount('calcium_block', 15)
-    actions.setSupplyCount('wolfram_bar', 8)
-    actions.setSupplyCount('calcium_block', Number.NaN)
+    actions.setSupply('calcium_block', 15)
+    actions.setSupply('wolfram_bar', 8)
+    actions.setSupply('calcium_block', Number.NaN)
+    actions.setSupply('zero', 0)
+    actions.setSupply('negative', -1)
+    actions.setSupply('infinite', Number.POSITIVE_INFINITY)
 
     expect(usePlannerStore.getState().supplyCountByItem).toEqual({ wolfram_bar: 8 })
+  })
 
-    usePlannerStore.getState().incrementSupplyCount('wolfram_bar', -8)
+  it('increments from one and removes exhausted or invalid supply', () => {
+    const actions = usePlannerStore.getState()
+
+    actions.setSupply('ceramics', 1)
+    actions.incrementSupply('ceramics', 4)
+    expect(usePlannerStore.getState().supplyCountByItem).toEqual({ ceramics: 5 })
+
+    actions.incrementSupply('ceramics', -5)
+    expect(usePlannerStore.getState().supplyCountByItem).toEqual({})
+
+    actions.incrementSupply('ore', 1)
+    expect(usePlannerStore.getState().supplyCountByItem).toEqual({ ore: 1 })
+
+    actions.incrementSupply('ore', Number.NaN)
     expect(usePlannerStore.getState().supplyCountByItem).toEqual({})
   })
 
-  it('adds an empty supply slot, increments it and removes it explicitly', () => {
+  it('removes supply explicitly', () => {
     const actions = usePlannerStore.getState()
 
-    actions.addSupplyItem('ceramics')
-    expect(usePlannerStore.getState().supplyCountByItem).toEqual({ ceramics: 0 })
-
-    usePlannerStore.getState().incrementSupplyCount('ceramics', 4)
+    actions.setSupply('ceramics', 4)
     expect(usePlannerStore.getState().supplyCountByItem).toEqual({ ceramics: 4 })
 
-    usePlannerStore.getState().removeSupplyItem('ceramics')
+    actions.removeSupply('ceramics')
     expect(usePlannerStore.getState().supplyCountByItem).toEqual({})
+  })
+
+  it('normalizes supply while rehydrating persisted state', async () => {
+    sessionStorage.setItem(
+      'zstore.planner',
+      JSON.stringify({
+        state: {
+          targetId: 'ceramics',
+          targetIpm: 10,
+          supplyCountByItem: { valid: 4, zero: 0, negative: -2, missing: null, text: '3' },
+          buildingVariantByItemId: {},
+        },
+        version: 0,
+      }),
+    )
+
+    await usePlannerStore.persist.rehydrate()
+
+    expect(usePlannerStore.getState().supplyCountByItem).toEqual({ valid: 4 })
   })
 })

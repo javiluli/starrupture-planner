@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { ProductionStep } from '../../../lib'
 import { buildTree } from '../lib/tree-build'
 import type { TreeNodeData } from '../types'
+import { isPositiveSupplyCount } from '@/features/planner/lib/supply-count'
 
 export const useTreeData = (steps: ProductionStep[] | undefined, supplyCountByItem?: Record<string, number>) => {
   return useMemo<TreeNodeData | null>(() => {
@@ -14,7 +15,7 @@ export const useTreeData = (steps: ProductionStep[] | undefined, supplyCountByIt
     const supplyRemaining = new Map<string, number>()
     if (supplyCountByItem) {
       Object.entries(supplyCountByItem).forEach(([itemId, count]) => {
-        supplyRemaining.set(itemId, count)
+        if (isPositiveSupplyCount(count)) supplyRemaining.set(itemId, count)
       })
     }
 
