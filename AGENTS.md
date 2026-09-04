@@ -30,7 +30,7 @@ Vitest and Testing Library cover component and unit behavior. Colocate focused t
 
 ## Protected Game Data
 
-Editors and AI agents must not modify the four JSON catalogs in `src/shared/data/` to fix missing IDs, recipes, items, fields, or inconsistent source values: `buildings_and_recipes.json`, `buildings_construction_area.json`, `corporations_components.json`, and `items_catalog.json`. Handle incomplete data in code around the catalogs. These snapshots may be replaced separately when the game changes and the user deliberately provides or approves updated source data.
+Editors and AI agents must not modify the four JSON catalogs in `src/shared/data/` to fix missing IDs, recipes, items, fields, or inconsistent source values: `buildings_and_recipes.json`, `buildings_construction_area.json`, `corporations_components.json`, and `items_catalog.json`. Handle incomplete data in code around the catalogs. These snapshots may be replaced separately when the game changes and the user deliberately provides or approves updated source data. See `src/shared/data/README.md` for the complete boundary.
 
 ## Commit & Pull Request Guidelines
 

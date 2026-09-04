@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Hitos 1.1, 1.2 y 1.3 completados y validados.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fase 1 completada y validada.
 
 ## 1. Executive Summary
 
@@ -1091,7 +1091,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** conseguir que una instalación limpia pueda ejecutar los mismos gates que la auditoría y que los contratos que no se pueden romper queden escritos y automatizados.
 
-**Progreso:** 3/4 hitos cerrados; Fase 1 en curso.
+**Progreso:** 4/4 hitos cerrados; Fase 1 completada.
 
 **Por qué ahora:** cualquier refactor posterior sería difícil de atribuir mientras el gestor de paquetes, el navegador E2E y CI dependan del entorno local. Además, esta fase deja explícito que el trabajo siguiente no debe corregir problemas editando los JSON de origen.
 
@@ -1177,7 +1177,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 1.4 — Documentar la restricción de edición de datos
 
 - **Prioridad:** P1
-- **Estado:** PENDIENTE.
+- **Estado:** COMPLETADO (4 de septiembre de 2026).
 - **Objetivo específico:** hacer explícita para editores y agentes la prohibición de corregir faltantes o inconsistencias modificando los JSON.
 - **Problema resuelto:** `AGENT-001`.
 - **Qué cambiar:** ampliar `AGENTS.md` y el README de datos con la restricción, el tratamiento de datos incompletos alrededor de la fuente y la excepción para actualizaciones deliberadas del juego.
@@ -1190,7 +1190,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** no se añade validación automática; esta es una restricción de edición para herramientas y agentes, no una garantía de inmutabilidad permanente.
 - **Resultado esperado:** un agente no confunde “resolver un dato incompleto” con inventar o corregir contenido dentro del JSON.
 - **Criterios de aceptación:** los cuatro archivos están nombrados; la guía prohíbe modificarlos como solución a errores de aplicación; las actualizaciones reales del juego siguen siendo posibles como mantenimiento separado.
-- **Baseline disponible, no cierre:** la restricción principal se conserva en `AGENTS.md`; el hito sigue pendiente hasta revisar el onboarding y la documentación de datos según sus criterios.
+- **Cierre y validación:** `AGENTS.md`, el onboarding principal y un README junto a los datos describen la misma frontera: los cuatro JSON no se corrigen durante trabajo de aplicación, los faltantes se resuelven alrededor de la fuente y una actualización deliberada del juego sí puede reemplazar los snapshots. No se añadió validación automática ni se modificó ningún catálogo. El usuario revisó y aprobó la documentación.
 
 # FASE 2 — Correctitud y usabilidad P1
 

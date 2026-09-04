@@ -75,4 +75,8 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
+### Datos del juego / Game data
+
+Antes de contribuir, consulta la [política de datos del juego](./src/shared/data/README.md). Los catálogos JSON son snapshots externos: las inconsistencias se gestionan en el código y sus reemplazos se realizan únicamente como actualizaciones deliberadas del juego.
+
 <p align="center"> <i>Developed with ❤️ for the <b>StarRupture</b> community.</i> </p>
