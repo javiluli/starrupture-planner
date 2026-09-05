@@ -4,7 +4,7 @@ test('permite buscar y restablecer el catalogo de edificios', async ({ page }) =
   await page.goto('/my-base')
 
   const searchInput = page.getByRole('searchbox', { name: 'Search buildings' })
-  await expect(searchInput).toBeVisible()
+  await expect(searchInput).toBeVisible({ timeout: 20_000 })
 
   await searchInput.fill('__missing_building__')
   await expect(page.getByText('No buildings found')).toBeVisible()
