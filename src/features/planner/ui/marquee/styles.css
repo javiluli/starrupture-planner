@@ -28,11 +28,3 @@
     transform: translateX(0);
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-marquee-reverse {
-    animation: none;
-    transform: none;
-  }
-}

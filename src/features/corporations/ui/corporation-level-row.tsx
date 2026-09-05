@@ -2,6 +2,7 @@ import { useOpenPlanner } from '@/features/planner'
 import type { Level } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
+import { getPreferredScrollBehavior } from '@/shared/utils'
 import { Button, Chip } from '@heroui/react'
 import { memo } from 'react'
 import { getCorporationLevelAnchorId } from '../lib/corporation-level-navigation'
@@ -18,7 +19,7 @@ interface Props {
 const centerTargetLevel = (element: HTMLDivElement | null) => {
   if (!element) return
 
-  element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  element.scrollIntoView({ behavior: getPreferredScrollBehavior(), block: 'center' })
 }
 
 const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargeted = false }: Props) => {

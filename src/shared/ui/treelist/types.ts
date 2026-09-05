@@ -29,8 +29,7 @@ export interface TreeListProps<TNode> {
   children: (props: TreeListNodeRenderProps<TNode>) => ReactNode
 }
 
-export interface TreeListNodeProps<TNode> {
-  node: TNode
+export interface TreeListNodeProps {
   hasChildren: boolean
   isExpanded: boolean
   toggle: () => void

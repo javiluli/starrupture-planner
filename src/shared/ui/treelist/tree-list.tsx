@@ -61,7 +61,7 @@ const TreeListNodeView = <TNode,>({
   }
 
   return (
-    <div className="flex flex-col group/treelist-node">
+    <li className="flex list-none flex-col group/treelist-node">
       <div className="flex items-stretch group/treelist-row">
         <TreeListLines depth={depth} isLast={isLast} ancestorLineFlags={ancestorLineFlags} lineConfig={lineConfig} />
 
@@ -71,31 +71,27 @@ const TreeListNodeView = <TNode,>({
         </div>
       </div>
 
-      {hasChildren ? (
-        <div
-          className={`transition-all duration-300 ease-out ${isExpanded ? 'opacity-100 translate-y-0 h-auto visible' : 'opacity-0 -translate-y-3 h-0 overflow-hidden invisible'}`}
-        >
-          {isExpanded
-            ? children.map((child, index) => (
-                <TreeListNodeView
-                  key={getNodeId(child, `${path}.${index}`)}
-                  node={child}
-                  path={`${path}.${index}`}
-                  depth={depth + 1}
-                  isLast={index === children.length - 1}
-                  ancestorLineFlags={nextAncestorFlags}
-                  getChildren={getChildren}
-                  getNodeId={getNodeId}
-                  renderNode={renderNode}
-                  expandedMap={expandedMap}
-                  onToggle={onToggle}
-                  lineConfig={lineConfig}
-                />
-              ))
-            : null}
-        </div>
+      {hasChildren && isExpanded ? (
+        <ul className="m-0 list-none p-0">
+          {children.map((child, index) => (
+            <TreeListNodeView
+              key={getNodeId(child, `${path}.${index}`)}
+              node={child}
+              path={`${path}.${index}`}
+              depth={depth + 1}
+              isLast={index === children.length - 1}
+              ancestorLineFlags={nextAncestorFlags}
+              getChildren={getChildren}
+              getNodeId={getNodeId}
+              renderNode={renderNode}
+              expandedMap={expandedMap}
+              onToggle={onToggle}
+              lineConfig={lineConfig}
+            />
+          ))}
+        </ul>
       ) : null}
-    </div>
+    </li>
   )
 }
 
@@ -116,7 +112,7 @@ const TreeListRaw = <TNode,>({
   if (!data.length) return null
 
   return (
-    <div className={className}>
+    <ul className={`m-0 list-none p-0 ${className ?? ''}`}>
       {data.map((node, index) => (
         <TreeListNodeView
           key={resolvedGetNodeId(node, `${index}`)}
@@ -133,7 +129,7 @@ const TreeListRaw = <TNode,>({
           lineConfig={resolvedLineConfig}
         />
       ))}
-    </div>
+    </ul>
   )
 }
 

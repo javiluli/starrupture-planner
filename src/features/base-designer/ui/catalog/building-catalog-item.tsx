@@ -1,8 +1,9 @@
 import type { KeyboardEvent, PointerEvent } from 'react'
 import type { Building } from '@/shared/@types/building.type'
 import { Flex, Typography } from '@/shared/ui'
-import { Card, CardBody, Tooltip } from '@heroui/react'
+import { Card, CardBody, Chip, Tooltip } from '@heroui/react'
 import { Flame, Zap, type LucideIcon } from 'lucide-react'
+import { getBuildingFootprintInfo } from '../../lib/building-dimensions'
 import { BuildingIcon } from '../building-icon'
 
 export type BuildingCatalogView = 'list' | 'grid'
@@ -31,6 +32,20 @@ const BuildingStat = ({ icon: Icon, value, label }: { icon: LucideIcon; value: n
   </Tooltip>
 )
 
+const BuildingFootprintBadge = ({ buildingId }: { buildingId: string }) => {
+  const { footprint, isEstimated } = getBuildingFootprintInfo(buildingId)
+  const dimensions = `${footprint.columns}×${footprint.rows}`
+  const label = isEstimated ? `Estimated footprint: ${dimensions}` : `Footprint: ${dimensions}`
+
+  return (
+    <Tooltip content={label} delay={300}>
+      <Chip size="sm" variant="flat" aria-label={label} className="font-mono text-xs tabular-nums">
+        {dimensions} {isEstimated ? 'estimated' : ''}
+      </Chip>
+    </Tooltip>
+  )
+}
+
 /** Building draggable del catalogo en su representacion de lista o rejilla. */
 export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWithKeyboard }: BuildingCatalogItemProps) => {
   const interactionProps = {
@@ -53,8 +68,9 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
             focus-visible:ring-2 focus-visible:ring-focus active:cursor-grabbing
           "
         >
-          <CardBody className="items-center justify-center p-3">
-            <BuildingIcon buildingId={building.id} label={building.name} width={76} />
+          <CardBody className="items-center justify-center gap-1 p-2">
+            <BuildingIcon buildingId={building.id} label={building.name} width={64} />
+            <BuildingFootprintBadge buildingId={building.id} />
           </CardBody>
         </Card>
       </Tooltip>
@@ -73,9 +89,12 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
     >
       <CardBody className="flex-row items-center justify-between gap-4 p-3">
         <Flex direction="col" align="start" justify="center" gap="md" className="min-w-0 flex-1">
-          <Typography variant="h4" className="w-full truncate">
-            {building.name}
-          </Typography>
+          <Flex justify="between" className="w-full min-w-0">
+            <Typography variant="h4" className="min-w-0 truncate">
+              {building.name}
+            </Typography>
+            <BuildingFootprintBadge buildingId={building.id} />
+          </Flex>
           <Flex gap="lg">
             <BuildingStat icon={Zap} value={Number(building.power) || 0} label="Power" />
             <BuildingStat icon={Flame} value={Number(building.heat) || 0} label="Heat" />

@@ -5,6 +5,7 @@ import { baseDesignerSelectors, useBaseDesignerStore } from '@/store/base-design
 import { BuildingNode } from './nodes/building-node'
 import { CoreNode } from './nodes/core-node'
 import { BaseDesignerToolbar } from './toolbar/base-designer-toolbar'
+import { useReducedMotion } from 'framer-motion'
 import './base-designer.css'
 
 const nodeTypes = {
@@ -18,6 +19,7 @@ export const BaseDesignerCanvas = () => {
   const applyNodeChanges = useBaseDesignerStore(baseDesignerSelectors.applyNodeChanges)
   const applyEdgeChanges = useBaseDesignerStore(baseDesignerSelectors.applyEdgeChanges)
   const connectNodes = useBaseDesignerStore(baseDesignerSelectors.connectNodes)
+  const reduceMotion = useReducedMotion() ?? false
 
   const isValidConnection = (connection: Connection | Edge) => isBaseDesignerConnectionValid({ connection, nodes, edges })
 
@@ -38,7 +40,7 @@ export const BaseDesignerCanvas = () => {
         snapToGrid
         snapGrid={[BASE_DESIGNER_GRID_SIZE, BASE_DESIGNER_GRID_SIZE]}
         fitView
-        fitViewOptions={BASE_DESIGNER_FIT_VIEW}
+        fitViewOptions={{ ...BASE_DESIGNER_FIT_VIEW, duration: reduceMotion ? 0 : BASE_DESIGNER_FIT_VIEW.duration }}
         colorMode="dark"
         attributionPosition="bottom-right"
         minZoom={0.5}

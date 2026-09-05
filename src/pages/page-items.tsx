@@ -8,7 +8,7 @@ import {
   useFilteredItemRows,
   useItemsTableRows,
 } from '@/features/items'
-import { Flex, PageContainer, PageContent, PageHeader, StatLabel } from '@/shared/ui'
+import { Flex, PageContainer, PageContent, PageHeader, StatLabel, Typography } from '@/shared/ui'
 
 export const PageItems = () => {
   const itemRows = useItemsTableRows()
@@ -17,6 +17,9 @@ export const PageItems = () => {
   return (
     <PageContainer>
       <PageHeader>
+        <Typography as="h1" variant="h2" className="sr-only">
+          Items
+        </Typography>
         <Flex wrap="wrap" justify="between" align="end" gap="lg">
           <Flex wrap="wrap">
             <CategorySelect />

@@ -39,9 +39,9 @@ export const TreeListPlayground = () => {
   return (
     <ComponentPlayground id="treelist" title="TreeList">
       <TreeList data={treeListMockData} className="rounded-xl border border-default bg-content1/30 p-3">
-        {(nodeProps) => (
-          <TreeListNode {...nodeProps} className="hover:bg-content2/70">
-            <CustomTreeRow node={nodeProps.node} />
+        {({ node, hasChildren, isExpanded, toggle }) => (
+          <TreeListNode hasChildren={hasChildren} isExpanded={isExpanded} toggle={toggle} className="hover:bg-content2/70">
+            <CustomTreeRow node={node} />
           </TreeListNode>
         )}
       </TreeList>

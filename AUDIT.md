@@ -1409,6 +1409,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** terminar la semántica de la interfaz y hacer que las mejoras de carga se sostengan mediante límites medibles, sin rediseñar el producto.
 
+**Progreso:** 1/2 hitos cerrados; Fase 4 en curso.
+
 **Por qué ahora:** los bloqueos P1 de interacción y LCP ya habrán desaparecido; esta fase completa los estados menos críticos y previene regresiones del bundle.
 
 **Resultado acumulativo:** headings y nombres coherentes, motion respetuoso, TreeList operable, escala de Base Designer honesta y entry/CSS bajo presupuesto explícito.
@@ -1420,6 +1422,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 4.1 — Completar semántica, contraste y reduced motion
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** corregir los problemas accesibles restantes de forma sistemática y visible.
 - **Problema resuelto:** `A11Y-002` y remanentes de `A11Y-001`.
 - **Qué cambiar:** un solo H1 de página dentro de `main`; brand sin apropiarse del heading principal; labels/nombres iguales al texto visible; contraste AA del chip de categoría; estructura válida del navbar; TreeList con botones y estado expandido o patrón tree completo; reduced motion también para Flow/transiciones; marcar los footprints fallback como “estimados”.
@@ -1434,6 +1437,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** Testing Library por roles/nombres, axe/Lighthouse como detector, contraste calculado, Playwright keyboard, snapshot con `prefers-reduced-motion: reduce` y revisión visual desktop/móvil.
 - **Resultado esperado:** la misma jerarquía y terminología se perciben visualmente y por tecnología asistiva; la estimación 4×4 no se presenta como dato exacto.
 - **Criterios de aceptación:** una H1 por ruta; markup de lista válido; contraste de texto normal ≥4.5:1; nombres accesibles contienen el nombre visible; TreeList expone expanded/level cuando aplique; animación no esencial se detiene con reduced motion; los 40 fallbacks se identifican como estimados.
+- **Cierre y validación:** cada ruta dispone de un único H1 dentro de `main` y la marca conserva su apariencia sin apropiarse del heading. La navegación principal usa una lista nativa válida y los enlaces de corporations obtienen su nombre accesible del mismo texto visible. Los chips de categoría conservan el fondo cromático de dominio con texto de foreground contrastado. TreeList adopta el patrón disclosure real mediante listas anidadas y botones nativos con `aria-expanded`, retirando el control simulado y su transición de montaje. La preferencia de movimiento reducido detiene marquee, animaciones CSS y edges, elimina la duración de los ajustes de viewport de ambos Flow y evita scroll programático suave. Las copias del marquee siguen siendo clicables, pero solo el ciclo principal participa en el orden de tabulación. Base Designer muestra la medida de todos los edificios y etiqueta como `estimated` los 40 fallbacks 4×4, sin modificar los catálogos. Se añadieron pruebas para semántica de TreeList, procedencia del footprint, viewport sin animación y copias del marquee. El usuario confirmó `pnpm test:all` y la revisión visual.
 
 ## Hito 4.2 — Dividir trabajo inicial y fijar budgets
 

@@ -25,7 +25,9 @@ const PageDevUI = () => {
     <PageContainer className="mx-auto max-w-6xl">
       <PageHeader>
         <Flex direction="col" align="start" gap="sm">
-          <Typography variant="h2">UI Playground</Typography>
+          <Typography as="h1" variant="h2">
+            UI Playground
+          </Typography>
           <Typography tone="soft">Dev-only page to preview typography, components, and theme cohesion.</Typography>
         </Flex>
       </PageHeader>

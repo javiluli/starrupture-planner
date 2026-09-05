@@ -14,6 +14,9 @@ const PlannerPageContent = () => {
   return (
     <PageContainer>
       <PageHeader>
+        <Typography as="h1" variant="h2" className="sr-only">
+          Planner
+        </Typography>
         <PlannerToolbar />
       </PageHeader>
 

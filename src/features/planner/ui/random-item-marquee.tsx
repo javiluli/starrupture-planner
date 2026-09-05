@@ -16,23 +16,26 @@ export function RandomItemMarquee() {
 
   return (
     <Marquee animationDuration={90}>
-      {itemList.map((id, index) => (
-        <Flex key={`${id}-${index}`} justify="center" className="w-28 shrink-0 hover:cursor-pointer">
-          <Link
-            onPress={() => {
-              selectTargetItem(id)
-            }}
-          >
-            <AssetImage
-              id={id}
-              kind="items"
-              width={96}
-              loading={index === 0 ? 'eager' : 'lazy'}
-              fetchPriority={index === 0 ? 'high' : 'auto'}
-            />
-          </Link>
-        </Flex>
-      ))}
+      {(isPrimary) =>
+        itemList.map((id, index) => (
+          <Flex key={`${id}-${index}`} justify="center" className="w-28 shrink-0 hover:cursor-pointer">
+            <Link
+              tabIndex={isPrimary ? 0 : -1}
+              onPress={() => {
+                selectTargetItem(id)
+              }}
+            >
+              <AssetImage
+                id={id}
+                kind="items"
+                width={96}
+                loading={isPrimary && index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={isPrimary && index === 0 ? 'high' : 'auto'}
+              />
+            </Link>
+          </Flex>
+        ))
+      }
     </Marquee>
   )
 }

@@ -6,9 +6,9 @@ Componente generico para renderizar arboles con filas custom.
 
 ```tsx
 <TreeList data={data}>
-  {(nodeProps) => (
-    <TreeListNode {...nodeProps}>
-      <div>{nodeProps.node.label}</div>
+  {({ node, hasChildren, isExpanded, toggle }) => (
+    <TreeListNode hasChildren={hasChildren} isExpanded={isExpanded} toggle={toggle}>
+      <div>{node.label}</div>
     </TreeListNode>
   )}
 </TreeList>
@@ -40,3 +40,5 @@ const data = [
 - `getChildren(node)`: permite usar otro campo para los hijos.
 - `lineConfig`: ajusta las lineas del arbol.
 - `defaultExpanded`: abre/cierra el arbol por defecto.
+
+`TreeList` usa listas anidadas y `TreeListNode` usa un boton nativo solo cuando la fila puede expandirse. Es un patron disclosure, no un widget `tree`, por lo que conserva la navegacion de teclado nativa sin simular controles con `div`.

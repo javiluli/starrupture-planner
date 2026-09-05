@@ -1,18 +1,9 @@
-import { memo, type KeyboardEvent } from 'react'
+import { memo } from 'react'
 import type { TreeListNodeProps } from './types'
 
-const ROW_BASE = 'flex items-center flex-1 text-left rounded-lg transition-colors'
+const ROW_BASE = 'flex w-full flex-1 items-center rounded-lg text-left transition-colors'
 
-const handleKeyDown = (event: KeyboardEvent<HTMLElement>, canToggle: boolean, toggle: () => void) => {
-  if (!canToggle) return
-
-  if (event.key === 'Enter' || event.key === ' ') {
-    event.preventDefault()
-    toggle()
-  }
-}
-
-const TreeListNodeRaw = <TNode,>({
+const TreeListNodeRaw = ({
   hasChildren,
   isExpanded,
   toggle,
@@ -20,19 +11,16 @@ const TreeListNodeRaw = <TNode,>({
   interactiveClassName = 'cursor-pointer',
   disabledClassName = 'cursor-default',
   children,
-}: TreeListNodeProps<TNode>) => {
+}: TreeListNodeProps) => {
+  const resolvedClassName = `${ROW_BASE} ${hasChildren ? interactiveClassName : disabledClassName} ${className ?? ''}`
+
+  if (!hasChildren) return <div className={resolvedClassName}>{children}</div>
+
   return (
-    <div
-      role={hasChildren ? 'button' : undefined}
-      tabIndex={hasChildren ? 0 : -1}
-      aria-expanded={hasChildren ? isExpanded : undefined}
-      onClick={hasChildren ? toggle : undefined}
-      onKeyDown={(event) => handleKeyDown(event, hasChildren, toggle)}
-      className={`${ROW_BASE} ${hasChildren ? interactiveClassName : disabledClassName} ${className ?? ''}`}
-    >
+    <button type="button" aria-expanded={isExpanded} onClick={toggle} className={resolvedClassName}>
       {children}
-    </div>
+    </button>
   )
 }
 
-export const TreeListNode = memo(TreeListNodeRaw) as typeof TreeListNodeRaw
+export const TreeListNode = memo(TreeListNodeRaw)

@@ -7,6 +7,7 @@ import type { Item } from '@/shared/@types/item.type'
 import { useReactFlow } from '@xyflow/react'
 import { useEffect, useRef } from 'react'
 import type { ProductionPlan } from '@/features/planner/lib/production-plan/types'
+import { useReducedMotion } from 'framer-motion'
 
 interface UseFlowDiagramParams {
   items: readonly Item[]
@@ -19,6 +20,7 @@ export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams)
 
   const { nodes, setNodes, edges, setEdges, onNodesChange } = useProduction()
   const { fitView } = useReactFlow<PlannerFlowNode>()
+  const reduceMotion = useReducedMotion() ?? false
 
   const lastTargetIdRef = useRef(targetId)
 
@@ -36,11 +38,11 @@ export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams)
 
     if (shouldFitFlowView(lastTargetIdRef.current, targetId)) {
       lastTargetIdRef.current = targetId
-      return scheduleFlowFitView(fitView)
+      return scheduleFlowFitView(fitView, reduceMotion)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plan, items, buildings, targetId, fitView])
+  }, [plan, items, buildings, targetId, fitView, reduceMotion])
 
   return { nodes, edges, onNodesChange }
 }

@@ -46,7 +46,7 @@ flowchart LR
 - Los stats nunca se guardan: se calculan desde los IDs colocados y el catalogo.
 - Zustand mantiene el estado runtime; `localStorage` conserva un DTO minimo y versionado del diseno actual.
 - El campo y los footprints usan `buildings_construction_area.json` y una escala de 10 px por celda.
-- El fallback 4x4 solo se usa mientras falten medidas concretas en el catalogo.
+- El fallback 4x4 solo se usa mientras falten medidas concretas en el catalogo y se identifica como `estimated` en la interfaz.
 
 ## Catalogo
 

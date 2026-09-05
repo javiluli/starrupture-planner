@@ -22,7 +22,7 @@ export const PlannerTreeRow = memo(({ node, itemNameMap, hasChildren, isExpanded
   const iconDim = hasChildren ? '' : ` ${ICON_DIM}`
 
   return (
-    <TreeListNode node={node} hasChildren={hasChildren} isExpanded={isExpanded} toggle={toggle} className="hover:bg-content1/30">
+    <TreeListNode hasChildren={hasChildren} isExpanded={isExpanded} toggle={toggle} className="hover:bg-content1/30">
       <div className={ROW_CONTENT}>
         <div className={`${ICON_BASE} ${iconBorder}${iconDim}`}>
           <AssetImage kind={iconKind} id={iconId} width={44} />

@@ -16,15 +16,15 @@ const RootLayout = () => {
         maxWidth="full"
       >
         <NavbarBrand className="hidden space-x-2 lg:flex">
-          <Typography variant="h2" as="h1">
+          <Typography variant="h2" as="span">
             SR Planner
           </Typography>
         </NavbarBrand>
 
         <nav aria-label="Primary navigation" className="min-w-0 flex-1 overflow-hidden lg:flex-[3]">
-          <NavbarContent justify="center" className="w-full min-w-0 gap-1">
+          <ul className="m-0 flex h-full w-full min-w-0 list-none items-center justify-center gap-1 p-0">
             {PRIMARY_NAVIGATION.map((item) => (
-              <NavbarItem key={item.path} className="shrink-0">
+              <li key={item.path} className="shrink-0">
                 <NavLink
                   to={item.path}
                   end={item.path === ROUTE.HOME}
@@ -41,9 +41,9 @@ const RootLayout = () => {
                   <span aria-hidden>{item.icon}</span>
                   <span className="hidden sm:inline">{item.label}</span>
                 </NavLink>
-              </NavbarItem>
+              </li>
             ))}
-          </NavbarContent>
+          </ul>
         </nav>
 
         <NavbarContent justify="end" className="hidden lg:flex">

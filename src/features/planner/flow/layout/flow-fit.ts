@@ -5,9 +5,9 @@ type FitView = (options: { padding: number; duration: number }) => unknown
  *
  * @param fitView Callback de React Flow para ajustar el viewport.
  */
-export const scheduleFlowFitView = (fitView: FitView) => {
+export const scheduleFlowFitView = (fitView: FitView, reduceMotion = false) => {
   const timeoutId = globalThis.setTimeout(() => {
-    fitView({ padding: 0.1, duration: 600 })
+    fitView({ padding: 0.1, duration: reduceMotion ? 0 : 600 })
   }, 100)
 
   return () => globalThis.clearTimeout(timeoutId)

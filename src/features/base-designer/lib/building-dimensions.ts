@@ -2,16 +2,27 @@ import { constructionAreaByBuildingId } from '@/shared/data'
 import { BASE_DESIGNER_FALLBACK_FOOTPRINT, BASE_DESIGNER_GRID_SIZE } from '../base-designer.config'
 import type { BuildingFootprint } from '../types'
 
-/**
- * Returns the footprint declared by the game data.
- * Buildings not catalogued yet use the current in-game 4x4 fallback explicitly.
- */
-export const getBuildingFootprint = (buildingId: string): BuildingFootprint => {
-  const footprint = constructionAreaByBuildingId.get(buildingId)?.area_ocupada
-  if (!footprint || !Number.isFinite(footprint[0]) || !Number.isFinite(footprint[1])) return BASE_DESIGNER_FALLBACK_FOOTPRINT
-
-  return { columns: footprint[0], rows: footprint[1] }
+export interface BuildingFootprintInfo {
+  footprint: BuildingFootprint
+  isEstimated: boolean
 }
+
+/** Returns the catalogued footprint or the explicit estimated fallback. */
+export const getBuildingFootprintInfo = (buildingId: string): BuildingFootprintInfo => {
+  const sourceFootprint = constructionAreaByBuildingId.get(buildingId)?.area_ocupada
+
+  if (!sourceFootprint) {
+    return { footprint: BASE_DESIGNER_FALLBACK_FOOTPRINT, isEstimated: true }
+  }
+
+  return {
+    footprint: { columns: sourceFootprint[0], rows: sourceFootprint[1] },
+    isEstimated: false,
+  }
+}
+
+/** Returns the dimensions used by placement and collision calculations. */
+export const getBuildingFootprint = (buildingId: string) => getBuildingFootprintInfo(buildingId).footprint
 
 export const footprintToPixels = ({ columns, rows }: BuildingFootprint) => ({
   width: columns * BASE_DESIGNER_GRID_SIZE,

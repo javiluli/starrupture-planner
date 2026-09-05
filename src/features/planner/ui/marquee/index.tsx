@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import './styles.css'
 
 export interface MarqueeProps {
-  children: ReactNode
+  children: ReactNode | ((isPrimary: boolean) => ReactNode)
   animationDuration?: number
   reverse?: boolean
 }
@@ -63,7 +63,7 @@ export function Marquee({ children, animationDuration = 200, reverse = false }: 
             data-testid={i === 0 ? 'planner-marquee-primary' : 'planner-marquee-copy'}
             className="flex shrink-0 items-center gap-4 px-2"
           >
-            {children}
+            {typeof children === 'function' ? children(i === 0) : children}
           </div>
         ))}
       </div>

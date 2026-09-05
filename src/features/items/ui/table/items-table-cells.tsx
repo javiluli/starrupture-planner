@@ -19,10 +19,9 @@ export const ItemCell = ({ item }: { item: Item }) => {
 
 export const CategoryCell = ({ itemType }: { itemType: string }) => {
   const bgColor = `color-mix(in srgb, var(--color-item-${itemType}), transparent 80%)`
-  const color = `var(--color-item-${itemType})`
 
   return (
-    <Chip variant="flat" style={{ backgroundColor: bgColor, color: color }}>
+    <Chip variant="flat" className="text-foreground" style={{ backgroundColor: bgColor }}>
       {itemType}
     </Chip>
   )
@@ -55,11 +54,10 @@ export const CorporationsCell = ({ corporations }: { corporations: readonly Corp
         <Link
           key={`${corporation.corporationId}-${corporation.level}`}
           to={getCorporationLevelPath(corporation.corporationId, corporation.level)}
-          aria-label={`Open ${corporation.corporationName} level ${corporation.level}`}
           className="rounded-lg px-2 py-1 transition-colors hover:bg-content2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
         >
           <Flex gap="sm">
-            <AssetImage kind="corporations" id={corporation.corporationId} width={24} />
+            <AssetImage kind="corporations" id={corporation.corporationId} alt="" width={24} />
             <Typography as="span" variant="small" tone="soft" className="capitalize">
               {corporation.corporationName} <span>L.{corporation.level}</span>
             </Typography>
