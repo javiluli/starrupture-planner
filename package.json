@@ -30,7 +30,7 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "test": "vitest run src",
-    "test:all": "pnpm format:check && pnpm lint && pnpm test && pnpm typecheck:e2e && pnpm build && pnpm test:e2e",
+    "test:all": "node scripts/test-all.mjs",
     "typecheck:e2e": "tsc --noEmit -p tsconfig.e2e.json",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
