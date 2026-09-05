@@ -1,11 +1,11 @@
-import type { SupplyNodeData } from '@/features/planner/types'
+import type { SupplyFlowNode } from '@/features/planner/flow/types'
 import { AssetImage, Flex } from '@/shared/ui'
 import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
-export function SupplyNode({ data, selected }: NodeProps) {
-  const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supplyCount } = data as SupplyNodeData
+export function SupplyNode({ data, selected }: NodeProps<SupplyFlowNode>) {
+  const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supplyCount } = data
 
   return (
     <Flex

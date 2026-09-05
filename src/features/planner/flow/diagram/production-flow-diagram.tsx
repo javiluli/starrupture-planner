@@ -5,6 +5,7 @@ import { FLOW_COLORS } from '@/features/planner/flow/config/flow-theme'
 import { FLOW_NODE_TYPES } from '@/features/planner/flow/config/node-types'
 import { useFlowDiagram } from '@/features/planner/hooks/use-flow-diagram'
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
+import type { PlannerFlowNode } from '@/features/planner/flow/types'
 
 function ProductionFlowDiagramInner() {
   const plan = useProductionPlan()
@@ -17,7 +18,7 @@ function ProductionFlowDiagramInner() {
 
   return (
     <div className="h-full min-h-0 w-full min-w-0 overflow-hidden">
-      <ReactFlow
+      <ReactFlow<PlannerFlowNode>
         minZoom={0.15}
         nodes={nodes}
         edges={edges}

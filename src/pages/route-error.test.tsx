@@ -36,7 +36,7 @@ describe('RouteError', () => {
     renderRejectedRoute(new Response('Not found', { status: 404, statusText: 'Not Found' }))
 
     expect(await screen.findByRole('heading', { name: 'Page not found' })).toBeVisible()
-    expect(screen.getByRole('link', { name: 'Back to Planner' })).toBeVisible()
+    expect(screen.getByRole('button', { name: 'Back to Planner' })).toBeVisible()
   })
 
   it('does not disguise an unexpected failure as a 404', async () => {

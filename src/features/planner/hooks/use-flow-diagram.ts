@@ -1,9 +1,9 @@
-import { buildProductionFlowFromPlan } from '@/features/planner/flow/builder/build-production-flow'
+import { planToFlow } from '@/features/planner/flow/plan-to-flow'
 import { scheduleFlowFitView, shouldFitFlowView } from '@/features/planner/flow/layout/flow-fit'
+import type { PlannerFlowNode } from '@/features/planner/flow/types'
 import { useProduction } from '@/features/planner/hooks/use-production'
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
-import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { useReactFlow } from '@xyflow/react'
 import { useEffect, useRef } from 'react'
 import type { ProductionPlan } from '@/features/planner/lib/production-plan/types'
@@ -15,22 +15,20 @@ interface UseFlowDiagramParams {
 }
 
 export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams) => {
-  const targetId = usePlannerStore(plannerSelectors.targetId)
-  const setSupply = usePlannerStore(plannerSelectors.setSupply)
+  const targetId = plan?.targetId ?? ''
 
   const { nodes, setNodes, edges, setEdges, onNodesChange } = useProduction()
-  const { fitView } = useReactFlow()
+  const { fitView } = useReactFlow<PlannerFlowNode>()
 
   const lastTargetIdRef = useRef(targetId)
 
   useEffect(() => {
     if (!plan) return
 
-    const { nodes: newNodes, edges: newEdges } = buildProductionFlowFromPlan({
+    const { nodes: newNodes, edges: newEdges } = planToFlow({
       plan,
       items,
       buildings,
-      setSupply,
     })
 
     setNodes(newNodes)
@@ -38,11 +36,11 @@ export const useFlowDiagram = ({ items, buildings, plan }: UseFlowDiagramParams)
 
     if (shouldFitFlowView(lastTargetIdRef.current, targetId)) {
       lastTargetIdRef.current = targetId
-      scheduleFlowFitView(fitView)
+      return scheduleFlowFitView(fitView)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [plan, items, buildings, targetId, fitView, setSupply])
+  }, [plan, items, buildings, targetId, fitView])
 
   return { nodes, edges, onNodesChange }
 }

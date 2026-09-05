@@ -1,12 +1,11 @@
-import { type ProductionNodeData } from '@/features/planner/types'
+import type { ProductionMachineNode } from '@/features/planner/flow/types'
 import { AssetImage, Flex } from '@/shared/ui'
 import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeProductionRate, FlowNodeStats } from './node-parts'
 
-export const ProductionNode = ({ data, selected }: NodeProps) => {
-  const { buildingId, buildingName, buildingPower, buildingHeat, buildingLoad, buildingCount, itemId, itemName, baseIpm, targetIpm } =
-    data as ProductionNodeData
+export const ProductionNode = ({ data, selected }: NodeProps<ProductionMachineNode>) => {
+  const { buildingId, buildingName, buildingPower, buildingHeat, buildingLoad, buildingCount, itemId, itemName, baseIpm, targetIpm } = data
 
   return (
     <Flex

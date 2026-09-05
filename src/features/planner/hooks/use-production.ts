@@ -1,11 +1,14 @@
-import { applyNodeChanges, type Edge, type Node, type OnNodesChange } from '@xyflow/react'
+import type { PlannerFlowNode } from '@/features/planner/flow/types'
+import { applyNodeChanges, type Edge, type OnNodesChange } from '@xyflow/react'
 import { useCallback, useState } from 'react'
 
 export const useProduction = () => {
-  const [nodes, setNodes] = useState<Node[]>([])
+  const [nodes, setNodes] = useState<PlannerFlowNode[]>([])
   const [edges, setEdges] = useState<Edge[]>([])
 
-  const onNodesChange: OnNodesChange = useCallback((chs) => setNodes((nds) => applyNodeChanges(chs, nds)), [])
+  const onNodesChange: OnNodesChange<PlannerFlowNode> = useCallback((changes) => {
+    setNodes((nodes) => applyNodeChanges(changes, nodes))
+  }, [])
 
   return { nodes, setNodes, edges, setEdges, onNodesChange }
 }

@@ -79,7 +79,7 @@ const rectanglesOverlap = (first: { position: { x: number; y: number } }, second
 
 describe('planToFlow layout', () => {
   it('keeps the production graph connected, left-to-right and without overlapping nodes', () => {
-    const { nodes, edges } = planToFlow({ plan, items, buildings, setSupply: () => undefined })
+    const { nodes, edges } = planToFlow({ plan, items, buildings })
     const nodeById = new Map(nodes.map((node) => [node.id, node]))
 
     expect(new Set(nodes.map((node) => node.id))).toEqual(new Set(['plate', 'ingot', 'wire', 'supply-ore', 'supply-copper']))

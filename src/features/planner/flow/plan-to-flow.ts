@@ -1,5 +1,5 @@
 import { Graph, layout } from '@dagrejs/dagre'
-import type { Edge, Node } from '@xyflow/react'
+import type { Edge } from '@xyflow/react'
 import { Position } from '@xyflow/react'
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
@@ -7,20 +7,20 @@ import { DAGRE_GRAPH_CONFIG } from '@/features/planner/flow/config/dagre-config'
 import { buildLauncherNode, buildProductionNodes, buildSupplyNodes } from '@/features/planner/flow/core/flow-nodes'
 import { buildEdges } from '@/features/planner/flow/core/flow-edges'
 import type { ProductionPlan } from '@/features/planner/lib/production-plan'
+import type { PlannerFlowNode } from '@/features/planner/flow/types'
 
 interface PlanToFlowParams {
   plan: ProductionPlan
   items: readonly Item[]
   buildings: readonly Building[]
-  setSupply: (id: string, val: number) => void
 }
 
 interface PlanToFlowResult {
-  nodes: Node[]
+  nodes: PlannerFlowNode[]
   edges: Edge[]
 }
 
-export const planToFlow = ({ plan, items, buildings, setSupply }: PlanToFlowParams): PlanToFlowResult => {
+export const planToFlow = ({ plan, items, buildings }: PlanToFlowParams): PlanToFlowResult => {
   if (!plan.targetId || plan.targetIpm <= 0) {
     return { nodes: [], edges: [] }
   }
@@ -29,8 +29,8 @@ export const planToFlow = ({ plan, items, buildings, setSupply }: PlanToFlowPara
   dagreGraph.setDefaultEdgeLabel(() => ({}))
   dagreGraph.setGraph(DAGRE_GRAPH_CONFIG)
 
-  const supplyNodes = buildSupplyNodes(plan.supplyCountByItem, buildings, items, setSupply, dagreGraph)
-  const productionNodes = buildProductionNodes(plan.targetId, plan.steps, items, setSupply, dagreGraph)
+  const supplyNodes = buildSupplyNodes(plan.supplyCountByItem, buildings, items, dagreGraph)
+  const productionNodes = buildProductionNodes(plan.steps, items, dagreGraph)
   const launcherNodes = plan.isExportable ? buildLauncherNode(plan.targetId, plan.targetIpm, items, buildings, dagreGraph) : []
 
   const nodes = [...supplyNodes, ...productionNodes, ...launcherNodes]

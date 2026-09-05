@@ -11,8 +11,6 @@ React Flow + helpers de layout y construccion de nodos/edges.
 
 ```
 flow/
-+- builder/
-|  +- build-production-flow.ts
 +- core/
 |  +- connect-edges.ts
 |  +- flow-edges.ts
@@ -26,8 +24,8 @@ flow/
 
 ## Rol en el sistema
 
-- `buildProductionFlowFromPlan` orquesta (plan -> flow).
 - `planToFlow` transforma el plan en nodos y edges.
+- `types.ts` relaciona cada `type` de nodo con los datos exactos de su renderer.
 - `core/*` crea nodos/edges a partir del plan.
 - El `plan` viene de `useProductionPlan`.
 

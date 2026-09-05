@@ -31,7 +31,7 @@ export const getItemType = (items: readonly Item[], itemId: string) => findItemB
  * Normaliza stats del edificio para evitar undefined.
  *
  * @param building Edificio opcional.
- * @returns Stats con defaults en 0.
+ * @returns Valores con defaults en 0.
  */
 export const getBuildingStats = (building?: { power?: number; heat?: number }) => ({
   power: building?.power || 0,

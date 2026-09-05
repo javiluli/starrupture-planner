@@ -1,12 +1,12 @@
 import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, ORBITAL_CARGO_LAUNCHER_NAME } from '@/features/planner/constants'
-import { type OrbitalExportSystemNodeData } from '@/features/planner/types'
+import type { OrbitalCargoLauncherFlowNode } from '@/features/planner/flow/types'
 import { AssetImage, Flex } from '@/shared/ui'
 import { cn, Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
-export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps) => {
-  const { buildingPower, buildingHeat, buildingCount, exportItemId, exportItemName } = data as OrbitalExportSystemNodeData
+export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps<OrbitalCargoLauncherFlowNode>) => {
+  const { buildingPower, buildingHeat, buildingCount, exportItemId, exportItemName } = data
 
   return (
     <Flex

@@ -2,10 +2,10 @@ import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, PACKAGE_R
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
 import type { Graph } from '@dagrejs/dagre'
-import { type Node } from '@xyflow/react'
 import { getBuildingStats, getItemName } from './lookup'
 import type { ProductionStep } from '@/features/planner/lib/production-plan'
 import { isPositiveSupplyCount } from '@/features/planner/lib/supply-count'
+import type { OrbitalCargoLauncherFlowNode, ProductionMachineNode, SupplyFlowNode } from '@/features/planner/flow/types'
 
 /**
  * Fabrica de nodos de suministro (inputs).
@@ -13,7 +13,6 @@ import { isPositiveSupplyCount } from '@/features/planner/lib/supply-count'
  * @param supplyCountByItem Diccionario de supply (itemId -> cantidad).
  * @param buildings Catalogo de edificios.
  * @param items Catalogo de items.
- * @param onSupplyCountChange Callback para actualizar el supply.
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
  * @returns Lista de nodos de supply.
  */
@@ -21,55 +20,51 @@ export const buildSupplyNodes = (
   supplyCountByItem: Record<string, number>,
   buildings: readonly Building[],
   items: readonly Item[],
-  onSupplyCountChange: (id: string, val: number) => void,
   dagreGraph: Graph,
-): Node[] => {
+): SupplyFlowNode[] => {
   const buildingData = buildings.find((b) => b.id === PACKAGE_RECEIVER_ID)
   const { power, heat } = getBuildingStats(buildingData)
 
-  return Object.entries(supplyCountByItem).flatMap(([id, supplyCount]) => {
+  return Object.entries(supplyCountByItem).flatMap(([id, supplyCount]): SupplyFlowNode[] => {
     if (!isPositiveSupplyCount(supplyCount)) return []
 
     // Reservamos un poco mas de alto para evitar solapes con produccion.
     dagreGraph.setNode(`supply-${id}`, { width: 260, height: 350 })
 
-    return {
-      id: `supply-${id}`,
-      type: 'supplyNode',
-      draggable: true,
-      data: {
-        buildingId: buildingData?.id,
-        buildingName: buildingData?.name,
-        buildingPower: power,
-        buildingHeat: heat,
-        itemId: id,
-        itemName: getItemName(items, id),
-        supplyCount,
-        onSupplyCountChange,
+    return [
+      {
+        id: `supply-${id}`,
+        type: 'supplyNode',
+        draggable: true,
+        data: {
+          buildingId: buildingData?.id ?? PACKAGE_RECEIVER_ID,
+          buildingName: buildingData?.name ?? 'Cargo Receiver',
+          buildingPower: power,
+          buildingHeat: heat,
+          itemId: id,
+          itemName: getItemName(items, id),
+          supplyCount,
+        },
+        position: { x: 0, y: 0 },
       },
-      position: { x: 0, y: 0 },
-    }
+    ]
   })
 }
 
 /**
  * Genera nodos de produccion para items con carga positiva.
  *
- * @param targetId Id del item objetivo.
  * @param steps Pasos de produccion calculados.
  * @param items Catalogo de items.
- * @param onSupplyCountChange Callback para actualizar el supply.
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
  * @returns Lista de nodos de produccion.
  */
 export const buildProductionNodes = (
-  targetId: string,
   steps: readonly ProductionStep[],
   items: readonly Item[],
-  onSupplyCountChange: (id: string, val: number) => void,
   dagreGraph: Graph,
-): Node[] =>
-  steps.map((step) => {
+): ProductionMachineNode[] =>
+  steps.map((step): ProductionMachineNode => {
     // Ajuste de altura para compactar en vertical.
     dagreGraph.setNode(step.itemId, { width: 260, height: 350 })
 
@@ -86,11 +81,8 @@ export const buildProductionNodes = (
         buildingCount: step.buildingCount,
         baseIpm: step.recipeOutputIpm,
         targetIpm: step.targetIpm,
-        supplyCount: step.supplyCount,
-        onSupplyCountChange,
         buildingPower: step.buildingPower,
         buildingHeat: step.buildingHeat,
-        isTarget: step.itemId === targetId,
       },
       position: { x: 0, y: 0 },
     }
@@ -112,7 +104,7 @@ export const buildLauncherNode = (
   items: readonly Item[],
   buildings: readonly Building[],
   dagreGraph: Graph,
-): Node[] => {
+): OrbitalCargoLauncherFlowNode[] => {
   const buildingData = buildings.find((b) => b.id === ORBITAL_CARGO_LAUNCHER_ID)
   const targetItemName = getItemName(items, targetId)
   const { power, heat } = getBuildingStats(buildingData)

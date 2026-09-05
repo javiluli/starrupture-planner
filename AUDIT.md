@@ -1319,7 +1319,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** simplificar la dirección de dependencias y establecer un único modelo tipado derivado de los JSON, manteniendo la estructura feature-first y Zustand donde sí hay estado de usuario.
 
-**Progreso:** 4/5 hitos cerrados; Fase 3 en curso.
+**Progreso:** 5/5 hitos cerrados; Fase 3 completada.
 
 **Por qué ahora:** los fallos P1 ya estarán cubiertos; se puede refactorizar con tests que preserven el comportamiento correcto recién fijado.
 
@@ -1389,11 +1389,12 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** unitarios de boundary, deep link válido e inválido, excepción de loader/componente y navegación rápida/desmontaje; E2E 404 y corporation→Items.
 - **Resultado esperado:** una excepción no se disfraza de 404 y la navegación no depende de 300 ms arbitrarios.
 - **Criterios de aceptación:** 404 y 500 tienen mensajes/acciones diferentes; ambos conservan landmark y H1; deep link funciona bajo carga lenta; no queda timer sin cleanup.
-- **Cierre y validación:** el boundary de rutas vive dentro de `RootLayout`, por lo que tanto las rutas desconocidas como los fallos inesperados conservan el shell, la navegación y el landmark principal. Un 404 muestra una salida específica hacia Planner; una excepción runtime ofrece reintento e inicio, y solo expone el detalle técnico en desarrollo. La navegación directa a un nivel de Corporation ya centra y enfoca la fila cuando el nodo real se monta mediante un callback ref, sin depender del timeout fijo de 300 ms. Se añadieron pruebas unitarias de ambos tipos de error y recorridos E2E para el 404 y el deep link. El usuario confirmó el funcionamiento del hito.
+- **Cierre y validación:** el boundary de rutas vive dentro de `RootLayout`, por lo que tanto las rutas desconocidas como los fallos inesperados conservan el shell, la navegación y el landmark principal. Un 404 muestra una salida específica hacia Planner; una excepción runtime ofrece reintento e inicio, y solo expone el detalle técnico en desarrollo. La navegación directa a un nivel de Corporation ya centra la fila cuando el nodo real se monta mediante un callback ref, sin depender del timeout fijo de 300 ms. Se añadieron pruebas unitarias de ambos tipos de error y recorridos E2E para el 404 y el deep link. El usuario confirmó el funcionamiento del hito.
 
 ## Hito 3.5 — Tipar nodos React Flow y retirar contratos muertos
 
 - **Prioridad:** P3
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** hacer que cada renderer reciba el `data` exacto que construye su feature.
 - **Problemas resueltos:** `TS-001`, `DEAD-001`.
 - **Qué cambiar:** declarar un union de tipos de nodo por diagrama, parametrizar builders/resultados/`NodeProps`, eliminar casts `data as`; borrar `Stats`, `useFlowFitEffect` y `FlowBuildResult.stats` tras confirmar consumidores; limpiar imports derivados del tab retirado.
@@ -1402,6 +1403,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** `tsc`, tests de builders/renderers y búsqueda de casts/símbolos retirados.
 - **Resultado esperado:** cambios de shape fallan en compilación en el constructor o renderer correcto.
 - **Criterios de aceptación:** renderers auditados no hacen cast manual de `data`; union es exhaustivo; símbolos muertos tienen cero referencias; tests/build siguen verdes.
+- **Cierre y validación:** `flow/types.ts` define la unión local de nodos de Planner y relaciona cada discriminante con los datos exactos de su renderer. Builders, estado de nodos, `ReactFlow` y cada `NodeProps` consumen el mismo contrato; el mapa de componentes es exhaustivo mediante un mapped type y ya no existen casts `data as`. Se retiraron `Stats`, `useFlowFitEffect`, `FlowBuildResult`, el builder y barrel redundantes, además de callbacks, flags y campos que ningún nodo utilizaba. El ajuste diferido del viewport devuelve cleanup y tiene pruebas de ejecución y cancelación. Los recorridos de error comprueban la navegación real de HeroUI y que el deep link abre y centra el nivel solicitado. El usuario confirmó formato, lint, 77 unitarios, typecheck E2E, build y los E2E afectados; los catálogos JSON protegidos permanecen intactos.
 
 # FASE 4 — Accesibilidad, coherencia visual y presupuesto de rendimiento
 
