@@ -1,5 +1,6 @@
 import RootLayout from '@/layouts/root-layout'
 import { NotFound } from '@/pages/not-found'
+import { RouteError } from '@/pages/route-error'
 import { ROUTE } from '@/router/routes'
 import { PageLoadingSkeleton } from '@/shared/ui'
 import { lazy, Suspense } from 'react'
@@ -53,7 +54,11 @@ const productionRoutes = [
 export const router = createBrowserRouter([
   {
     element: <RootLayout />,
-    errorElement: <NotFound />,
-    children: [...productionRoutes, ...devRoutes],
+    children: [
+      {
+        errorElement: <RouteError />,
+        children: [...productionRoutes, ...devRoutes, { path: '*', element: <NotFound /> }],
+      },
+    ],
   },
 ])

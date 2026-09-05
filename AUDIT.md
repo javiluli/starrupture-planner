@@ -1319,7 +1319,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** simplificar la dirección de dependencias y establecer un único modelo tipado derivado de los JSON, manteniendo la estructura feature-first y Zustand donde sí hay estado de usuario.
 
-**Progreso:** 3/5 hitos cerrados; Fase 3 en curso.
+**Progreso:** 4/5 hitos cerrados; Fase 3 en curso.
 
 **Por qué ahora:** los fallos P1 ya estarán cubiertos; se puede refactorizar con tests que preserven el comportamiento correcto recién fijado.
 
@@ -1380,6 +1380,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 3.4 — Separar 404 de error runtime y estabilizar deep links
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** dar una salida correcta a rutas inexistentes y fallos inesperados, sin temporizadores frágiles.
 - **Problema resuelto:** `ERROR-001`.
 - **Qué cambiar:** crear error boundary de ruta que distinga `isRouteErrorResponse(404)` de excepciones; renderizar ambos dentro del shell con `main`, heading y recuperación; reemplazar timeout fijo de corporation por una transición basada en router/store listo y cleanup.
@@ -1388,6 +1389,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** unitarios de boundary, deep link válido e inválido, excepción de loader/componente y navegación rápida/desmontaje; E2E 404 y corporation→Items.
 - **Resultado esperado:** una excepción no se disfraza de 404 y la navegación no depende de 300 ms arbitrarios.
 - **Criterios de aceptación:** 404 y 500 tienen mensajes/acciones diferentes; ambos conservan landmark y H1; deep link funciona bajo carga lenta; no queda timer sin cleanup.
+- **Cierre y validación:** el boundary de rutas vive dentro de `RootLayout`, por lo que tanto las rutas desconocidas como los fallos inesperados conservan el shell, la navegación y el landmark principal. Un 404 muestra una salida específica hacia Planner; una excepción runtime ofrece reintento e inicio, y solo expone el detalle técnico en desarrollo. La navegación directa a un nivel de Corporation ya centra y enfoca la fila cuando el nodo real se monta mediante un callback ref, sin depender del timeout fijo de 300 ms. Se añadieron pruebas unitarias de ambos tipos de error y recorridos E2E para el 404 y el deep link. El usuario confirmó el funcionamiento del hito.
 
 ## Hito 3.5 — Tipar nodos React Flow y retirar contratos muertos
 

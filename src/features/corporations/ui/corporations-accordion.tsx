@@ -1,10 +1,8 @@
 import { Accordion, AccordionItemContent } from '@/shared/ui'
 import { accordionItemStyles } from '@/shared/ui/accordion/accordion-item.styles'
 import { AccordionItem } from '@heroui/react'
-import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useCorporationsAccordionData } from '../hooks/use-corporations-accordion-data'
-import { getCorporationLevelAnchorId } from '../lib/corporation-level-navigation'
 import { CorporationAccordionHeader } from './corporation-accordion-header'
 import { CorporationLevelRow } from './corporation-level-row'
 
@@ -22,19 +20,6 @@ export const CorporationsAccordion = () => {
   const targetCorporationId = corporationsList.some((corporation) => corporation.id === requestedCorporationId)
     ? requestedCorporationId
     : null
-
-  useEffect(() => {
-    if (!targetCorporationId || !targetLevel) return
-
-    // Wait for the accordion expansion animation before centering the requested level.
-    const timer = window.setTimeout(() => {
-      const target = document.getElementById(getCorporationLevelAnchorId(targetCorporationId, targetLevel))
-      target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      target?.focus({ preventScroll: true })
-    }, 300)
-
-    return () => window.clearTimeout(timer)
-  }, [targetCorporationId, targetLevel])
 
   return (
     <Accordion

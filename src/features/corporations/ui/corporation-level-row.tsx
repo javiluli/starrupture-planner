@@ -14,12 +14,22 @@ interface Props {
   isTargeted?: boolean
 }
 
+/** Focuses and centers a requested level when its accordion content enters the DOM. */
+const focusTargetLevel = (element: HTMLDivElement | null) => {
+  if (!element) return
+
+  element.focus({ preventScroll: true })
+  element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
 const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargeted = false }: Props) => {
   const openPlanner = useOpenPlanner()
 
   return (
     <div
+      ref={isTargeted ? focusTargetLevel : undefined}
       id={getCorporationLevelAnchorId(corporationId, level.level)}
+      data-testid={`corporations-level-${corporationId}-${level.level}`}
       tabIndex={-1}
       className={`scroll-mt-24 rounded-lg border transition-colors focus:outline-none ${
         isTargeted ? 'border-primary bg-primary/5 ring-1 ring-primary/40' : 'border-divider'
