@@ -1,12 +1,14 @@
 import { Tab, Tabs } from '@heroui/react'
 import { ListTree, Network, Package, type LucideIcon } from 'lucide-react'
-import type { ComponentType } from 'react'
+import { lazy, Suspense, type ComponentType } from 'react'
 
-import { ProductionFlowDiagram } from './production-flow-diagram'
+import { NetworkGraphSkeleton } from './network-graph-skeleton'
 import { ProductionTreelistDiagram } from './production-treelist-diagram'
 import { ProductionItemsDiagram } from './production-items-diagram'
 import { RawTargetDiagram } from './raw-target-diagram'
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
+
+const ProductionFlowDiagram = lazy(() => import('./production-flow-diagram').then((module) => ({ default: module.ProductionFlowDiagram })))
 
 type DiagramTab = {
   key: string
@@ -64,7 +66,9 @@ export function ProductionDiagramTabs() {
             </span>
           }
         >
-          <Content />
+          <Suspense fallback={<NetworkGraphSkeleton />}>
+            <Content />
+          </Suspense>
         </Tab>
       ))}
     </Tabs>

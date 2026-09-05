@@ -12,9 +12,16 @@ test('mantiene los 16 objetivos clicables del marquee', async ({ page }) => {
   await expect(repeatedItems.first()).toHaveAttribute('tabindex', '-1')
 })
 
-test('detiene el marquee cuando el sistema solicita movimiento reducido', async ({ page }) => {
+test('respeta el movimiento reducido en el marquee y la carga del planner', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto('/')
 
   await expect(page.getByTestId('planner-marquee-track')).toHaveCSS('animation-name', 'none', { timeout: 20_000 })
+
+  const targetItem = page.getByRole('combobox', { name: 'Select production target' })
+  await targetItem.fill('Accumulator')
+  await page.getByRole('option', { name: /Accumulator/ }).click()
+
+  await expect(page.getByTestId('planner-result')).toHaveCSS('animation-name', 'none')
+  await expect(page.getByTestId('planner-network-graph')).toHaveCSS('animation-name', 'none')
 })

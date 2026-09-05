@@ -114,6 +114,10 @@
     animation: page-enter 180ms ease-out both;
   }
 
+  .soft-enter {
+    animation: soft-enter 200ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
   .deferred-render {
     content-visibility: auto;
     contain-intrinsic-size: auto 96px;
@@ -131,6 +135,17 @@
   }
 }
 
+@keyframes soft-enter {
+  from {
+    opacity: 0;
+    transform: translateY(3px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -141,7 +156,8 @@
     animation-iteration-count: 1 !important;
   }
 
-  .page-enter {
+  .page-enter,
+  .soft-enter {
     animation: none !important;
   }
 

@@ -1,21 +1,15 @@
 import type { SupplyFlowNode } from '@/features/planner/flow/types'
 import { AssetImage, Flex } from '@/shared/ui'
-import { cn, Divider } from '@heroui/react'
+import { Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { FlowNodeShell } from './flow-node-shell'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
 export function SupplyNode({ data, selected }: NodeProps<SupplyFlowNode>) {
   const { buildingId, buildingName, buildingPower, buildingHeat, itemId, itemName, supplyCount } = data
 
   return (
-    <Flex
-      direction="col"
-      className={cn(
-        'relative w-64 space-y-1 bg-content1/90 text-foreground px-4 py-3 shadow-xl rounded-2xl border-4 transition-all',
-        selected ? 'border-primary' : 'border-content3',
-        selected ? 'shadow-background' : 'shadow-none',
-      )}
-    >
+    <FlowNodeShell selected={selected}>
       <Handle type="target" position={Position.Left} className="bg-foreground! opacity-0" />
       <Handle type="source" position={Position.Right} className="bg-foreground!" />
 
@@ -41,6 +35,6 @@ export function SupplyNode({ data, selected }: NodeProps<SupplyFlowNode>) {
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2">
         <FlowNodeCountBadge buildingCount={1} />
       </div>
-    </Flex>
+    </FlowNodeShell>
   )
 }

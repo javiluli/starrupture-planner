@@ -6,6 +6,7 @@ import { getBuildingStats, getItemName } from './lookup'
 import type { ProductionStep } from '@/features/planner/lib/production-plan'
 import { isPositiveSupplyCount } from '@/features/planner/lib/supply-count'
 import type { OrbitalCargoLauncherFlowNode, ProductionMachineNode, SupplyFlowNode } from '@/features/planner/flow/types'
+import { buildProductionNodeData } from './production-node-data'
 
 /**
  * Fabrica de nodos de suministro (inputs).
@@ -72,18 +73,7 @@ export const buildProductionNodes = (
       id: step.itemId,
       type: 'productionNode',
       draggable: true,
-      data: {
-        itemId: step.itemId,
-        itemName: getItemName(items, step.itemId),
-        buildingId: step.buildingId,
-        buildingName: step.buildingName,
-        buildingLoad: step.buildingLoad,
-        buildingCount: step.buildingCount,
-        baseIpm: step.recipeOutputIpm,
-        targetIpm: step.targetIpm,
-        buildingPower: step.buildingPower,
-        buildingHeat: step.buildingHeat,
-      },
+      data: buildProductionNodeData(step, items),
       position: { x: 0, y: 0 },
     }
   })

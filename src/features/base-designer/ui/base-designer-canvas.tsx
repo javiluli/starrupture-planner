@@ -1,4 +1,5 @@
 import { Background, BackgroundVariant, Controls, ReactFlow, SelectionMode, type Edge, type Connection } from '@xyflow/react'
+import '@xyflow/react/dist/style.css'
 import { BASE_DESIGNER_FIT_VIEW, BASE_DESIGNER_FLOW_COLORS, BASE_DESIGNER_GRID_SIZE } from '../base-designer.config'
 import { isBaseDesignerConnectionValid } from '../lib/connection-validation'
 import { baseDesignerSelectors, useBaseDesignerStore } from '@/store/base-designer.store'

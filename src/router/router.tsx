@@ -11,7 +11,6 @@ const PageItems = lazy(() => import('@/pages/page-items').then((m) => ({ default
 const PageRecipes = lazy(() => import('@/pages/page-recipes').then((m) => ({ default: m.PageRecipes })))
 const PageCorporations = lazy(() => import('@/pages/page-corporations').then((m) => ({ default: m.PageCorporations })))
 const PageBaseDesigner = lazy(() => import('@/pages/page-base-designer').then((m) => ({ default: m.PageBaseDesigner })))
-const PageDevUI = lazy(() => import('@/pages/pagedevui/page-dev-ui'))
 
 const withSuspense = (Component: React.ComponentType) => (
   <Suspense fallback={<PageLoadingSkeleton />}>
@@ -23,7 +22,7 @@ const devRoutes = import.meta.env.DEV
   ? [
       {
         path: '/dev/ui',
-        element: withSuspense(PageDevUI),
+        element: withSuspense(lazy(() => import('@/pages/pagedevui/page-dev-ui'))),
       },
     ]
   : []

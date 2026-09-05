@@ -24,7 +24,8 @@ const PlannerPageContent = () => {
         {plan ? (
           <Grid
             gap="lg"
-            className="h-full min-h-0 min-w-0 grid-cols-1 grid-rows-[minmax(32rem,1fr)_22rem] items-stretch lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-1"
+            data-testid="planner-result"
+            className="soft-enter h-full min-h-0 min-w-0 grid-cols-1 grid-rows-[minmax(32rem,1fr)_22rem] items-stretch lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-1"
           >
             <Panel padding="none" variant="muted" className="min-h-0 min-w-0 overflow-hidden">
               <ProductionDiagramTabs />

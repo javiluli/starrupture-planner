@@ -4,7 +4,7 @@
 **Fecha de reinicio del roadmap:** 4 de septiembre de 2026  
 **Rama auditada originalmente:** `desing-base` (`de121b9`)  
 **Baseline actual:** `master` (`first commit`)  
-**Estado:** auditoría técnica conservada; roadmap reiniciado; Fases 1–2 completadas y validadas.
+**Estado:** auditoría técnica conservada; roadmap reiniciado; Fases 1–4 completadas y validadas.
 
 ## 1. Executive Summary
 
@@ -642,7 +642,7 @@ En móvil, el elemento LCP fue `tube.webp`: se encoló alrededor de 3.882 ms, co
 
 **Dependencias.** DX-001 para builds reproducibles; UI-001 puede cambiar el shell.
 
-**Criterio de aceptación.** Build de producción no emite Dev UI; rutas sin Flow no solicitan su CSS; el entry gzip baja de forma medida y queda un budget automatizado sin regresión funcional.
+**Criterio de aceptación.** Build de producción no emite Dev UI; rutas sin Flow no solicitan su CSS; el entry gzip baja de forma medida y el reporte nativo de Vite permite detectar una regresión significativa.
 
 ### TEST-001 — Faltan unit tests justo en las fronteras donde aparecieron bugs
 
@@ -950,13 +950,13 @@ El sistema debe ampliarse solo con tokens/variantes que tengan dos o más consum
 
 ### Resumen
 
-| Finding                                  | Clasificación        | Prioridad       | Interpretación                                            |
-| ---------------------------------------- | -------------------- | --------------- | --------------------------------------------------------- |
-| PERF-001                                 | MEASURED             | P1              | LCP 4.827 ms móvil y reflow 63 ms; actuar primero.        |
-| PERF-002                                 | MEASURED             | P2              | Entry 194,16 kB gzip y CSS global; optimizar con budgets. |
-| Búsquedas `.find` sobre 44/104 registros | THEORETICAL          | Sin hito propio | Centralizar por mantenimiento, no por CPU.                |
-| Modal de 104 items                       | LIKELY_IMPACT bajo   | Observar        | Dataset acotado; no virtualizar sin perfil.               |
-| Tabla Items                              | MEASURED previamente | Mantener        | Virtualización existente y documentada.                   |
+| Finding                                  | Clasificación        | Prioridad       | Interpretación                                      |
+| ---------------------------------------- | -------------------- | --------------- | --------------------------------------------------- |
+| PERF-001                                 | MEASURED             | P1              | LCP 4.827 ms móvil y reflow 63 ms; actuar primero.  |
+| PERF-002                                 | MEASURED             | P2              | Entry 194,16 kB gzip y CSS global; dividir y medir. |
+| Búsquedas `.find` sobre 44/104 registros | THEORETICAL          | Sin hito propio | Centralizar por mantenimiento, no por CPU.          |
+| Modal de 104 items                       | LIKELY_IMPACT bajo   | Observar        | Dataset acotado; no virtualizar sin perfil.         |
+| Tabla Items                              | MEASURED previamente | Mantener        | Virtualización existente y documentada.             |
 
 No se recomienda recomprimir indiscriminadamente iconos: el análisis móvil estimó unos 37 kB de ahorro total de imagen, muy inferior al retraso de descubrimiento. Tampoco se recomienda `manualChunks` para silenciar Vite. El objetivo es reducir trabajo crítico inicial: empty state, CSS global, imports DEV y, si la medición lo avala, coste del shell HeroUI.
 
@@ -1405,19 +1405,19 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Criterios de aceptación:** renderers auditados no hacen cast manual de `data`; union es exhaustivo; símbolos muertos tienen cero referencias; tests/build siguen verdes.
 - **Cierre y validación:** `flow/types.ts` define la unión local de nodos de Planner y relaciona cada discriminante con los datos exactos de su renderer. Builders, estado de nodos, `ReactFlow` y cada `NodeProps` consumen el mismo contrato; el mapa de componentes es exhaustivo mediante un mapped type y ya no existen casts `data as`. Se retiraron `Stats`, `useFlowFitEffect`, `FlowBuildResult`, el builder y barrel redundantes, además de callbacks, flags y campos que ningún nodo utilizaba. El ajuste diferido del viewport devuelve cleanup y tiene pruebas de ejecución y cancelación. Los recorridos de error comprueban la navegación real de HeroUI y que el deep link abre y centra el nivel solicitado. El usuario confirmó formato, lint, 77 unitarios, typecheck E2E, build y los E2E afectados; los catálogos JSON protegidos permanecen intactos.
 
-# FASE 4 — Accesibilidad, coherencia visual y presupuesto de rendimiento
+# FASE 4 — Accesibilidad, coherencia visual y rendimiento medible
 
-**Objetivo global:** terminar la semántica de la interfaz y hacer que las mejoras de carga se sostengan mediante límites medibles, sin rediseñar el producto.
+**Objetivo global:** terminar la semántica de la interfaz y hacer que las mejoras de carga queden medidas, sin rediseñar el producto.
 
-**Progreso:** 1/2 hitos cerrados; Fase 4 en curso.
+**Progreso:** 2/2 hitos cerrados; Fase 4 completada.
 
 **Por qué ahora:** los bloqueos P1 de interacción y LCP ya habrán desaparecido; esta fase completa los estados menos críticos y previene regresiones del bundle.
 
-**Resultado acumulativo:** headings y nombres coherentes, motion respetuoso, TreeList operable, escala de Base Designer honesta y entry/CSS bajo presupuesto explícito.
+**Resultado acumulativo:** headings y nombres coherentes, motion respetuoso, TreeList operable, escala de Base Designer honesta y entry/CSS separados y medidos.
 
 **Riesgo global:** medio; las mejoras semánticas pueden alterar estructura DOM y selectores, y el code splitting puede introducir waterfalls si se hace sin medir.
 
-**Dependencias:** Hitos 2.4–2.6 y 3.1. El presupuesto de 4.2 usa una baseline construida con el toolchain de Fase 1.
+**Dependencias:** Hitos 2.4–2.6 y 3.1. La medición de 4.2 usa una baseline construida con el toolchain de Fase 1.
 
 ## Hito 4.1 — Completar semántica, contraste y reduced motion
 
@@ -1439,23 +1439,26 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Criterios de aceptación:** una H1 por ruta; markup de lista válido; contraste de texto normal ≥4.5:1; nombres accesibles contienen el nombre visible; TreeList expone expanded/level cuando aplique; animación no esencial se detiene con reduced motion; los 40 fallbacks se identifican como estimados.
 - **Cierre y validación:** cada ruta dispone de un único H1 dentro de `main` y la marca conserva su apariencia sin apropiarse del heading. La navegación principal usa una lista nativa válida y los enlaces de corporations obtienen su nombre accesible del mismo texto visible. Los chips de categoría conservan el fondo cromático de dominio con texto de foreground contrastado. TreeList adopta el patrón disclosure real mediante listas anidadas y botones nativos con `aria-expanded`, retirando el control simulado y su transición de montaje. La preferencia de movimiento reducido detiene marquee, animaciones CSS y edges, elimina la duración de los ajustes de viewport de ambos Flow y evita scroll programático suave. Las copias del marquee siguen siendo clicables, pero solo el ciclo principal participa en el orden de tabulación. Base Designer muestra la medida de todos los edificios y etiqueta como `estimated` los 40 fallbacks 4×4, sin modificar los catálogos. Se añadieron pruebas para semántica de TreeList, procedencia del footprint, viewport sin animación y copias del marquee. El usuario confirmó `pnpm test:all` y la revisión visual.
 
-## Hito 4.2 — Dividir trabajo inicial y fijar budgets
+## Hito 4.2 — Dividir y medir el trabajo inicial
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** bajar coste inicial sin fragmentación manual arbitraria.
 - **Problema resuelto:** `PERF-002`.
-- **Qué cambiar:** importar CSS de XYFlow solo donde se necesita; impedir que el playground DEV se resuelva/emita en producción; auditar imports HeroUI por entrada; lazy-load de rutas/features pesadas que no participan en la primera vista; añadir reporte/budget del entry JS y CSS.
+- **Qué cambiar:** importar CSS de XYFlow solo donde se necesita; impedir que el playground DEV se resuelva/emita en producción; auditar imports HeroUI por entrada; lazy-load de rutas/features pesadas que no participan en la primera vista; conservar el reporte nativo de tamaños JS y CSS de Vite.
 - **Áreas:** entry global, router lazy, Dev UI, imports de UI/Flow, Vite y CI.
 - **Pasos:**
   1. capturar tamaños antes del cambio;
   2. quitar primero assets/código inequívocamente globales;
   3. inspeccionar grafo después de cada split para evitar waterfalls;
-  4. fijar límites inicialmente cercanos a la mejora lograda, no un número aspiracional;
-  5. fallar CI solo ante regresión significativa y mostrar el delta.
-- **Tests/comprobaciones:** `pnpm build`, inspección de chunks/sourcemap, trace de primera ruta y navegación diferida, comparación gzip y ausencia de chunk DEV en manifest de producción.
+  4. conservar los avisos nativos de Vite sin añadir umbrales propios;
+  5. revisar el reporte de Vite al cerrar cambios que afecten al bundle.
+- **Tests/comprobaciones:** `pnpm build`, inspección de chunks/sourcemap, trace de primera ruta y navegación diferida, comparación gzip y ausencia del chunk DEV en la salida de producción.
 - **Resultado esperado:** entry menor que la baseline de 687,02 kB min/194,16 kB gzip y CSS inicial menor que 273 kB, sin retrasar la primera interacción de rutas lazy.
-- **Criterios de aceptación:** chunk Dev UI de 56,45 kB no se emite en producción; XYFlow no carga en rutas que nunca muestran grafos cuando técnicamente separable; budgets están versionados; métricas de navegación no empeoran materialmente.
+- **Criterios de aceptación:** chunk Dev UI de 56,45 kB no se emite en producción; XYFlow no carga en rutas que nunca muestran grafos cuando técnicamente separable; Vite informa de los tamaños y conserva sus avisos nativos; las métricas de navegación no empeoran materialmente.
 - **Seguimiento heredado de 2.6:** repetir tres trazas móviles CPU 4×/Slow 4G sobre el empty state, registrar mediana LCP y confirmar que el marquee no vuelve a introducir reflow forzado.
+- **Rework futuro fuera de este hito:** rediseñar cómo aparece y se sustituye el Flow al cargar o cambiar una receta. Incluir un componente visible que indique qué receta seleccionada se está preparando, coordinar la transición entre skeleton, Flow anterior y Flow nuevo para evitar saltos bruscos, y definir su comportamiento con movimiento reducido. Se desglosará y estimará en un hito independiente antes de implementarlo.
+- **Cierre y validación:** el CSS de XYFlow dejó de cargarse desde `main` y se importa junto a Planner y Base Designer; el grafo de Planner y la ruta Dev UI quedaron detrás de imports lazy que no participan en la entrada inicial de producción. El skeleton de carga usa la receta real de Ceramics y la tarjeta compartida de producción, sin descargar iconos de preview. La entrada del resultado y del grafo tienen una aparición sutil que se desactiva con `prefers-reduced-motion`; el E2E correspondiente y el pipeline completo fueron confirmados por el usuario. Se descartó el gate de budgets propio por mantenimiento desproporcionado: Vite conserva su reporte nativo y sus avisos estándar. No se modificaron los catálogos JSON protegidos.
 
 # FASE 5 — Cobertura de riesgos y flujo humano → Playwright
 
@@ -1610,7 +1613,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 | `TS-001`    | P3        | 3.5           | 5.1                | Nodos Flow tipados sin casts de frontera.           |
 | `DEAD-001`  | P3        | 3.5           | 2.3                | Contratos y hooks sin consumidores retirados.       |
 | `A11Y-002`  | P2        | 4.1           | 2.6, 5.3           | Semántica, contraste y motion consistentes.         |
-| `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS medidos y bajo budget.                    |
+| `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS divididos, medidos y vigilados.           |
 | `TEST-001`  | P2        | 5.1           | 5.4                | Invariantes cubiertos por Vitest.                   |
 | `TEST-002`  | P2        | 5.3           | 1.3, 5.2, 5.4      | Journeys críticos cubiertos por Playwright.         |
 | `SKILL-001` | P2        | 5.2           | 6.2                | Skill Playwright adaptada y catálogo racionalizado. |

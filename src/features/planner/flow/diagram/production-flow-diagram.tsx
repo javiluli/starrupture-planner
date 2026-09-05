@@ -1,4 +1,5 @@
 import { Background, BackgroundVariant, Controls, ReactFlow, ReactFlowProvider } from '@xyflow/react'
+import '@xyflow/react/dist/style.css'
 
 import { buildings, items } from '@/shared/data'
 import { FLOW_COLORS } from '@/features/planner/flow/config/flow-theme'
@@ -17,7 +18,7 @@ function ProductionFlowDiagramInner() {
   })
 
   return (
-    <div className="h-full min-h-0 w-full min-w-0 overflow-hidden">
+    <div data-testid="planner-network-graph" className="soft-enter h-full min-h-0 w-full min-w-0 overflow-hidden">
       <ReactFlow<PlannerFlowNode>
         minZoom={0.15}
         nodes={nodes}

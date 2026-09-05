@@ -1,22 +1,16 @@
 import { ORBITAL_CARGO_LAUNCHER_EXPORT_IPM, ORBITAL_CARGO_LAUNCHER_ID, ORBITAL_CARGO_LAUNCHER_NAME } from '@/features/planner/constants'
 import type { OrbitalCargoLauncherFlowNode } from '@/features/planner/flow/types'
 import { AssetImage, Flex } from '@/shared/ui'
-import { cn, Divider } from '@heroui/react'
+import { Divider } from '@heroui/react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { FlowNodeShell } from './flow-node-shell'
 import { FlowNodeCountBadge, FlowNodeHeader, FlowNodeOutputRate, FlowNodeStats } from './node-parts'
 
 export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps<OrbitalCargoLauncherFlowNode>) => {
   const { buildingPower, buildingHeat, buildingCount, exportItemId, exportItemName } = data
 
   return (
-    <Flex
-      direction="col"
-      className={cn(
-        'relative w-64 space-y-1 bg-content1/90 text-foreground px-4 py-3 shadow-xl rounded-2xl border-4 transition-all',
-        selected ? 'border-primary' : 'border-content3',
-        selected ? 'shadow-background' : 'shadow-none',
-      )}
-    >
+    <FlowNodeShell selected={selected}>
       <Handle type="target" position={Position.Left} className="bg-foreground!" />
       <Handle type="source" position={Position.Right} className="opacity-0" />
 
@@ -45,6 +39,6 @@ export const OrbitalCargoLauncherNode = ({ data, selected }: NodeProps<OrbitalCa
       <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2">
         <FlowNodeCountBadge buildingCount={buildingCount} />
       </div>
-    </Flex>
+    </FlowNodeShell>
   )
 }
