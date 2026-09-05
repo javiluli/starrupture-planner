@@ -1,9 +1,9 @@
 import type { IconKind } from '@/shared/ui/asset-image'
 import type { TreeNodeData } from '../types'
 
-const getItemName = (itemMap: Map<string, string>, itemId: string) => itemMap.get(itemId) ?? itemId
+const getItemName = (itemMap: ReadonlyMap<string, string>, itemId: string) => itemMap.get(itemId) ?? itemId
 
-export const getTreeNodeInfo = (node: TreeNodeData, itemNameMap: Map<string, string>) => {
+export const getTreeNodeInfo = (node: TreeNodeData, itemNameMap: ReadonlyMap<string, string>) => {
   const isSupply = Boolean(node.isSupply)
   const itemLabel = getItemName(itemNameMap, node.itemId)
   const label = isSupply ? itemLabel : node.isFinalProduct ? itemLabel : node.buildingName

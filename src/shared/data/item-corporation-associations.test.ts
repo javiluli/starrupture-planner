@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { corporations, items } from './index'
+import { corporationsByName, items } from './index'
 
 describe('item corporation associations', () => {
   it('links every normalized reference to a real corporation level requirement', () => {
@@ -9,7 +9,7 @@ describe('item corporation associations', () => {
 
     for (const item of associatedItems) {
       for (const reference of item.corporations) {
-        const corporation = corporations[reference.corporationName]
+        const corporation = corporationsByName[reference.corporationName]
         const level = corporation?.levels.find((candidate) => candidate.level === reference.level)
 
         expect(corporation?.id).toBe(reference.corporationId)

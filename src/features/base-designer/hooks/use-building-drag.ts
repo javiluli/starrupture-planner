@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useReactFlow, type XYPosition } from '@xyflow/react'
 import { BASE_FIELD_NODE_ID } from '../base-designer.config'
 import { createBuildingNode, findAvailableBuildingPosition } from '../lib/create-building-node'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { buildingById } from '@/shared/data'
 import { baseDesignerSelectors, useBaseDesignerStore } from '@/store/base-designer.store'
 
 interface ActiveBuildingDrag {
@@ -15,7 +15,6 @@ const createInstanceId = () => crypto.randomUUID()
 
 /** Coordinates pointer and keyboard placement while React Flow remains store-controlled. */
 export const useBuildingDrag = () => {
-  const buildings = useDataStore(dataSelectors.buildings)
   const addBuildingNode = useBaseDesignerStore(baseDesignerSelectors.addBuildingNode)
   const { screenToFlowPosition } = useReactFlow()
   const [activeDrag, setActiveDrag] = useState<ActiveBuildingDrag>()
@@ -32,7 +31,7 @@ export const useBuildingDrag = () => {
   }
 
   const addBuildingWithKeyboard = (buildingId: string) => {
-    const building = buildings.find((entry) => entry.id === buildingId)
+    const building = buildingById.get(buildingId)
     if (!building) return
 
     const state = useBaseDesignerStore.getState()
@@ -49,7 +48,7 @@ export const useBuildingDrag = () => {
     const finishDragging = (event: PointerEvent) => {
       const dropTarget = document.elementFromPoint(event.clientX, event.clientY)
       const isInsideCanvas = Boolean(dropTarget?.closest('[data-base-designer-canvas]'))
-      const building = buildings.find((entry) => entry.id === activeDrag.buildingId)
+      const building = buildingById.get(activeDrag.buildingId)
 
       if (isInsideCanvas && building) {
         const parentPosition = useBaseDesignerStore.getState().nodes.find((node) => node.id === BASE_FIELD_NODE_ID)?.position
@@ -81,7 +80,7 @@ export const useBuildingDrag = () => {
       document.removeEventListener('keydown', cancelWithEscape)
       window.removeEventListener('blur', cancelDragging)
     }
-  }, [activeDrag, addBuildingNode, buildings, screenToFlowPosition])
+  }, [activeDrag, addBuildingNode, screenToFlowPosition])
 
   return {
     activeDrag,

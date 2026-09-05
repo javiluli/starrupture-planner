@@ -1,7 +1,7 @@
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
 import { getBuildingVariantOptions } from '@/features/planner/lib/building-variants'
+import { buildings, itemNameById } from '@/shared/data'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from '@heroui/react'
 
@@ -10,15 +10,11 @@ import { Card, CardBody, CardHeader, Chip, Tab, Tabs } from '@heroui/react'
  * Se muestra dentro del sidebar como pestaña independiente.
  */
 export const BuildingVariantsPanel = () => {
-  const buildings = useDataStore(dataSelectors.buildings)
-  const items = useDataStore(dataSelectors.items)
-
   const plan = useProductionPlan()
 
   const buildingVariantByItemId = usePlannerStore(plannerSelectors.buildingVariantByItemId)
   const setBuildingVariantForItem = usePlannerStore(plannerSelectors.setBuildingVariantForItem)
 
-  const itemNameMap = new Map(items.map((item) => [item.id, item.name]))
   const steps = plan?.steps ?? []
 
   if (!steps.length) {
@@ -40,7 +36,7 @@ export const BuildingVariantsPanel = () => {
 
             const selectedId = buildingVariantByItemId[step.itemId] ?? options.baseId
 
-            const itemName = itemNameMap.get(step.itemId) ?? step.itemId
+            const itemName = itemNameById.get(step.itemId) ?? step.itemId
 
             return (
               <div key={step.itemId} className="min-w-0">

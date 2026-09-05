@@ -4,11 +4,11 @@ import type { ItemFilterInput } from '@/features/items/types'
 type ItemFilterTarget = {
   name: string
   type: string
-  producerBuildingIds: string[]
-  corporations?: CorporationLevelRef[]
+  producerBuildingIds: readonly string[]
+  corporations?: readonly CorporationLevelRef[]
 }
 
-export const filterItems = <T extends ItemFilterTarget>(items: T[], filters: ItemFilterInput): T[] => {
+export const filterItems = <T extends ItemFilterTarget>(items: readonly T[], filters: ItemFilterInput): T[] => {
   const { selectedCategory, selectedBuildingId, selectedCorporationId, searchQuery } = filters
   const normalizedQuery = searchQuery.toLowerCase()
 

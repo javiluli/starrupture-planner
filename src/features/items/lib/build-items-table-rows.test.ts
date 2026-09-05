@@ -1,12 +1,13 @@
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
+import { indexProducerBuildingsByItemId } from '@/shared/data'
 import { describe, expect, it } from 'vitest'
 import { buildItemsTableRows } from './build-items-table-rows'
 
 const items = [
-  { id: 'ceramics', name: 'Ceramics', type: 'processed' },
-  { id: 'ore_calcium', name: 'Calcium Ore', type: 'raw' },
-  { id: 'plate', name: 'Plate', type: 'component' },
+  { id: 'ceramics', name: 'Ceramics', type: 'processed', corporations: [] },
+  { id: 'ore_calcium', name: 'Calcium Ore', type: 'raw', corporations: [] },
+  { id: 'plate', name: 'Plate', type: 'component', corporations: [] },
 ] satisfies Item[]
 
 const buildings = [
@@ -38,7 +39,7 @@ const buildings = [
 
 describe('buildItemsTableRows', () => {
   it('preserves zero, one or multiple producers without changing the presentation order', () => {
-    const rows = buildItemsTableRows(items, buildings)
+    const rows = buildItemsTableRows(items, indexProducerBuildingsByItemId(buildings))
 
     expect(rows).toEqual([
       expect.objectContaining({ id: 'ore_calcium', producerBuildingIds: [], primaryProducerName: undefined }),

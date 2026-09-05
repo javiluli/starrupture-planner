@@ -1,12 +1,12 @@
 import type { ItemTableRow } from '@/features/items/types'
 import type { Building } from '@/shared/@types/building.type'
 import type { Item } from '@/shared/@types/item.type'
-import { indexProducerBuildingsByItemId } from '@/shared/data/building-production'
 
 /** Builds the read-only rows consumed by the Items table. */
-export const buildItemsTableRows = (items: Item[], buildings: Building[]): ItemTableRow[] => {
-  const producersByItemId = indexProducerBuildingsByItemId(buildings)
-
+export const buildItemsTableRows = (
+  items: readonly Item[],
+  producersByItemId: ReadonlyMap<string, readonly Building[]>,
+): ItemTableRow[] => {
   return items
     .map((item) => {
       const producers = producersByItemId.get(item.id) ?? []

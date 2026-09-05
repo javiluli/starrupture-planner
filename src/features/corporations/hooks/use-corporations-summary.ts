@@ -1,9 +1,6 @@
-import { dataSelectors, useDataStore } from '@/store/data.store'
-import { useMemo } from 'react'
+import { corporationsByName } from '@/shared/data'
 import { getCorporationsSummary } from '../lib/corporation-summary'
 
-export const useCorporationsSummary = () => {
-  const corporations = useDataStore(dataSelectors.corporations)
+const corporationsSummary = getCorporationsSummary(corporationsByName)
 
-  return useMemo(() => getCorporationsSummary(corporations), [corporations])
-}
+export const useCorporationsSummary = () => corporationsSummary

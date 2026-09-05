@@ -23,8 +23,7 @@ import {
 } from '@/features/base-designer/lib/editor-operations'
 import { createBaseDesignerStateStorage } from '@/features/base-designer/lib/design-storage'
 import type { BaseDesignerBuildingNode, BaseDesignerEdge, BaseDesignerNode } from '@/features/base-designer/types'
-import type { Building } from '@/shared/@types/building.type'
-import { buildings as buildingsCatalog } from '@/shared/data'
+import { buildings } from '@/shared/data'
 import { addEdge, applyEdgeChanges, applyNodeChanges, type Connection, type EdgeChange, type NodeChange } from '@xyflow/react'
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
@@ -89,8 +88,6 @@ const hasRecordableNodeChange = (changes: NodeChange<BaseDesignerNode>[]) =>
 
 const hasRecordableEdgeChange = (changes: EdgeChange<BaseDesignerEdge>[]) =>
   changes.some((change) => change.type === 'add' || change.type === 'remove' || change.type === 'replace')
-
-const gameBuildings = buildingsCatalog as Building[]
 
 /**
  * Source of truth for the controlled base editor.
@@ -240,10 +237,7 @@ export const useBaseDesignerStore = create<BaseDesignerStoreState>()(
       migrate: migrateBaseDesignerPersistedState,
       merge: (persistedState, currentState) => ({
         ...currentState,
-        ...restoreBaseDesignerDesign(
-          migrateBaseDesignerPersistedState(persistedState, BASE_DESIGNER_STORAGE_VERSION).design,
-          gameBuildings,
-        ),
+        ...restoreBaseDesignerDesign(migrateBaseDesignerPersistedState(persistedState, BASE_DESIGNER_STORAGE_VERSION).design, buildings),
         history: EMPTY_BASE_DESIGNER_HISTORY,
       }),
     },

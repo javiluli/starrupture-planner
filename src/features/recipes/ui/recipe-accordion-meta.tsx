@@ -31,7 +31,7 @@ const UnlockBadge = ({ unlockInfo }: { unlockInfo: BuildingUnlockInfo | null }) 
 
 export const RecipeAccordionMeta = ({ building, unlockInfo }: { building: Building; unlockInfo: BuildingUnlockInfo | null }) => (
   <Flex gap="md" align="center" wrap="wrap">
-    <RecipesChip count={building.recipes?.length ?? 0} />
+    <RecipesChip count={building.recipes.length} />
     <Flex align="center" wrap="wrap" className="h-4">
       <StatBadge icon={<Zap size={14} className="text-warning" />} value={building.power} />
       <Divider orientation="vertical" />

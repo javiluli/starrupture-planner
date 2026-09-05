@@ -48,10 +48,10 @@ export const ActionsCell = ({ item }: { item: Item }) => {
   )
 }
 
-export const CorporationsCell = ({ corporations }: { corporations: CorporationLevelRef[] | undefined }) => {
+export const CorporationsCell = ({ corporations }: { corporations: readonly CorporationLevelRef[] }) => {
   return (
     <Flex gap="lg" wrap="wrap">
-      {corporations?.map((corporation) => (
+      {corporations.map((corporation) => (
         <Link
           key={`${corporation.corporationId}-${corporation.level}`}
           to={getCorporationLevelPath(corporation.corporationId, corporation.level)}

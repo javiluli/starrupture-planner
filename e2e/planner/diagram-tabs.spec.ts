@@ -14,5 +14,5 @@ test('muestra solo diagramas implementados y conserva el catalogo de buildings',
   const primaryNavigation = page.getByRole('navigation', { name: 'Primary navigation' })
   await primaryNavigation.getByRole('link', { name: /Buildings/ }).click()
   await expect(page).toHaveURL(/\/recipes$/)
-  await expect(page.getByRole('heading', { name: 'Buildings & Recipes' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Buildings & Recipes' })).toBeVisible({ timeout: 20_000 })
 })

@@ -1,11 +1,10 @@
 import type { Corporation } from '@/shared/@types/corporations.type'
+import { corporationsList } from '@/shared/data'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
 import { Select, SelectItem } from '@heroui/react'
 import { useItemsFilters } from '@/features/items/hooks/use-items-filters'
 
 export const CorporationSelect = () => {
-  const corporations = useDataStore(dataSelectors.corporations)
   const { filters, setSelectedCorporationId } = useItemsFilters()
   const selectedKeys = filters.selectedCorporationId ? [filters.selectedCorporationId] : []
 
@@ -14,7 +13,7 @@ export const CorporationSelect = () => {
       size="sm"
       variant="bordered"
       className="w-67.5"
-      items={Object.values(corporations)}
+      items={corporationsList}
       isClearable={true}
       placeholder="Filter by Corporation"
       maxListboxHeight={500}

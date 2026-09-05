@@ -9,7 +9,7 @@ import { RecipeInputs } from './recipe-inputs'
 interface Props {
   recipe: Recipe
   outputItem?: Item
-  itemMap: Map<string, Item>
+  itemMap: ReadonlyMap<string, Item>
 }
 
 const RecipeRowComponent = ({ recipe, outputItem, itemMap }: Props) => (

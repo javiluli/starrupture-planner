@@ -1,4 +1,4 @@
-import type { CorporationsById } from '@/shared/@types/corporations.type'
+import type { CorporationsByName } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 
 export interface CorporationLevelRequirement {
@@ -16,11 +16,11 @@ export interface CorporationLevelRequirement {
 export const calculateCorporationLevelRequirements = (
   item: Item,
   targetIpm: number,
-  corporations: CorporationsById,
+  corporations: CorporationsByName,
 ): CorporationLevelRequirement[] => {
   const requirements: CorporationLevelRequirement[] = []
 
-  for (const reference of item.corporations ?? []) {
+  for (const reference of item.corporations) {
     const corporation = corporations[reference.corporationName]
     const level = corporation?.levels.find((candidate) => candidate.level === reference.level)
     const component = level?.components.find((candidate) => candidate.id === item.id)
@@ -43,10 +43,10 @@ export const calculateCorporationLevelRequirements = (
   return requirements
 }
 
-export const sortRequirementsByTime = (requirements: CorporationLevelRequirement[]) =>
+export const sortRequirementsByTime = (requirements: readonly CorporationLevelRequirement[]) =>
   [...requirements].sort((first, second) => first.timeMinutes - second.timeMinutes)
 
-export const pickRequirementByIndex = (requirements: CorporationLevelRequirement[], index: number) => {
+export const pickRequirementByIndex = (requirements: readonly CorporationLevelRequirement[], index: number) => {
   if (!requirements.length) return { selectedStat: undefined, safeIndex: 0 }
   const safeIndex = index >= requirements.length ? 0 : index
   return { selectedStat: requirements[safeIndex], safeIndex }

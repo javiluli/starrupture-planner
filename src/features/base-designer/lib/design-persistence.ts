@@ -121,7 +121,7 @@ export const serializeBaseDesignerDesign = (nodes: BaseDesignerNode[], edges: Ba
  */
 export const restoreBaseDesignerDesign = (
   input: unknown,
-  buildings: Building[],
+  buildings: readonly Building[],
 ): { nodes: BaseDesignerNode[]; edges: BaseDesignerEdge[] } => {
   const design = normalizeDesign(input)
   const buildingById = new Map(buildings.map((building) => [building.id, building]))
@@ -143,7 +143,7 @@ export const restoreBaseDesignerDesign = (
       },
     })
 
-    const selectedRecipeExists = building.recipes?.some((recipe) => recipe.output.id === persistedBuilding.selectedRecipeOutputId)
+    const selectedRecipeExists = building.recipes.some((recipe) => recipe.output.id === persistedBuilding.selectedRecipeOutputId)
     if (selectedRecipeExists) node.data.selectedRecipeOutputId = persistedBuilding.selectedRecipeOutputId
     if (isBuildingNodePlacementAvailable(node, nodes)) nodes.push(node)
   }

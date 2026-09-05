@@ -2,13 +2,13 @@ import type { Item } from '@/shared/@types/item.type'
 
 export const SUPPLY_ITEM_TYPE_ORDER: Item['type'][] = ['raw', 'processed', 'material', 'component', 'ammo']
 
-export const filterItemsByQuery = (items: Item[], query: string) => {
+export const filterItemsByQuery = (items: readonly Item[], query: string) => {
   const normalized = query.trim().toLowerCase()
   if (!normalized) return items
   return items.filter((item) => item.name.toLowerCase().includes(normalized))
 }
 
-export const groupItemsByType = (items: Item[]) =>
+export const groupItemsByType = (items: readonly Item[]) =>
   items.reduce<Record<Item['type'], Item[]>>(
     (acc, item) => {
       acc[item.type].push(item)

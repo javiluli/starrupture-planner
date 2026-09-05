@@ -5,7 +5,7 @@ import type { ProductionItemsColumnKey } from '../lib/items-columns'
 interface CellProps {
   row: ProductionStep
   columnKey: ProductionItemsColumnKey
-  itemNameMap: Map<string, string>
+  itemNameMap: ReadonlyMap<string, string>
 }
 
 export const ItemsDiagramCell = ({ row, columnKey, itemNameMap }: CellProps) => {

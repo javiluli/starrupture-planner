@@ -1,19 +1,18 @@
 import { AssetImage, Flex } from '@/shared/ui'
 import { Marquee } from './marquee'
 import { getRandomItemIds } from '@/features/planner/lib/random-items'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { items } from '@/shared/data'
 import { usePlannerTarget } from '@/features/planner/hooks/use-planner-target'
 import { Link } from '@heroui/react'
 import { useMemo } from 'react'
 
 export function RandomItemMarquee() {
-  const items = useDataStore(dataSelectors.items)
   const { selectTargetItem } = usePlannerTarget()
 
   // Genera una muestra nueva al montar el estado vacio del Planner.
   const itemList = useMemo(() => {
     return getRandomItemIds(items, 16)
-  }, [items])
+  }, [])
 
   return (
     <Marquee animationDuration={90}>

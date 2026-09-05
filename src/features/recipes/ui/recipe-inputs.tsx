@@ -2,7 +2,7 @@ import type { Item } from '@/shared/@types/item.type'
 import type { RecipeInput } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 
-export const RecipeInputs = ({ inputs, itemMap }: { inputs: RecipeInput[]; itemMap: Map<string, Item> }) => (
+export const RecipeInputs = ({ inputs, itemMap }: { inputs: readonly RecipeInput[]; itemMap: ReadonlyMap<string, Item> }) => (
   <div className="flex-1">
     <Typography as="span" variant="micro" tone="soft" className="mb-2">
       Inputs

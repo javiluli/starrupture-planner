@@ -19,8 +19,8 @@ import { isPositiveSupplyCount } from '@/features/planner/lib/supply-count'
  */
 export const buildSupplyNodes = (
   supplyCountByItem: Record<string, number>,
-  buildings: Building[],
-  items: Item[],
+  buildings: readonly Building[],
+  items: readonly Item[],
   onSupplyCountChange: (id: string, val: number) => void,
   dagreGraph: Graph,
 ): Node[] => {
@@ -64,8 +64,8 @@ export const buildSupplyNodes = (
  */
 export const buildProductionNodes = (
   targetId: string,
-  steps: ProductionStep[],
-  items: Item[],
+  steps: readonly ProductionStep[],
+  items: readonly Item[],
   onSupplyCountChange: (id: string, val: number) => void,
   dagreGraph: Graph,
 ): Node[] =>
@@ -106,7 +106,13 @@ export const buildProductionNodes = (
  * @param dagreGraph Instancia de Dagre para registrar dimensiones.
  * @returns Lista con el nodo del launcher.
  */
-export const buildLauncherNode = (targetId: string, targetIpm: number, items: Item[], buildings: Building[], dagreGraph: Graph): Node[] => {
+export const buildLauncherNode = (
+  targetId: string,
+  targetIpm: number,
+  items: readonly Item[],
+  buildings: readonly Building[],
+  dagreGraph: Graph,
+): Node[] => {
   const buildingData = buildings.find((b) => b.id === ORBITAL_CARGO_LAUNCHER_ID)
   const targetItemName = getItemName(items, targetId)
   const { power, heat } = getBuildingStats(buildingData)

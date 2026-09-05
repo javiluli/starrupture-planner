@@ -8,7 +8,7 @@ import { BuildingCatalogItem, type BuildingCatalogView } from './building-catalo
 import { filterBuildingCatalog, getBuildingCatalogCategories } from './filter-building-catalog'
 
 interface BuildingCatalogProps {
-  buildings: Building[]
+  buildings: readonly Building[]
   onStartDragging: (event: PointerEvent<HTMLElement>, buildingId: string) => void
   onAddWithKeyboard: (buildingId: string) => void
 }

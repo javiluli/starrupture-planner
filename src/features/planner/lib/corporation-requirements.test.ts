@@ -1,4 +1,4 @@
-import type { CorporationsById } from '@/shared/@types/corporations.type'
+import type { CorporationsByName } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { describe, expect, it } from 'vitest'
 import { calculateCorporationLevelRequirements } from './corporation-requirements'
@@ -28,7 +28,7 @@ const corporations = {
       },
     ],
   },
-} satisfies CorporationsById
+} satisfies CorporationsByName
 
 const item = {
   id: 'ceramics',
@@ -54,7 +54,7 @@ describe('calculateCorporationLevelRequirements', () => {
   })
 
   it('returns no requirements for an item without corporation associations', () => {
-    const regularItem = { id: 'glass', name: 'Glass', type: 'component' } satisfies Item
+    const regularItem = { id: 'glass', name: 'Glass', type: 'component', corporations: [] } satisfies Item
 
     expect(calculateCorporationLevelRequirements(regularItem, 12, corporations)).toEqual([])
   })

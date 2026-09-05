@@ -7,7 +7,7 @@ import type { Item } from '@/shared/@types/item.type'
  * @param itemId Id del item.
  * @returns Item encontrado o undefined.
  */
-export const findItemById = (items: Item[], itemId: string) => items.find((item) => item.id === itemId)
+export const findItemById = (items: readonly Item[], itemId: string) => items.find((item) => item.id === itemId)
 
 /**
  * Devuelve el nombre visible del item.
@@ -16,7 +16,7 @@ export const findItemById = (items: Item[], itemId: string) => items.find((item)
  * @param itemId Id del item.
  * @returns Nombre traducido o el id como fallback.
  */
-export const getItemName = (items: Item[], itemId: string) => findItemById(items, itemId)?.name || itemId
+export const getItemName = (items: readonly Item[], itemId: string) => findItemById(items, itemId)?.name || itemId
 
 /**
  * Devuelve el tipo del item.
@@ -25,7 +25,7 @@ export const getItemName = (items: Item[], itemId: string) => findItemById(items
  * @param itemId Id del item.
  * @returns Tipo de item o 'raw' por defecto.
  */
-export const getItemType = (items: Item[], itemId: string) => findItemById(items, itemId)?.type || 'raw'
+export const getItemType = (items: readonly Item[], itemId: string) => findItemById(items, itemId)?.type || 'raw'
 
 /**
  * Normaliza stats del edificio para evitar undefined.

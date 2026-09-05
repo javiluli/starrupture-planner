@@ -26,7 +26,7 @@ const normalizeSearchText = (value: string) => value.trim().toLocaleLowerCase()
 export const getBuildingCategoryLabel = (category: string) => CATEGORY_LABELS[category] ?? category.replaceAll('_', ' ')
 
 /** Construye las categorias del catalogo manteniendo el orden de los datos del juego. */
-export const getBuildingCatalogCategories = (buildings: Building[]): BuildingCatalogCategory[] => {
+export const getBuildingCatalogCategories = (buildings: readonly Building[]): BuildingCatalogCategory[] => {
   const counts = new Map<string, number>()
   for (const building of buildings) {
     counts.set(building.type, (counts.get(building.type) ?? 0) + 1)
@@ -36,7 +36,7 @@ export const getBuildingCatalogCategories = (buildings: Building[]): BuildingCat
 }
 
 /** Filtra el catalogo sin reordenar los buildings ni modificar el array original. */
-export const filterBuildingCatalog = (buildings: Building[], filters: BuildingCatalogFilters): Building[] => {
+export const filterBuildingCatalog = (buildings: readonly Building[], filters: BuildingCatalogFilters): Building[] => {
   const query = normalizeSearchText(filters.query)
 
   return buildings.filter((building) => {

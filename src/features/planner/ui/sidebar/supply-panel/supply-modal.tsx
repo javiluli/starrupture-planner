@@ -1,13 +1,12 @@
 import { Flex, AssetImage, Typography } from '@/shared/ui'
 import { filterItemsByQuery, groupItemsByType, SUPPLY_ITEM_TYPE_ORDER } from '@/features/planner/lib/supply-count-items'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { items } from '@/shared/data'
 import { Button, Chip, Input, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure } from '@heroui/react'
 import { SearchIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 
 export function SupplyModal() {
-  const items = useDataStore(dataSelectors.items)
   const supplyCountByItem = usePlannerStore(plannerSelectors.supplyCountByItem)
   const setSupply = usePlannerStore(plannerSelectors.setSupply)
 

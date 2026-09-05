@@ -16,7 +16,7 @@ import { normalizeSupplyCountByItem } from '../supply-count'
  * @param isExportable Indica si se agrega el launcher orbital.
  * @returns Totales de edificios, energia y heat.
  */
-const computeStats = (buildings: Building[], steps: ProductionStep[], targetIpm: number, isExportable: boolean) => {
+const computeStats = (buildings: readonly Building[], steps: readonly ProductionStep[], targetIpm: number, isExportable: boolean) => {
   let power = 0
   let heat = 0
   let totalBuildings = 0
@@ -75,6 +75,7 @@ const pruneSteps = (steps: ProductionStep[], targetId: string) => {
  */
 export const buildProductionPlan = ({
   buildings,
+  producerBuildingsByItemId,
   targetId,
   targetIpm,
   isRawTarget,
@@ -83,7 +84,7 @@ export const buildProductionPlan = ({
   isExportable,
 }: BuildProductionPlanParams): ProductionPlan => {
   const normalizedSupplyCountByItem = normalizeSupplyCountByItem(supplyCountByItem)
-  const resolver = buildPlanResolver(buildings, buildingVariantByItemId)
+  const resolver = buildPlanResolver(buildings, producerBuildingsByItemId, buildingVariantByItemId)
   const totals = calculateTotals(resolver, targetId, targetIpm, normalizedSupplyCountByItem)
   const rawSteps = buildSteps(resolver, totals, normalizedSupplyCountByItem)
   const steps = pruneSteps(rawSteps, targetId)

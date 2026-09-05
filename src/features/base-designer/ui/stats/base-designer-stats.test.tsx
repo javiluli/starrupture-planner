@@ -6,11 +6,10 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { createBuildingNode } from '../../lib/create-building-node'
 import { createInitialBaseDesignerNodes } from '../../lib/create-initial-nodes'
 import { useBaseDesignerStore } from '@/store/base-designer.store'
-import { useDataStore } from '@/store/data.store'
+import { buildings } from '@/shared/data'
 import { BaseDesignerStats } from './base-designer-stats'
 
 beforeEach(() => {
-  const buildings = useDataStore.getState().buildings
   const solar = buildings.find((building) => building.id === 'solar_generator_v1')
   const fabricator = buildings.find((building) => building.id === 'fabricator')
   if (!solar || !fabricator) throw new Error('Expected base designer fixtures in the game catalog')

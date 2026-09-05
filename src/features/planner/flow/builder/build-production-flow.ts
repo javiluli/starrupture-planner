@@ -6,9 +6,9 @@ import type { ProductionPlan } from '@/features/planner/lib/production-plan/type
 
 export interface FlowBuildParams {
   /** Lista de items del juego (nombre ya traducido). */
-  items: Item[]
+  items: readonly Item[]
   /** Lista de edificios con recetas. */
-  buildings: Building[]
+  buildings: readonly Building[]
   /** Plan de produccion ya calculado. */
   plan: ProductionPlan
   /** Callback para actualizar supply desde nodos. */

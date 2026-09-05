@@ -1,18 +1,12 @@
 import type { Building } from '@/shared/@types/building.type'
-
-const NON_PRODUCING_TYPES = new Set(['generator', 'transport', 'temperature', 'habitat', 'defense', 'storage', 'core'])
-
-/**
- * Indica si el building se usa para producir items.
- */
-export const isProductionBuilding = (building: Building) => !NON_PRODUCING_TYPES.has(building.type)
+import { isProductionBuilding } from '@/shared/data'
 
 export interface BuildingVariantOptions {
   baseId: string
   options: Building[]
 }
 
-const getRecipeForItem = (building: Building, itemId: string) => building.recipes?.find((recipe) => recipe.output.id === itemId)
+const getRecipeForItem = (building: Building, itemId: string) => building.recipes.find((recipe) => recipe.output.id === itemId)
 
 const normalizeInputs = (inputs: Building['recipes'][number]['inputs']) =>
   [...inputs].sort((a, b) => (a.id === b.id ? a.amount_per_minute - b.amount_per_minute : a.id.localeCompare(b.id)))
@@ -40,7 +34,11 @@ const hasMeaningfulDifference = (base: Building, upgrade: Building, itemId: stri
  * Devuelve las variantes disponibles para un building concreto.
  * Usa el campo `upgrade` como fuente principal.
  */
-export const getBuildingVariantOptions = (buildings: Building[], buildingId: string, itemId: string): BuildingVariantOptions | null => {
+export const getBuildingVariantOptions = (
+  buildings: readonly Building[],
+  buildingId: string,
+  itemId: string,
+): BuildingVariantOptions | null => {
   const byId = new Map(buildings.map((b) => [b.id, b]))
   const base = byId.get(buildingId)
 
@@ -71,7 +69,7 @@ export const getBuildingVariantOptions = (buildings: Building[], buildingId: str
  * Devuelve el building seleccionado para un paso concreto.
  * Si no hay seleccion, devuelve el building base.
  */
-export const resolveBuildingVariant = (buildings: Building[], baseBuilding: Building, selectedVariantId?: string) => {
+export const resolveBuildingVariant = (buildings: readonly Building[], baseBuilding: Building, selectedVariantId?: string) => {
   if (!selectedVariantId) return baseBuilding
   return buildings.find((b) => b.id === selectedVariantId) ?? baseBuilding
 }

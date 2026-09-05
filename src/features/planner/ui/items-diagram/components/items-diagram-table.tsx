@@ -5,9 +5,9 @@ import type { ProductionItemsColumn, ProductionItemsColumnKey } from '../lib/ite
 import { ItemsDiagramCell } from './items-diagram-cell'
 
 interface ItemsTableProps {
-  columns: ProductionItemsColumn[]
-  rows: ProductionStep[]
-  itemNameMap: Map<string, string>
+  columns: readonly ProductionItemsColumn[]
+  rows: readonly ProductionStep[]
+  itemNameMap: ReadonlyMap<string, string>
 }
 
 export const ItemsDiagramTable = ({ columns, rows, itemNameMap }: ItemsTableProps) => {

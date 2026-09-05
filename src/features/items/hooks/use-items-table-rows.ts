@@ -1,10 +1,6 @@
-import { useMemo } from 'react'
 import { buildItemsTableRows } from '@/features/items/lib/build-items-table-rows'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { items, producerBuildingsByItemId } from '@/shared/data'
 
-export const useItemsTableRows = () => {
-  const items = useDataStore(dataSelectors.items)
-  const buildings = useDataStore(dataSelectors.buildings)
+const itemTableRows = buildItemsTableRows(items, producerBuildingsByItemId)
 
-  return useMemo(() => buildItemsTableRows(items, buildings), [items, buildings])
-}
+export const useItemsTableRows = () => itemTableRows

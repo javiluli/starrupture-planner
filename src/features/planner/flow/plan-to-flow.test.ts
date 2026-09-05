@@ -8,11 +8,11 @@ const NODE_WIDTH = 260
 const NODE_HEIGHT = 350
 
 const items: Item[] = [
-  { id: 'plate', name: 'Plate', type: 'processed' },
-  { id: 'ingot', name: 'Ingot', type: 'processed' },
-  { id: 'wire', name: 'Wire', type: 'component' },
-  { id: 'ore', name: 'Ore', type: 'raw' },
-  { id: 'copper', name: 'Copper', type: 'raw' },
+  { id: 'plate', name: 'Plate', type: 'processed', corporations: [] },
+  { id: 'ingot', name: 'Ingot', type: 'processed', corporations: [] },
+  { id: 'wire', name: 'Wire', type: 'component', corporations: [] },
+  { id: 'ore', name: 'Ore', type: 'raw', corporations: [] },
+  { id: 'copper', name: 'Copper', type: 'raw', corporations: [] },
 ]
 
 const buildings: Building[] = [{ id: 'package_receiver', name: 'Package Receiver', power: 1, heat: 1, type: 'transport', recipes: [] }]

@@ -10,7 +10,7 @@ import { LevelRequirements } from './level-requirements'
 interface Props {
   corporationId: string
   level: Level
-  itemMap: Map<string, Item>
+  itemMap: ReadonlyMap<string, Item>
   isTargeted?: boolean
 }
 

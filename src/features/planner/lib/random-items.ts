@@ -1,7 +1,7 @@
 import type { Item } from '@/shared/@types/item.type'
 
 /** Returns a shuffled subset for the decorative Planner marquee. */
-export const getRandomItemIds = (items: Item[], count: number) => {
+export const getRandomItemIds = (items: readonly Item[], count: number) => {
   const shuffledIds = items.map((item) => item.id)
 
   for (let index = shuffledIds.length - 1; index > 0; index -= 1) {

@@ -1,14 +1,13 @@
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
+import { itemNameById } from '@/shared/data'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
 
 export function RawTargetDiagram() {
-  const items = useDataStore(dataSelectors.items)
   const plan = useProductionPlan()
 
   if (!plan) return null
 
-  const targetName = items.find((item) => item.id === plan.targetId)?.name ?? plan.targetId
+  const targetName = itemNameById.get(plan.targetId) ?? plan.targetId
 
   return (
     <Flex align="center" justify="center" className="h-full min-h-0 p-6">

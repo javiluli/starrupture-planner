@@ -10,8 +10,8 @@ import type { ProductionPlan } from '@/features/planner/lib/production-plan'
 
 interface PlanToFlowParams {
   plan: ProductionPlan
-  items: Item[]
-  buildings: Building[]
+  items: readonly Item[]
+  buildings: readonly Building[]
   setSupply: (id: string, val: number) => void
 }
 

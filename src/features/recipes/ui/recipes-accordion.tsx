@@ -18,7 +18,7 @@ export const RecipesAccordion = () => {
           title={<RecipeAccordionHeader building={building} unlockInfo={getUnlockInfo(building.name)} />}
         >
           <AccordionItemContent>
-            {building.recipes?.map((recipe, index) => (
+            {building.recipes.map((recipe, index) => (
               <RecipeRow key={`${building.id}-${index}`} recipe={recipe} outputItem={itemMap.get(recipe.output.id)} itemMap={itemMap} />
             ))}
           </AccordionItemContent>

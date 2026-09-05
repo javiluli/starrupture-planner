@@ -30,8 +30,8 @@ src/features/planner/
 
 ## Fuentes de verdad
 
-- `src/shared/data/*.json`: catalogo inmutable del juego.
-- `data.store.ts`: acceso reactivo de solo lectura al catalogo.
+- `src/shared/data/*.json`: snapshots externos del juego; no se modifican durante el desarrollo funcional.
+- `src/shared/data/index.ts`: normalizacion e indices derivados estables del catalogo.
 - `planner.store.ts`: unicamente entradas editables del usuario.
 - `ProductionPlanProvider`: unico propietario del plan calculado.
 - `ProductionPlan`: resultado derivado; nunca se persiste ni se duplica en Zustand.
@@ -47,9 +47,9 @@ src/features/planner/
 ```mermaid
 flowchart LR
   UI[Toolbar / Sidebar] -->|actions| Store[planner.store]
-  Data[shared/data JSON] --> DataStore[data.store]
+  Data[shared/data JSON] --> Catalog[typed derived catalog]
   Store --> Provider[ProductionPlanProvider]
-  DataStore --> Provider
+  Catalog --> Provider
   Provider --> Builder[buildProductionPlan]
   Builder --> Plan[ProductionPlan]
   Plan --> Stats[PlannerStats]

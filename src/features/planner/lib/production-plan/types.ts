@@ -11,7 +11,7 @@ export interface ProductionStep {
   buildingPower: number
   buildingHeat: number
   supplyCount: number
-  inputs: RecipeInput[]
+  inputs: readonly RecipeInput[]
 }
 
 export interface ProductionPlan {
@@ -26,7 +26,8 @@ export interface ProductionPlan {
 }
 
 export interface BuildProductionPlanParams {
-  buildings: Building[]
+  buildings: readonly Building[]
+  producerBuildingsByItemId: ReadonlyMap<string, readonly Building[]>
   targetId: string
   targetIpm: number
   isRawTarget: boolean
@@ -36,7 +37,7 @@ export interface BuildProductionPlanParams {
 }
 
 export interface PlanResolver {
-  buildings: Building[]
+  buildings: readonly Building[]
   buildingVariantByItemId: Record<string, string>
   getBuildingForItem: (itemId: string) => Building | null
   getRecipeForItem: (itemId: string) => Recipe | null

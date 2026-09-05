@@ -5,7 +5,7 @@ import { getTreeNodeInfo } from '../lib/tree-node-info'
 import type { TreeNodeData } from '../types'
 
 interface PlannerTreeRowProps extends TreeListNodeRenderProps<TreeNodeData> {
-  itemNameMap: Map<string, string>
+  itemNameMap: ReadonlyMap<string, string>
 }
 
 const ROW_CONTENT = 'flex items-center gap-3 flex-1 text-left rounded-lg pl-0 pr-2 py-2 transition-colors'

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useMemo } from 'react'
 import { buildProductionPlan } from '@/features/planner/lib/production-plan'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { buildings, itemById, producerBuildingsByItemId } from '@/shared/data'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { ProductionPlanContext } from '../hooks/use-production-plan'
 
@@ -14,8 +14,6 @@ interface ProductionPlanProviderProps {
  * Zustand remains responsible only for editable planner inputs.
  */
 export const ProductionPlanProvider = ({ children }: ProductionPlanProviderProps) => {
-  const items = useDataStore(dataSelectors.items)
-  const buildings = useDataStore(dataSelectors.buildings)
   const targetId = usePlannerStore(plannerSelectors.targetId)
   const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
   const supplyCountByItem = usePlannerStore(plannerSelectors.supplyCountByItem)
@@ -24,18 +22,19 @@ export const ProductionPlanProvider = ({ children }: ProductionPlanProviderProps
   const plan = useMemo(() => {
     if (!targetId) return null
 
-    const targetItem = items.find((item) => item.id === targetId)
+    const targetItem = itemById.get(targetId)
 
     return buildProductionPlan({
       buildings,
+      producerBuildingsByItemId,
       targetId,
       targetIpm,
       isRawTarget: targetItem?.type === 'raw',
       supplyCountByItem,
       buildingVariantByItemId,
-      isExportable: Boolean(targetItem?.corporations?.length),
+      isExportable: Boolean(targetItem?.corporations.length),
     })
-  }, [items, buildings, targetId, targetIpm, supplyCountByItem, buildingVariantByItemId])
+  }, [targetId, targetIpm, supplyCountByItem, buildingVariantByItemId])
 
   return <ProductionPlanContext value={plan}>{children}</ProductionPlanContext>
 }

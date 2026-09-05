@@ -1319,7 +1319,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** simplificar la dirección de dependencias y establecer un único modelo tipado derivado de los JSON, manteniendo la estructura feature-first y Zustand donde sí hay estado de usuario.
 
-**Progreso:** 2/5 hitos cerrados; Fase 3 en curso.
+**Progreso:** 3/5 hitos cerrados; Fase 3 en curso.
 
 **Por qué ahora:** los fallos P1 ya estarán cubiertos; se puede refactorizar con tests que preserven el comportamiento correcto recién fijado.
 
@@ -1360,6 +1360,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 3.3 — Crear un catálogo derivado tipado y retirar estado estático
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** centralizar normalización e índices sin repository layer ni copiar los JSON.
 - **Problemas resueltos:** `DATA-001`, `DATA-002` y consolidación de `BUG-002`/`BUG-003`.
 - **Qué cambiar:** implementar un módulo puro cacheado a nivel de módulo con catálogos e índices (`itemById`, `buildingById`, `producersByItem`, asociaciones corporation); hacer opcionales/precisos los campos según fuente; corregir el contrato de keys de corporations; eliminar el Zustand store que solo envuelve constantes.
@@ -1367,13 +1368,14 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Pasos:**
   1. definir tipos raw que reflejen campos ausentes (`recipes?`);
   2. definir modelos derivados separados y explícitos;
-  3. construir índices una vez, validando duplicados/referencias;
+  3. construir índices una vez; se omite validación runtime general porque los snapshots se revisan antes de incorporarlos;
   4. migrar consumidores gradualmente;
   5. borrar store estático cuando quede sin consumidores;
   6. unificar `NON_PRODUCING_TYPES` en el dueño del dominio.
 - **Tests/comprobaciones:** tests de invariantes sobre datos reales en solo lectura; fixtures pequeñas para índices; typecheck; búsqueda de la constante duplicada y store retirado.
 - **Resultado esperado:** todas las features leen la misma interpretación del dataset y Zustand queda reservado a estado mutable del usuario.
 - **Criterios de aceptación:** el refactor no usa ediciones de los JSON para completar datos; los tipos raw no mienten; los índices conservan 0/1/N productores; no hay dos definiciones de reglas de producción; no existe store de datos estáticos sin estado mutable.
+- **Cierre y validación:** los cuatro JSON se consumen desde una única frontera pública en `shared/data`; los tipos raw representan campos ausentes y los modelos derivados normalizan `recipes`, `power`, `heat` y asociaciones de corporations. Los índices de items, buildings, nombres, medidas, corporations y productores se crean una vez y todas las features consumen esa misma interpretación. Se retiraron `data.store`, `useItemMap` y el helper compartido ya innecesario; Zustand queda reservado a inputs editables. La regla de buildings productores tiene un único dueño y las fixtures conservan relaciones 0/1/N. El ensamblador `index.ts` delega normalización e índices a módulos pequeños documentados. Por decisión del usuario no se mantienen validaciones generales de duplicados o referencias: los snapshots cambian poco y se revisan antes de incorporarlos. No se modificó ningún JSON protegido.
 
 ## Hito 3.4 — Separar 404 de error runtime y estabilizar deep links
 

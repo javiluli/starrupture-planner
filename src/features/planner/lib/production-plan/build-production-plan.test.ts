@@ -1,4 +1,5 @@
 import type { Building } from '@/shared/@types/building.type'
+import { indexProducerBuildingsByItemId } from '@/shared/data'
 import { describe, expect, it } from 'vitest'
 import { buildProductionPlan } from './build-production-plan'
 
@@ -70,6 +71,7 @@ const buildPlan = ({
 } = {}) =>
   buildProductionPlan({
     buildings,
+    producerBuildingsByItemId: indexProducerBuildingsByItemId(buildings),
     targetId,
     targetIpm,
     isRawTarget,

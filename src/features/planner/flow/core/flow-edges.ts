@@ -21,9 +21,9 @@ import type { ProductionStep } from '@/features/planner/lib/production-plan'
 export const buildEdges = (
   targetId: string,
   targetIpm: number,
-  steps: ProductionStep[],
+  steps: readonly ProductionStep[],
   supplyCountInventory: Record<string, number>,
-  items: Item[],
+  items: readonly Item[],
   addOrgitalExportSystem: boolean,
   dagreGraph: Graph,
 ): Edge[] => {

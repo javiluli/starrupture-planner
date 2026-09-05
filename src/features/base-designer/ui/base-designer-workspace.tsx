@@ -1,16 +1,16 @@
 import { Grid, Panel } from '@/shared/ui'
 import { ReactFlowProvider } from '@xyflow/react'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { buildingById, buildings } from '@/shared/data'
 import { useBuildingDrag } from '../hooks/use-building-drag'
 import { BaseDesignerCanvas } from './base-designer-canvas'
 import { BuildingCatalog } from './catalog/building-catalog'
 import { DragPreview } from './drag-preview'
 
+const placeableBuildings = buildings.filter((building) => building.type !== 'core')
+
 const BaseDesignerWorkspaceContent = () => {
-  const buildings = useDataStore(dataSelectors.buildings)
-  const placeableBuildings = buildings.filter((building) => building.type !== 'core')
   const { activeDrag, startDragging, addBuildingWithKeyboard } = useBuildingDrag()
-  const draggedBuilding = activeDrag ? buildings.find((building) => building.id === activeDrag.buildingId) : undefined
+  const draggedBuilding = activeDrag ? buildingById.get(activeDrag.buildingId) : undefined
 
   return (
     <>

@@ -1,20 +1,12 @@
 import type { Building } from '@/shared/@types/building.type'
+import { productionBuildings } from '@/shared/data'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { dataSelectors, useDataStore } from '@/store/data.store'
 import { Select, SelectItem } from '@heroui/react'
-import { useMemo } from 'react'
 import { useItemsFilters } from '@/features/items/hooks/use-items-filters'
 
-const NON_PRODUCING_TYPES = new Set(['generator', 'transport', 'temperature', 'habitat', 'defense', 'storage', 'core'])
-
 export const BuildingSelect = () => {
-  const buildings = useDataStore(dataSelectors.buildings)
   const { filters, setSelectedBuildingId } = useItemsFilters()
   const selectedKeys = filters.selectedBuildingId ? [filters.selectedBuildingId] : []
-
-  const productionBuildings = useMemo(() => {
-    return buildings.filter((b) => !NON_PRODUCING_TYPES.has(b.type))
-  }, [buildings])
 
   return (
     <Select

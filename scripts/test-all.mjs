@@ -59,6 +59,7 @@ const runStage = ({ script, ...stage }) =>
     child.on('close', (exitCode, signal) => {
       resolve({
         ...stage,
+        script,
         exitCode: exitCode ?? 1,
         signal,
         output,

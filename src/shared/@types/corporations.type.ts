@@ -10,23 +10,21 @@ export interface Component {
 export interface Level {
   level: number
   xp: number
-  components: Component[]
-  rewards: Reward[]
+  components: readonly Component[]
+  rewards: readonly Reward[]
 }
 
 export interface Corporation {
   id: string
   description: string
-  levels: Level[]
+  levels: readonly Level[]
 }
 
 /**
  * Mapa global con todas las corporations del juego.
- * La clave es el id de la corporation.
+ * La clave es el nombre visible de la corporation, tal como aparece en el JSON.
  */
-export interface CorporationsById {
-  [corporationId: string]: Corporation
-}
+export type CorporationsByName = Readonly<Record<string, Corporation>>
 
 /**
  * Referencia compacta a una corporation y su nivel.

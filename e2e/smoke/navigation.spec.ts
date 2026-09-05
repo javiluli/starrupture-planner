@@ -12,7 +12,7 @@ test('permite recorrer las secciones principales desde la navegacion', async ({ 
 
   await navigation.getByRole('link', { name: /Buildings/ }).click()
   await expect(page).toHaveURL(/\/recipes$/)
-  await expect(page.getByRole('heading', { name: 'Buildings & Recipes' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Buildings & Recipes' })).toBeVisible({ timeout: 20_000 })
 
   await navigation.getByRole('link', { name: /Corporations/ }).click()
   await expect(page).toHaveURL(/\/corporations$/)

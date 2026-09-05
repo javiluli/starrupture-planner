@@ -5,7 +5,7 @@ import {
   sortRequirementsByTime,
   pickRequirementByIndex,
 } from '@/features/planner/lib/corporation-requirements'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { corporationsByName, itemById } from '@/shared/data'
 import { Button, Card, Chip, Divider, Popover, PopoverContent, PopoverTrigger } from '@heroui/react'
 import { useMemo, useState } from 'react'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
@@ -13,17 +13,15 @@ import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 export const CorporationLevelRequirements = () => {
   const targetId = usePlannerStore(plannerSelectors.targetId)
   const targetIpm = usePlannerStore(plannerSelectors.targetIpm)
-  const items = useDataStore(dataSelectors.items)
-  const corporations = useDataStore(dataSelectors.corporations)
-  const selectedItem = useMemo(() => items.find((item) => item.id === targetId), [items, targetId])
+  const selectedItem = itemById.get(targetId)
 
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
 
   const exportStats = useMemo(() => {
     if (!selectedItem || targetIpm <= 0) return []
-    return calculateCorporationLevelRequirements(selectedItem, targetIpm, corporations)
-  }, [selectedItem, targetIpm, corporations])
+    return calculateCorporationLevelRequirements(selectedItem, targetIpm, corporationsByName)
+  }, [selectedItem, targetIpm])
 
   const displayStats = useMemo(() => {
     return sortRequirementsByTime(exportStats)

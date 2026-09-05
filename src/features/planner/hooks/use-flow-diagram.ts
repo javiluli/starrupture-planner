@@ -9,8 +9,8 @@ import { useEffect, useRef } from 'react'
 import type { ProductionPlan } from '@/features/planner/lib/production-plan/types'
 
 interface UseFlowDiagramParams {
-  items: Item[]
-  buildings: Building[]
+  items: readonly Item[]
+  buildings: readonly Building[]
   plan: ProductionPlan | null
 }
 

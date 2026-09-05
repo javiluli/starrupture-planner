@@ -1,9 +1,6 @@
-import { useMemo } from 'react'
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { buildings } from '@/shared/data'
 import { getRecipesSummary } from '../lib/recipes-summary'
 
-export const useRecipesSummary = () => {
-  const buildings = useDataStore(dataSelectors.buildings)
+const recipesSummary = getRecipesSummary(buildings)
 
-  return useMemo(() => getRecipesSummary(buildings), [buildings])
-}
+export const useRecipesSummary = () => recipesSummary

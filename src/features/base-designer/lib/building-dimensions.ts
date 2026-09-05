@@ -1,8 +1,6 @@
-import constructionAreas from '@/shared/data/buildings_construction_area.json'
+import { constructionAreaByBuildingId } from '@/shared/data'
 import { BASE_DESIGNER_FALLBACK_FOOTPRINT, BASE_DESIGNER_GRID_SIZE } from '../base-designer.config'
 import type { BuildingFootprint } from '../types'
-
-const constructionAreaByBuildingId = new Map(constructionAreas.map((entry) => [entry.id, entry]))
 
 /**
  * Returns the footprint declared by the game data.
@@ -10,7 +8,7 @@ const constructionAreaByBuildingId = new Map(constructionAreas.map((entry) => [e
  */
 export const getBuildingFootprint = (buildingId: string): BuildingFootprint => {
   const footprint = constructionAreaByBuildingId.get(buildingId)?.area_ocupada
-  if (!footprint) return BASE_DESIGNER_FALLBACK_FOOTPRINT
+  if (!footprint || !Number.isFinite(footprint[0]) || !Number.isFinite(footprint[1])) return BASE_DESIGNER_FALLBACK_FOOTPRINT
 
   return { columns: footprint[0], rows: footprint[1] }
 }

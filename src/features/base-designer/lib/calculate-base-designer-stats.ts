@@ -11,7 +11,7 @@ const EMPTY_STATS: BaseDesignerStats = {
 }
 
 /** Calculates base totals from placed building IDs and the immutable game catalog. */
-export const calculateBaseDesignerStats = (buildingIds: string[], buildings: Building[]): BaseDesignerStats => {
+export const calculateBaseDesignerStats = (buildingIds: readonly string[], buildings: readonly Building[]): BaseDesignerStats => {
   if (buildingIds.length === 0) {
     const heatCapacity = buildings.find((building) => building.id === 'base_core')?.levels?.[0]?.heatCapacity
     return { ...EMPTY_STATS, heatCapacity: heatCapacity ?? EMPTY_STATS.heatCapacity }

@@ -1,20 +1,17 @@
 import { Background, BackgroundVariant, Controls, ReactFlow, ReactFlowProvider } from '@xyflow/react'
 
-import { dataSelectors, useDataStore } from '@/store/data.store'
+import { buildings, items } from '@/shared/data'
 import { FLOW_COLORS } from '@/features/planner/flow/config/flow-theme'
 import { FLOW_NODE_TYPES } from '@/features/planner/flow/config/node-types'
 import { useFlowDiagram } from '@/features/planner/hooks/use-flow-diagram'
 import { useProductionPlan } from '@/features/planner/hooks/use-production-plan'
 
 function ProductionFlowDiagramInner() {
-  const itemsStore = useDataStore(dataSelectors.items)
-  const buildingsStore = useDataStore(dataSelectors.buildings)
-
   const plan = useProductionPlan()
 
   const { nodes, edges, onNodesChange } = useFlowDiagram({
-    items: itemsStore,
-    buildings: buildingsStore,
+    items,
+    buildings,
     plan,
   })
 
