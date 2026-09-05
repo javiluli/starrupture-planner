@@ -1319,7 +1319,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** simplificar la dirección de dependencias y establecer un único modelo tipado derivado de los JSON, manteniendo la estructura feature-first y Zustand donde sí hay estado de usuario.
 
-**Progreso:** 1/5 hitos cerrados; Fase 3 en curso.
+**Progreso:** 2/5 hitos cerrados; Fase 3 en curso.
 
 **Por qué ahora:** los fallos P1 ya estarán cubiertos; se puede refactorizar con tests que preserven el comportamiento correcto recién fijado.
 
@@ -1346,6 +1346,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 3.2 — Definir APIs públicas de features sin autociclos
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** conservar barrels útiles para consumidores externos sin que módulos internos se importen a sí mismos a través del barrel.
 - **Problema resuelto:** `ARCH-002`.
 - **Qué cambiar:** establecer regla “interno usa paths internos/tipos locales; externo usa API pública”; mover contratos neutrales fuera de componentes; retirar imports de hooks/stores desde barrels que reexportan al consumidor; exponer selectors públicos para relaciones cross-feature.
@@ -1354,6 +1355,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** detector de ciclos/import graph, TypeScript, lint, Vitest y build tras cada feature.
 - **Resultado esperado:** dirección de dependencias comprensible sin prohibir todos los barrels.
 - **Criterios de aceptación:** cero autociclos confirmados; ningún feature externo importa `lib/` privado de otro; API pública contiene solo contratos deliberados; AGENTS documenta la regla.
+- **Cierre y validación:** Planner dejó de importar `usePlannerTarget` desde su propio barrel, el store de Items consume su contrato de tipos directamente y la navegación de niveles de Corporations se expone mediante su API pública. Los barrels raíz de Planner e Items quedaron limitados a consumidores externos reales y `AGENTS.md` documenta la dirección permitida para features y stores. La revisión estática confirmó cero imports mediante el barrel propio y cero accesos privados entre features; no se añadió una regla de lint específica porque exigiría excepciones por feature sin aportar suficiente señal adicional. Los E2E que arrancan sobre rutas lazy esperan ahora su contenido real bajo carga paralela. El usuario confirmó `pnpm test:all`, incluida la tabla final aislada para formato, lint, Vitest, typecheck E2E, build y Playwright. No se modificaron los catálogos JSON ni el comportamiento visual de la aplicación.
 
 ## Hito 3.3 — Crear un catálogo derivado tipado y retirar estado estático
 

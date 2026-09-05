@@ -1,5 +1,5 @@
+import { getCorporationLevelPath } from '@/features/corporations'
 import { useOpenPlanner } from '@/features/planner'
-import { getCorporationLevelPath } from '@/features/corporations/lib/corporation-level-navigation'
 import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'

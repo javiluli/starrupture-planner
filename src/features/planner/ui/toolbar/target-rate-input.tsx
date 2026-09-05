@@ -1,4 +1,4 @@
-import { usePlannerTarget } from '@/features/planner'
+import { usePlannerTarget } from '@/features/planner/hooks/use-planner-target'
 import { Typography } from '@/shared/ui'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { NumberInput } from '@heroui/react'

@@ -4,6 +4,8 @@
 
 This Vite, React, and TypeScript application follows a feature-first structure. Route-level composition belongs in `src/pages/`, while product code lives in `src/features/<feature>/` (currently `planner`, `items`, `recipes`, `corporations`, and `base-designer`). Keep feature-specific UI, hooks, types, and pure logic inside that feature. Put reusable components and helpers in `src/shared/`; reserve `src/lib/` for logic genuinely shared across features. Zustand stores live in `src/store/`, routing in `src/router/`, and application shells in `src/layouts/`. Game data is stored in `src/shared/data/`. Catalog icons live in `public/assets/icons/` so `AssetImage` can load them on demand; other public static files remain in `public/`.
 
+Treat each feature root `index.ts` as its public API. Consumers outside a feature must import from that API instead of reaching into private `lib/`, `hooks/`, `types/`, or `ui/` paths. Code inside a feature must use direct internal paths and never import from its own public API. Central stores may import feature-owned types and pure functions directly, but must not depend on a feature barrel or UI module.
+
 ## Build, Test, and Development Commands
 
 Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. Install with `pnpm install --frozen-lockfile` and commit changes to `pnpm-lock.yaml` when dependencies change.

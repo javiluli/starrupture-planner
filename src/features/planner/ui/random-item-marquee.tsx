@@ -2,7 +2,7 @@ import { AssetImage, Flex } from '@/shared/ui'
 import { Marquee } from './marquee'
 import { getRandomItemIds } from '@/features/planner/lib/random-items'
 import { dataSelectors, useDataStore } from '@/store/data.store'
-import { usePlannerTarget } from '@/features/planner'
+import { usePlannerTarget } from '@/features/planner/hooks/use-planner-target'
 import { Link } from '@heroui/react'
 import { useMemo } from 'react'
 

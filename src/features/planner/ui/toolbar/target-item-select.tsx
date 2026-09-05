@@ -2,7 +2,7 @@ import { AssetImage } from '@/shared/ui'
 import { dataSelectors, useDataStore } from '@/store/data.store'
 import { plannerSelectors, usePlannerStore } from '@/store/planner.store'
 import { Autocomplete, AutocompleteItem } from '@heroui/react'
-import { usePlannerTarget } from '@/features/planner'
+import { usePlannerTarget } from '@/features/planner/hooks/use-planner-target'
 
 export function TargetItemSelect() {
   const items = useDataStore(dataSelectors.items)

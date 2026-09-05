@@ -1,4 +1,4 @@
-import type { ItemFilterInput } from '@/features/items'
+import type { ItemFilterInput } from '@/features/items/types'
 import { create } from 'zustand'
 
 interface ItemsStoreState {
