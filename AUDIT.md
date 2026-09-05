@@ -1464,6 +1464,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** cubrir contratos de dominio y recorridos críticos con la capa de prueba correcta, y dar a humanos/Codex un proceso corto para convertir escenarios en E2E mantenibles.
 
+**Progreso:** 1/4 hitos cerrados; Fase 5 en curso.
+
 **Por qué ahora:** la arquitectura y la semántica estabilizadas evitan escribir tests contra estructuras que se van a retirar inmediatamente.
 
 **Resultado acumulativo:** Vitest cubre reglas puras/estado; Playwright cubre journeys, móvil y teclado; CI ejecuta ambos; los escenarios humanos tienen una plantilla y ownership claros.
@@ -1475,6 +1477,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 5.1 — Añadir tests unitarios de las fronteras de dominio
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (5 de septiembre de 2026).
 - **Objetivo específico:** proteger las reglas con mayor fan-out sin perseguir cobertura porcentual.
 - **Problema resuelto:** `TEST-001`.
 - **Qué cambiar:** añadir fixtures tipadas pequeñas y tests para one-to-many, raw target, supply/persistencia, índices derivados, error routing y footprint estimado; consolidar helpers de render solo si reducen repetición real.
@@ -1483,6 +1486,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** suite Vitest completa, mutación manual temporal de una condición para comprobar que el test falla y revisión de tiempo total.
 - **Resultado esperado:** un cambio que vuelva a colapsar productores, conserve supply cero o trate raw como receta falla cerca de su causa.
 - **Criterios de aceptación:** cada regla crítica tiene test positivo y negativo; fixtures no copian bloques grandes de JSON; no hay mocks de la lógica bajo prueba; suite mantiene feedback rápido y determinista.
+- **Cierre y validación:** las pruebas incorporadas durante las fases anteriores ya cubrían relaciones 0/1/N de productores, raw targets, supply válido e inválido, rehidratación del store, índices derivados, separación 404/error runtime y footprints reales/estimados. Se añadió la frontera que faltaba: `buildTree` ahora verifica la jerarquía producción→inputs→raw y que un supply compartido se consuma una sola vez antes de construir únicamente la demanda restante. Las fixtures son pequeñas y tipadas, no copian los catálogos ni mockean la lógica probada. El usuario confirmó la suite Vitest completa.
 
 ## Hito 5.2 — Crear y evaluar la skill local `playwright-project`
 
