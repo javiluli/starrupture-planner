@@ -1545,7 +1545,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** alinear la superficie de mantenimiento con el sistema resultante y retirar ruido de bajo riesgo.
 
-**Progreso:** 1/4 hitos cerrados; Fase 6 en curso.
+**Progreso:** 2/4 hitos resueltos; 1 completado y 1 descartado; Fase 6 en curso.
 
 **Por qué ahora:** documentación y skills deben describir la arquitectura final, no el estado intermedio; los últimos cambios son pequeños y no deben bloquear la corrección del producto.
 
@@ -1572,6 +1572,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 6.2 — Reducir y adaptar el catálogo de skills
 
 - **Prioridad:** P2
+- **Estado:** DESCARTADO por decisión del usuario (6 de septiembre de 2026).
 - **Objetivo específico:** conservar únicamente guías frecuentes, precisas y adaptadas a esta SPA.
 - **Problema resuelto:** resto de `SKILL-001`.
 - **Qué cambiar:** KEEP de `interface-design`, `web-perf`, `playwright-best-practices` y `playwright-cli`; IMPROVE de `react-best-practices` y `find-skills`; MERGE de reglas útiles de composition dentro de React y retirada de `vercel-composition-patterns`; REMOVE de `skill-creator` local, manteniéndola disponible global/on-demand.
@@ -1580,6 +1581,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** matriz de prompts positivos/negativos, revisión completa de los `SKILL.md`, medición de conflicto de triggers y búsqueda de links internos rotos.
 - **Resultado esperado:** menor carga de contexto y menos reglas contradictorias, sin perder capacidades frecuentes de diseño, React y performance.
 - **Criterios de aceptación:** cada skill restante tiene un rol documentado y las reglas locales resuelven cualquier solapamiento; composición está cubierta una sola vez; discovery exige supply-chain review; `skill-creator` no vive localmente; evals documentan que no cae la calidad.
+- **Decisión de cierre:** se conserva el catálogo instalado sin adaptaciones, fusiones ni eliminaciones. El usuario indicó explícitamente no tocar las skills y continuar con el siguiente hito. La preparación temporal se eliminó antes de modificar `.agents/skills/`; `skills-lock.json` y todas las skills permanecen intactos.
 
 ## Hito 6.3 — Corregir metadatos públicos básicos
 
