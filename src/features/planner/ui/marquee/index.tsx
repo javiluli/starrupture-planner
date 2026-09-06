@@ -60,6 +60,7 @@ export function Marquee({ children, animationDuration = 200, reverse = false }: 
           <div
             key={i}
             ref={i === 0 ? contentRef : null}
+            aria-hidden={i === 0 ? undefined : true}
             data-testid={i === 0 ? 'planner-marquee-primary' : 'planner-marquee-copy'}
             className="flex shrink-0 items-center gap-4 px-2"
           >

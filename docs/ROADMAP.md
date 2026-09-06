@@ -2,7 +2,7 @@
 
 **Fecha:** 6 de septiembre de 2026  
 **Fuente:** [`AUDIT.md`](./AUDIT.md)  
-**Estado:** Hito 1 completado; Hitos 2–4 pendientes
+**Estado:** Hitos 1–2 completados; Hitos 3–4 pendientes
 
 ## Principios de orden
 
@@ -16,7 +16,7 @@
 | Orden | Hito                                            | Prioridad | Estado     | Findings                               | Resultado verificable                                                       |
 | ----: | ----------------------------------------------- | --------- | ---------- | -------------------------------------- | --------------------------------------------------------------------------- |
 |     1 | Cerrar la actualización y precedencia de skills | P2        | COMPLETADO | `SKILL-001`                            | Lock, directorios y referencias internas coinciden.                         |
-|     2 | Corregir el contrato accesible del marquee      | P2        | PENDIENTE  | `A11Y-002`, parte de `TEST-002`        | Una única colección accesible de botones; copias visuales fuera de AT/foco. |
+|     2 | Corregir el contrato accesible del marquee      | P2        | COMPLETADO | `A11Y-002`, parte de `TEST-002`        | Una única colección accesible de botones; copias visuales fuera de AT/foco. |
 |     3 | Cerrar LCP y presupuesto de ruta inicial        | P2        | PENDIENTE  | `PERF-001`, `PERF-002`, `BASELINE-001` | LCP medido contra objetivo y presupuesto de JS inicial automatizado.        |
 |     4 | Hacer fiel el resumen de lint                   | P3        | PENDIENTE  | `GATE-001`                             | `test:all` informa warnings reales o lint falla con ellos.                  |
 
@@ -44,6 +44,7 @@ No hay hitos P0, P1 ni P4 nuevos. `DEPLOY-001` queda invalidado por la aclaraci�
 ## Hito 2 — Corregir el contrato accesible del marquee
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (6 de septiembre de 2026)
 - **Dependencia:** Hito 1
 - **Objetivo:** preservar la experiencia visual/clicable sin duplicar controles para teclado o tecnología asistiva.
 - **Áreas:** `random-item-marquee.tsx`, `ui/marquee/` y `e2e/planner/marquee.spec.ts`.
@@ -57,6 +58,7 @@ No hay hitos P0, P1 ni P4 nuevos. `DEPLOY-001` queda invalidado por la aclaraci�
 - **Criterios de aceptación:** exactamente 16 acciones de selección accesibles; ninguna copia aparece como control o entra en tab; todos los botones tienen nombre; click y teclado seleccionan objetivo; no cambia la estética.
 - **Riesgo:** medio por la interacción entre semántica, duplicación animada y requisito de click en copias.
 - **No incluye:** retirar el marquee, cambiar los 16 items aleatorios o rediseñar el empty state.
+- **Cierre y validación:** las 16 acciones primarias son botones nativos con nombre accesible. Las copias animadas permanecen clicables por puntero, pero sus grupos están fuera del árbol accesible mediante `aria-hidden`, sus botones usan `tabIndex=-1` y el puntero no les transfiere el foco. El contrato E2E comprueba el recuento de roles, nombres, ausencia de links, foco, selección primaria y de copia, y movimiento reducido. `pnpm test:all` terminó con 98 tests superados (83 unitarios y 15 E2E), además de formato, tipos y build en verde.
 
 ## Hito 3 — Cerrar LCP y presupuesto de ruta inicial
 
@@ -93,7 +95,7 @@ No hay hitos P0, P1 ni P4 nuevos. `DEPLOY-001` queda invalidado por la aclaraci�
 
 ## Próximo hito exacto
 
-El siguiente hito es **Hito 2 — Corregir el contrato accesible del marquee**. La primera acción es fijar el DOM final: botones accesibles en el conjunto primario y copias visuales no enfocables ni expuestas como controles a tecnología asistiva.
+El siguiente hito es **Hito 3 — Cerrar LCP y presupuesto de ruta inicial**. La primera acción es reproducir el baseline móvil con el DOM definitivo y el mismo perfil de laboratorio antes de cambiar la estrategia de carga de las imágenes decorativas.
 
 ## Definición de terminado del roadmap
 

@@ -124,10 +124,10 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 | `DATA-001`           | `CONFIRMED`   | Tipos raw/normalizados y casts de frontera siguen contenidos.                                                                       |
 | `DATA-002`           | `CONFIRMED`   | Catálogo estático e índices únicos siguen centralizados.                                                                            |
 | `ERROR-001`          | `CONFIRMED`   | 404, route error y deep links locales siguen diferenciados.                                                                         |
-| `A11Y-002`           | `REFINED`     | Motion/foco mejoraron; rol de acción y duplicación en árbol accesible quedan abiertos.                                              |
+| `A11Y-002`           | `REFINED`     | Resuelto en el Hito 2: botones primarios nombrados y copias fuera del árbol accesible y del tab.                                    |
 | `PERF-002`           | `REFINED`     | Entry baja a 177,32 kB gzip, pero no existe un presupuesto que detecte regresiones.                                                 |
 | `TEST-001`           | `CONFIRMED`   | 83 unit/component tests cubren lógica e invariantes principales.                                                                    |
-| `TEST-002`           | `REFINED`     | Los 14 journeys son útiles, pero consolidan `link` y solo prueban `tabIndex` en clones.                                             |
+| `TEST-002`           | `REFINED`     | La parte del marquee quedó resuelta en el Hito 2; la suite suma 15 journeys y protege roles, foco, clicks y reduced motion.         |
 | `DOC-001`            | `REFINED`     | La documentación operativa sigue útil, pero faltaba una ubicación viva separada del audit histórico; queda resuelto con estos docs. |
 | `SKILL-001`          | `REFINED`     | El drift detectado quedó resuelto en el Hito 1; catálogo, referencias y precedencia ya son verificables.                            |
 | `TS-001`             | `CONFIRMED`   | Contratos React Flow permanecen tipados sin casts problemáticos nuevos.                                                             |
@@ -168,14 +168,16 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 - **Impacto:** la mejora es real, pero el primer contenido significativo móvil sigue tardando y varía con el asset aleatorio.
 - **Solución propuesta:** conservar el concepto visual, pero hacer determinista el recurso crítico o retrasar las imágenes decorativas hasta después de contenido útil. Medir tres cargas frías con el mismo perfil y fijar un objetivo explícito; si se conserva una mediana mayor de 2.500 ms, registrar conscientemente el tradeoff.
 
-### A11Y-002 — El marquee sigue exponiendo controles duplicados y rol incorrecto
+### A11Y-002 — El marquee exponía controles duplicados y rol incorrecto
 
 - **Clasificación:** `REFINED`
 - **Prioridad:** P2
+- **Estado de remediación:** RESUELTO en el Hito 2 (6-09-2026)
 - **Evidencia:** `random-item-marquee.tsx:22-35` usa `Link` sin `href` para una acción `onPress`; el navegador expone 16 controles primarios y 32 copias en 390 px. `marquee/index.tsx:59-66` no aplica `aria-hidden` ni una representación visual no interactiva a las copias. Solo se asigna `tabIndex=-1`.
 - **Skills/principios:** Web Interface Guidelines y Playwright a11y: botón para acciones, link para navegación; contenido visual repetido no debe duplicar la experiencia de tecnología asistiva.
 - **Impacto:** lectores de pantalla encuentran múltiples “links” equivalentes que no navegan. El teclado secuencial ya está arreglado, por lo que baja de la urgencia histórica bloqueante a P2.
 - **Solución propuesta:** renderizar el conjunto primario como botones accesibles con nombre; renderizar copias como réplicas `aria-hidden` y no enfocables. Si se conserva por decisión de producto el click de ratón sobre las copias, usar una superficie visual no semántica para ese puntero, sin crear controles repetidos para AT. Añadir una aserción dirigida de rol/árbol/foco.
+- **Solución aplicada:** se sustituyeron los pseudoenlaces por botones nativos nombrados y se marcaron los grupos duplicados con `aria-hidden`; sus controles quedan fuera del tab y no toman foco por puntero, aunque conservan la selección visual requerida. El diseño, la pausa y `prefers-reduced-motion` se mantienen.
 
 ### PERF-002 — La división mejora, pero carece de guardrail
 
@@ -190,10 +192,12 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 
 - **Clasificación:** `REFINED`
 - **Prioridad:** P2, absorbido por `A11Y-002`
+- **Estado de remediación:** RESUELTO para el contrato del marquee en el Hito 2 (6-09-2026)
 - **Evidencia:** `e2e/planner/marquee.spec.ts:6-12` busca explícitamente roles `link` y solo exige `tabindex=-1` en copias, por lo que protege el comportamiento hoy incorrecto. Tampoco existe un listener común de `pageerror`/errores inesperados.
 - **Skills/principios:** `playwright-best-practices`, `web-design-guidelines`; automatizar contratos de usuario de alto valor y dejar performance detallada fuera de E2E funcional.
 - **Impacto:** una suite verde no detecta la duplicación accesible.
 - **Solución propuesta:** actualizar el spec del marquee junto al arreglo semántico. Un chequeo global de errores de página puede añadirse si se filtran explícitamente mensajes aceptados; no convertir cada página en un test exhaustivo.
+- **Solución aplicada:** el spec exige exactamente 16 botones accesibles con nombre, ninguna semántica de link, copias ocultas para AT y no enfocables, y selección correcta tanto en el conjunto primario como en una copia. La cobertura E2E total pasa de 14 a 15 journeys y conserva la comprobación de movimiento reducido.
 
 ### DOC-001 — Separar historia cerrada de estado vivo
 
