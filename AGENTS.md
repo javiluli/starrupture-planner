@@ -30,6 +30,8 @@ Prettier is the formatting source of truth: two spaces, single quotes, no semico
 
 Vitest and Testing Library cover component and unit behavior. Colocate focused tests with their owner: `src/shared/ui/asset-image/asset-image.test.tsx` is the reference pattern. Playwright journeys live in `e2e/`, grouped by feature or user flow. Prefer role-based locators over CSS selectors. When no stable semantic locator exists, add `data-testid` in kebab-case using the `<feature>-<element>[-<identifier>]` pattern and query it with `getByTestId`; do not introduce DOM IDs, `data-name`, or class selectors for tests. See `e2e/README.md` for the full convention. Run `pnpm test`, `pnpm test:e2e`, `pnpm lint`, and `pnpm build` before merging behavior or layout changes.
 
+For E2E work, use `playwright-best-practices` for test design and diagnosis, and `playwright-cli` for browser inspection or reproduction. Repository commands and conventions take precedence over generic `npx`, `npm`, Bash, locator, or execution examples from those skills.
+
 ## Protected Game Data
 
 Editors and AI agents must not modify the four JSON catalogs in `src/shared/data/` to fix missing IDs, recipes, items, fields, or inconsistent source values: `buildings_and_recipes.json`, `buildings_construction_area.json`, `corporations_components.json`, and `items_catalog.json`. Handle incomplete data in code around the catalogs. These snapshots may be replaced separately when the game changes and the user deliberately provides or approves updated source data. See `src/shared/data/README.md` for the complete boundary.

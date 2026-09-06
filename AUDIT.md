@@ -730,11 +730,11 @@ En móvil, el elemento LCP fue `tube.webp`: se encoló alrededor de 3.882 ms, co
 
 **Causa raíz.** Skills copiadas como paquetes genéricos sin una fase de adaptación al repositorio.
 
-**Solución propuesta.** Aplicar la clasificación detallada de la sección Skills: conservar lo útil, recortar/relajar React, fusionar composition, retirar skill-creator del repo y crear/adaptar una skill Playwright pequeña. No instalar el pack externo completo de forma automática.
+**Solución propuesta.** Aplicar la clasificación detallada de la sección Skills: conservar lo útil, recortar/relajar React, fusionar composition y retirar skill-creator del repo. Para Playwright se adopta la pareja instalada `playwright-best-practices` + `playwright-cli`, con roles separados y subordinada a los comandos y convenciones locales; se descarta mantener una tercera skill propia.
 
 **Dependencias.** E2E-001 y AGENT-001 para que la guía de proyecto sea fuente superior.
 
-**Criterio de aceptación.** Cada skill tiene scope y trigger no solapados, ninguna regla contradice AGENTS/arquitectura, y la skill Playwright transforma escenarios humanos en specs usando los comandos del repo.
+**Criterio de aceptación.** Cada skill tiene un rol documentado, ninguna regla genérica prevalece sobre AGENTS/arquitectura, y las skills de Playwright ayudan a diseñar o reproducir journeys usando los comandos del repo.
 
 ### TS-001 — Los nodos de Planner pierden el tipado que React Flow ya permite
 
@@ -1025,6 +1025,8 @@ Codex debe convertir ese escenario en tests pequeños con `test.step` solo cuand
 | `vercel-composition-patterns` | MERGE         | Integrar sus pocas reglas útiles de composition/variants en React; corregir la afirmación `use()` vs `useContext` y retirar ejemplos no web/repetidos. Después eliminar la skill independiente. |
 | `find-skills`                 | IMPROVE       | Mantener discovery, pero exigir revisión completa de SKILL/scripts/licencia/commit, pinning y aprobación antes de instalar; stars/installs no bastan. Adaptar comandos a pnpm/Codex.            |
 | `skill-creator`               | REMOVE        | 230,6 KB, orientada a Claude CLI, viewers y un proceso de evaluación poco frecuente. Usarla global/on-demand cuando se cree una skill, no cargarla como parte del producto.                     |
+| `playwright-best-practices`   | KEEP          | Guía técnica para diseñar, revisar y diagnosticar E2E. Consultar solo las referencias necesarias y hacer prevalecer los scripts pnpm y convenciones del repositorio.                            |
+| `playwright-cli`              | KEEP          | Herramienta operativa para inspección y reproducción en navegador. No sustituye los specs ni obliga a automatizar escenarios de poco valor.                                                    |
 
 ### Skill externa de Playwright
 
@@ -1034,7 +1036,7 @@ Se compararon tres fuentes:
 2. [`magnus919/agent-skills/playwright`](https://github.com/magnus919/agent-skills/blob/main/playwright/SKILL.md): skill concisa (157 líneas), MIT, source-indexed, con ocho referencias y un `pwrun` para doctor/inventory/report. Sus comandos/scripts priorizan bash/npx y cubre scraping, por lo que no encaja directamente en Windows/pnpm ni en el scope del repo.
 3. [`testdino-hq/playwright-skill`](https://github.com/testdino-hq/playwright-skill): mantenida, MIT y con mayor adopción visible, pero incluye más de 50 guías sobre API, seguridad, migraciones, múltiples CI y producto TestDino; es desproporcionada para dos specs de una SPA local.
 
-**Decisión recomendada:** no instalar ninguno completo. Crear una skill local pequeña `playwright-project` usando la documentación oficial como fuente normativa y tomando del candidato Magnus únicamente el contrato operativo/diagnóstico que pase revisión. Debe hablar de los scripts reales del repo, Windows/pnpm, plantilla humana, Vitest vs E2E, trace y no-MCP. Evaluarla con 3–5 prompts reales antes de conservarla.
+**Decisión adoptada (6 de septiembre de 2026):** usar `playwright-best-practices` para diseño/diagnóstico y `playwright-cli` para inspección/reproducción. Se descarta la skill local `playwright-project` y su workspace de evaluación para evitar una tercera guía que mantener. `AGENTS.md`, `e2e/README.md` y los scripts pnpm del repositorio prevalecen sobre ejemplos genéricos Bash/npm/npx de ambas skills. La expansión de E2E seguirá siendo proporcional al riesgo del producto.
 
 ## 23. Developer Experience
 
@@ -1464,7 +1466,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** cubrir contratos de dominio y recorridos críticos con la capa de prueba correcta, y dar a humanos/Codex un proceso corto para convertir escenarios en E2E mantenibles.
 
-**Progreso:** 1/4 hitos cerrados; Fase 5 en curso.
+**Progreso:** 2/4 hitos cerrados; Fase 5 en curso.
 
 **Por qué ahora:** la arquitectura y la semántica estabilizadas evitan escribir tests contra estructuras que se van a retirar inmediatamente.
 
@@ -1488,22 +1490,23 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Criterios de aceptación:** cada regla crítica tiene test positivo y negativo; fixtures no copian bloques grandes de JSON; no hay mocks de la lógica bajo prueba; suite mantiene feedback rápido y determinista.
 - **Cierre y validación:** las pruebas incorporadas durante las fases anteriores ya cubrían relaciones 0/1/N de productores, raw targets, supply válido e inválido, rehidratación del store, índices derivados, separación 404/error runtime y footprints reales/estimados. Se añadió la frontera que faltaba: `buildTree` ahora verifica la jerarquía producción→inputs→raw y que un supply compartido se consuma una sola vez antes de construir únicamente la demanda restante. Las fixtures son pequeñas y tipadas, no copian los catálogos ni mockean la lógica probada. El usuario confirmó la suite Vitest completa.
 
-## Hito 5.2 — Crear y evaluar la skill local `playwright-project`
+## Hito 5.2 — Adoptar las skills instaladas de Playwright
 
 - **Prioridad:** P2
-- **Objetivo específico:** adaptar buenas prácticas de Playwright al workflow real Windows/pnpm del repositorio.
+- **Estado:** COMPLETADO (6 de septiembre de 2026).
+- **Objetivo específico:** utilizar guías mantenidas para Playwright sin convertir E2E en una superficie principal del proyecto.
 - **Problema resuelto:** parte principal de `SKILL-001` y habilitador de `TEST-002`.
-- **Qué cambiar:** crear una skill breve con trigger preciso, comandos reales, routing Vitest/E2E/manual, plantilla humana, locators, web-first assertions, aislamiento, trace y prohibición del MCP en el camino por defecto; citar documentación oficial y fijar cualquier referencia externa reutilizada.
-- **Áreas:** `.agents/skills/playwright-project/` y documentación E2E.
+- **Qué cambiar:** conservar `playwright-best-practices` para diseño/diagnóstico y `playwright-cli` para inspección/reproducción; documentar que AGENTS, `e2e/README.md` y scripts pnpm prevalecen sobre sus ejemplos genéricos; no crear una skill adicional.
+- **Áreas:** `.agents/skills/playwright-best-practices/`, `.agents/skills/playwright-cli/`, `skills-lock.json` y `AGENTS.md`.
 - **Pasos:**
-  1. extraer solo reglas verificadas de la documentación oficial;
-  2. revisar y adaptar, no copiar ciegamente, ideas diagnósticas del candidato Magnus;
-  3. crear 3–5 prompts de evaluación reales del repo;
-  4. comprobar trigger, utilidad, longitud y que no invente scripts;
-  5. conservarla solo si supera la baseline sin skill.
-- **Tests/comprobaciones:** evals con navegación simple, flujo multi-ruta, keyboard/mobile, elección Vitest vs Playwright y diagnóstico de browser ausente.
-- **Resultado esperado:** Codex genera specs alineadas con el proyecto y sabe rechazar casos que pertenecen a Vitest/manual.
-- **Criterios de aceptación:** skill referencia `pnpm` y paths reales; no presupone bash/npx ni servicios externos; incluye plantilla humana; todos los comandos funcionan; evals muestran mejora observable; licencia/origen de fragmentos queda registrado.
+  1. revisar completamente los dos `SKILL.md` y su procedencia registrada;
+  2. separar diseño/diagnóstico de la operativa de navegador;
+  3. fijar la precedencia de las reglas locales frente a npm/npx/Bash y ejemplos genéricos;
+  4. retirar `playwright-project` y todos sus artefactos temporales.
+- **Tests/comprobaciones:** revisión estática de ambos paquetes, `skills-lock.json`, referencias locales y ausencia de la skill descartada; no requiere ejecutar la aplicación.
+- **Resultado esperado:** Codex usa una guía técnica y una herramienta de navegador ya mantenidas, solo cuando el riesgo justifica E2E.
+- **Criterios de aceptación:** ambas skills están instaladas y fijadas; sus roles están separados; los comandos pnpm y convenciones del repo tienen prioridad; no queda una tercera skill Playwright ni su workspace.
+- **Cierre y validación:** `playwright-best-practices` queda como guía de diseño y diagnóstico, mientras `playwright-cli` queda para inspección o reproducción en navegador. Se revisaron sus instrucciones completas y se registró su origen en `skills-lock.json`. `AGENTS.md` evita que sus ejemplos genéricos npm/npx/Bash sustituyan el workflow Windows/pnpm del proyecto. La skill local creada durante el hito y su workspace de evaluación fueron eliminados por decisión del usuario; no se modificó código de producto ni fue necesario ejecutar tests.
 
 ## Hito 5.3 — Automatizar journeys críticos, responsive y teclado
 
@@ -1563,12 +1566,12 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Prioridad:** P2
 - **Objetivo específico:** conservar únicamente guías frecuentes, precisas y adaptadas a esta SPA.
 - **Problema resuelto:** resto de `SKILL-001`.
-- **Qué cambiar:** KEEP de `interface-design` y `web-perf`; IMPROVE de `react-best-practices` y `find-skills`; MERGE de reglas útiles de composition dentro de React y retirada de `vercel-composition-patterns`; REMOVE de `skill-creator` local, manteniéndola disponible global/on-demand.
+- **Qué cambiar:** KEEP de `interface-design`, `web-perf`, `playwright-best-practices` y `playwright-cli`; IMPROVE de `react-best-practices` y `find-skills`; MERGE de reglas útiles de composition dentro de React y retirada de `vercel-composition-patterns`; REMOVE de `skill-creator` local, manteniéndola disponible global/on-demand.
 - **Áreas:** `.agents/skills/` y cualquier índice/documentación de skills.
 - **Pasos:** editar descripciones para triggers específicos; retirar referencias Mastra/TanStack/no-web; convertir absolutos sobre memo/casts/null en criterios; exigir revisión/licencia/pinning al descubrir; ejecutar evals antes/después; eliminar una skill solo tras confirmar que la consolidada cubre prompts relevantes.
 - **Tests/comprobaciones:** matriz de prompts positivos/negativos, revisión completa de los `SKILL.md`, medición de conflicto de triggers y búsqueda de links internos rotos.
 - **Resultado esperado:** menor carga de contexto y menos reglas contradictorias, sin perder capacidades frecuentes de diseño, React y performance.
-- **Criterios de aceptación:** cada skill restante tiene scope y trigger no solapados; composición está cubierta una sola vez; discovery exige supply-chain review; `skill-creator` no vive localmente; evals documentan que no cae la calidad.
+- **Criterios de aceptación:** cada skill restante tiene un rol documentado y las reglas locales resuelven cualquier solapamiento; composición está cubierta una sola vez; discovery exige supply-chain review; `skill-creator` no vive localmente; evals documentan que no cae la calidad.
 
 ## Hito 6.3 — Corregir metadatos públicos básicos
 
@@ -1620,7 +1623,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 | `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS divididos, medidos y vigilados.           |
 | `TEST-001`  | P2        | 5.1           | 5.4                | Invariantes cubiertos por Vitest.                   |
 | `TEST-002`  | P2        | 5.3           | 1.3, 5.2, 5.4      | Journeys críticos cubiertos por Playwright.         |
-| `SKILL-001` | P2        | 5.2           | 6.2                | Skill Playwright adaptada y catálogo racionalizado. |
+| `SKILL-001` | P2        | 5.2           | 6.2                | Skills Playwright adoptadas; catálogo pendiente.     |
 | `DOC-001`   | P2        | 6.1           | 1.4                | Onboarding/docs/comentarios fieles al repo.         |
 | `SEO-001`   | P4        | 6.3           | —                  | Metadatos y recursos públicos correctos.            |
 | `ASSET-001` | P4        | 6.4           | —                  | Assets clasificados y fallbacks explícitos.         |
