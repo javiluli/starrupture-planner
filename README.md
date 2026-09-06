@@ -103,6 +103,8 @@ Consulta el [mapa de estructura](./README-STRUCTURE.md), la [frontera de datos](
 
 ### Datos del juego / Game data
 
-Antes de contribuir, consulta la [política de datos del juego](./src/shared/data/README.md). Los catálogos JSON son snapshots externos: las inconsistencias se gestionan en el código y sus reemplazos se realizan únicamente como actualizaciones deliberadas del juego.
+Antes de contribuir, consulta la [política de datos del juego](./src/shared/data/README.md) y la
+[política de iconos](./public/assets/icons/README.md). Los catálogos JSON son snapshots externos: las inconsistencias se gestionan en el código
+y sus reemplazos se realizan únicamente como actualizaciones deliberadas del juego.
 
 <p align="center"> <i>Developed with ❤️ for the <b>StarRupture</b> community.</i> </p>

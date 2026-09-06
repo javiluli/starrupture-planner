@@ -1545,7 +1545,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** alinear la superficie de mantenimiento con el sistema resultante y retirar ruido de bajo riesgo.
 
-**Progreso:** 3/4 hitos resueltos; 2 completados y 1 descartado; Fase 6 en curso.
+**Progreso:** 4/4 hitos resueltos; 3 completados y 1 descartado; Fase 6 completada.
 
 **Por qué ahora:** documentación y skills deben describir la arquitectura final, no el estado intermedio; los últimos cambios son pequeños y no deben bloquear la corrección del producto.
 
@@ -1600,6 +1600,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 6.4 — Formalizar la política de iconos y fallbacks
 
 - **Prioridad:** P4
+- **Estado:** COMPLETADO CON ALCANCE REDUCIDO (6 de septiembre de 2026).
 - **Objetivo específico:** distinguir assets anticipados de huérfanos y hacer explícitas las excepciones.
 - **Problema resuelto:** `ASSET-001`.
 - **Qué cambiar:** documentar naming/origen/ownership; generar un reporte no destructivo catálogo↔archivos; decidir si los 26 iconos de item extra son futuros; conservar el fallback explícito de Zipline o aportar asset autorizado.
@@ -1608,6 +1609,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** inventario reproducible y render de fallback.
 - **Resultado esperado:** incorporar o retirar assets deja de depender de inspección manual y ninguna ausencia aceptada se confunde con error.
 - **Criterios de aceptación:** los 26 extras tienen decisión registrada; Zipline está cubierto por asset o fallback probado; el script no escribe/borrar archivos; CI solo falla por ausencias no declaradas.
+- **Cierre y validación:** la política mínima documenta la convención `<kind>/<catalog-id>.webp`, separa actualizaciones de assets y datos, conserva deliberadamente los 26 iconos de items anticipados y registra el fallback `Cable` de `zipline`. `AssetImage` mantiene su fallback neutral ya probado. Por decisión del usuario se retiraron el script de inventario, el nuevo test específico y cualquier integración con CI o `test:all`; no queda código de mantenimiento adicional. No se modificó, renombró ni eliminó ningún icono o catálogo JSON, y el usuario validó el alcance reducido.
 
 # Matriz de trazabilidad hallazgo → roadmap
 
