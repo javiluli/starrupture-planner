@@ -1077,7 +1077,7 @@ Los 26 findings se reducen a cinco causas sistémicas:
 
 Resolver estas causas evita crear decenas de parches locales.
 
-## 26. Preguntas pendientes
+## 26. Decisiones cerradas
 
 No quedan decisiones importantes abiertas. Se registran las respuestas vinculantes:
 
@@ -1230,7 +1230,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 2.2 — Soportar raw items y relaciones productor one-to-many
 
 - **Prioridad:** P1
-- **Estado:** COMPLETADO con seguimiento E2E pendiente (4 de septiembre de 2026).
+- **Estado:** COMPLETADO (6 de septiembre de 2026).
 - **Objetivo específico:** alinear el Planner y el catálogo con el modelo real del juego.
 - **Problemas resueltos:** `BUG-002`, `BUG-003`.
 - **Qué cambiar:** modelar productores como colección estable; cambiar el filtro de Items de igualdad singular a pertenencia; evitar que `buildItemsTableRows` descarte productores; definir el plan válido para raw items sin receta y mostrar acción/copy coherentes en Items y Planner.
@@ -1245,7 +1245,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Resultado esperado:** los 26 items multi-productor conservan todas sus asociaciones y los raw items son objetivos válidos, no una excepción oculta.
 - **Criterios de aceptación:** filtrar por cualquiera de los productores devuelve el item; no se usa `find` para colapsar cardinalidad; un raw target se guarda/restaura y produce vista terminal sin error; CTA/copy son consistentes.
 - **Cierre y validación:** un índice compartido conserva todos los buildings productores en orden de catálogo; Items filtra contra la colección completa y usa el primero solo como presentación. Las materias primas exponen el CTA Planner y muestran una vista terminal explícita sin inventar receta ni edificio. Los tests unitarios cubren relaciones 0/1/N y el filtro por productor alternativo; el E2E de `Calcium Ore` pasa. La revisión adicional dejó roles/nombres accesibles como primera opción y `data-testid` solo para elementos sin referencia semántica, con la convención documentada en `AGENTS.md` y `e2e/README.md`. Ningún catálogo JSON fue modificado.
-- **Seguimiento pendiente:** el E2E que opera el filtro multi-productor queda marcado como `fixme`: HeroUI abre correctamente el Select, pero su opción renderizada no ofrece todavía un locator estable sin acoplarse al DOM interno. El comportamiento sigue protegido por tests puros y esta deuda se retomará al consolidar los journeys de Items en el Hito 5.3.
+- **Seguimiento resuelto:** el journey E2E del filtro multi-productor quedó cubierto durante el Hito 5.3 mediante un locator estable y la convención de `data-testid` documentada. No queda `fixme` asociado a este comportamiento.
 
 ## Hito 2.3 — Retirar el tab interno `Buildings`
 
@@ -1458,8 +1458,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** `pnpm build`, inspección de chunks/sourcemap, trace de primera ruta y navegación diferida, comparación gzip y ausencia del chunk DEV en la salida de producción.
 - **Resultado esperado:** entry menor que la baseline de 687,02 kB min/194,16 kB gzip y CSS inicial menor que 273 kB, sin retrasar la primera interacción de rutas lazy.
 - **Criterios de aceptación:** chunk Dev UI de 56,45 kB no se emite en producción; XYFlow no carga en rutas que nunca muestran grafos cuando técnicamente separable; Vite informa de los tamaños y conserva sus avisos nativos; las métricas de navegación no empeoran materialmente.
-- **Seguimiento heredado de 2.6:** repetir tres trazas móviles CPU 4×/Slow 4G sobre el empty state, registrar mediana LCP y confirmar que el marquee no vuelve a introducir reflow forzado.
-- **Rework futuro fuera de este hito:** rediseñar cómo aparece y se sustituye el Flow al cargar o cambiar una receta. Incluir un componente visible que indique qué receta seleccionada se está preparando, coordinar la transición entre skeleton, Flow anterior y Flow nuevo para evitar saltos bruscos, y definir su comportamiento con movimiento reducido. Se desglosará y estimará en un hito independiente antes de implementarlo.
+- **Seguimiento heredado revisado:** la medición adicional de tres trazas móviles CPU 4×/Slow 4G no se mantuvo como criterio de cierre; el comportamiento crítico del marquee quedó corregido y la ampliación de medición se trasladó a `ideas_futuras.md` como mejora opcional.
+- **Trabajo posterior:** el rework de la transición del Flow al cargar o cambiar receta se trasladó a `ideas_futuras.md`; no forma parte de esta auditoría ni queda como tarea abierta de la Fase 6.
 - **Cierre y validación:** el CSS de XYFlow dejó de cargarse desde `main` y se importa junto a Planner y Base Designer; el grafo de Planner y la ruta Dev UI quedaron detrás de imports lazy que no participan en la entrada inicial de producción. El skeleton de carga usa la receta real de Ceramics y la tarjeta compartida de producción, sin descargar iconos de preview. La entrada del resultado y del grafo tienen una aparición sutil que se desactiva con `prefers-reduced-motion`; el E2E correspondiente y el pipeline completo fueron confirmados por el usuario. Se descartó el gate de budgets propio por mantenimiento desproporcionado: Vite conserva su reporte nativo y sus avisos estándar. No se modificaron los catálogos JSON protegidos.
 
 # FASE 5 — Cobertura de riesgos y flujo humano → Playwright
@@ -1613,33 +1613,43 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 # Matriz de trazabilidad hallazgo → roadmap
 
-| Finding     | Prioridad | Hito primario | Hitos relacionados | Estado objetivo                                    |
-| ----------- | --------- | ------------- | ------------------ | -------------------------------------------------- |
-| `DX-001`    | P1        | 1.1           | 5.4                | Toolchain e instalación reproducibles.             |
-| `DEP-001`   | P1        | 1.2           | 4.2                | Dependencias mínimas, actualizadas y justificadas. |
-| `E2E-001`   | P1        | 1.3           | 5.4                | Chromium y specs ejecutables local/CI.             |
-| `AGENT-001` | P1        | 1.4           | 6.1                | Restricción de edición explicada a los agentes.    |
-| `BUG-001`   | P1        | 2.1           | 5.1, 5.3           | Supply es positivo o no existe.                    |
-| `BUG-002`   | P1        | 2.2           | 3.3, 5.1, 5.3      | Ningún productor se descarta.                      |
-| `BUG-003`   | P2        | 2.2           | 3.3, 5.1, 5.3      | Raw item soportado de extremo a extremo.           |
-| `A11Y-001`  | P1        | 2.4           | 5.3                | Supply/target operables y nombrados.               |
-| `UI-001`    | P1        | 2.5           | 3.1, 5.3           | Navegación y toolbar responsive.                   |
-| `UI-002`    | P2        | 2.3           | 3.5                | Placeholder interno retirado.                      |
-| `PERF-001`  | P1        | 2.6           | 4.1                | LCP/reflow/motion del empty state corregidos.      |
-| `ARCH-001`  | P2        | 3.1           | 2.5                | Router/layout sin ciclo y links reales.            |
-| `ARCH-002`  | P2        | 3.2           | 6.1                | APIs públicas con dirección de imports.            |
-| `DATA-001`  | P2        | 3.3           | 2.2, 5.1           | Tipos raw/derivados fieles a la fuente.            |
-| `DATA-002`  | P2        | 3.3           | 1.4, 5.1           | Índices/reglas únicos, sin Zustand estático.       |
-| `ERROR-001` | P2        | 3.4           | 5.1, 5.3           | 404, error runtime y deep links diferenciados.     |
-| `TS-001`    | P3        | 3.5           | 5.1                | Nodos Flow tipados sin casts de frontera.          |
-| `DEAD-001`  | P3        | 3.5           | 2.3                | Contratos y hooks sin consumidores retirados.      |
-| `A11Y-002`  | P2        | 4.1           | 2.6, 5.3           | Semántica, contraste y motion consistentes.        |
-| `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS divididos, medidos y vigilados.          |
-| `TEST-001`  | P2        | 5.1           | 5.4                | Invariantes cubiertos por Vitest.                  |
-| `TEST-002`  | P2        | 5.3           | 1.3, 5.2, 5.4      | Journeys críticos cubiertos por Playwright.        |
-| `SKILL-001` | P2        | 5.2           | 6.2                | Skills Playwright adoptadas; catálogo pendiente.   |
-| `DOC-001`   | P2        | 6.1           | 1.4                | Onboarding/docs/comentarios fieles al repo.        |
-| `SEO-001`   | P4        | 6.3           | —                  | Metadatos y recursos públicos correctos.           |
-| `ASSET-001` | P4        | 6.4           | —                  | Assets clasificados y fallbacks explícitos.        |
+| Finding     | Prioridad | Hito primario | Hitos relacionados | Estado objetivo                                               |
+| ----------- | --------- | ------------- | ------------------ | ------------------------------------------------------------- |
+| `DX-001`    | P1        | 1.1           | 5.4                | Toolchain e instalación reproducibles.                        |
+| `DEP-001`   | P1        | 1.2           | 4.2                | Dependencias mínimas, actualizadas y justificadas.            |
+| `E2E-001`   | P1        | 1.3           | 5.4                | Chromium y specs ejecutables local/CI.                        |
+| `AGENT-001` | P1        | 1.4           | 6.1                | Restricción de edición explicada a los agentes.               |
+| `BUG-001`   | P1        | 2.1           | 5.1, 5.3           | Supply es positivo o no existe.                               |
+| `BUG-002`   | P1        | 2.2           | 3.3, 5.1, 5.3      | Ningún productor se descarta.                                 |
+| `BUG-003`   | P2        | 2.2           | 3.3, 5.1, 5.3      | Raw item soportado de extremo a extremo.                      |
+| `A11Y-001`  | P1        | 2.4           | 5.3                | Supply/target operables y nombrados.                          |
+| `UI-001`    | P1        | 2.5           | 3.1, 5.3           | Navegación y toolbar responsive.                              |
+| `UI-002`    | P2        | 2.3           | 3.5                | Placeholder interno retirado.                                 |
+| `PERF-001`  | P1        | 2.6           | 4.1                | LCP/reflow/motion del empty state corregidos.                 |
+| `ARCH-001`  | P2        | 3.1           | 2.5                | Router/layout sin ciclo y links reales.                       |
+| `ARCH-002`  | P2        | 3.2           | 6.1                | APIs públicas con dirección de imports.                       |
+| `DATA-001`  | P2        | 3.3           | 2.2, 5.1           | Tipos raw/derivados fieles a la fuente.                       |
+| `DATA-002`  | P2        | 3.3           | 1.4, 5.1           | Índices/reglas únicos, sin Zustand estático.                  |
+| `ERROR-001` | P2        | 3.4           | 5.1, 5.3           | 404, error runtime y deep links diferenciados.                |
+| `TS-001`    | P3        | 3.5           | 5.1                | Nodos Flow tipados sin casts de frontera.                     |
+| `DEAD-001`  | P3        | 3.5           | 2.3                | Contratos y hooks sin consumidores retirados.                 |
+| `A11Y-002`  | P2        | 4.1           | 2.6, 5.3           | Semántica, contraste y motion consistentes.                   |
+| `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS divididos, medidos y vigilados.                     |
+| `TEST-001`  | P2        | 5.1           | 5.4                | Invariantes cubiertos por Vitest.                             |
+| `TEST-002`  | P2        | 5.3           | 1.3, 5.2, 5.4      | Journeys críticos cubiertos por Playwright.                   |
+| `SKILL-001` | P2        | 5.2           | 6.2                | Skills Playwright adoptadas; catálogo conservado sin cambios. |
+| `DOC-001`   | P2        | 6.1           | 1.4                | Onboarding/docs/comentarios fieles al repo.                   |
+| `SEO-001`   | P4        | 6.3           | —                  | Metadatos y recursos públicos correctos.                      |
+| `ASSET-001` | P4        | 6.4           | —                  | Assets clasificados y fallbacks explícitos.                   |
 
-La secuencia es acumulativa, no un conjunto de iniciativas paralelas: cada fase debe terminar con sus criterios de aceptación y gates verdes antes de empezar la siguiente. Dentro de una fase solo se paralelizan hitos cuyas dependencias se indiquen como independientes; cualquier edición no autorizada de datos, regresión de cálculo o accesibilidad bloquea el avance aunque el build compile.
+## Cierre de la auditoría
+
+La auditoría queda cerrada el 6 de septiembre de 2026. Las seis fases han sido
+resueltas, sus decisiones están registradas y los cambios se integraron en `master`.
+Las ideas nuevas y el trabajo de producto posterior se mantienen fuera de este
+documento, en `ideas_futuras.md`, para no reabrir artificialmente el roadmap.
+
+La secuencia fue acumulativa: cada fase terminó con sus criterios de aceptación y
+gates correspondientes antes de iniciar la siguiente. Cualquier mejora futura debe
+abrir su propio hito y respetar las restricciones de datos, regresión de cálculo y
+accesibilidad ya establecidas.
