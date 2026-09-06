@@ -7,7 +7,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  // Vite transforms lazy routes on demand; cap cold-start concurrency without disabling parallel tests.
+  workers: process.env.CI ? 1 : 4,
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL,
@@ -19,6 +20,12 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: /\.mobile\.spec\.ts$/,
+    },
+    {
+      name: 'chromium-mobile',
+      use: { ...devices['Pixel 5'] },
+      testMatch: /\.mobile\.spec\.ts$/,
     },
   ],
   webServer: process.env.PLAYWRIGHT_BASE_URL

@@ -35,7 +35,7 @@ export const BuildingSelect = () => {
       }}
     >
       {(b) => (
-        <SelectItem key={b.id} textValue={b.name}>
+        <SelectItem key={b.id} textValue={b.name} data-testid={`items-building-option-${b.id}`}>
           <Flex>
             <AssetImage kind="buildings" id={b.id} width={32} className="shrink-0" />
             <Typography as="span" variant="small" tone="muted">

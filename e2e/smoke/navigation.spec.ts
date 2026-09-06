@@ -23,7 +23,7 @@ test('permite recorrer las secciones principales desde la navegacion', async ({ 
   await expect(page.getByRole('heading', { name: 'My Base' })).toBeVisible()
 
   await navigation.getByRole('link', { name: /Planner/ }).click()
-  await expect(page).toHaveURL(/\/$/)
+  await expect(page).toHaveURL('/')
 })
 
 test('conserva deep links, estado activo e historial del navegador', async ({ page }) => {

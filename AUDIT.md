@@ -1466,7 +1466,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** cubrir contratos de dominio y recorridos críticos con la capa de prueba correcta, y dar a humanos/Codex un proceso corto para convertir escenarios en E2E mantenibles.
 
-**Progreso:** 2/4 hitos cerrados; Fase 5 en curso.
+**Progreso:** 3/4 hitos cerrados; Fase 5 en curso.
 
 **Por qué ahora:** la arquitectura y la semántica estabilizadas evitan escribir tests contra estructuras que se van a retirar inmediatamente.
 
@@ -1511,6 +1511,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 5.3 — Automatizar journeys críticos, responsive y teclado
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (6 de septiembre de 2026).
 - **Objetivo específico:** ampliar desde smoke tests a un conjunto pequeño que detecte roturas de producto de alto impacto.
 - **Problema resuelto:** `TEST-002` y validación integrada de `BUG-001`, `BUG-002`, `BUG-003`, `UI-001` y `A11Y-001`.
 - **Qué cambiar:** organizar specs por journey con estado aislado; cubrir Planner target/rate/supply/persistencia visible, raw target, Items filtro multi-productor y CTA, corporation deep link, Base Designer catálogo/place/remove y navegación móvil/teclado.
@@ -1524,6 +1525,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** repetición local (`--repeat-each`) para detectar flakiness, ejecución Chromium en CI y revisión de traces de fallos reales.
 - **Resultado esperado:** el usuario puede confiar en que los recorridos principales sobreviven cambios de layout, datos derivados y routing.
 - **Criterios de aceptación:** specs independientes y paralelizables; cero sleeps fijos/selectores CSS; los journeys P1 están cubiertos; móvil detecta overflow/cortes; teclado completa supply; historial de CI no muestra flakiness persistente.
+- **Cierre y validación:** la suite queda en 14 journeys activos y sin casos `fixme`: cubre target, rate, supply y su restauración tras recarga; raw targets; filtro por productor alternativo y CTA de Items; deep link de Corporations; catálogo, colocación y borrado por teclado en Base Designer; navegación, overflow y toolbar móvil. Los casos responsive viven en `*.mobile.spec.ts` y se ejecutan únicamente con el proyecto `chromium-mobile`. Se mantuvieron locators semánticos y se añadieron `data-testid` solo a las opciones HeroUI que no ofrecían una referencia estable. La concurrencia local se limitó a cuatro workers tras comprobar que ocho peticiones simultáneas saturaban la transformación en frío de rutas lazy de Vite y dejaban las páginas en `Loading page`; los tests siguen siendo paralelos. El usuario confirmó tres repeticiones consecutivas completas: 42/42 tests superados. No se modificaron los catálogos JSON.
 
 ## Hito 5.4 — Consolidar gates y política de artefactos
 

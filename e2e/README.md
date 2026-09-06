@@ -7,6 +7,8 @@ Las pruebas de navegador viven aqui y se agrupan por recorrido o feature:
 - `items/`: filtros del catalogo y entrada al Planner.
 - `planner/`: recorridos de target, supply y diagramas.
 
+Los ficheros `*.mobile.spec.ts` se ejecutan únicamente en el proyecto `chromium-mobile`; el resto usa Chromium de escritorio. Así los journeys responsive relevantes prueban emulación móvil sin duplicar toda la suite.
+
 Usa locators por rol, nombre accesible o texto estable. Evita clases CSS, estructura interna de HeroUI y esperas manuales. Playwright arranca Vite automaticamente si no existe un servidor reutilizable.
 
 Cuando un elemento no tenga una referencia semantica estable o su nombre sea ambiguo, añade `data-testid` al componente y usa `getByTestId`. Mantén los valores en kebab-case con el patrón `<feature>-<elemento>[-<identificador>]`; no mezcles esta convención con IDs de DOM, `data-name` o selectores de clases.
@@ -37,6 +39,7 @@ pnpm test:e2e:debug
 pnpm test:e2e:report
 pnpm typecheck:e2e
 pnpm test:all
+pnpm exec playwright test --project=chromium-mobile
 ```
 
 ## CLI de Playwright

@@ -40,3 +40,22 @@ test('mantiene navegacion y toolbar operables en anchos compactos', async ({ pag
     expect(pageWidth.scroll).toBeLessThanOrEqual(pageWidth.client)
   }
 })
+
+test('mantiene la navegacion principal operable con teclado en movil', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/')
+
+  const navigation = page.getByRole('navigation', { name: 'Primary navigation' })
+  const itemsLink = navigation.getByRole('link', { name: 'Items' })
+  await itemsLink.focus()
+  await itemsLink.press('Enter')
+
+  await expect(page).toHaveURL('/items')
+  await expect(page.getByRole('table', { name: 'Game items catalog' })).toBeVisible()
+
+  const plannerLink = navigation.getByRole('link', { name: 'Planner' })
+  await plannerLink.focus()
+  await plannerLink.press('Enter')
+
+  await expect(page).toHaveURL('/')
+})

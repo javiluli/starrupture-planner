@@ -7,7 +7,7 @@ test('mantiene el shell y muestra un 404 semantico para una ruta inexistente', a
   await expect(page.getByRole('main')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible()
   await page.getByRole('button', { name: 'Back to Planner' }).click()
-  await expect(page).toHaveURL(/\/$/)
+  await expect(page).toHaveURL('/')
 })
 
 test('abre y centra un nivel de corporation desde un deep link', async ({ page }) => {
