@@ -38,23 +38,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Chromium
-        run: pnpm exec playwright install --with-deps --only-shell chromium
-
       - name: Check formatting
         run: pnpm format:check
 
       - name: Lint
         run: pnpm lint
 
-      - name: Run unit and component tests
-        run: pnpm test
-
       - name: Type-check Playwright
         run: pnpm typecheck:e2e
 
+      - name: Run unit and component tests
+        run: pnpm test
+
       - name: Build
         run: pnpm build
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps --only-shell chromium
 
       - name: Run browser journeys
         id: e2e

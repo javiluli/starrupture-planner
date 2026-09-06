@@ -6,8 +6,8 @@ const command = process.platform === 'win32' ? (process.env.ComSpec ?? 'cmd.exe'
 const stages = [
   { id: 'format', label: 'Format check', script: 'format:check' },
   { id: 'lint', label: 'Lint', script: 'lint' },
-  { id: 'unit', label: 'Unit tests', script: 'test', testOutput: 'vitest' },
   { id: 'e2e-typecheck', label: 'E2E typecheck', script: 'typecheck:e2e' },
+  { id: 'unit', label: 'Unit tests', script: 'test', testOutput: 'vitest' },
   { id: 'build', label: 'Build', script: 'build' },
   { id: 'e2e', label: 'E2E tests', script: 'test:e2e', testOutput: 'playwright' },
 ]
@@ -154,6 +154,7 @@ const printTable = (results) => {
 }
 
 const results = []
+const pipelineStartedAt = Date.now()
 
 for (const stage of stages) {
   const result = await runStage(stage)
@@ -162,6 +163,7 @@ for (const stage of stages) {
 }
 
 printTable(results)
+console.log(`Pipeline time: ${formatDuration(Date.now() - pipelineStartedAt)}`)
 
 const failedStage = results.find((result) => result.exitCode !== 0)
 if (failedStage) {

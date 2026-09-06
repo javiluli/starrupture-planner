@@ -75,6 +75,18 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
+### Validación antes de integrar / Pre-merge validation
+
+Ejecuta la misma definición de listo que usa CI:
+
+```bash
+pnpm test:all
+```
+
+El comando comprueba formato, lint, tipos E2E, tests unitarios, build y recorridos Chromium en ese orden. Se detiene en el primer fallo y
+muestra una tabla con el comando local que debe repetirse. Consulta la [guía E2E](./e2e/README.md) para preparar Chromium y ejecutar
+recorridos concretos.
+
 ### Datos del juego / Game data
 
 Antes de contribuir, consulta la [política de datos del juego](./src/shared/data/README.md). Los catálogos JSON son snapshots externos: las inconsistencias se gestionan en el código y sus reemplazos se realizan únicamente como actualizaciones deliberadas del juego.

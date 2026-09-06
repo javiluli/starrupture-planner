@@ -1466,7 +1466,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** cubrir contratos de dominio y recorridos críticos con la capa de prueba correcta, y dar a humanos/Codex un proceso corto para convertir escenarios en E2E mantenibles.
 
-**Progreso:** 3/4 hitos cerrados; Fase 5 en curso.
+**Progreso:** 4/4 hitos cerrados; Fase 5 completada.
 
 **Por qué ahora:** la arquitectura y la semántica estabilizadas evitan escribir tests contra estructuras que se van a retirar inmediatamente.
 
@@ -1530,6 +1530,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 5.4 — Consolidar gates y política de artefactos
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (6 de septiembre de 2026).
 - **Objetivo específico:** convertir lint, tipos, unit, build y E2E en una definición única de listo.
 - **Problema resuelto:** cierre de `DX-001`, `E2E-001`, `TEST-001` y `TEST-002`.
 - **Qué cambiar:** ordenar jobs para feedback temprano, cachear pnpm de forma segura, cancelar ejecuciones superseded, publicar solo reportes útiles y documentar excepciones temporales con owner/fecha.
@@ -1538,6 +1539,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** PR de prueba verde, fallos inducidos de cada gate y verificación de que el mensaje apunta al comando local equivalente.
 - **Resultado esperado:** una regresión obtiene feedback específico y reproducible, no un “build failed” opaco.
 - **Criterios de aceptación:** todos los gates obligatorios se ejecutan; no hay comandos exclusivos de CI; artefactos aparecen en fallo conforme a política; caché no oculta instalación congelada; tiempo total queda medido y documentado.
+- **Cierre y validación:** `pnpm test:all` queda como definición local de listo y detiene la secuencia en el primer fallo, mostrando por gate su comando reproducible, resultado, conteos y duración, además del tiempo total. CI conserva los mismos scripts y ordena formato, lint, tipos E2E, unitarios y build antes de instalar Chromium y ejecutar los journeys; así un fallo temprano no paga la preparación del navegador. El workflow cancela ejecuciones superseded, siempre ejecuta la instalación congelada aunque cachee el store de pnpm, añade anotaciones de GitHub para fallos E2E y conserva el reporte HTML durante 14 días solo cuando aporta diagnóstico. La guía declara que cualquier `skip` o `fixme` temporal necesita responsable, fecha y condición de retirada; actualmente no existe ninguno. El usuario confirmó el pipeline local completo. La ejecución remota sigue aplazada mientras el trabajo permanezca solo en local.
 
 # FASE 6 — Documentación, skills y housekeeping proporcional
 

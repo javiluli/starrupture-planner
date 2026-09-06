@@ -9,7 +9,7 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   // Vite transforms lazy routes on demand; cap cold-start concurrency without disabling parallel tests.
   workers: process.env.CI ? 1 : 4,
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: process.env.CI ? [['list'], ['github'], ['html', { open: 'never' }]] : [['list'], ['html', { open: 'never' }]],
   use: {
     baseURL,
     trace: 'on-first-retry',

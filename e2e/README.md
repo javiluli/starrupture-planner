@@ -62,3 +62,13 @@ pnpm exec playwright codegen http://127.0.0.1:5173
 ```
 
 El codigo de `codegen` es un borrador: revisa sus locators y conserva solo aserciones que representen comportamiento real. Para probar una URL ya desplegada, define `PLAYWRIGHT_BASE_URL`; en ese caso Playwright no inicia Vite.
+
+## Política de CI y excepciones
+
+CI ejecuta los mismos scripts incluidos en `pnpm test:all`, cancela ejecuciones anteriores de la misma rama y solo instala Chromium cuando
+formato, lint, tipos, tests unitarios y build ya han pasado. El store de pnpm se cachea, pero `pnpm install --frozen-lockfile` se ejecuta
+siempre. El reporte HTML de Playwright se conserva durante 14 días únicamente cuando falla un recorrido; el log y las anotaciones de GitHub
+bastan para el resto de gates.
+
+No hay tests omitidos actualmente. Cualquier `test.skip` o `test.fixme` temporal debe incluir junto al test responsable, fecha en formato
+`YYYY-MM-DD` y condición concreta para retirarlo.
