@@ -26,6 +26,8 @@ Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. 
 
 Prettier is the formatting source of truth: two spaces, single quotes, no semicolons, trailing commas, and a 140-character line limit. Use function components and TypeScript types for public contracts. Name files in kebab-case (`production-flow-diagram.tsx`), components in PascalCase, hooks with `use-`, stores as `*.store.ts`, and type modules as `*.types.ts`. Pages should compose ready-to-use feature components; calculations belong in feature `lib/` modules and global client state in Zustand stores. Prefer HeroUI components for UI and Tailwind utilities for focused layout adjustments.
 
+Comments should explain a non-obvious invariant, intent, or tradeoff. Do not narrate the next line, repeat a component's props, preserve historical implementation details, or claim a performance optimization without supporting measurement.
+
 ## Testing Guidelines
 
 Vitest and Testing Library cover component and unit behavior. Colocate focused tests with their owner: `src/shared/ui/asset-image/asset-image.test.tsx` is the reference pattern. Playwright journeys live in `e2e/`, grouped by feature or user flow. Prefer role-based locators over CSS selectors. When no stable semantic locator exists, add `data-testid` in kebab-case using the `<feature>-<element>[-<identifier>]` pattern and query it with `getByTestId`; do not introduce DOM IDs, `data-name`, or class selectors for tests. See `e2e/README.md` for the full convention. Run `pnpm test`, `pnpm test:e2e`, `pnpm lint`, and `pnpm build` before merging behavior or layout changes.

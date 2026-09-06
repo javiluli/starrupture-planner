@@ -3,8 +3,9 @@
 The repository follows a feature-first architecture. Product-specific code stays close to its feature; only genuinely cross-feature primitives belong in `shared/`.
 
 ```text
+public/
+`- assets/       # Catalog icons and public examples loaded on demand
 src/
-|- assets/       # Bundled icons and visual assets
 |- features/     # Planner, Items, Recipes, Corporations and Base Designer
 |- layouts/      # Root shell and navbar
 |- pages/        # Route-level composition only
@@ -48,6 +49,12 @@ Move code to `src/shared/` only after it is reused by multiple features and its 
 ## Page Rule
 
 Pages compose existing feature components inside `PageContainer`, `PageHeader` and `PageContent`. Business calculations, filtering and store actions remain in the owning feature.
+
+## Data Flow
+
+Game snapshots enter through `src/shared/data/`, where they are normalized and indexed without changing the source JSON. Features combine that
+read-only catalog with user-owned Zustand state, calculate derived results in pure helpers or providers, and expose ready-to-render UI through
+their public API. Pages compose those APIs; the router and layouts only decide where they render.
 
 ## Bundle Policy
 

@@ -87,6 +87,20 @@ El comando comprueba formato, lint, tipos E2E, tests unitarios, build y recorrid
 muestra una tabla con el comando local que debe repetirse. Consulta la [guía E2E](./e2e/README.md) para preparar Chromium y ejecutar
 recorridos concretos.
 
+### Arquitectura y elección de pruebas / Architecture and test scope
+
+El código sigue una estructura feature-first: las páginas componen APIs públicas de `src/features/`, `src/shared/data/` adapta los snapshots
+protegidos del juego y los stores Zustand conservan únicamente estado editable del usuario. El flujo general es:
+
+`JSON del juego → índices de shared/data → lógica de feature → store/provider → UI de página`
+
+- Usa Vitest para cálculos puros, stores y componentes aislados.
+- Usa Playwright solo para recorridos críticos entre pantallas, persistencia visible, responsive o teclado.
+- Conserva como revisión manual los detalles visuales que no representan un contrato estable.
+
+Consulta el [mapa de estructura](./README-STRUCTURE.md), la [frontera de datos](./src/shared/data/README.md) y la
+[guía E2E](./e2e/README.md) antes de mover responsabilidades entre capas.
+
 ### Datos del juego / Game data
 
 Antes de contribuir, consulta la [política de datos del juego](./src/shared/data/README.md). Los catálogos JSON son snapshots externos: las inconsistencias se gestionan en el código y sus reemplazos se realizan únicamente como actualizaciones deliberadas del juego.

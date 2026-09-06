@@ -1026,7 +1026,7 @@ Codex debe convertir ese escenario en tests pequeños con `test.step` solo cuand
 | `find-skills`                 | IMPROVE       | Mantener discovery, pero exigir revisión completa de SKILL/scripts/licencia/commit, pinning y aprobación antes de instalar; stars/installs no bastan. Adaptar comandos a pnpm/Codex.            |
 | `skill-creator`               | REMOVE        | 230,6 KB, orientada a Claude CLI, viewers y un proceso de evaluación poco frecuente. Usarla global/on-demand cuando se cree una skill, no cargarla como parte del producto.                     |
 | `playwright-best-practices`   | KEEP          | Guía técnica para diseñar, revisar y diagnosticar E2E. Consultar solo las referencias necesarias y hacer prevalecer los scripts pnpm y convenciones del repositorio.                            |
-| `playwright-cli`              | KEEP          | Herramienta operativa para inspección y reproducción en navegador. No sustituye los specs ni obliga a automatizar escenarios de poco valor.                                                    |
+| `playwright-cli`              | KEEP          | Herramienta operativa para inspección y reproducción en navegador. No sustituye los specs ni obliga a automatizar escenarios de poco valor.                                                     |
 
 ### Skill externa de Playwright
 
@@ -1545,6 +1545,8 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** alinear la superficie de mantenimiento con el sistema resultante y retirar ruido de bajo riesgo.
 
+**Progreso:** 1/4 hitos cerrados; Fase 6 en curso.
+
 **Por qué ahora:** documentación y skills deben describir la arquitectura final, no el estado intermedio; los últimos cambios son pequeños y no deben bloquear la corrección del producto.
 
 **Resultado acumulativo:** onboarding fiable, comentarios útiles, catálogo de skills pequeño, metadatos públicos básicos correctos y política de assets explícita.
@@ -1556,6 +1558,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 6.1 — Reescribir documentación operativa y comentarios engañosos
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (6 de septiembre de 2026).
 - **Objetivo específico:** hacer que README, estructura y comentarios coincidan con el código y los comandos comprobados.
 - **Problema resuelto:** `DOC-001` y parte documental de `AGENT-001`.
 - **Qué cambiar:** corregir referencias a `src/assets`, `src/app/App.tsx`, escala exacta de Base Designer y setup E2E; añadir mapa corto de arquitectura/data flow; depurar comentarios de SupplyCard y módulos afines para conservar solo intención/invariante/decisión.
@@ -1564,6 +1567,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** ejecutar todos los comandos copiados, comprobar links/paths con script simple y revisión de un onboarding simulado desde checkout limpio.
 - **Resultado esperado:** un colaborador puede arrancar, ubicar un cambio y elegir la capa de test sin descubrir excepciones por ensayo/error.
 - **Criterios de aceptación:** cero paths conocidos obsoletos; comandos verificados; restricción de edición de JSON y footprint estimado explícitos; comentarios narrativos/misleading señalados en el finding han sido corregidos.
+- **Cierre y validación:** el README raíz enlaza la instalación, la definición de listo, la arquitectura, la frontera de datos y la guía E2E; además distingue Vitest, Playwright y revisión visual manual. `README-STRUCTURE.md` representa `public/assets` en su ubicación real y documenta el flujo snapshot→índices→feature→estado/provider→UI. La documentación y el copy de Base Designer ya diferencian medidas catalogadas de footprints estimados. Se retiraron de `SupplyCard` y `PlannerSidebar` comentarios redundantes, incorrectos y afirmaciones de rendimiento sin medición, y `AGENTS.md` fija la regla de comentar solo intención, invariantes o tradeoffs no evidentes. La búsqueda estática no encontró las referencias obsoletas conocidas y no se modificó ningún catálogo JSON. El usuario autorizó continuar tras revisar el hito.
 
 ## Hito 6.2 — Reducir y adaptar el catálogo de skills
 
@@ -1603,33 +1607,33 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 # Matriz de trazabilidad hallazgo → roadmap
 
-| Finding     | Prioridad | Hito primario | Hitos relacionados | Estado objetivo                                     |
-| ----------- | --------- | ------------- | ------------------ | --------------------------------------------------- |
-| `DX-001`    | P1        | 1.1           | 5.4                | Toolchain e instalación reproducibles.              |
-| `DEP-001`   | P1        | 1.2           | 4.2                | Dependencias mínimas, actualizadas y justificadas.  |
-| `E2E-001`   | P1        | 1.3           | 5.4                | Chromium y specs ejecutables local/CI.              |
-| `AGENT-001` | P1        | 1.4           | 6.1                | Restricción de edición explicada a los agentes.     |
-| `BUG-001`   | P1        | 2.1           | 5.1, 5.3           | Supply es positivo o no existe.                     |
-| `BUG-002`   | P1        | 2.2           | 3.3, 5.1, 5.3      | Ningún productor se descarta.                       |
-| `BUG-003`   | P2        | 2.2           | 3.3, 5.1, 5.3      | Raw item soportado de extremo a extremo.            |
-| `A11Y-001`  | P1        | 2.4           | 5.3                | Supply/target operables y nombrados.                |
-| `UI-001`    | P1        | 2.5           | 3.1, 5.3           | Navegación y toolbar responsive.                    |
-| `UI-002`    | P2        | 2.3           | 3.5                | Placeholder interno retirado.                       |
-| `PERF-001`  | P1        | 2.6           | 4.1                | LCP/reflow/motion del empty state corregidos.       |
-| `ARCH-001`  | P2        | 3.1           | 2.5                | Router/layout sin ciclo y links reales.             |
-| `ARCH-002`  | P2        | 3.2           | 6.1                | APIs públicas con dirección de imports.             |
-| `DATA-001`  | P2        | 3.3           | 2.2, 5.1           | Tipos raw/derivados fieles a la fuente.             |
-| `DATA-002`  | P2        | 3.3           | 1.4, 5.1           | Índices/reglas únicos, sin Zustand estático.        |
-| `ERROR-001` | P2        | 3.4           | 5.1, 5.3           | 404, error runtime y deep links diferenciados.      |
-| `TS-001`    | P3        | 3.5           | 5.1                | Nodos Flow tipados sin casts de frontera.           |
-| `DEAD-001`  | P3        | 3.5           | 2.3                | Contratos y hooks sin consumidores retirados.       |
-| `A11Y-002`  | P2        | 4.1           | 2.6, 5.3           | Semántica, contraste y motion consistentes.         |
-| `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS divididos, medidos y vigilados.           |
-| `TEST-001`  | P2        | 5.1           | 5.4                | Invariantes cubiertos por Vitest.                   |
-| `TEST-002`  | P2        | 5.3           | 1.3, 5.2, 5.4      | Journeys críticos cubiertos por Playwright.         |
-| `SKILL-001` | P2        | 5.2           | 6.2                | Skills Playwright adoptadas; catálogo pendiente.     |
-| `DOC-001`   | P2        | 6.1           | 1.4                | Onboarding/docs/comentarios fieles al repo.         |
-| `SEO-001`   | P4        | 6.3           | —                  | Metadatos y recursos públicos correctos.            |
-| `ASSET-001` | P4        | 6.4           | —                  | Assets clasificados y fallbacks explícitos.         |
+| Finding     | Prioridad | Hito primario | Hitos relacionados | Estado objetivo                                    |
+| ----------- | --------- | ------------- | ------------------ | -------------------------------------------------- |
+| `DX-001`    | P1        | 1.1           | 5.4                | Toolchain e instalación reproducibles.             |
+| `DEP-001`   | P1        | 1.2           | 4.2                | Dependencias mínimas, actualizadas y justificadas. |
+| `E2E-001`   | P1        | 1.3           | 5.4                | Chromium y specs ejecutables local/CI.             |
+| `AGENT-001` | P1        | 1.4           | 6.1                | Restricción de edición explicada a los agentes.    |
+| `BUG-001`   | P1        | 2.1           | 5.1, 5.3           | Supply es positivo o no existe.                    |
+| `BUG-002`   | P1        | 2.2           | 3.3, 5.1, 5.3      | Ningún productor se descarta.                      |
+| `BUG-003`   | P2        | 2.2           | 3.3, 5.1, 5.3      | Raw item soportado de extremo a extremo.           |
+| `A11Y-001`  | P1        | 2.4           | 5.3                | Supply/target operables y nombrados.               |
+| `UI-001`    | P1        | 2.5           | 3.1, 5.3           | Navegación y toolbar responsive.                   |
+| `UI-002`    | P2        | 2.3           | 3.5                | Placeholder interno retirado.                      |
+| `PERF-001`  | P1        | 2.6           | 4.1                | LCP/reflow/motion del empty state corregidos.      |
+| `ARCH-001`  | P2        | 3.1           | 2.5                | Router/layout sin ciclo y links reales.            |
+| `ARCH-002`  | P2        | 3.2           | 6.1                | APIs públicas con dirección de imports.            |
+| `DATA-001`  | P2        | 3.3           | 2.2, 5.1           | Tipos raw/derivados fieles a la fuente.            |
+| `DATA-002`  | P2        | 3.3           | 1.4, 5.1           | Índices/reglas únicos, sin Zustand estático.       |
+| `ERROR-001` | P2        | 3.4           | 5.1, 5.3           | 404, error runtime y deep links diferenciados.     |
+| `TS-001`    | P3        | 3.5           | 5.1                | Nodos Flow tipados sin casts de frontera.          |
+| `DEAD-001`  | P3        | 3.5           | 2.3                | Contratos y hooks sin consumidores retirados.      |
+| `A11Y-002`  | P2        | 4.1           | 2.6, 5.3           | Semántica, contraste y motion consistentes.        |
+| `PERF-002`  | P2        | 4.2           | 1.2, 5.4           | Entry/CSS divididos, medidos y vigilados.          |
+| `TEST-001`  | P2        | 5.1           | 5.4                | Invariantes cubiertos por Vitest.                  |
+| `TEST-002`  | P2        | 5.3           | 1.3, 5.2, 5.4      | Journeys críticos cubiertos por Playwright.        |
+| `SKILL-001` | P2        | 5.2           | 6.2                | Skills Playwright adoptadas; catálogo pendiente.   |
+| `DOC-001`   | P2        | 6.1           | 1.4                | Onboarding/docs/comentarios fieles al repo.        |
+| `SEO-001`   | P4        | 6.3           | —                  | Metadatos y recursos públicos correctos.           |
+| `ASSET-001` | P4        | 6.4           | —                  | Assets clasificados y fallbacks explícitos.        |
 
 La secuencia es acumulativa, no un conjunto de iniciativas paralelas: cada fase debe terminar con sus criterios de aceptación y gates verdes antes de empezar la siguiente. Dentro de una fase solo se paralelizan hitos cuyas dependencias se indiquen como independientes; cualquier edición no autorizada de datos, regresión de cálculo o accesibilidad bloquea el avance aunque el build compile.

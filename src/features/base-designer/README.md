@@ -1,6 +1,6 @@
 # Base Designer
 
-Editor visual para colocar edificios a escala dentro del area de construccion de la base.
+Editor visual para colocar edificios según las medidas disponibles dentro del área de construcción de la base.
 React Flow se usa como capa de interaccion; Zustand contiene el estado editable y los JSON del juego siguen siendo la fuente de verdad.
 
 ## Estructura

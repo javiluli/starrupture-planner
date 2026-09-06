@@ -10,7 +10,7 @@ export const PageBaseDesigner = () => {
             <Typography as="h1" variant="h2">
               My Base
             </Typography>
-            <Typography tone="soft">Place buildings at their in-game scale and connect production lines.</Typography>
+            <Typography tone="soft">Place buildings using catalog dimensions; missing footprints are marked as estimates.</Typography>
           </Flex>
           <BaseDesignerStats />
         </Flex>
