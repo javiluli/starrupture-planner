@@ -1545,7 +1545,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 
 **Objetivo global:** alinear la superficie de mantenimiento con el sistema resultante y retirar ruido de bajo riesgo.
 
-**Progreso:** 2/4 hitos resueltos; 1 completado y 1 descartado; Fase 6 en curso.
+**Progreso:** 3/4 hitos resueltos; 2 completados y 1 descartado; Fase 6 en curso.
 
 **Por qué ahora:** documentación y skills deben describir la arquitectura final, no el estado intermedio; los últimos cambios son pequeños y no deben bloquear la corrección del producto.
 
@@ -1586,6 +1586,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 ## Hito 6.3 — Corregir metadatos públicos básicos
 
 - **Prioridad:** P4
+- **Estado:** COMPLETADO (6 de septiembre de 2026).
 - **Objetivo específico:** cerrar inconsistencias SEO/documentales sin ampliar el alcance a SSR.
 - **Problema resuelto:** `SEO-001`.
 - **Qué cambiar:** favicon con MIME/extensión real, description útil, `robots.txt` servido como texto y title estable; decidir conscientemente indexación. No añadir sitemap/schema/SSR sin necesidad de negocio.
@@ -1594,6 +1595,7 @@ No quedan decisiones importantes abiertas. Se registran las respuestas vinculant
 - **Tests/comprobaciones:** `curl`/browser sobre favicon y robots, Lighthouse SEO y build preview.
 - **Resultado esperado:** crawlers y navegador reciben tipos/contenido correctos, sin que una ruta de texto termine en la SPA.
 - **Criterios de aceptación:** favicon carga sin mismatch; description presente; `/robots.txt` devuelve `text/plain` y no HTML; Lighthouse deja de señalar esos ítems.
+- **Cierre y validación:** el favicon existente conserva su archivo JPEG real y declara `image/jpeg`; el documento incluye una descripción útil y el título estable `StarRupture Planner`. `public/robots.txt` permite conscientemente la indexación y queda fuera del rewrite SPA por tener extensión. No se añadieron sitemap, schema ni SSR. El usuario confirmó sobre `pnpm preview` respuestas `200`, `Content-Type: image/jpeg` para el icono y `Content-Type: text/plain` con el contenido esperado para `/robots.txt`.
 
 ## Hito 6.4 — Formalizar la política de iconos y fallbacks
 
