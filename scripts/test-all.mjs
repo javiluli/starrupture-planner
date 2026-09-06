@@ -4,6 +4,7 @@ const packageManager = process.platform === 'win32' ? 'pnpm.cmd' : 'pnpm'
 const command = process.platform === 'win32' ? (process.env.ComSpec ?? 'cmd.exe') : packageManager
 
 const stages = [
+  { id: 'skills', label: 'Skill catalog', script: 'check:skills' },
   { id: 'format', label: 'Format check', script: 'format:check' },
   { id: 'lint', label: 'Lint', script: 'lint' },
   { id: 'e2e-typecheck', label: 'E2E typecheck', script: 'typecheck:e2e' },

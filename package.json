@@ -28,6 +28,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "check:skills": "node scripts/validate-skills.mjs",
     "preview": "vite preview",
     "test": "vitest run src",
     "test:all": "node scripts/test-all.mjs",

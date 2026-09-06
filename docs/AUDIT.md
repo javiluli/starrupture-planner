@@ -129,7 +129,7 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 | `TEST-001`           | `CONFIRMED`   | 83 unit/component tests cubren lógica e invariantes principales.                                                                    |
 | `TEST-002`           | `REFINED`     | Los 14 journeys son útiles, pero consolidan `link` y solo prueban `tabIndex` en clones.                                             |
 | `DOC-001`            | `REFINED`     | La documentación operativa sigue útil, pero faltaba una ubicación viva separada del audit histórico; queda resuelto con estos docs. |
-| `SKILL-001`          | `REFINED`     | El catálogo cambió y ahora tiene drift verificable y prerrequisitos ausentes.                                                       |
+| `SKILL-001`          | `REFINED`     | El drift detectado quedó resuelto en el Hito 1; catálogo, referencias y precedencia ya son verificables.                            |
 | `TS-001`             | `CONFIRMED`   | Contratos React Flow permanecen tipados sin casts problemáticos nuevos.                                                             |
 | `DEAD-001`           | `CONFIRMED`   | No reapareció el código muerto retirado.                                                                                            |
 | `SEO-001`            | `CONFIRMED`   | Metadata/favicon/robots son correctos en build local.                                                                               |
@@ -204,14 +204,15 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 - **Impacto:** sin esta separación, actualizar cifras vivas falsearía el registro de decisiones o dejaría el roadmap sin fuente canónica.
 - **Solución propuesta:** mantener `AUDIT.md` intacto y usar estos dos documentos para la delta y el roadmap vigente. Actualizar el baseline de `README-STRUCTURE.md` durante el hito de performance, no en esta auditoría.
 
-### SKILL-001 — La actualización de skills no está internamente consistente
+### SKILL-001 — La actualización de skills no estaba internamente consistente
 
 - **Clasificación:** `REFINED`
 - **Prioridad:** P2
+- **Estado:** RESUELTO en el Hito 1
 - **Evidencia:** `skills-lock.json:16-50` conserva `interface-design`, el antiguo `react-best-practices` y `skill-creator`, pero sus directorios están borrados en la rama. `web-quality-audit/SKILL.md:19` enlaza un `performance/references/MEASUREMENT.md` inexistente. `typescript-best-practices/SKILL.md:10-25` exige `type-system-discipline` y remite a `boundary-discipline`, skills no disponibles en el proyecto.
 - **Skills/principios:** reproducibilidad, prerequisite integrity y precedencia local.
 - **Impacto:** futuros agentes pueden creer que hay capacidades instaladas que no existen o detenerse siguiendo referencias imposibles; dos auditorías con el mismo lock pueden usar criterios distintos.
-- **Solución propuesta:** cerrar la actualización actual sincronizando lock y directorios, reparar o eliminar referencias rotas y documentar qué prerequisitos se sustituyen por reglas locales. Añadir una validación no destructiva de entradas/rutas del lock.
+- **Solución aplicada:** se sincronizaron las 14 skills de disco con el lock, se retiraron tres entradas obsoletas, se repararon referencias/prerrequisitos y `AGENTS.md` fija la precedencia. `pnpm check:skills` valida catálogo, frontmatter y links locales desde `test:all` y CI.
 
 ### BASELINE-001 — La cifra anterior de bundle ya no es actual
 

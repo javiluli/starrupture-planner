@@ -2,7 +2,7 @@
 
 **Fecha:** 6 de septiembre de 2026  
 **Fuente:** [`AUDIT.md`](./AUDIT.md)  
-**Estado:** propuesto; ningún hito de este documento ha sido implementado
+**Estado:** Hito 1 completado; Hitos 2–4 pendientes
 
 ## Principios de orden
 
@@ -13,18 +13,19 @@
 
 ## Resumen de hitos
 
-| Orden | Hito                                            | Prioridad | Findings                               | Resultado verificable                                                       |
-| ----: | ----------------------------------------------- | --------- | -------------------------------------- | --------------------------------------------------------------------------- |
-|     1 | Cerrar la actualización y precedencia de skills | P2        | `SKILL-001`                            | Lock, directorios y referencias internas coinciden.                         |
-|     2 | Corregir el contrato accesible del marquee      | P2        | `A11Y-002`, parte de `TEST-002`        | Una única colección accesible de botones; copias visuales fuera de AT/foco. |
-|     3 | Cerrar LCP y presupuesto de ruta inicial        | P2        | `PERF-001`, `PERF-002`, `BASELINE-001` | LCP medido contra objetivo y presupuesto de JS inicial automatizado.        |
-|     4 | Hacer fiel el resumen de lint                   | P3        | `GATE-001`                             | `test:all` informa warnings reales o lint falla con ellos.                  |
+| Orden | Hito                                            | Prioridad | Estado     | Findings                               | Resultado verificable                                                       |
+| ----: | ----------------------------------------------- | --------- | ---------- | -------------------------------------- | --------------------------------------------------------------------------- |
+|     1 | Cerrar la actualización y precedencia de skills | P2        | COMPLETADO | `SKILL-001`                            | Lock, directorios y referencias internas coinciden.                         |
+|     2 | Corregir el contrato accesible del marquee      | P2        | PENDIENTE  | `A11Y-002`, parte de `TEST-002`        | Una única colección accesible de botones; copias visuales fuera de AT/foco. |
+|     3 | Cerrar LCP y presupuesto de ruta inicial        | P2        | PENDIENTE  | `PERF-001`, `PERF-002`, `BASELINE-001` | LCP medido contra objetivo y presupuesto de JS inicial automatizado.        |
+|     4 | Hacer fiel el resumen de lint                   | P3        | PENDIENTE  | `GATE-001`                             | `test:all` informa warnings reales o lint falla con ellos.                  |
 
 No hay hitos P0, P1 ni P4 nuevos. `DEPLOY-001` queda invalidado por la aclaración del usuario. Los findings `CONFIRMED`, `DOC-001` y `SKILL-CONFLICT-001` no generan trabajo adicional.
 
 ## Hito 1 — Cerrar la actualización y precedencia de skills
 
 - **Prioridad:** P2
+- **Estado:** COMPLETADO (6 de septiembre de 2026)
 - **Objetivo:** hacer determinista el catálogo que se usará en los siguientes hitos.
 - **Áreas:** `.agents/skills/`, `skills-lock.json` y reglas locales de uso.
 - **Secuencia:**
@@ -38,6 +39,7 @@ No hay hitos P0, P1 ni P4 nuevos. `DEPLOY-001` queda invalidado por la aclaraci�
 - **Criterios de aceptación:** lock y disco enumeran el mismo catálogo; cero links requeridos rotos; cada overlap tiene owner/precedencia; `find-skills` no se activa en auditorías ordinarias.
 - **Riesgo:** bajo; no toca producto.
 - **No incluye:** fusionar contenido de terceros, instalar skills adicionales por conveniencia ni cambiar reglas de producto.
+- **Cierre y validación:** el catálogo final contiene 14 skills tanto en disco como en `skills-lock.json`; se retiraron las tres entradas obsoletas. `web-quality-audit` enlaza únicamente guías instaladas y `typescript-best-practices` quedó autocontenida, sin prerrequisitos fantasma. `AGENTS.md` define la precedencia de reglas. El nuevo `pnpm check:skills` valida catálogo, frontmatter y enlaces locales, y se ejecuta desde `test:all` y CI. La matriz de aplicabilidad permanece en `docs/AUDIT.md`. El validador Python genérico de `skill-creator` no pudo arrancar porque el runtime no incluye PyYAML; el check Node del repositorio cubrió las invariantes requeridas sin añadir una dependencia. `pnpm test:all` terminó con 97 tests superados y el nuevo gate verde.
 
 ## Hito 2 — Corregir el contrato accesible del marquee
 
@@ -91,7 +93,7 @@ No hay hitos P0, P1 ni P4 nuevos. `DEPLOY-001` queda invalidado por la aclaraci�
 
 ## Próximo hito exacto
 
-El siguiente hito es **Hito 1 — Cerrar la actualización y precedencia de skills**. La primera acción es decidir el conjunto final de las 14 skills presentes y sincronizarlo con `skills-lock.json`; después se reparan las referencias requeridas que hoy apuntan a recursos ausentes.
+El siguiente hito es **Hito 2 — Corregir el contrato accesible del marquee**. La primera acción es fijar el DOM final: botones accesibles en el conjunto primario y copias visuales no enfocables ni expuestas como controles a tecnología asistiva.
 
 ## Definición de terminado del roadmap
 

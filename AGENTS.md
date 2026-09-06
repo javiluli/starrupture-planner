@@ -15,11 +15,12 @@ Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. 
 - `pnpm lint`: run ESLint across TypeScript and React files.
 - `pnpm format`: format supported project files with the repository's pinned Prettier version.
 - `pnpm format:check`: verify formatting without changing files.
+- `pnpm check:skills`: verify that the project skill catalog, lockfile, frontmatter, and local `SKILL.md` links agree.
 - `pnpm test`: run component and unit tests once with Vitest.
 - `pnpm typecheck:e2e`: type-check Playwright configuration and browser journeys.
 - `pnpm test:e2e`: run Playwright browser journeys in Chromium.
 - `pnpm test:e2e:ui`: open Playwright UI mode for local debugging.
-- `pnpm test:all`: run formatting, lint, unit tests, E2E type-checking, build, and Chromium journeys.
+- `pnpm test:all`: run the skill catalog check, formatting, lint, unit tests, E2E type-checking, build, and Chromium journeys.
 - `pnpm preview`: serve the production build locally.
 
 ## Coding Style & Naming Conventions
@@ -27,6 +28,10 @@ Use Node.js 24.20.0 and pnpm 11.19.0, as pinned by `.nvmrc` and `package.json`. 
 Prettier is the formatting source of truth: two spaces, single quotes, no semicolons, trailing commas, and a 140-character line limit. Use function components and TypeScript types for public contracts. Name files in kebab-case (`production-flow-diagram.tsx`), components in PascalCase, hooks with `use-`, stores as `*.store.ts`, and type modules as `*.types.ts`. Pages should compose ready-to-use feature components; calculations belong in feature `lib/` modules and global client state in Zustand stores. Prefer HeroUI components for UI and Tailwind utilities for focused layout adjustments.
 
 Comments should explain a non-obvious invariant, intent, or tradeoff. Do not narrate the next line, repeat a component's props, preserve historical implementation details, or claim a performance optimization without supporting measurement.
+
+## Skill Precedence
+
+When installed skill guidance conflicts, project instructions and supported library contracts take precedence, followed by measured evidence, domain-specific skills, and then generic recommendations. Do not replace feature public APIs, supported `@heroui/react` imports, or idiomatic React APIs solely because a generic rule prefers another pattern. Apply version-specific guidance only when it matches the versions pinned by this repository. A skill must be self-contained against the installed catalog: required references and prerequisites cannot point to absent local skills.
 
 ## Testing Guidelines
 
