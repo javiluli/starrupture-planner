@@ -21,7 +21,7 @@ export const RecipeInputs = ({ inputs, itemMap }: { inputs: readonly RecipeInput
 
           return (
             <div key={input.id} className="flex flex-col items-center gap-2 p-2 rounded-md bg-content1 min-w-30">
-              <AssetImage kind="items" id={input.id} width={48} />
+              <AssetImage kind="items" id={input.id} width={48} alt="" />
 
               <Typography as="span" variant="micro" tone="normal" className="text-center">
                 {inputItem?.name ?? input.id}

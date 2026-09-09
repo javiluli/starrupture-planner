@@ -17,7 +17,7 @@ export const RecipeOutput = ({ output, outputItem }: Props) => {
       <Typography as="span" variant="micro" tone="soft" className="mb-2">
         Output
       </Typography>
-      <AssetImage kind="items" id={output.id} width={72} />
+      <AssetImage kind="items" id={output.id} width={72} alt="" />
       <Typography as="span" variant="small" tone="normal" className="font-semibold text-center">
         {outputItem?.name ?? output.id}
       </Typography>

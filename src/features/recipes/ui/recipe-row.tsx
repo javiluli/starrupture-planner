@@ -16,7 +16,7 @@ const RecipeRowComponent = ({ recipe, outputItem, itemMap }: Props) => (
   <div className="rounded-lg border border-divider">
     <Flex align="center" gap="xl" wrap="wrap" className="px-10 py-6">
       <RecipeOutput output={recipe.output} outputItem={outputItem} />
-      <ChevronLeft size={32} className="text-foreground" />
+      <ChevronLeft aria-hidden size={32} className="text-foreground" />
       <RecipeInputs inputs={recipe.inputs} itemMap={itemMap} />
     </Flex>
   </div>

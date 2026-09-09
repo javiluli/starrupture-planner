@@ -9,7 +9,14 @@ import { GithubButton } from './components/github-button'
  */
 const RootLayout = () => {
   return (
-    <Flex id="__NEXT" direction="col" align="stretch" className="h-dvh min-h-0 gap-0 overflow-hidden">
+    <>
+      <a
+        href="#main-content"
+        className="sr-only fixed left-3 top-3 z-50 rounded-medium bg-content1 px-3 py-2 text-sm text-foreground focus:not-sr-only focus-visible:ring-2 focus-visible:ring-focus"
+      >
+        Skip to main content
+      </a>
+      <Flex direction="col" align="stretch" className="h-dvh min-h-0 gap-0 overflow-hidden">
       <Navbar
         className="shrink-0 border-b border-divider/60 bg-background/80 backdrop-blur"
         classNames={{ wrapper: 'min-w-0 gap-2 px-3 sm:px-4 lg:px-6' }}
@@ -53,10 +60,11 @@ const RootLayout = () => {
         </NavbarContent>
       </Navbar>
 
-      <main className="min-h-0 flex-1 overflow-hidden">
+      <main id="main-content" tabIndex={-1} className="min-h-0 flex-1 overflow-hidden">
         <Outlet />
       </main>
-    </Flex>
+      </Flex>
+    </>
   )
 }
 

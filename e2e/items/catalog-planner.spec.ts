@@ -3,6 +3,10 @@ import { expect, test } from '@playwright/test'
 test('filtra un item por cualquiera de sus buildings productores', async ({ page }) => {
   await page.goto('/items')
 
+  await expect(page.getByRole('button', { name: 'Filter items by category' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Filter items by corporation' })).toBeVisible()
+  await expect(page.getByRole('searchbox', { name: 'Search items' })).toBeVisible()
+
   const buildingTrigger = page.getByRole('button', { name: /Filter items by building/ })
 
   await buildingTrigger.click()

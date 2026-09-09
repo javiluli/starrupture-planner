@@ -10,6 +10,7 @@ export const CorporationSelect = () => {
 
   return (
     <Select
+      aria-label="Filter items by corporation"
       size="sm"
       variant="bordered"
       className="w-67.5"
@@ -24,7 +25,7 @@ export const CorporationSelect = () => {
           const c = item.data as Corporation
           return (
             <Flex key={c.id} align="center" gap="sm">
-              <AssetImage kind="corporations" id={c.id} width={16} className="rounded-none" />
+              <AssetImage kind="corporations" id={c.id} width={16} alt="" className="rounded-none" />
               <Typography as="span" variant="small" tone="muted" className="capitalize">
                 {c.id.replaceAll('_', ' ')}
               </Typography>
@@ -36,7 +37,7 @@ export const CorporationSelect = () => {
       {(c) => (
         <SelectItem key={c.id} className="py-3">
           <Flex>
-            <AssetImage kind="corporations" id={c.id} width={18} className="rounded-none" />
+            <AssetImage kind="corporations" id={c.id} width={18} alt="" className="rounded-none" />
             <Typography as="span" variant="small" tone="muted" className="capitalize">
               {c.id.split('_').join(' ')}
             </Typography>

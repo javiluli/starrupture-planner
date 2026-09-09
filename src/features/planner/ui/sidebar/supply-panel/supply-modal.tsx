@@ -13,7 +13,7 @@ export function SupplyModal() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const [search, setSearch] = useState('')
 
-  const filteredItems = useMemo(() => filterItemsByQuery(items, search), [items, search])
+  const filteredItems = useMemo(() => filterItemsByQuery(items, search), [search])
   const itemsByType = useMemo(() => groupItemsByType(filteredItems), [filteredItems])
 
   const handleSupply = (itemId: string) => {
@@ -41,8 +41,8 @@ export function SupplyModal() {
                   fullWidth
                   aria-label="Search supply items"
                   variant="bordered"
-                  placeholder="Type to search..."
-                  startContent={<SearchIcon size={18} />}
+                  placeholder="Type to search…"
+                  startContent={<SearchIcon aria-hidden size={18} />}
                   type="search"
                   onChange={(e) => setSearch(e.target.value)}
                 />

@@ -19,6 +19,7 @@ export const CategorySelect = () => {
 
   return (
     <Select
+      aria-label="Filter items by category"
       size="sm"
       variant="bordered"
       className="w-48"

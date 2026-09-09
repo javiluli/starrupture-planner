@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom'
 export const ItemCell = ({ item }: { item: Item }) => {
   return (
     <Flex gap="sm">
-      <AssetImage kind="items" id={item.id} width={56} />
+      <AssetImage kind="items" id={item.id} width={56} alt="" />
       <Typography as="span" variant="body" tone="muted">
         {item.name}
       </Typography>

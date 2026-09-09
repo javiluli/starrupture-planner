@@ -24,8 +24,8 @@ export const BuildingSelect = () => {
         return items.map((item) => {
           const b = item.data as Building
           return (
-            <Flex>
-              <AssetImage kind="buildings" id={b.id} width={24} className="shrink-0" />
+            <Flex key={b.id}>
+              <AssetImage kind="buildings" id={b.id} width={24} alt="" className="shrink-0" />
               <Typography as="span" variant="small" tone="muted">
                 {b.name}
               </Typography>
@@ -37,7 +37,7 @@ export const BuildingSelect = () => {
       {(b) => (
         <SelectItem key={b.id} textValue={b.name} data-testid={`items-building-option-${b.id}`}>
           <Flex>
-            <AssetImage kind="buildings" id={b.id} width={32} className="shrink-0" />
+            <AssetImage kind="buildings" id={b.id} width={32} alt="" className="shrink-0" />
             <Typography as="span" variant="small" tone="muted">
               {b.name}
             </Typography>

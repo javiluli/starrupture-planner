@@ -31,6 +31,10 @@
 }
 
 @layer base {
+  html {
+    color-scheme: dark;
+  }
+
   body,
   #root,
   main {

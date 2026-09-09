@@ -7,12 +7,13 @@ export const SearchInput = () => {
 
   return (
     <Input
+      aria-label="Search items"
       type="search"
       size="sm"
       variant="bordered"
       className="w-50"
       placeholder="Search items"
-      startContent={<SearchIcon size={18} />}
+      startContent={<SearchIcon aria-hidden size={18} />}
       value={filters.searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)}
     />

@@ -54,7 +54,7 @@ const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargete
                       </Typography>
                     </Flex>
 
-                    <AssetImage kind="items" id={component.id} width={48} />
+                    <AssetImage kind="items" id={component.id} width={48} alt="" />
                     <Typography as="span" variant="micro" tone="normal" className="text-center">
                       {inputItem?.name ?? component.id}
                     </Typography>

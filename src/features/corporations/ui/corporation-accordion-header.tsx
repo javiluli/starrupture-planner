@@ -13,7 +13,7 @@ export const CorporationAccordionHeader = ({ corporation }: Props) => (
       <Typography as="h3" variant="h3" className="capitalize">
         {corporation.id.split('_').join(' ')}
       </Typography>
-      <Typography as="h3" variant="h4" tone="soft" className="capitalize">
+      <Typography as="p" variant="h4" tone="soft" className="capitalize">
         {corporation.description}
       </Typography>
       <CorporationAccordionMeta corporation={corporation} />

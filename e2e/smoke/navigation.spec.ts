@@ -3,6 +3,11 @@ import { expect, test } from '@playwright/test'
 test('permite recorrer las secciones principales desde la navegacion', async ({ page }) => {
   await page.goto('/')
 
+  const skipLink = page.getByRole('link', { name: 'Skip to main content' })
+  await skipLink.focus()
+  await skipLink.press('Enter')
+  await expect(page.getByRole('main')).toBeFocused()
+
   const navigation = page.getByRole('navigation', { name: 'Primary navigation' })
   await expect(navigation).toBeVisible()
 

@@ -1,24 +1,26 @@
 import { heroui } from '@heroui/react'
 
+// Balanced / Recommended
+// Mantiene los colores de marca y estados del tema original.
+// Ajusta principalmente la jerarquía de fondos, superficies, overlays y divisores.
 export default heroui({
   defaultTheme: 'dark',
-
   themes: {
     dark: {
       colors: {
         default: {
-          '50': '#05080e',
-          '100': '#090d17',
-          '200': '#0c121f',
-          '300': '#0f1628',
-          '400': '#121b30',
-          '500': '#3b4354',
-          '600': '#656b78',
-          '700': '#8e939d',
-          '800': '#b8bbc1',
-          '900': '#e1e3e5',
+          '50': '#060910',
+          '100': '#0b111b',
+          '200': '#101826',
+          '300': '#162236',
+          '400': '#1e2d45',
+          '500': '#46546b',
+          '600': '#6e798b',
+          '700': '#97a0ad',
+          '800': '#bfc5cd',
+          '900': '#e8eaee',
           foreground: '#fff',
-          DEFAULT: '#121b30',
+          DEFAULT: '#1e2d45',
         },
         primary: {
           '50': '#0b1e47',
@@ -90,40 +92,40 @@ export default heroui({
           foreground: '#000',
           DEFAULT: '#ef4444',
         },
-        background: '#03050A',
         foreground: {
-          '50': '#454749',
-          '100': '#6d7173',
-          '200': '#969a9e',
-          '300': '#bec4c8',
-          '400': '#e6edf3',
-          '500': '#eaf0f5',
-          '600': '#eff3f7',
-          '700': '#f3f6f9',
-          '800': '#f8fafb',
-          '900': '#fcfdfe',
+          '50': '#48505a',
+          '100': '#707986',
+          '200': '#98a1ad',
+          '300': '#c0c8d2',
+          '400': '#e8eef5',
+          '500': '#edf2f7',
+          '600': '#f1f5f9',
+          '700': '#f5f8fb',
+          '800': '#f9fbfd',
+          '900': '#fdfeff',
           foreground: '#000',
-          DEFAULT: '#e6edf3',
+          DEFAULT: '#e8eef5',
         },
+        background: '#05070c',
         content1: {
-          DEFAULT: '#0A101B',
+          DEFAULT: '#0b111b',
           foreground: '#fff',
         },
         content2: {
-          DEFAULT: '#0E1422',
+          DEFAULT: '#101826',
           foreground: '#fff',
         },
         content3: {
-          DEFAULT: '#121B30',
+          DEFAULT: '#162236',
           foreground: '#fff',
         },
         content4: {
-          DEFAULT: '#18233B',
+          DEFAULT: '#1e2d45',
           foreground: '#fff',
         },
-        focus: '#2563EB',
-        overlay: '#03050A',
-        divider: '#121B30',
+        focus: '#2563eb',
+        overlay: '#162236',
+        divider: '#263852',
       },
     },
   },
