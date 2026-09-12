@@ -7,6 +7,19 @@ import {
   useProductionPlan,
 } from '@/features/planner'
 import { Flex, Grid, PageContainer, PageContent, PageHeader, Panel, Typography } from '@/shared/ui'
+import { Suspense } from 'react'
+
+const PlannerPanelFallback = ({ label }: { label: string }) => (
+  <Flex role="status" align="center" justify="center" className="h-full min-h-0 p-6">
+    <Typography tone="soft">{label}</Typography>
+  </Flex>
+)
+
+const PlannerToolbarFallback = () => (
+  <div role="status" className="min-h-10 w-full sm:min-h-8">
+    <span className="sr-only">Loading planner controls</span>
+  </div>
+)
 
 const PlannerPageContent = () => {
   const plan = useProductionPlan()
@@ -17,7 +30,9 @@ const PlannerPageContent = () => {
         <Typography as="h1" variant="h2" className="sr-only">
           Planner
         </Typography>
-        <PlannerToolbar />
+        <Suspense fallback={<PlannerToolbarFallback />}>
+          <PlannerToolbar />
+        </Suspense>
       </PageHeader>
 
       <PageContent className="lg:overflow-hidden">
@@ -28,10 +43,14 @@ const PlannerPageContent = () => {
             className="soft-enter h-full min-h-0 min-w-0 grid-cols-1 grid-rows-[minmax(32rem,1fr)_22rem] items-stretch lg:grid-cols-[minmax(0,1fr)_24rem] lg:grid-rows-1"
           >
             <Panel padding="none" variant="muted" className="min-h-0 min-w-0 overflow-hidden">
-              <ProductionDiagramTabs />
+              <Suspense fallback={<PlannerPanelFallback label="Loading production views" />}>
+                <ProductionDiagramTabs />
+              </Suspense>
             </Panel>
             <Panel padding="none" variant="muted" className="min-h-0 min-w-0 overflow-hidden">
-              <PlannerSidebar />
+              <Suspense fallback={<PlannerPanelFallback label="Loading planner settings" />}>
+                <PlannerSidebar />
+              </Suspense>
             </Panel>
           </Grid>
         ) : (

@@ -3,7 +3,9 @@
 **Fecha:** 7 de septiembre de 2026  
 **Tipo:** roadmap posterior a una auditoría completa  
 **Alcance:** mejoras incrementales, de bajo o medio riesgo, basadas en evidencia  
-**Estado del código al crear este documento:** sin cambios realizados durante esta revisión
+**Estado de creación (histórico):** sin cambios realizados durante esta revisión
+
+**Estado actualizado al 12 de septiembre de 2026:** los lotes 1, 2 y 6 se ejecutaron parcialmente o por completo en `71f51c8`. Esta actualización conserva el plan original y añade el resultado de la auditoría incremental final; no modifica código de producto ni catálogos protegidos.
 
 ## 1. Objetivo
 
@@ -596,26 +598,24 @@ Roadmap v2 puede considerarse cerrado cuando:
 
 Esta sección recoge únicamente los cambios que merece la pena implementar. No incluye contexto histórico, hallazgos descartados ni propuestas de rediseño.
 
-### Lote 1 — Accesibilidad y semántica
+### Lote 1 — Accesibilidad y semántica — PARCIALMENTE EJECUTADO
 
 **Prioridad:** P2/P3  
 **Riesgo:** bajo
 
-- Añadir `aria-label` explícito a `CategorySelect`, `CorporationSelect` y `SearchInput`.
-- Marcar como decorativos los iconos que acompañan a esos controles.
-- Usar `alt=""` en iconos que ya tienen el nombre visible al lado.
-- Añadir un skip link hacia el contenido principal.
-- Cambiar la descripción de Corporation de `h3` a `p`, conservando su estilo visual.
-- Añadir `key={b.id}` al valor renderizado por `BuildingSelect`.
+- Completado: `aria-label` explícito en los filtros principales.
+- Completado: iconos de búsqueda decorativos y skip link hacia `main`.
+- Completado: descripción de Corporation como párrafo y `key={b.id}` en `BuildingSelect`.
+- Pendiente: completar `alt=""` en todos los iconos que duplican nombres visibles; quedan callsites en Planner, Recipes, Corporations y Base Designer.
 
-### Lote 2 — Dark mode
+### Lote 2 — Dark mode — PARCIALMENTE EJECUTADO
 
 **Prioridad:** P2  
 **Riesgo:** bajo
 
-- Declarar `color-scheme: dark` globalmente.
-- Añadir `meta[name="theme-color"]` usando el fondo actual `#03050A`.
-- Validar selectores nativos, scrollbars y superficies del navegador en desktop y móvil.
+- Completado: declaración global `color-scheme: dark`.
+- Parcial: existe `meta[name="theme-color"]`, pero conserva `#03050A` mientras el fondo actual del tema es `#05070c`.
+- Pendiente: alinear el meta color con el token real y validar la superficie nativa en desktop y móvil.
 
 ### Lote 3 — Responsive de Corporations
 
@@ -648,14 +648,14 @@ Esta sección recoge únicamente los cambios que merece la pena implementar. No 
 - Añadir un presupuesto de JS inicial gzip.
 - Actualizar el baseline de `README-STRUCTURE.md`.
 
-### Lote 6 — Gates y documentación
+### Lote 6 — EJECUTADO CON DERIVA DOCUMENTAL PENDIENTE
 
 **Prioridad:** P2/P3  
 **Riesgo:** bajo
 
-- Corregir las tablas actuales de `docs/AUDIT.md` que todavía describen skills eliminadas o enlaces ya reparados.
-- Hacer que `test:all` muestre warnings reales de ESLint o falle con ellos según la política elegida.
-- Eliminar la dependencia innecesaria de `items` en el `useMemo` de `supply-modal.tsx`.
+- Completado en código: la política `lint --max-warnings=0` convierte warnings en fallo.
+- Completado en código: se eliminó la dependencia innecesaria de `items` en `supply-modal.tsx`.
+- Pendiente documental: `docs/ROADMAP.md`, `README-STRUCTURE.md` y el estado inicial de este archivo todavía contienen estados o baselines históricos que deben distinguirse explícitamente del estado vivo.
 
 ### Orden recomendado
 
@@ -665,3 +665,150 @@ Esta sección recoge únicamente los cambios que merece la pena implementar. No 
 4. Lote 4 — marquee.
 5. Lote 5 — rendimiento.
 6. Lote 6 — gates y documentación.
+
+## 17. Auditoría incremental final — 12 de septiembre de 2026
+
+### Resultado
+
+La auditoría estática final queda **COMPLETADA** como revisión de alcance, pero el proyecto **NO está listo para cerrar la fase de calidad**. No se encontraron P0 ni P1. Persisten cuatro áreas técnicas P2, una deriva documental P2 y la verificación operativa completa no pudo repetirse en este entorno.
+
+La arquitectura feature-first, los límites entre features, la separación entre estado editable y datos derivados, la persistencia versionada del Base Designer, los catálogos protegidos y la matriz Vitest/Playwright se mantienen razonables. No se justifica un refactor general.
+
+### Skills y skills eliminadas
+
+- `pnpm check:skills` pasa con 14 skills instaladas y bloqueadas.
+- Las skills eliminadas `interface-design`, `react-best-practices` y `skill-creator` no tienen dependencias activas del producto.
+- La ruta `skills/react-best-practices/SKILL.md` del lock pertenece a la skill instalada `vercel-react-best-practices`; no es una referencia activa a la skill local eliminada.
+- Las skills nuevas aportan criterios concretos que todavía dejan trabajo: semántica de `aria-hidden`, labels e imágenes decorativas; responsive probado; presupuestos de bundle; y evidencia fresca antes de declarar gates verdes.
+
+### Hallazgos abiertos
+
+#### CORP-RESP-001 — Niveles de Corporations sin composición responsive demostrada
+
+- **Problema:** la fila de componentes y la fila de recompensas usan `Flex` sin wrapping. El catálogo contiene niveles con hasta 3 componentes y hasta 5 recompensas.
+- **Ubicación:** `src/features/corporations/ui/corporation-level-row.tsx`.
+- **Evidencia:** `corporations_components.json` contiene esos máximos; cada tarjeta usa `min-w-30`, el nivel añade `px-10` y la composición mantiene `flex-nowrap` por defecto.
+- **Impacto:** un nivel expandido puede exceder el ancho útil en 390 px aunque las rutas generales no presenten overflow.
+- **Propuesta:** probar una composición responsive con wrapping/grid y mantener la relación `OR`; añadir un journey dirigido a 390 px.
+- **Prioridad:** P2.
+- **Confianza:** Media — el riesgo estructural es alto, pero el overflow real requiere navegador operativo.
+
+#### A11Y-MARQUEE-001 — Botones dentro de copias `aria-hidden`
+
+- **Problema:** las copias visuales del marquee están ocultas con `aria-hidden="true"`, pero aún contienen elementos `<button>` con `tabIndex=-1`.
+- **Ubicación:** `src/features/planner/ui/marquee/index.tsx` y `src/features/planner/ui/random-item-marquee.tsx`.
+- **Evidencia:** el E2E verifica roles, nombres y `tabindex`, pero no ejecuta una comprobación dirigida de `aria-hidden-focus`; las pautas actuales exigen que un contenedor `aria-hidden` no contenga descendientes enfocables.
+- **Impacto:** una herramienta de accesibilidad puede marcar la combinación y el DOM conserva controles duplicados aunque no estén en el tab secuencial.
+- **Propuesta:** validar primero con una regla dirigida; si falla, renderizar las copias como superficies no semánticas de puntero y mantener botones únicamente en la colección primaria.
+- **Prioridad:** P2.
+- **Confianza:** Alta para la necesidad de validación; Media para afirmar fallo de herramienta sin ejecutarla.
+
+#### PERF-001 — LCP móvil sigue fuera del objetivo
+
+- **Problema:** la primera imagen aleatoria del marquee continúa en el camino crítico del estado vacío.
+- **Ubicación:** `src/features/planner/ui/random-item-marquee.tsx` y `src/pages/page-planner.tsx`.
+- **Evidencia:** `docs/AUDIT.md` documenta tres cargas frías con mediana de 3.572 ms y una imagen del marquee como LCP; el cambio actual conserva `eager` y `fetchPriority="high"` para un asset aleatorio.
+- **Impacto:** primer render móvil más lento y variable; el resultado no entra en el umbral objetivo de 2.500 ms.
+- **Propuesta:** repetir el benchmark con build de producción y decidir entre recurso inicial determinista, diferir el marquee o documentar una excepción medida.
+- **Prioridad:** P2.
+- **Confianza:** Alta como pendiente histórica; Media para afirmar que la cifra no ha variado sin repetir el benchmark.
+
+#### PERF-002 — No hay presupuesto automatizado para el entry gzip
+
+- **Problema:** existe un baseline documentado, pero CI no falla ni avisa ante una regresión de tamaño del JavaScript inicial.
+- **Ubicación:** `.github/workflows/ci.yml`, `vite.config.ts`, `README-STRUCTURE.md`.
+- **Evidencia:** el baseline operativo documentado es aproximadamente 628,47 kB raw / 177,32 kB gzip, mientras `README-STRUCTURE.md` aún conserva 685/194 kB; no hay comparación automatizada.
+- **Impacto:** una dependencia o cambio de import puede inflar la ruta inicial sin señal temprana.
+- **Propuesta:** registrar baseline fechado y añadir un gate pequeño para el entry gzip, sin `manualChunks` cosmético ni deep imports no medidos.
+- **Prioridad:** P2.
+- **Confianza:** Alta.
+
+### Pulido y deriva documental
+
+#### UI-THEME-001 — `theme-color` desalineado del fondo real
+
+- **Problema:** el color del navegador móvil no coincide con el fondo de la aplicación.
+- **Ubicación:** `index.html:7` frente a `src/hero.ts:109`.
+- **Evidencia:** el meta usa `#03050A`, pero el token `background` actual es `#05070c`.
+- **Impacto:** puede verse un cambio de tono en la barra del navegador o durante la carga en móvil.
+- **Propuesta:** usar el token real del tema y comprobar el resultado en móvil.
+- **Prioridad:** P3.
+- **Confianza:** Alta.
+
+#### A11Y-IMG-001 — Callsites restantes con `alt` derivado duplicado
+
+- **Problema:** `AssetImage` deriva un `alt` desde el ID cuando no recibe uno; varios callsites tienen el mismo nombre visible o un `aria-label` en el padre.
+- **Ubicación:** `AssetImage` y, entre otros, `recipe-accordion-meta.tsx`, `recipe-accordion-header.tsx`, `corporation-accordion-header.tsx`, `corporation-level-requirements.tsx`, `building-variants-panel/index.tsx`, `planner-tree-row.tsx`, nodos del Flow y nodos del Base Designer.
+- **Evidencia:** esos callsites omiten `alt`, mientras muestran el nombre junto al icono o exponen un nombre accesible en el contenedor.
+- **Impacto:** anuncios duplicados o mayor ruido para lectores de pantalla.
+- **Propuesta:** añadir `alt=""` solo en contextos decorativos; conservar alt contextual en imágenes standalone y en el catálogo arrastrable.
+- **Prioridad:** P3.
+- **Confianza:** Alta.
+
+#### DOC-DRIFT-001 — Roadmaps y baseline operativo desactualizados
+
+- **Problema:** la documentación viva no refleja completamente los lotes ya ejecutados.
+- **Ubicación:** `docs/ROADMAP.md`, `README-STRUCTURE.md` y estado inicial de `roadmapv2.md`.
+- **Evidencia:** `docs/ROADMAP.md` mantiene Hito 4 como pendiente aunque `package.json` ya usa `--max-warnings=0` y el warning de `supply-modal` ya no está en el código; `README-STRUCTURE.md` conserva 685/194 kB; `roadmapv2.md` decía que no había cambios.
+- **Impacto:** dificulta saber qué queda realmente pendiente y puede repetir trabajo cerrado.
+- **Propuesta:** actualizar únicamente el estado vivo, mantener los documentos históricos fechados y registrar el baseline nuevo después de la medición de PERF-001/PERF-002.
+- **Prioridad:** P2.
+- **Confianza:** Alta.
+
+### Revisado — no requiere cambios
+
+- No se detectó una separación de responsabilidades que justifique reestructurar features o stores.
+- No se recomienda sustituir barrels públicos, `useContext`, `useMemo` o casts de frontera solo por reglas genéricas de skills.
+- No se detectaron `TODO/FIXME`, `console` de producto, `any` explícitos, `transition: all`, listeners sin cleanup ni catálogos JSON modificados.
+- La cobertura actual protege lógica de producción, persistencia, filtros, tablas, flow, navegación y journeys críticos; no se propone aumentar cobertura por porcentaje.
+- La metadata `homepage` no canónica no se eleva a defecto de deploy sin una URL pública confirmada.
+- No se propone auditoría de seguridad amplia, CSP, SSR, schemas globales ni actualización indiscriminada de dependencias.
+
+### Limitaciones de verificación
+
+- `pnpm format:check` y `pnpm check:skills` pasaron en este entorno.
+- `pnpm lint`, `pnpm test`, `pnpm typecheck:e2e` y `pnpm build` no pudieron completar bajo el sandbox por `EPERM`/tipos de `node_modules`; la repetición escalada fue rechazada por el límite de uso del entorno.
+- `pnpm audit --prod` no pudo consultar el registro por `EACCES`/`fetch failed`.
+- Por tanto, no se declaran verdes los gates de runtime ni se actualiza el baseline de rendimiento con una nueva medición.
+
+### Lotes siguientes
+
+1. **Lote A — Responsive Corporations y prueba dirigida del marquee:** P2, cambio acotado, riesgo medio.
+2. **Lote B — Benchmark LCP y budget gzip:** P2, requiere entorno operativo y decisión basada en medición.
+3. **Lote C — Pulido semántico y de theme:** P3, bajo riesgo.
+4. **Lote D — Sincronización documental:** P2 por fiabilidad del proceso, bajo riesgo.
+
+No se recomienda ejecutar cambios de producto antes de completar la verificación del lote correspondiente y de resolver la decisión de interacción del marquee si la comprobación de accesibilidad confirma el problema.
+
+## 18. Ejecución y estado vivo — 12 de septiembre de 2026
+
+Esta sección reemplaza el estado operativo de la sección 17. La inspección runtime sí pudo completarse con permisos locales, y confirmó un P1 que la revisión estática no podía demostrar: Recipes y Corporations recortaban contenido a 320 px.
+
+### Ejecutado
+
+- **P1 responsive:** cabeceras, métricas, filas de componentes y recompensas se adaptan a móvil. Un journey nuevo verifica a 320×800 las dos rutas y un nivel expandido.
+- **P2 marquee:** las copias animadas son `span` no enfocables dentro de los grupos `aria-hidden`; solo la colección primaria expone 16 botones accesibles. Se conserva la selección con puntero sobre las copias.
+- **P2 estabilidad E2E:** una espera inicial de 5 s falló una vez bajo compilación fría concurrente. Cinco repeticiones aisladas pasaron y la suite completa posterior pasó; el límite inicial se amplió a 20 s sin relajar el contrato funcional.
+- **P3 semántica/UI:** iconos decorativos usan alt vacío, el alt contextual se conserva donde identifica una fila, `theme-color` coincide con el tema y la transición genérica se restringió.
+- **Documentación:** `docs/AUDIT.md`, `docs/ROADMAP.md` y `README-STRUCTURE.md` contienen ahora el estado y baseline fechados.
+- **Skills:** el gate detectó `impeccable` instalada sin entrada de lock; se registró su origen/hash y `pnpm check:skills` confirma 15 skills instaladas y bloqueadas.
+- **Validación completa:** `pnpm test:all` pasa formato, lint estricto, tipos E2E, 83 tests Vitest, build y 16 journeys Playwright; total 99/99 tests.
+
+### Rendimiento cerrado
+
+- La build produce un entry de **694,03 kB raw / 191,65 kB gzip**. El aumento elimina el waterfall de la home y deja toolbar, diagramas y sidebar en chunks lazy.
+- Accumulator es el primer item estable y se precarga desde el documento; los otros 15 siguen siendo aleatorios.
+- Tres cargas frías de producción a 390×844 dan una mediana LCP de **2.400 ms**; a 1440×900, **2.480 ms**. CLS mediano es 0. El objetivo ≤2.500 ms queda cumplido.
+- El preload aislado empeoró la mediana a 4.020 ms porque otro icono aleatorio del mismo tamaño pasó a ser LCP; esa variante se descartó. La solución conservada combina el recurso crítico con la división arquitectónica medida.
+- No se añade un presupuesto automático de gzip sin un SLA acordado; se conserva un baseline fechado y el warning raw de Vite como señal, no como fallo.
+
+### Clasificación resultante
+
+| Prioridad | Resultado                                                                                               |
+| --------- | ------------------------------------------------------------------------------------------------------- |
+| P0        | Ninguno.                                                                                                |
+| P1        | `RESP-001`, resuelto.                                                                                   |
+| P2        | Marquee, estabilidad E2E, deriva documental y `PERF-001` resueltos.                                     |
+| P3        | Pulido semántico, tema y transición resueltos; budget de bundle descartado por ahora con justificación. |
+
+El proyecto no necesita un refactor general. No quedan P0, P1 ni P2 importantes abiertos; el cierre estricto es **SÍ**.

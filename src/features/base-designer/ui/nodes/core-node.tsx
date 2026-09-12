@@ -7,7 +7,7 @@ export const CoreNode = ({ data }: NodeProps<BaseDesignerCoreNode>) => {
 
   return (
     <div aria-label="Base Core" className="flex h-full w-full items-center justify-center rounded-sm border border-primary/70 bg-content1">
-      <AssetImage kind="buildings" id={data.buildingId} width={imageSize} loading="eager" />
+      <AssetImage kind="buildings" id={data.buildingId} width={imageSize} alt="" loading="eager" />
     </div>
   )
 }

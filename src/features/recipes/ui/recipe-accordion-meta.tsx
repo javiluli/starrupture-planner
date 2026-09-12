@@ -20,7 +20,7 @@ const UnlockBadge = ({ unlockInfo }: { unlockInfo: BuildingUnlockInfo | null }) 
   <Flex align="center" gap="xs">
     {unlockInfo ? (
       <>
-        <AssetImage kind="corporations" id={unlockInfo.corporationId} width={20} />
+        <AssetImage kind="corporations" id={unlockInfo.corporationId} width={20} alt="" />
         <Typography as="span" variant="small" tone="soft">
           {unlockInfo.corporationName} L.{unlockInfo.corporationLevel}
         </Typography>
@@ -32,10 +32,10 @@ const UnlockBadge = ({ unlockInfo }: { unlockInfo: BuildingUnlockInfo | null }) 
 export const RecipeAccordionMeta = ({ building, unlockInfo }: { building: Building; unlockInfo: BuildingUnlockInfo | null }) => (
   <Flex gap="md" align="center" wrap="wrap">
     <RecipesChip count={building.recipes.length} />
-    <Flex align="center" wrap="wrap" className="h-4">
-      <StatBadge icon={<Zap size={14} className="text-warning" />} value={building.power} />
+    <Flex align="center" wrap="wrap" className="min-h-4">
+      <StatBadge icon={<Zap aria-hidden size={14} className="text-warning" />} value={building.power} />
       <Divider orientation="vertical" />
-      <StatBadge icon={<Flame size={14} className="text-danger" />} value={building.heat} />
+      <StatBadge icon={<Flame aria-hidden size={14} className="text-danger" />} value={building.heat} />
       <Divider orientation="vertical" />
       <UnlockBadge unlockInfo={unlockInfo} />
     </Flex>

@@ -30,19 +30,19 @@ const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargete
       ref={isTargeted ? centerTargetLevel : undefined}
       id={getCorporationLevelAnchorId(corporationId, level.level)}
       data-testid={`corporations-level-${corporationId}-${level.level}`}
-      className={`scroll-mt-24 rounded-lg border transition-colors ${
+      className={`w-full min-w-0 scroll-mt-24 rounded-lg border transition-colors ${
         isTargeted ? 'border-primary bg-primary/5 ring-1 ring-primary/40' : 'border-divider'
       }`}
     >
-      <Flex direction="col" align="start" gap="xl" wrap="wrap" className="px-10 py-6">
+      <Flex direction="col" align="start" gap="xl" className="w-full min-w-0 px-4 py-5 sm:px-10 sm:py-6">
         <LevelRequirements level={level.level} xp={level.xp} />
 
-        <Flex gap="lg">
+        <Flex align="start" gap="lg" wrap="wrap" className="w-full min-w-0">
           {level.components.map((component, index) => {
             const inputItem = itemMap.get(component.id)
 
             return (
-              <Flex key={component.id} gap="lg">
+              <Flex key={component.id} align="start" gap="lg">
                 <Flex direction="col" gap="md">
                   <div className="flex min-w-30 flex-col items-center gap-2 rounded-md bg-content1 p-2">
                     <Flex gap="md">
@@ -75,7 +75,7 @@ const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargete
           })}
         </Flex>
 
-        <Flex>
+        <Flex align="start" wrap="wrap" className="w-full min-w-0">
           <Typography variant="small" tone="muted">
             Rewards:
           </Typography>

@@ -1,4 +1,4 @@
-import { Background, BackgroundVariant, Controls, ReactFlow, ReactFlowProvider } from '@xyflow/react'
+import { Background, BackgroundVariant, Controls, ReactFlow, ReactFlowProvider, SelectionMode } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 
 import { buildings, items } from '@/shared/data'
@@ -18,13 +18,20 @@ function ProductionFlowDiagramInner() {
   })
 
   return (
-    <div data-testid="planner-network-graph" className="soft-enter h-full min-h-0 w-full min-w-0 overflow-hidden">
+    <div
+      data-testid="planner-network-graph"
+      data-flow-selection-surface
+      className="soft-enter h-full min-h-0 w-full min-w-0 overflow-hidden"
+    >
       <ReactFlow<PlannerFlowNode>
         minZoom={0.15}
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
         nodeTypes={FLOW_NODE_TYPES}
+        selectionKeyCode="Shift"
+        multiSelectionKeyCode={['Control', 'Meta']}
+        selectionMode={SelectionMode.Partial}
         colorMode="dark"
         fitView
       >

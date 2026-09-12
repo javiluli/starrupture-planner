@@ -19,6 +19,12 @@
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
     },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "38c2e839e130008b6da814ab9c16f3fcbbedfdf721a9638eebd31a9e65341a7a"
+    },
     "playwright-best-practices": {
       "source": "currents-dev/playwright-best-practices-skill",
       "sourceType": "github",

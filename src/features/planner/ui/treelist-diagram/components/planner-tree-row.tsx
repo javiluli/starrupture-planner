@@ -25,7 +25,7 @@ export const PlannerTreeRow = memo(({ node, itemNameMap, hasChildren, isExpanded
     <TreeListNode hasChildren={hasChildren} isExpanded={isExpanded} toggle={toggle} className="hover:bg-content1/30">
       <div className={ROW_CONTENT}>
         <div className={`${ICON_BASE} ${iconBorder}${iconDim}`}>
-          <AssetImage kind={iconKind} id={iconId} width={44} />
+          <AssetImage kind={iconKind} id={iconId} width={44} alt="" />
         </div>
 
         <Flex direction="col" align="start" gap="xs" className="min-w-0">

@@ -11,11 +11,11 @@ La nueva colección de skills no justifica una reescritura ni un rediseño gener
 
 La delta sí cambia la prioridad de tres áreas:
 
-1. **Semántica del marquee:** el arreglo histórico sacó las copias del orden de tabulación, pero no del árbol accesible; además, la acción de elegir objetivo sigue renderizada como `Link` sin `href`.
+1. **Semántica del marquee:** el commit `5245e5a` dejó las acciones primarias como botones nombrados y ocultó las copias para tecnología asistiva; queda una comprobación dirigida de `aria-hidden-focus`.
 2. **Rendimiento del estado vacío:** tres cargas frías móviles dan una mediana LCP de **3.572 ms**. Es una mejora aproximada del 26 % frente a 4.827 ms, pero la imagen aleatoria del marquee continúa siendo el LCP y no entra en el rango “good”.
-3. **Gobierno de skills y gates:** el lock de skills conserva tres entradas cuyos directorios ya no existen, dos skills nuevas enlazan prerrequisitos ausentes y `test:all` informa “0 problems” aunque ESLint haya emitido un warning.
+3. **Gobierno de skills y gates:** el catálogo actual está sincronizado; el gate de lint usa una política estricta para que los warnings no puedan pasar silenciosamente.
 
-No se encontraron P0, vulnerabilidades conocidas en dependencias de producción, errores de build, fallos unitarios/E2E, overflow horizontal móvil ni errores de consola en el smoke local inspeccionado.
+En la comprobación registrada el 6 de septiembre no se encontraron P0, vulnerabilidades conocidas en dependencias de producción, errores de build, fallos unitarios/E2E, overflow horizontal móvil ni errores de consola en el smoke local inspeccionado.
 
 ### Conteo de clasificación delta
 
@@ -42,7 +42,7 @@ Se revisaron completamente los `SKILL.md` relevantes y solo las referencias nece
 | `pnpm test`                           | PASS: 24 archivos, 83 tests                                                                          |
 | `pnpm build`                          | PASS: 4.111 módulos; entry 628,47 kB raw / 177,32 kB gzip; CSS 257,17 / 33,21 kB                     |
 | `pnpm test:e2e`                       | PASS: 14 journeys en Chromium desktop/mobile                                                         |
-| `pnpm audit --prod`                   | PASS: 0 vulnerabilidades conocidas                                                                   |
+| `pnpm audit --prod`                   | PASS histórico del 6-09: 0 vulnerabilidades conocidas                                                |
 | Smoke local 390×844                   | Sin overflow horizontal, un `main`, `h1` visible y cero errores de consola/página                    |
 | Referencia de `package.json#homepage` | Responde `404 DEPLOYMENT_NOT_FOUND`; el usuario confirma que no es canónica y no demuestra un outage |
 
@@ -62,21 +62,21 @@ Es evidencia de laboratorio comparable dentro de esta auditoría, no CrUX, RUM n
 
 ### Skills aplicadas a la evaluación
 
-| Skill                            | Propósito aplicado                                            | Áreas del proyecto                                          | Reglas importantes y límites                                                                                                                      |
-| -------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `best-practices`                 | Seguridad web, dependencias, compatibilidad y calidad básica. | `package.json`, UI, configuración Vercel, enlaces externos. | Se buscaron sinks y secretos; CSP/Trusted Types no se proponen sin superficie que los justifique.                                                 |
-| `frontend-design`                | Calidad visual intencional y coherencia estética.             | Shell, páginas, paneles, Planner y Base Designer.           | Confirma la identidad industrial/oscura existente. Sus pautas de hero/landing no aplican a una herramienta densa.                                 |
-| `playwright-best-practices`      | Diseño de journeys, locators, a11y, waits y diagnóstico.      | `e2e/`, `playwright.config.ts`, CI.                         | Prevalecen `AGENTS.md`, pnpm y los patrones locales. No se persigue un porcentaje arbitrario de cobertura E2E.                                    |
-| `playwright-cli`                 | Inspección y reproducción de navegador.                       | Smoke local y semántica del marquee.                        | Se consultó como guía operativa; la medición se hizo con el Playwright ya instalado, sin añadir otro binario.                                     |
-| `systematic-debugging`           | Separar causa raíz de síntomas.                               | Gates que fallaron bajo sandbox.                            | Permitió clasificar `EPERM` como restricción del entorno y no como fallo del proyecto.                                                            |
-| `typescript-best-practices`      | Contratos, narrowing y fronteras runtime.                     | Tipos de catálogos, stores, planner y React Flow.           | Branded types y schemas no se aplican de forma general. Sus skills prerrequisito no están instaladas.                                             |
-| `vercel-composition-patterns`    | APIs de componentes y composición.                            | Shared UI, providers, hooks y componentes grandes.          | No se detectó proliferación relevante de boolean props ni motivo para compound components nuevos.                                                 |
-| `vercel-react-best-practices`    | Bundle, render, estado persistido y React 19.                 | Router lazy, HeroUI, providers, Zustand y marquee.          | Sus reglas para Next/server no aplican a esta SPA. Dos absolutos entran en conflicto con contratos locales; véase `SKILL-CONFLICT-001`.           |
-| `vitest`                         | Calidad de unit/component tests, fixtures y mocks.            | 24 archivos de test, stores y lógica pura.                  | El proyecto usa Vitest 4.1.11; ejemplos específicos de Vitest 5 beta no se adoptan sin necesidad.                                                 |
-| `web-design-guidelines`          | Semántica, teclado, focus, motion, formularios e imágenes.    | Navegación, toolbar, supply, marquee y layouts móviles.     | Se aplicó una versión fresca de las reglas. La revisión visual manual sigue siendo necesaria.                                                     |
-| `web-perf`                       | Baseline de carga y Core Web Vitals.                          | Ruta `/`, marquee, imágenes, chunks y CSS.                  | Se midió antes de proponer. No se confunde laboratorio local con datos de campo.                                                                  |
-| `web-quality-audit`              | Orquestación de performance, a11y, SEO y buenas prácticas.    | Repositorio completo y endpoint público.                    | Su enlace a `../performance/references/MEASUREMENT.md` está roto en el catálogo actual; se usó el método disponible y se documentó la limitación. |
-| `verification-before-completion` | Evidencia fresca antes de declarar éxito.                     | Gates finales y revisión del diff.                          | Un exit code 0 no basta para afirmar “0 warnings”; este principio origina `GATE-001`.                                                             |
+| Skill                            | Propósito aplicado                                            | Áreas del proyecto                                          | Reglas importantes y límites                                                                                                            |
+| -------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `best-practices`                 | Seguridad web, dependencias, compatibilidad y calidad básica. | `package.json`, UI, configuración Vercel, enlaces externos. | Se buscaron sinks y secretos; CSP/Trusted Types no se proponen sin superficie que los justifique.                                       |
+| `frontend-design`                | Calidad visual intencional y coherencia estética.             | Shell, páginas, paneles, Planner y Base Designer.           | Confirma la identidad industrial/oscura existente. Sus pautas de hero/landing no aplican a una herramienta densa.                       |
+| `playwright-best-practices`      | Diseño de journeys, locators, a11y, waits y diagnóstico.      | `e2e/`, `playwright.config.ts`, CI.                         | Prevalecen `AGENTS.md`, pnpm y los patrones locales. No se persigue un porcentaje arbitrario de cobertura E2E.                          |
+| `playwright-cli`                 | Inspección y reproducción de navegador.                       | Smoke local y semántica del marquee.                        | Se consultó como guía operativa; la medición se hizo con el Playwright ya instalado, sin añadir otro binario.                           |
+| `systematic-debugging`           | Separar causa raíz de síntomas.                               | Gates que fallaron bajo sandbox.                            | Permitió clasificar `EPERM` como restricción del entorno y no como fallo del proyecto.                                                  |
+| `typescript-best-practices`      | Contratos, narrowing y fronteras runtime.                     | Tipos de catálogos, stores, planner y React Flow.           | Branded types y schemas no se aplican de forma general. Sus skills prerrequisito no están instaladas.                                   |
+| `vercel-composition-patterns`    | APIs de componentes y composición.                            | Shared UI, providers, hooks y componentes grandes.          | No se detectó proliferación relevante de boolean props ni motivo para compound components nuevos.                                       |
+| `vercel-react-best-practices`    | Bundle, render, estado persistido y React 19.                 | Router lazy, HeroUI, providers, Zustand y marquee.          | Sus reglas para Next/server no aplican a esta SPA. Dos absolutos entran en conflicto con contratos locales; véase `SKILL-CONFLICT-001`. |
+| `vitest`                         | Calidad de unit/component tests, fixtures y mocks.            | 24 archivos de test, stores y lógica pura.                  | El proyecto usa Vitest 4.1.11; ejemplos específicos de Vitest 5 beta no se adoptan sin necesidad.                                       |
+| `web-design-guidelines`          | Semántica, teclado, focus, motion, formularios e imágenes.    | Navegación, toolbar, supply, marquee y layouts móviles.     | Se aplicó una versión fresca de las reglas. La revisión visual manual sigue siendo necesaria.                                           |
+| `web-perf`                       | Baseline de carga y Core Web Vitals.                          | Ruta `/`, marquee, imágenes, chunks y CSS.                  | Se midió antes de proponer. No se confunde laboratorio local con datos de campo.                                                        |
+| `web-quality-audit`              | Orquestación de performance, a11y, SEO y buenas prácticas.    | Repositorio completo y endpoint público.                    | El enlace a `../web-perf/SKILL.md` está disponible; la medición runtime sigue dependiendo de un navegador operativo.                    |
+| `verification-before-completion` | Evidencia fresca antes de declarar éxito.                     | Gates finales y revisión del diff.                          | Un exit code 0 no basta para afirmar “0 warnings”; este principio origina `GATE-001`.                                                   |
 
 ### Skill disponible pero no aplicable
 
@@ -98,9 +98,9 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 | `src/shared/data/`                                                 | TypeScript, best practices                          | Normalización/índices continúan protegiendo los JSON. No se tocó ningún catálogo.                                                           |
 | `src/shared/ui/` y HeroUI                                          | Composition, frontend design, React                 | La capa compartida es pequeña y coherente; no se aconseja otra abstracción.                                                                 |
 | `e2e/`, `playwright.config.ts`, `.github/workflows/ci.yml`         | Playwright, web guidelines, verification            | Suite estable y proporcionada; faltan checks dirigidos al delta del marquee.                                                                |
-| `scripts/test-all.mjs`                                             | Verification, best practices                        | El resumen positivo oculta warnings de ESLint.                                                                                              |
+| `scripts/test-all.mjs`                                             | Verification, best practices                        | La política `--max-warnings=0` evita que un warning de ESLint produzca un resumen positivo silencioso.                                      |
 | `package.json`, `vercel.json` y referencia `homepage`              | Best practices, web quality, web-perf               | Build local sano; `homepage` está obsoleto y no representa el contrato público del producto.                                                |
-| `.agents/skills/`, `skills-lock.json`                              | Todas, especialmente verification                   | La actualización de skills no está internamente cerrada ni totalmente reproducible.                                                         |
+| `.agents/skills/`, `skills-lock.json`                              | Todas, especialmente verification                   | El catálogo actual está sincronizado y validado por `pnpm check:skills`; los hashes requieren interpretar el formato del instalador.        |
 
 ## 5. Disposición de todos los findings
 
@@ -109,8 +109,8 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 | ID                   | Clasificación | Estado actual / delta                                                                                                               |
 | -------------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | `DX-001`             | `CONFIRMED`   | Toolchain fijado y gates reproducibles.                                                                                             |
-| `DEP-001`            | `CONFIRMED`   | Auditoría de producción en cero vulnerabilidades conocidas.                                                                         |
-| `E2E-001`            | `CONFIRMED`   | Playwright ejecuta 14 journeys.                                                                                                     |
+| `DEP-001`            | `CONFIRMED`   | La ejecución histórica del 6-09 registró cero vulnerabilidades conocidas; no se repitió contra el registro en el cierre actual.     |
+| `E2E-001`            | `CONFIRMED`   | Playwright ejecuta 15 journeys según la última ejecución documentada.                                                               |
 | `AGENT-001`          | `CONFIRMED`   | La frontera de JSON protegidos está en `AGENTS.md`.                                                                                 |
 | `BUG-001`            | `CONFIRMED`   | Supply mantiene una única invariante positiva.                                                                                      |
 | `BUG-002`            | `CONFIRMED`   | Índice one-to-many y filtros conservan productores alternativos.                                                                    |
@@ -250,3 +250,65 @@ Las skills globales de documentos, imágenes, Figma, hojas de cálculo, presenta
 - No se modificaron `buildings_and_recipes.json`, `buildings_construction_area.json`, `corporations_components.json` ni `items_catalog.json`.
 - No se cambió código de producto, configuración, dependencias, tests ni skills durante esta auditoría.
 - El audit raíz permanece como evidencia histórica. Este documento registra únicamente la delta producida por el nuevo conjunto de skills y por la evidencia actual.
+
+## 9. Cierre técnico exhaustivo — 12–13 de septiembre de 2026
+
+Esta sección sustituye el estado operativo de las secciones anteriores sin reescribir su evidencia histórica. La revisión abarcó los 250 módulos TypeScript/TSX de `src`, las 628 aristas internas del grafo de imports, configuración, scripts, stores, datos normalizados, rutas, UI compartida, cinco features, tests y documentación.
+
+El catálogo de skills contiene 15 entradas instaladas y bloqueadas. La nueva `impeccable` se aplicó mediante su contexto, auditoría y detector local; su incorporación se sincronizó en `skills-lock.json` cuando el gate detectó el desfase.
+
+### Clasificación final
+
+| ID                 | Prioridad | Estado                | Evidencia y resolución                                                                                                                                                                                           |
+| ------------------ | --------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `RESP-001`         | P1        | RESUELTO              | Recipes y Corporations recortaban contenido a 320 px. Se hicieron responsive cabeceras, métricas y niveles, y se añadió un journey a 320×800.                                                                    |
+| `A11Y-MARQUEE-001` | P2        | RESUELTO              | Las copias `aria-hidden` ya no contienen botones: son superficies `span` no enfocables; solo existen 16 acciones primarias accesibles.                                                                           |
+| `E2E-COLD-001`     | P2        | RESUELTO              | La primera aserción de Items agotó 5 s una vez bajo transformación fría concurrente. Cinco repeticiones aisladas y la suite completa confirmaron ausencia de fallo funcional; el primer límite se ajustó a 20 s. |
+| `PERF-001`         | P2        | RESUELTO              | El primer item es determinista y precargable; la home evita el waterfall de ruta y difiere controles/resultados pesados. Mediana LCP: 2.400 ms móvil y 2.480 ms escritorio.                                      |
+| `A11Y-IMG-001`     | P3        | RESUELTO              | Los iconos junto a nombres o dentro de controles nombrados usan `alt=""`; la tabla conserva un alt contextual donde la imagen identifica el item.                                                                |
+| `UI-THEME-001`     | P3        | RESUELTO              | `theme-color` coincide con `#05070c`.                                                                                                                                                                            |
+| `MOTION-001`       | P3        | RESUELTO              | La única `transition-all` de producto se limitó a color de fondo y sombra.                                                                                                                                       |
+| `PERF-002`         | P3        | ACEPTADO TÉCNICAMENTE | El entry final es 694,03 kB raw / 191,65 kB gzip. El aumento medido elimina el waterfall de la home y mejora LCP; no se añade un gate arbitrario sin SLA de producto.                                            |
+| `DOC-DRIFT-001`    | P2        | RESUELTO              | Audit, roadmap y baseline estructural distinguen historia y estado vivo.                                                                                                                                         |
+
+No se detectaron P0. Tampoco se encontraron ciclos internos, imports privados entre features, duplicación que justificase una nueva abstracción, responsabilidades de store impropias, `any` explícitos de producto, `TODO/FIXME`, logs de producto, sinks HTML peligrosos, listeners sin limpieza ni dependencias declaradas sin uso. Los cuatro JSON protegidos permanecen intactos.
+
+### Impeccable Audit Health Score
+
+| Dimensión                    | Puntuación | Hallazgo clave                                                                                        |
+| ---------------------------- | ---------: | ----------------------------------------------------------------------------------------------------- |
+| Accesibilidad                |        3/4 | Contratos principales correctos; no se eleva a 4 sin una validación WCAG/contraste de campo completa. |
+| Rendimiento                  |        3/4 | LCP mediano ≤2.500 ms y CLS mediano 0; falta evidencia de campo para elevarlo a excelente.            |
+| Responsive                   |        4/4 | Sin overflow documental a 320 px en Recipes y Corporations, incluido un nivel expandido.              |
+| Theming                      |        4/4 | Tokens coherentes, dark mode nativo del producto y `theme-color` alineado.                            |
+| Integridad de implementación |        4/4 | Sistema feature-first coherente, específico del producto y sin drift mecánico confirmado.             |
+| **Total**                    |  **18/20** | **Excellent — quedan solo límites conocidos y polish opcional.**                                      |
+
+El detector Impeccable produjo cuatro avisos. El fondo de rejilla es un falso positivo contextual: aparece exclusivamente en el lienzo medible del Base Designer, uno de los usos que la propia regla considera válido. Los tres avisos de Geist señalan una preferencia estética genérica, no un defecto: es la tipografía incumbente, está autocontenida y sustituirla alteraría la identidad visual sin evidencia de usabilidad o rendimiento. No se promovieron a roadmap.
+
+### Cambios implementados
+
+- Responsive móvil localizado en Recipes, Corporations y estilos compartidos del acordeón.
+- Semántica del marquee corregida sin perder click de puntero, teclado en la colección primaria ni movimiento reducido.
+- Imágenes decorativas silenciadas para tecnología asistiva y alt contextual conservado donde aporta identidad.
+- `theme-color`, transición específica y comentario tipográfico residual corregidos.
+- Timeout inicial de una ruta lazy ajustado a la realidad del servidor Vite frío; no se ocultaron aserciones funcionales.
+- Journey móvil nuevo y expectativas del marquee actualizadas.
+- Primer item del marquee fijado como Accumulator y precargado desde el documento; los otros 15 siguen siendo aleatorios.
+- Home Planner cargada sin waterfall de ruta; toolbar, diagramas y sidebar pesados conservan límites `React.lazy` desde la API pública de la feature.
+
+### Rendimiento medido y decisiones descartadas
+
+Perfil repetible: build de producción, Chromium headless, CPU ×4, latencia 150 ms, descarga 1,6 Mbps y tres cargas frías por viewport. A 390×844: FCP 2.056/2.032/2.076 ms, LCP 2.364/3.008/2.400 ms y CLS 0/0,039/0. A 1440×900: FCP 2.168/2.124/2.164 ms, LCP 2.492/2.444/2.480 ms y CLS 0. Las medianas LCP son 2.400 ms móvil y 2.480 ms escritorio; el objetivo ≤2.500 ms queda cumplido sin ocultar el outlier móvil.
+
+El preload aislado no bastó: otro icono aleatorio del mismo tamaño pasó a ser LCP y la mediana móvil subió a 4.020 ms; esa variante no se conservó. La solución final combina recurso crítico determinista con eliminación del waterfall de la home y carga diferida de superficies pesadas. Una lectura anterior de ≈29,5 s se invalidó al comprobar que había medido Vite dev en lugar del preview de producción. También se descartó reducir visualmente los iconos: varias medidas no cambiaron el elemento LCP ni su tiempo. No se aplican `manualChunks`, imports profundos de HeroUI ni trucos para excluir artificialmente la imagen de LCP.
+
+### Límites de seguridad y dependencias
+
+La revisión estática no encontró rutas de autenticación, backend, secretos, `dangerouslySetInnerHTML` ni entradas remotas que amplíen la superficie de ataque. `pnpm audit --prod` no se ejecutó porque la consulta envía el inventario de dependencias al registro npm y la autorización externa fue denegada; por tanto, no se afirma que el árbol actual esté libre de advisories del registro.
+
+### Estado de cierre
+
+`pnpm test:all` terminó en verde: 15 skills instaladas/bloqueadas, Prettier, ESLint con cero warnings, tipos E2E, 24 archivos Vitest con 83 tests, build de 4.111 módulos y 16 journeys Playwright. Total: **99/99 tests**, cero fallos y cero omitidos. `git diff --check` y la comprobación específica de catálogos protegidos forman parte de la revisión final del diff.
+
+El código queda sin P0, sin P1 abierto y sin P2 importante pendiente. `PERF-001` cumple el objetivo mediano acordado y los P3 restantes están resueltos o aceptados con justificación. El veredicto de cierre estricto es **SÍ**.

@@ -5,6 +5,9 @@ test-results/
 blob-report/
 public/assets/
 .agents/
+.github/agents/impeccable-*.agent.md
+.github/hooks/impeccable.json
+.github/skills/impeccable/
 skills-lock.json
 pnpm-lock.yaml
 

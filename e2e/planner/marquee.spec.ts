@@ -13,6 +13,8 @@ test('expone solo los 16 objetivos primarios como botones accesibles', async ({ 
   const marquee = page.getByTestId('planner-marquee-track')
   const primaryItems = page.getByTestId('planner-marquee-primary').getByRole('button', { name: /^Select .+ as production target$/ })
   await expect(primaryItems).toHaveCount(16, { timeout: 20_000 })
+  await expect(primaryItems.first()).toHaveAttribute('data-planner-target-id', 'accumulator')
+  await expect(page.getByTestId('planner-featured-item-preload')).toHaveAttribute('href', '/assets/icons/items/accumulator.webp')
   await expect(primaryItems.first()).toBeEnabled()
   await expect(primaryItems.last()).toBeEnabled()
   await expect(marquee.getByRole('link')).toHaveCount(0)
@@ -21,7 +23,9 @@ test('expone solo los 16 objetivos primarios como botones accesibles', async ({ 
   await expect(repeatedGroups.first()).toHaveAttribute('aria-hidden', 'true')
 
   const repeatedItems = page.getByTestId('planner-marquee-copy-item')
-  await expect(repeatedItems.first()).toHaveAttribute('tabindex', '-1')
+  expect(await repeatedItems.evaluateAll((items) => items.every((item) => item.tagName === 'SPAN' && !item.hasAttribute('tabindex')))).toBe(
+    true,
+  )
   await expect(marquee.getByRole('button')).toHaveCount(16)
 
   const firstTarget = primaryItems.first()

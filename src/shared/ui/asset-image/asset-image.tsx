@@ -65,7 +65,7 @@ const AssetImageResource = ({ id, kind, width, alt, loading = 'lazy', fetchPrior
         loading={loading}
         fetchPriority={fetchPriority}
         decoding="async"
-        className="h-full w-full rounded-none object-contain transition-opacity duration-200"
+        className={cn('h-full w-full rounded-none object-contain', loading === 'lazy' && 'transition-opacity duration-200')}
         style={{ opacity: isLoaded ? 1 : 0 }}
       />
     </span>

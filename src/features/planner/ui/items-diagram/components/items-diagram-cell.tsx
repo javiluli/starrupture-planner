@@ -11,7 +11,7 @@ interface CellProps {
 export const ItemsDiagramCell = ({ row, columnKey, itemNameMap }: CellProps) => {
   switch (columnKey) {
     case 'item':
-      return <AssetImage kind="items" id={row.itemId} width={56} />
+      return <AssetImage kind="items" id={row.itemId} width={56} alt={itemNameMap.get(row.itemId) ?? row.itemId} />
     case 'needed':
       return (
         <>

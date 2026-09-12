@@ -36,9 +36,9 @@ function ProductionArtwork({ buildingId, itemId, loading }: ProductionArtworkPro
 
   return (
     <div className="relative">
-      <AssetImage kind="buildings" id={buildingId} width={160} />
+      <AssetImage kind="buildings" id={buildingId} width={160} alt="" />
       <div className="absolute bottom-0 left-1/2 z-10 rounded-2xl bg-content1 ring-2 ring-foreground">
-        <AssetImage kind="items" id={itemId} width={64} />
+        <AssetImage kind="items" id={itemId} width={64} alt="" />
       </div>
     </div>
   )

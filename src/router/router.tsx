@@ -1,12 +1,12 @@
 import RootLayout from '@/layouts/root-layout'
 import { NotFound } from '@/pages/not-found'
+import { PagePlanner } from '@/pages/page-planner'
 import { RouteError } from '@/pages/route-error'
 import { ROUTE } from '@/router/routes'
 import { PageLoadingSkeleton } from '@/shared/ui'
 import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 
-const PagePlanner = lazy(() => import('@/pages/page-planner').then((m) => ({ default: m.PagePlanner })))
 const PageItems = lazy(() => import('@/pages/page-items').then((m) => ({ default: m.PageItems })))
 const PageRecipes = lazy(() => import('@/pages/page-recipes').then((m) => ({ default: m.PageRecipes })))
 const PageCorporations = lazy(() => import('@/pages/page-corporations').then((m) => ({ default: m.PageCorporations })))
@@ -30,7 +30,7 @@ const devRoutes = import.meta.env.DEV
 const productionRoutes = [
   {
     path: ROUTE.HOME,
-    element: withSuspense(PagePlanner),
+    element: <PagePlanner />,
   },
   {
     path: ROUTE.ITEMS,

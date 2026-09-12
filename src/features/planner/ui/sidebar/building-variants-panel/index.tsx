@@ -43,7 +43,7 @@ export const BuildingVariantsPanel = () => {
                 <Card>
                   <CardHeader className="p-2 pb-1">
                     <Flex align="center">
-                      <AssetImage id={step.itemId} kind="items" width={38} />
+                      <AssetImage id={step.itemId} kind="items" width={38} alt="" />
                       <Typography variant="micro">{itemName}</Typography>
                       <Chip size="sm" color="primary" variant="flat">
                         {step.targetIpm.toFixed(2)}/min
@@ -69,7 +69,7 @@ export const BuildingVariantsPanel = () => {
                           key={item.id}
                           title={
                             <Flex>
-                              <AssetImage id={item.id} kind="buildings" width={28} />
+                              <AssetImage id={item.id} kind="buildings" width={28} alt="" />
                               <span className="text-xs">{item.name}</span>
                             </Flex>
                           }

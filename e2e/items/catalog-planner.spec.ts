@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('filtra un item por cualquiera de sus buildings productores', async ({ page }) => {
   await page.goto('/items')
 
-  await expect(page.getByRole('button', { name: 'Filter items by category' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Filter items by category' })).toBeVisible({ timeout: 20_000 })
   await expect(page.getByRole('button', { name: 'Filter items by corporation' })).toBeVisible()
   await expect(page.getByRole('searchbox', { name: 'Search items' })).toBeVisible()
 
@@ -27,6 +27,6 @@ test('abre una materia prima como objetivo terminal desde Items', async ({ page 
 
   await expect(page).toHaveURL('/')
   const plannerResult = page.getByTestId('planner-result')
-  await expect(plannerResult.getByRole('heading', { name: 'Calcium Ore' })).toBeVisible()
+  await expect(plannerResult.getByRole('heading', { name: 'Calcium Ore' })).toBeVisible({ timeout: 20_000 })
   await expect(plannerResult.getByText('Raw material target')).toBeVisible()
 })

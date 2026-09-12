@@ -19,7 +19,7 @@ interface NodeStatBadgeProps {
 function NodeStatBadge({ icon: Icon, value, color }: NodeStatBadgeProps) {
   return (
     <Flex gap="xs">
-      <Icon size={20} className={color} />
+      <Icon aria-hidden size={20} className={color} />
       <Typography as="span" variant="small" className="font-mono font-bold">
         {value}
       </Typography>

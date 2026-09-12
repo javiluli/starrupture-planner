@@ -60,7 +60,7 @@ export const DragPreview = ({ building, initialPosition }: DragPreviewProps) => 
         </span>
       )}
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <BuildingIcon buildingId={building.id} label={building.name} width={52} />
+        <BuildingIcon buildingId={building.id} width={52} />
       </div>
       <Typography variant="micro" className="absolute inset-x-2 bottom-1 truncate text-center">
         {building.name}

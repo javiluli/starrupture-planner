@@ -12,7 +12,7 @@ export const PageCorporations = () => {
           <Typography as="h1" variant="h2">
             Corporations & Rewards
           </Typography>
-          <Flex gap="md" align="center">
+          <Flex gap="md" align="center" wrap="wrap">
             <StatLabel value={stats.corporationsCount} label="Corporation" />
             <StatLabel value={stats.levelsCount} label="Level" />
             <StatLabel value={`${formatNumber(stats.costCount)} G`} label="Cost" />

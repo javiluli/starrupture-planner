@@ -69,7 +69,7 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
           "
         >
           <CardBody className="items-center justify-center gap-1 p-2">
-            <BuildingIcon buildingId={building.id} label={building.name} width={64} />
+            <BuildingIcon buildingId={building.id} width={64} />
             <BuildingFootprintBadge buildingId={building.id} />
           </CardBody>
         </Card>
@@ -102,7 +102,7 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
         </Flex>
 
         <Flex justify="center" className="size-24 shrink-0 rounded-xl bg-content2/60">
-          <BuildingIcon buildingId={building.id} label={building.name} width={84} />
+          <BuildingIcon buildingId={building.id} width={84} />
         </Flex>
       </CardBody>
     </Card>

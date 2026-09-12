@@ -113,6 +113,11 @@
   stroke: var(--color-flow-export);
 }
 
+[data-flow-selection-surface] .react-flow {
+  --xy-selection-background-color: hsl(var(--heroui-primary) / 0.1);
+  --xy-selection-border: 1px solid hsl(var(--heroui-primary) / 0.75);
+}
+
 @layer utilities {
   .page-enter {
     animation: page-enter 180ms ease-out both;

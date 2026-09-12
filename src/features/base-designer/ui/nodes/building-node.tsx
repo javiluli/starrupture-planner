@@ -15,7 +15,7 @@ export const BuildingNode = ({ data, selected }: NodeProps<BaseDesignerBuildingN
         selected ? 'border-primary ring-1 ring-primary/50' : 'border-divider',
       )}
     >
-      <BuildingIcon buildingId={data.buildingId} label={data.label} width={imageSize} />
+      <BuildingIcon buildingId={data.buildingId} width={imageSize} />
 
       {data.acceptsItems && (
         <Handle id="item-input" type="target" position={Position.Left} className="!size-2.5 !border-2 !border-background !bg-secondary" />

@@ -62,14 +62,14 @@ export const CorporationLevelRequirements = () => {
                 key={stat.corporationName}
                 isPressable
                 onPress={() => handleSelect(index)}
-                className={`w-full p-3 transition-all duration-200 group border border-divider/60 shadow-none
+                className={`group w-full border border-divider/60 p-3 shadow-none transition-[background-color,box-shadow] duration-200
                   ${isSelected ? 'bg-content1/40 ring-2 ring-primary/30' : 'bg-transparent hover:bg-content1'}
                 `}
               >
                 <Flex justify="between" className="mb-3">
                   <Flex gap="sm">
                     <div className="p-1.5 bg-content2 rounded-lg border border-divider/60">
-                      <AssetImage kind="corporations" id={stat.corporationId} width={20} />
+                      <AssetImage kind="corporations" id={stat.corporationId} width={20} alt="" />
                     </div>
                     <Flex direction="col" gap="none">
                       <Typography as="span" variant="small" tone="muted" className="font-semibold">
@@ -111,7 +111,7 @@ export const CorporationLevelRequirements = () => {
       <PopoverTrigger>
         <Button variant="light" className="px-4 panel">
           <Flex gap="md">
-            <AssetImage kind="corporations" id={selectedStat.corporationId} width={24} />
+            <AssetImage kind="corporations" id={selectedStat.corporationId} width={24} alt="" />
             <Flex className="h-5 px-3" gap="md">
               <Typography as="span" variant="small">
                 {formatNumber(selectedStat.totalItemsNeeded)} Items

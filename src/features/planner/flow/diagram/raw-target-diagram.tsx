@@ -17,7 +17,7 @@ export function RawTargetDiagram() {
         gap="md"
         className="w-full max-w-xl rounded-xl border border-dashed border-divider/70 p-12 text-center"
       >
-        <AssetImage kind="items" id={plan.targetId} alt={targetName} width={96} />
+        <AssetImage kind="items" id={plan.targetId} alt="" width={96} />
         <Typography as="h2" variant="h2">
           {targetName}
         </Typography>

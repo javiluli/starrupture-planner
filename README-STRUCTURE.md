@@ -58,9 +58,9 @@ their public API. Pages compose those APIs; the router and layouts only decide w
 
 ## Bundle Policy
 
-Route pages are loaded with `React.lazy`; keep page-only dependencies behind that boundary. Continue importing supported components from `@heroui/react`: its package is tree-shakeable and the production source map confirms that only used HeroUI component packages enter each chunk. Do not import undeclared transitive `@heroui/*` packages or add `manualChunks` only to hide Vite's size warning; either change requires a measured reduction in initial gzip size.
+Route pages are normally loaded with `React.lazy`; keep page-only dependencies behind that boundary. Planner is the measured exception: its lightweight home shell loads eagerly to remove the initial route waterfall, while toolbar, diagrams and sidebar stay behind lazy boundaries exposed by the feature API. Continue importing supported components from `@heroui/react`: its package is tree-shakeable and the production source map confirms that only used HeroUI component packages enter each chunk. Do not import undeclared transitive `@heroui/*` packages or add `manualChunks` only to hide Vite's size warning; either change requires a measured reduction in initial gzip size.
 
-Current production baseline: the entry chunk is about `685 kB` raw / `194 kB` gzip. Most mapped bytes come from React DOM, HeroUI Theme, React Router and React Aria rather than application code.
+Current production baseline (12 September 2026): the entry chunk is `694.03 kB` raw / `191.65 kB` gzip. The deliberate increase from the previous `177.21 kB` gzip entry removes the Planner route waterfall and, together with a deterministic preloaded marquee item, reduces median laboratory LCP from `3.676 s` to `2.400 s` on mobile. Vite still reports its generic 500 kB raw warning; add an automated gzip budget only when the product has an agreed performance SLA, rather than treating that warning as a failure by itself.
 
 ## Naming
 
