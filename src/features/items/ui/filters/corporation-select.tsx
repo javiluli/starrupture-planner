@@ -13,7 +13,7 @@ export const CorporationSelect = () => {
       aria-label="Filter items by corporation"
       size="sm"
       variant="bordered"
-      className="w-67.5"
+      className="w-full sm:w-67.5"
       items={corporationsList}
       isClearable={true}
       placeholder="Filter by Corporation"

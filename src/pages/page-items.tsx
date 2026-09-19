@@ -21,7 +21,7 @@ export const PageItems = () => {
           Items
         </Typography>
         <Flex wrap="wrap" justify="between" align="end" gap="lg">
-          <Flex wrap="wrap">
+          <Flex wrap="wrap" className="w-full lg:w-auto">
             <CategorySelect />
             <BuildingSelect />
             <CorporationSelect />

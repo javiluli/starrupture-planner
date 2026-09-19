@@ -14,11 +14,11 @@ export const ITEMS_TABLE_COLUMNS: ItemsTableColumn[] = [
 ]
 
 export const ITEMS_TABLE_COLUMN_WIDTHS: Record<ColumnKey, string> = {
-  item: '20%',
-  category: '10%',
-  production: '10%',
+  item: '25%',
+  category: '14%',
+  production: '16%',
   actions: '10%',
-  corporations: '50%',
+  corporations: '35%',
 }
 
 export const ITEMS_TABLE_ESTIMATED_ROW_HEIGHT = 72

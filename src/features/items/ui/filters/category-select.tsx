@@ -22,7 +22,7 @@ export const CategorySelect = () => {
       aria-label="Filter items by category"
       size="sm"
       variant="bordered"
-      className="w-48"
+      className="w-full sm:w-48"
       items={CATEGORY_OPTIONS}
       isClearable={true}
       placeholder="Filter by category"

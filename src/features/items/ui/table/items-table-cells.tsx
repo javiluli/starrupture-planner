@@ -10,7 +10,7 @@ export const ItemCell = ({ item }: { item: Item }) => {
   return (
     <Flex gap="sm">
       <AssetImage kind="items" id={item.id} width={56} alt="" />
-      <Typography as="span" variant="body" tone="muted">
+      <Typography as="span" variant="body">
         {item.name}
       </Typography>
     </Flex>

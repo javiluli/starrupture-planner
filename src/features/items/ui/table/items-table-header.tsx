@@ -14,7 +14,7 @@ export const ItemsTableHeader = () => (
       <tr aria-rowindex={1} className={itemsTableStyles.row}>
         {ITEMS_TABLE_COLUMNS.map((column) => (
           <th key={column.key} scope="col" className={itemsTableStyles.headerCell}>
-            <Typography as="span" variant="micro" tone="soft">
+            <Typography as="span" variant="micro" tone="soft" className="text-foreground/70">
               {column.name}
             </Typography>
           </th>

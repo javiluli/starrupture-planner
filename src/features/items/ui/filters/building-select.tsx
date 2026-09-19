@@ -13,7 +13,7 @@ export const BuildingSelect = () => {
       aria-label="Filter items by building"
       size="sm"
       variant="bordered"
-      className="w-57.5"
+      className="w-full sm:w-57.5"
       items={productionBuildings}
       isClearable={true}
       placeholder="Filter by building"

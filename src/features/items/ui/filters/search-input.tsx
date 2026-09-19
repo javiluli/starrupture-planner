@@ -11,7 +11,7 @@ export const SearchInput = () => {
       type="search"
       size="sm"
       variant="bordered"
-      className="w-50"
+      className="w-full sm:w-50"
       placeholder="Search items"
       startContent={<SearchIcon aria-hidden size={18} />}
       value={filters.searchQuery}
