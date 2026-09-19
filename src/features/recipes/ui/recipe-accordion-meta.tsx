@@ -5,7 +5,11 @@ import { AssetImage, Flex, Typography } from '@/shared/ui'
 import type { Building } from '@/shared/@types/building.type'
 import type { BuildingUnlockInfo } from '../types/recipes.types'
 
-const RecipesChip = ({ count }: { count: number }) => <Chip variant="solid">{count} recipes</Chip>
+const RecipesChip = ({ count }: { count: number }) => (
+  <Chip variant="solid">
+    {count} {count === 1 ? 'recipe' : 'recipes'}
+  </Chip>
+)
 
 const StatBadge = ({ icon, value }: { icon: ReactNode; value: number }) => (
   <Flex align="center" gap="xs">

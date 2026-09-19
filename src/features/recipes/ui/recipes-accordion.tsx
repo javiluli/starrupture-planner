@@ -18,9 +18,11 @@ export const RecipesAccordion = () => {
           title={<RecipeAccordionHeader building={building} unlockInfo={getUnlockInfo(building.name)} />}
         >
           <AccordionItemContent>
-            {building.recipes.map((recipe, index) => (
-              <RecipeRow key={`${building.id}-${index}`} recipe={recipe} outputItem={itemMap.get(recipe.output.id)} itemMap={itemMap} />
-            ))}
+            <div className="grid gap-4 xl:grid-cols-2">
+              {building.recipes.map((recipe, index) => (
+                <RecipeRow key={`${building.id}-${index}`} recipe={recipe} outputItem={itemMap.get(recipe.output.id)} itemMap={itemMap} />
+              ))}
+            </div>
           </AccordionItemContent>
         </AccordionItem>
       ))}

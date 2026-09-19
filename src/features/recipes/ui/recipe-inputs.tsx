@@ -3,7 +3,7 @@ import type { RecipeInput } from '@/shared/@types/building.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 
 export const RecipeInputs = ({ inputs, itemMap }: { inputs: readonly RecipeInput[]; itemMap: ReadonlyMap<string, Item> }) => (
-  <div className="flex-1">
+  <div className="min-w-0 flex-1">
     <Typography as="span" variant="micro" tone="soft" className="mb-2">
       Inputs
     </Typography>
@@ -20,10 +20,10 @@ export const RecipeInputs = ({ inputs, itemMap }: { inputs: readonly RecipeInput
           const inputItem = itemMap.get(input.id)
 
           return (
-            <div key={input.id} className="flex flex-col items-center gap-2 p-2 rounded-md bg-content1 min-w-30">
+            <div key={input.id} className="flex min-w-24 flex-col items-center gap-2 rounded-md bg-content1 p-2 sm:min-w-30">
               <AssetImage kind="items" id={input.id} width={48} alt="" />
 
-              <Typography as="span" variant="micro" tone="normal" className="text-center">
+              <Typography as="span" variant="small" tone="normal" className="text-center">
                 {inputItem?.name ?? input.id}
               </Typography>
 
