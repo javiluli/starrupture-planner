@@ -24,7 +24,7 @@ export function SupplyModal() {
 
   return (
     <>
-      <Flex justify="end" className="w-full mb-4">
+      <Flex justify="end" className="w-full">
         <Button aria-label="Add supply item" onPress={onOpen}>
           Add an item
         </Button>

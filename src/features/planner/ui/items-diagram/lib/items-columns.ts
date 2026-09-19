@@ -7,5 +7,5 @@ export interface ProductionItemsColumn {
 
 export const PRODUCTION_ITEMS_COLUMNS: ProductionItemsColumn[] = [
   { key: 'item', name: 'Item' },
-  { key: 'needed', name: 'Needed per minute' },
+  { key: 'needed', name: 'Needed / min' },
 ]

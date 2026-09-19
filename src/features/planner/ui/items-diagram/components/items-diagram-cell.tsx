@@ -11,13 +11,19 @@ interface CellProps {
 export const ItemsDiagramCell = ({ row, columnKey, itemNameMap }: CellProps) => {
   switch (columnKey) {
     case 'item':
-      return <AssetImage kind="items" id={row.itemId} width={56} alt={itemNameMap.get(row.itemId) ?? row.itemId} />
+      return (
+        <div className="flex min-w-0 items-center gap-3">
+          <AssetImage kind="items" id={row.itemId} width={44} alt="" />
+          <Typography as="span" className="min-w-0 break-words">
+            {itemNameMap.get(row.itemId) ?? row.itemId}
+          </Typography>
+        </div>
+      )
     case 'needed':
       return (
-        <>
-          <Typography as="span">{row.targetIpm.toFixed(2)} units/min of </Typography>
-          <Typography as="span">{itemNameMap.get(row.itemId) ?? row.itemId}</Typography>
-        </>
+        <Typography as="span" className="whitespace-nowrap tabular-nums">
+          {row.targetIpm.toFixed(2)} units/min
+        </Typography>
       )
     default:
       return null

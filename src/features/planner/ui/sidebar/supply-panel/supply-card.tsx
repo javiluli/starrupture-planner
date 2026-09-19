@@ -23,37 +23,43 @@ export const SupplyCard = memo(({ itemId, itemName, value }: SupplyCardProps) =>
   const removex10ItemsSupply = () => incrementSupply(itemId, -10)
 
   return (
-    <Card className="">
-      <CardBody className="py-2">
-        <Flex gap="md">
-          <AssetImage kind="items" id={itemId} width={72} alt={itemName} />
-
-          <Flex className="bg-content2/60 rounded-lg border border-divider/60">
-            <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemName} supply by 10`} onPress={removex10ItemsSupply}>
-              <ChevronsLeft />
-            </Button>
-            <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemName} supply by 1`} onPress={removex1ItemsSupply}>
-              <ChevronLeft />
-            </Button>
-            <NumberInput
-              aria-label={`${itemName} supply per minute`}
-              hideStepper
-              size="sm"
-              variant="faded"
-              classNames={{
-                inputWrapper: 'bg-transparent shadow-none',
-              }}
-              minValue={1}
-              value={value}
-              onChange={(val) => handleUpdateSupply(Number(val))}
-            />
-            <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemName} supply by 1`} onPress={addx1ItemsSupply}>
-              <ChevronRight />
-            </Button>
-            <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemName} supply by 10`} onPress={addx10ItemsSupply}>
-              <ChevronsRight />
-            </Button>
+    <Card className="border border-divider/60 bg-content1/75 shadow-none">
+      <CardBody className="gap-3 p-3">
+        <Flex gap="sm" className="min-w-0">
+          <AssetImage kind="items" id={itemId} width={48} alt="" />
+          <Flex direction="col" align="start" gap="none" className="min-w-0">
+            <span className="min-w-0 break-words text-sm font-medium">{itemName}</span>
+            <span className="text-xs text-foreground/60">items/min</span>
           </Flex>
+        </Flex>
+
+        <Flex gap="none" className="w-full min-w-0 rounded-medium border border-divider/60 bg-content2/40">
+          <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemName} supply by 10`} onPress={removex10ItemsSupply}>
+            <ChevronsLeft size={18} />
+          </Button>
+          <Button isIconOnly size="sm" variant="light" aria-label={`Decrease ${itemName} supply by 1`} onPress={removex1ItemsSupply}>
+            <ChevronLeft size={18} />
+          </Button>
+          <NumberInput
+            aria-label={`${itemName} supply per minute`}
+            hideStepper
+            size="sm"
+            variant="faded"
+            className="min-w-0 flex-1"
+            classNames={{
+              inputWrapper: 'bg-transparent shadow-none',
+              input: 'text-center tabular-nums',
+            }}
+            minValue={1}
+            value={value}
+            onChange={(val) => handleUpdateSupply(Number(val))}
+          />
+          <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemName} supply by 1`} onPress={addx1ItemsSupply}>
+            <ChevronRight size={18} />
+          </Button>
+          <Button isIconOnly size="sm" variant="light" aria-label={`Increase ${itemName} supply by 10`} onPress={addx10ItemsSupply}>
+            <ChevronsRight size={18} />
+          </Button>
         </Flex>
       </CardBody>
     </Card>

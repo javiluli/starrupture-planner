@@ -15,7 +15,7 @@ export const ItemsDiagramTable = ({ columns, rows, itemNameMap }: ItemsTableProp
     <Table removeWrapper isHeaderSticky aria-label="Game item table">
       <TableHeader columns={columns} className="bg-content1/60">
         {(column) => (
-          <TableColumn key={column.key} className={`uppercase text-foreground/50 ${column.key === 'item' ? 'w-20' : ''}`}>
+          <TableColumn key={column.key} className={`uppercase text-foreground/60 ${column.key === 'needed' ? 'w-36 text-right' : ''}`}>
             <Typography as="span" variant="micro" tone="soft">
               {column.name}
             </Typography>
@@ -26,7 +26,7 @@ export const ItemsDiagramTable = ({ columns, rows, itemNameMap }: ItemsTableProp
         {(item) => (
           <TableRow key={item.itemId} className="border-b border-divider/60 hover:bg-content1/30 transition-colors">
             {(columnKey) => (
-              <TableCell>
+              <TableCell className={columnKey === 'needed' ? 'text-right' : ''}>
                 <ItemsDiagramCell row={item} columnKey={columnKey as ProductionItemsColumnKey} itemNameMap={itemNameMap} />
               </TableCell>
             )}

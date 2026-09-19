@@ -7,7 +7,7 @@
  */
 export const FLOW_COLORS = {
   canvas: 'hsl(var(--heroui-background) / 1)',
-  grid: 'hsl(var(--heroui-content3) / 1)',
+  grid: 'hsl(var(--heroui-content3) / 0.4)',
   labelBackground: 'hsl(var(--heroui-background) / 1)',
   labelText: 'hsl(var(--heroui-foreground) / 1)',
   supplyEdge: 'var(--color-item-component)',
