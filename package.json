@@ -8,7 +8,7 @@
   },
   "type": "module",
   "description": "A website that allows you to create a detailed production workflow for the video game StarRupture.",
-  "homepage": "https://sr-planner.vercel.app/",
+  "homepage": "https://starruptureplanner.vercel.app/",
   "author": "javiluli",
   "license": "MIT",
   "keywords": [
