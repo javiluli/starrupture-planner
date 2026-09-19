@@ -9,11 +9,11 @@ export const CorporationAccordionMeta = ({ corporation }: { corporation: Corpora
   const xpCount = corporation.levels.reduce((total, c) => total + c.xp, 0)
 
   return (
-    <Flex gap="md" align="center" wrap="wrap">
-      <Chip>{corporation.levels.length ?? 0} levels</Chip>
-      <Chip>{componentsCount} components</Chip>
-      <Chip>{rewardsCount} rewards</Chip>
-      <Chip>{formatNumber(xpCount)} G</Chip>
+    <Flex gap="sm" align="center" wrap="wrap">
+      <Chip size="sm">{corporation.levels.length ?? 0} levels</Chip>
+      <Chip size="sm">{componentsCount} components</Chip>
+      <Chip size="sm">{rewardsCount} rewards</Chip>
+      <Chip size="sm">{formatNumber(xpCount)} G</Chip>
     </Flex>
   )
 }

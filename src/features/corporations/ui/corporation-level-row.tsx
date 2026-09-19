@@ -4,7 +4,7 @@ import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { getPreferredScrollBehavior } from '@/shared/utils'
 import { Button, Chip } from '@heroui/react'
-import { memo } from 'react'
+import { Fragment, memo } from 'react'
 import { getCorporationLevelAnchorId } from '../lib/corporation-level-navigation'
 import { LevelRequirements } from './level-requirements'
 
@@ -37,12 +37,17 @@ const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargete
       <Flex direction="col" align="start" gap="xl" className="w-full min-w-0 px-4 py-5 sm:px-10 sm:py-6">
         <LevelRequirements level={level.level} xp={level.xp} />
 
-        <Flex align="start" gap="lg" wrap="wrap" className="w-full min-w-0">
+        <Flex direction="col" align="start" gap="md" wrap="wrap" className="w-full min-w-0 sm:flex-row sm:items-center">
           {level.components.map((component, index) => {
             const inputItem = itemMap.get(component.id)
 
             return (
-              <Flex key={component.id} align="start" gap="lg">
+              <Fragment key={component.id}>
+                {index > 0 && (
+                  <Typography as="span" variant="h3" tone="soft" className="self-center font-light">
+                    OR
+                  </Typography>
+                )}
                 <Flex direction="col" gap="md">
                   <div className="flex min-w-30 flex-col items-center gap-2 rounded-md bg-content1 p-2">
                     <Flex gap="md">
@@ -64,13 +69,7 @@ const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargete
                     Open on planner
                   </Button>
                 </Flex>
-
-                {index < level.components.length - 1 && (
-                  <Typography as="span" variant="h3" tone="soft" className="font-light">
-                    OR
-                  </Typography>
-                )}
-              </Flex>
+              </Fragment>
             )
           })}
         </Flex>
