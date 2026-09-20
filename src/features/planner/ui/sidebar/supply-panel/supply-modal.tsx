@@ -22,6 +22,11 @@ export function SupplyModal() {
     onClose()
   }
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) setSearch('')
+    onOpenChange()
+  }
+
   return (
     <>
       <Flex justify="end" className="w-full">
@@ -29,7 +34,7 @@ export function SupplyModal() {
           Add an item
         </Button>
       </Flex>
-      <Modal isOpen={isOpen} size="5xl" scrollBehavior="inside" onOpenChange={onOpenChange}>
+      <Modal isOpen={isOpen} size="5xl" scrollBehavior="inside" onOpenChange={handleOpenChange}>
         <ModalContent>
           {() => (
             <>
@@ -44,8 +49,20 @@ export function SupplyModal() {
                   placeholder="Type to search…"
                   startContent={<SearchIcon aria-hidden size={18} />}
                   type="search"
-                  onChange={(e) => setSearch(e.target.value)}
+                  value={search}
+                  onValueChange={setSearch}
                 />
+
+                {filteredItems.length === 0 && (
+                  <Flex direction="col" align="center" className="gap-3 py-10 text-center" role="status">
+                    <Typography variant="body" tone="soft">
+                      No supply items found
+                    </Typography>
+                    <Button variant="flat" onPress={() => setSearch('')}>
+                      Clear search
+                    </Button>
+                  </Flex>
+                )}
 
                 {SUPPLY_ITEM_TYPE_ORDER.map((type) => {
                   const sectionItems = itemsByType[type]
