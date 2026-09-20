@@ -8,6 +8,7 @@ import {
 } from '@/features/planner'
 import { Flex, Grid, PageContainer, PageContent, PageHeader, Panel, Typography } from '@/shared/ui'
 import { Suspense } from 'react'
+import './page-planner.css'
 
 const PlannerPanelFallback = ({ label }: { label: string }) => (
   <Flex role="status" align="center" justify="center" className="h-full min-h-0 p-6">
@@ -26,7 +27,7 @@ const PlannerPageContent = () => {
 
   return (
     <PageContainer>
-      <PageHeader>
+      <PageHeader className="planner-command-surface">
         <Typography as="h1" variant="h2" className="sr-only">
           Planner
         </Typography>

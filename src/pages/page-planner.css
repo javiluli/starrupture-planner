@@ -1,0 +1,6 @@
+.planner-command-surface {
+  background-image:
+    radial-gradient(ellipse 44% 150% at 17% -45%, hsl(var(--heroui-primary) / 0.18), transparent 85%),
+    linear-gradient(180deg, hsl(var(--heroui-content2) / 0.3), transparent 85%);
+  border-top-color: hsl(var(--heroui-primary) / 0.3);
+}
