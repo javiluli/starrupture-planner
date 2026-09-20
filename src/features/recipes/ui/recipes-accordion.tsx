@@ -1,5 +1,5 @@
 import { Accordion, AccordionItemContent } from '@/shared/ui'
-import { accordionItemStyles } from '@/shared/ui/accordion/accordion-item.styles'
+import { accordionSpotlightItemStyles } from '@/shared/ui/accordion/accordion-spotlight'
 import { AccordionItem } from '@heroui/react'
 import { useRecipesAccordionData } from '../hooks/use-recipes-accordion-data'
 import { RecipeRow } from './recipe-row'
@@ -14,7 +14,7 @@ export const RecipesAccordion = () => {
         <AccordionItem
           key={building.id}
           aria-label={building.name}
-          classNames={accordionItemStyles}
+          classNames={accordionSpotlightItemStyles}
           title={<RecipeAccordionHeader building={building} unlockInfo={getUnlockInfo(building.name)} />}
         >
           <AccordionItemContent>
