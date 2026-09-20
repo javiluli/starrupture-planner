@@ -13,7 +13,7 @@ interface Props {
 }
 
 const RecipeRowComponent = ({ recipe, outputItem, itemMap }: Props) => (
-  <div className="min-w-0 rounded-lg border border-divider">
+  <div className="min-w-0 rounded-lg border border-divider/65 border-t-divider bg-content1/55">
     <Flex direction="col" align="stretch" gap="md" className="p-4 lg:flex-row lg:items-center lg:gap-4">
       <RecipeOutput output={recipe.output} outputItem={outputItem} />
       <ChevronLeft aria-hidden size={24} className="mx-auto shrink-0 rotate-90 text-foreground/70 lg:mx-0 lg:rotate-0" />
