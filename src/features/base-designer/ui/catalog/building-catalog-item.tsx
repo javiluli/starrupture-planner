@@ -56,7 +56,6 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
   const interactionProps = {
     role: 'button',
     tabIndex: 0,
-    'aria-label': `Place ${building.name}`,
     onPointerDown: (event: PointerEvent<HTMLElement>) => onStartDragging(event, building.id),
     onKeyDown: (event: KeyboardEvent<HTMLElement>) => handleKeyboardPlacement(event, building.id, onAddWithKeyboard),
   }
@@ -68,15 +67,19 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
           {...interactionProps}
           shadow="sm"
           className="
-            deferred-render aspect-square w-full cursor-grab touch-pan-y border border-divider/70 bg-content1
+            deferred-render min-h-36 w-full cursor-grab touch-pan-y border border-divider/70 bg-content1
             transition-[background-color,border-color,box-shadow] duration-200 hover:border-primary/45
             hover:bg-content2/45 hover:shadow-[0_4px_14px_hsl(var(--heroui-primary)/0.09)]
             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:cursor-grabbing
             motion-reduce:transition-none
           "
         >
-          <CardBody className="items-center justify-center gap-1 p-2">
-            <BuildingIcon buildingId={building.id} width={64} />
+          <CardBody className="items-center justify-center gap-1 p-2 text-center">
+            <span className="sr-only">Place </span>
+            <BuildingIcon buildingId={building.id} width={48} />
+            <Typography as="span" variant="small" className="min-w-0 max-w-full text-center leading-tight [overflow-wrap:anywhere]">
+              {building.name}
+            </Typography>
             <BuildingFootprintBadge buildingId={building.id} compact />
           </CardBody>
         </Card>
@@ -97,6 +100,7 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
       "
     >
       <CardBody className="flex-row items-center justify-between gap-3 p-3">
+        <span className="sr-only">Place </span>
         <Flex direction="col" align="start" justify="center" gap="sm" className="min-w-0 flex-1">
           <Typography variant="h4" className="min-w-0 max-w-full break-words">
             {building.name}

@@ -8,3 +8,16 @@
   background-position: -1px -1px;
   background-size: 10px 10px;
 }
+
+[data-base-designer-canvas] .react-flow__attribution {
+  background: hsl(var(--heroui-content1));
+}
+
+[data-base-designer-canvas] .react-flow__attribution a {
+  color: hsl(var(--heroui-foreground));
+}
+
+[data-base-designer-canvas] .react-flow__attribution a:focus-visible {
+  outline: 2px solid hsl(var(--heroui-focus));
+  outline-offset: 2px;
+}

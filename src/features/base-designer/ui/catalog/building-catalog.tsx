@@ -91,7 +91,7 @@ export const BuildingCatalog = ({ buildings, onStartDragging, onAddWithKeyboard 
 
       <div className="min-h-0 w-full flex-1 overflow-y-auto pr-2">
         {filteredBuildings.length > 0 ? (
-          <div className={view === 'list' ? 'flex w-full flex-col gap-3' : 'grid w-full grid-cols-3 gap-3'}>
+          <div className={view === 'list' ? 'flex w-full flex-col gap-3' : 'grid w-full grid-cols-2 gap-3 lg:grid-cols-3'}>
             {filteredBuildings.map((building) => (
               <BuildingCatalogItem
                 key={building.id}

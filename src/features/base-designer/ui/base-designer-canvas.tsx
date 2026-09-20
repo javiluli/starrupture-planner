@@ -25,7 +25,12 @@ export const BaseDesignerCanvas = () => {
   const isValidConnection = (connection: Connection | Edge) => isBaseDesignerConnectionValid({ connection, nodes, edges })
 
   return (
-    <div data-base-designer-canvas data-flow-selection-surface className="h-full min-h-0 w-full overflow-hidden">
+    <div
+      data-testid="base-designer-canvas"
+      data-base-designer-canvas
+      data-flow-selection-surface
+      className="h-full min-h-0 w-full overflow-hidden"
+    >
       <ReactFlow
         nodes={nodes}
         edges={edges}
