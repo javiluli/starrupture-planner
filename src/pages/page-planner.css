@@ -4,3 +4,7 @@
     linear-gradient(180deg, hsl(var(--heroui-content2) / 0.3), transparent 85%);
   border-top-color: hsl(var(--heroui-primary) / 0.3);
 }
+
+.planner-empty-surface {
+  background-image: radial-gradient(ellipse 46% 43% at 50% 48%, hsl(var(--heroui-primary) / 0.065), transparent 100%);
+}

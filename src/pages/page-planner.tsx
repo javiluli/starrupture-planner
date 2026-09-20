@@ -55,7 +55,12 @@ const PlannerPageContent = () => {
             </Panel>
           </Grid>
         ) : (
-          <Flex direction="col" align="center" justify="center" className="h-full min-h-0 overflow-hidden text-center">
+          <Flex
+            direction="col"
+            align="center"
+            justify="center"
+            className="planner-empty-surface h-full min-h-0 overflow-hidden text-center"
+          >
             <Typography variant="h2">Select an object to begin production</Typography>
             <Typography tone="soft">
               Choose any item to see its production chain, or select a raw material to use it as a terminal target.
