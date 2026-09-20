@@ -5,6 +5,12 @@ import { useSearchParams } from 'react-router-dom'
 import { useCorporationsAccordionData } from '../hooks/use-corporations-accordion-data'
 import { CorporationAccordionHeader } from './corporation-accordion-header'
 import { CorporationLevelRow } from './corporation-level-row'
+import './corporation-spotlight.css'
+
+const corporationAccordionItemStyles = {
+  ...accordionItemStyles,
+  trigger: `${accordionItemStyles?.trigger ?? ''} corporation-spotlight-trigger`,
+}
 
 const parseLevel = (value: string | null) => {
   if (!value) return null
@@ -30,7 +36,7 @@ export const CorporationsAccordion = () => {
         <AccordionItem
           key={corporation.id}
           aria-label={corporation.id.split('_')[0]}
-          classNames={accordionItemStyles}
+          classNames={corporationAccordionItemStyles}
           title={<CorporationAccordionHeader corporation={corporation} />}
         >
           <AccordionItemContent>
