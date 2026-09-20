@@ -69,8 +69,10 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
           shadow="sm"
           className="
             deferred-render aspect-square w-full cursor-grab touch-pan-y border border-divider/70 bg-content1
-            transition-colors hover:border-primary/50 hover:bg-content2/30 focus-visible:outline-none
-            focus-visible:ring-2 focus-visible:ring-focus active:cursor-grabbing
+            transition-[background-color,border-color,box-shadow] duration-200 hover:border-primary/45
+            hover:bg-content2/45 hover:shadow-[0_4px_14px_hsl(var(--heroui-primary)/0.09)]
+            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:cursor-grabbing
+            motion-reduce:transition-none
           "
         >
           <CardBody className="items-center justify-center gap-1 p-2">
@@ -88,8 +90,10 @@ export const BuildingCatalogItem = ({ building, view, onStartDragging, onAddWith
       shadow="sm"
       className="
         deferred-render group w-full shrink-0 cursor-grab touch-pan-y border border-divider/70 bg-content1
-        transition-colors hover:border-primary/50 hover:bg-content2/30 focus-visible:outline-none
-        focus-visible:ring-2 focus-visible:ring-focus active:cursor-grabbing
+        transition-[background-color,border-color,box-shadow] duration-200 hover:border-primary/45
+        hover:bg-content2/45 hover:shadow-[0_4px_14px_hsl(var(--heroui-primary)/0.09)]
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus active:cursor-grabbing
+        motion-reduce:transition-none
       "
     >
       <CardBody className="flex-row items-center justify-between gap-3 p-3">
