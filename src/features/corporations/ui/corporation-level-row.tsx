@@ -2,38 +2,20 @@ import { useOpenPlanner } from '@/features/planner'
 import type { Level } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
-import { getPreferredScrollBehavior } from '@/shared/utils'
 import { Button, Chip } from '@heroui/react'
 import { Fragment, memo } from 'react'
-import { getCorporationLevelAnchorId } from '../lib/corporation-level-navigation'
 import { LevelRequirements } from './level-requirements'
 
 interface Props {
-  corporationId: string
   level: Level
   itemMap: ReadonlyMap<string, Item>
-  isTargeted?: boolean
 }
 
-/** Centers a requested level when its accordion content enters the DOM. */
-const centerTargetLevel = (element: HTMLDivElement | null) => {
-  if (!element) return
-
-  element.scrollIntoView({ behavior: getPreferredScrollBehavior(), block: 'center' })
-}
-
-const CorporationLevelRowComponent = ({ corporationId, level, itemMap, isTargeted = false }: Props) => {
+const CorporationLevelRowComponent = ({ level, itemMap }: Props) => {
   const openPlanner = useOpenPlanner()
 
   return (
-    <div
-      ref={isTargeted ? centerTargetLevel : undefined}
-      id={getCorporationLevelAnchorId(corporationId, level.level)}
-      data-testid={`corporations-level-${corporationId}-${level.level}`}
-      className={`w-full min-w-0 scroll-mt-24 rounded-lg border transition-colors ${
-        isTargeted ? 'border-primary bg-primary/5 ring-1 ring-primary/40' : 'border-divider'
-      }`}
-    >
+    <div className="w-full min-w-0 rounded-lg border border-divider">
       <Flex direction="col" align="start" gap="xl" className="w-full min-w-0 px-4 py-5 sm:px-10 sm:py-6">
         <LevelRequirements level={level.level} xp={level.xp} />
 

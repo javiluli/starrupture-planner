@@ -30,3 +30,13 @@ test('abre una materia prima como objetivo terminal desde Items', async ({ page 
   await expect(plannerResult.getByRole('heading', { name: 'Calcium Ore' })).toBeVisible({ timeout: 20_000 })
   await expect(plannerResult.getByText('Raw material target')).toBeVisible()
 })
+
+test('muestra referencias compactas de corporations sin enlaces', async ({ page }) => {
+  await page.goto('/items')
+
+  await page.getByRole('searchbox', { name: 'Search items' }).fill('Calcium Ore')
+  const rawItemRow = page.getByRole('row', { name: /Calcium Ore/ })
+
+  await expect(rawItemRow.getByText('Moon L.3', { exact: true })).toBeVisible()
+  await expect(rawItemRow.getByRole('link')).toHaveCount(0)
+})

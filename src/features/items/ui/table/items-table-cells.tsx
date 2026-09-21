@@ -1,10 +1,8 @@
-import { getCorporationLevelPath } from '@/features/corporations'
 import { useOpenPlanner } from '@/features/planner'
 import type { CorporationLevelRef } from '@/shared/@types/corporations.type'
 import type { Item } from '@/shared/@types/item.type'
 import { AssetImage, Flex, Typography } from '@/shared/ui'
 import { Button, Chip } from '@heroui/react'
-import { Link } from 'react-router-dom'
 
 export const ItemCell = ({ item }: { item: Item }) => {
   return (
@@ -51,18 +49,14 @@ export const CorporationsCell = ({ corporations }: { corporations: readonly Corp
   return (
     <Flex gap="lg" wrap="wrap">
       {corporations.map((corporation) => (
-        <Link
-          key={`${corporation.corporationId}-${corporation.level}`}
-          to={getCorporationLevelPath(corporation.corporationId, corporation.level)}
-          className="rounded-lg px-2 py-1 transition-colors hover:bg-content2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-        >
+        <div key={`${corporation.corporationId}-${corporation.level}`} className="px-2 py-1">
           <Flex gap="sm">
             <AssetImage kind="corporations" id={corporation.corporationId} alt="" width={24} />
             <Typography as="span" variant="small" tone="soft" className="capitalize">
-              {corporation.corporationName} <span>L.{corporation.level}</span>
+              {corporation.corporationName.split(' ')[0]} <span>L.{corporation.level}</span>
             </Typography>
           </Flex>
-        </Link>
+        </div>
       ))}
     </Flex>
   )

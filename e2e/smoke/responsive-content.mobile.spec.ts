@@ -33,5 +33,5 @@ test('mantiene legibles Recipes y Corporations a 320 px', async ({ page }) => {
   await expectFullyWithinViewport(page.getByRole('heading', { name: /future health solutions/i, level: 3 }))
 
   await page.getByRole('button', { name: /future health solutions/i }).click()
-  await expectFullyWithinViewport(page.getByTestId('corporations-level-future_health_solutions-3'))
+  await expectFullyWithinViewport(page.getByText('Level 3', { exact: true }))
 })

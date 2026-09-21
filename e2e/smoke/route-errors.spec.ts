@@ -9,11 +9,3 @@ test('mantiene el shell y muestra un 404 semantico para una ruta inexistente', a
   await page.getByRole('button', { name: 'Back to Planner' }).click()
   await expect(page).toHaveURL('/')
 })
-
-test('abre y centra un nivel de corporation desde un deep link', async ({ page }) => {
-  await page.goto('/corporations?corporation=moon_energy_corporation&level=3#corporation-moon_energy_corporation-level-3')
-
-  const targetedLevel = page.getByTestId('corporations-level-moon_energy_corporation-3')
-  await expect(targetedLevel).toBeVisible({ timeout: 20_000 })
-  await expect(targetedLevel).toBeInViewport()
-})
